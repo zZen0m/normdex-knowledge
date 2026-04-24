@@ -176,20 +176,21 @@
       "bases:Neue Base erstellen": false
     }
   },
-  "active": "7d03a8fb3b6cfe36",
+  "active": "3890ecf958852619",
   "lastOpenFiles": [
+    "90_Archiv",
+    "09_Besprechungen",
+    "08_Entscheidungen",
+    "07_KI_Agenten",
+    "06_Entwicklung",
+    "05_Geschaeft",
+    "01_Produkt",
     "README.md",
     "00_Start/AI Kontext - Einstieg.md",
     "90_Archive",
     "09_Meetings",
     "08_Decisions",
     "07_AI_Agents",
-    "06_Development",
-    "05_Business",
-    "04_Marketing",
-    "03_Landingpage",
-    "02_App",
-    "01_Product",
     "Willkommen.md"
   ]
 }

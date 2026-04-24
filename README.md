@@ -12,9 +12,24 @@ Dieser Obsidian-Vault enthält übergreifendes Wissen zu Normdex:
 - Marketing
 - Geschäftsmodell
 - Entwicklung
-- AI-Agenten
+- KI-Agenten
 - Architekturentscheidungen
-- Meetingnotizen
+- Besprechungsnotizen
+
+## Ordnerstruktur
+
+- `00_Start` – Einstieg, Übersicht, zentrale Kontextdateien
+- `01_Produkt` – Produktvision, Zielgruppen, Funktionen, Roadmap
+- `02_App` – App-Architektur, Datenmodell, API, Berechnungslogik
+- `03_Landingpage` – Seitenstruktur, SEO, Texte, Design
+- `04_Marketing` – Newsletter, Kampagnen, Content-Ideen
+- `05_Geschaeft` – Geschäftsmodell, Pricing, Lizenzen, Rechtliches
+- `06_Entwicklung` – Dev-Setup, Deployment, Git, Docker, bekannte Probleme
+- `07_KI_Agenten` – Claude, Codex, Paperclip, Prompts und Arbeitsweisen
+- `08_Entscheidungen` – Architektur- und Produktentscheidungen
+- `09_Besprechungen` – Meetingnotizen und Protokolle
+- `90_Archiv` – alte oder nicht mehr aktive Inhalte
+- `99_Anhaenge` – Bilder, Screenshots und sonstige Anhänge
 
 ## Wichtige lokale Pfade
 
