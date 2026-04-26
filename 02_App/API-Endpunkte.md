@@ -65,20 +65,35 @@ DELETE /organizations/{org_id}/logo                   → Logo löschen
 ## Lizenzen
 
 ```
-GET  /licenses/                      → Lizenzen der Organisation
-POST /licenses/{id}/start-usage      → Session starten (Seat belegen)
-POST /licenses/{id}/heartbeat        → Keep-Alive
-POST /licenses/{id}/end-usage        → Session beenden (Seat freigeben)
-POST /licenses/{id}/force-release    → Seat forciert freigeben (Admin)
+GET  /licenses/                         → Aktive Lizenzen der Organisation (Legacy-/Usage-kompatibel)
+GET  /licenses/pools                    → Pool-Zusammenfassung monatlich/jährlich
+GET  /licenses/pools/{pool}/items       → Einzellizenzen eines Pools
+GET  /licenses/{id}/history             → Lizenzhistorie
+POST /licenses/checkout/preview         → Kaufvorschau mit Staffelpreisen
+POST /licenses/checkout/create          → Kauf starten oder bestehende Subscription erweitern
+POST /licenses/checkout/confirm         → Stripe Checkout nach Redirect bestätigen
+POST /licenses/checkout/cancel          → Abgebrochenen Checkout bereinigen
+POST /licenses/{id}/cancel              → Lizenz zum Laufzeitende kündigen
+POST /licenses/{id}/reactivate-cancel   → Kündigung innerhalb der Restlaufzeit zurückziehen
+POST /licenses/{id}/undo-purchase       → Direkten Zusatzkauf innerhalb von 10 Minuten rückgängig machen
+POST /licenses/{id}/start-usage         → Session starten (Lizenz belegen)
+POST /licenses/{id}/heartbeat           → Keep-Alive
+POST /licenses/{id}/end-usage           → Session beenden (Lizenz freigeben)
+POST /licenses/{id}/force-release       → Session forciert freigeben (Admin)
+POST /licenses/{id}/assign-user         → Benutzer zuweisen (Backend vorhanden, UI nicht exponiert)
+POST /licenses/{id}/unassign-user       → Benutzerzuweisung entfernen (Backend vorhanden, UI nicht exponiert)
+POST /licenses/promotions/validate      → Stripe Promotion Code prüfen
+POST /admin/licenses/grant-complimentary → Kostenlose/interne Lizenz vergeben (System-Admin)
 ```
 
 ## Abonnements (Stripe)
 
 ```
-GET  /subscriptions/config                  → Stripe Public Key, Price IDs
-POST /subscriptions/create-checkout-session → Stripe Checkout starten
-POST /subscriptions/create-portal-session   → Stripe Customer Portal öffnen
+GET  /subscriptions/config                → Stripe Public Key
+POST /subscriptions/create-portal-session → Stripe Customer Portal öffnen
 ```
+
+Käufe und Kündigungen laufen über die neuen `/licenses/...`-Endpunkte. Rabattcodes werden aktuell nur im Stripe Checkout eingegeben, wenn eine neue Subscription entsteht.
 
 ## Support (öffentlich)
 

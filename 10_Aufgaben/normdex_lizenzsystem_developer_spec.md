@@ -55,7 +55,8 @@ In Normdex ist **jede Lizenz ein eigener Datensatz** mit:
 - eigenem Mindestlaufzeitende
 - eigenem Status
 - eigener Kündigungsinformation
-- optionaler Benutzerzuweisung
+
+Jede Lizenz erlaubt genau **einen gleichzeitigen aktiven Nutzer** (Concurrent-Use-Locking via Heartbeat-Session). Die statische Benutzerzuweisung (`assigned_user_id`) ist im Datenmodell vorhanden, wird aber in der UI nicht exponiert.
 
 ### 2.5 Sammelabrechnung
 In Stripe soll **nicht pro Lizenz eine eigene Subscription** existieren, sondern:
@@ -96,7 +97,7 @@ Für jede Lizenz müssen mindestens sichtbar sein:
 - Startdatum
 - Laufzeitende / nächstes Vertragsende
 - Status
-- ggf. zugewiesener Benutzer
+- aktive Sitzung (Nutzername + Uhrzeit, falls jemand die Lizenz gerade verwendet)
 - Kündigungsstatus inkl. Enddatum
 
 #### 4.1.2 Statusanzeige
@@ -365,8 +366,10 @@ Dabei muss:
 
 ### 8.3 Verwaltung
 - `POST /licenses/{license_id}/cancel`
-- `POST /licenses/{license_id}/assign-user`
-- `POST /licenses/{license_id}/unassign-user`
+- `POST /licenses/{license_id}/undo` — Direktaktivierung rückgängig machen (10-Minuten-Fenster)
+- `POST /licenses/{license_id}/force-release` — Admin: aktive Sessions einer Lizenz sofort beenden
+- `POST /licenses/{license_id}/assign-user` *(Backend vorhanden, UI nicht exponiert)*
+- `POST /licenses/{license_id}/unassign-user` *(Backend vorhanden, UI nicht exponiert)*
 
 ### 8.4 Promotions
 - `POST /licenses/promotions/validate`
@@ -389,11 +392,17 @@ Jede Lizenz muss als eigene Zeile/Karte sichtbar sein.
 - Typ: Basis / Add-on
 - Preis
 - Status
-- Benutzerzuweisung
+- Aktive Sitzung (Avatar + Name + „Aktiv seit HH:MM" wenn belegt, sonst „Keine aktive Sitzung")
 - Startdatum
 - Laufzeitende
 - Kündigungsstatus
-- Aktionen
+- Aktionen (Admin/Owner: Kündigen, Sitzungen bereinigen, Kauf rückgängig)
+
+#### 9.1.1 Rückgängig-Machen-Dialog
+Wenn ein Admin/Owner den „Rückgängig"-Button im 10-Minuten-Fenster klickt, muss ein Bestätigungsdialog erscheinen, der darüber informiert, dass die Lizenz mit sofortiger Wirkung vollständig entfernt wird. Die Aktion darf erst nach expliziter Bestätigung ausgeführt werden.
+
+#### 9.1.2 Lizenzauswahl in `useLicenseLock`
+Die Hook-Logik muss alle aktiven Lizenzen des passenden Produkts der Reihe nach probieren (nicht nur die erste). Bei 409 (Lizenz bereits belegt) wird die nächste Lizenz versucht. Erst wenn alle Lizenzen belegt sind, wird dem Nutzer ein Fehler angezeigt.
 
 ### 9.2 Kaufdialog
 Der Kaufdialog muss enthalten:

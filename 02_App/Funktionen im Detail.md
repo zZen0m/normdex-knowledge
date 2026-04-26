@@ -42,23 +42,50 @@ Normdex ist **mandantenfähig**: Jede Organisation ist ein isolierter Bereich.
 
 ## Lizenz- & Abonnementverwaltung
 
-Normdex verwendet ein **Concurrent-User-Seat-Modell**.
+Normdex verwendet ein **Pool-Modell mit Einzellizenzen**. Jede Lizenz ist ein eigener Datensatz in Normdex; die Abrechnung wird in Stripe je Organisation in maximal zwei Pools gebündelt:
+- monatlicher Pool
+- jährlicher Pool
 
 | Produkt-Key | Beschreibung |
 |---|---|
 | `economics_basic` | Economics Basic – Wirtschaftlichkeitsberechnung nach ÖNORM M 7140 |
 
-**Lizenz-Lebenszyklus:** `Trial (14 Tage) → Active → Canceled / Expired`
+**Lizenzarten und Preise:**
+
+| Pool | Hauptlizenz | Zusatzlizenz |
+|---|---:|---:|
+| Monatlich | 49 € / Monat | 29 € / Monat |
+| Jährlich | 490 € / Jahr | 290 € / Jahr |
+
+Die erste aktive oder noch laufende Lizenz in einem Pool ist die Hauptlizenz. Weitere Lizenzen im selben Pool sind Zusatzlizenzen. Monats- und Jahrespool werden getrennt bewertet.
+
+**Lizenz-Lebenszyklus:** `pending → active → scheduled_end → ended`, zusätzlich `payment_failed` bei Zahlungsproblemen.
 
 **Concurrent-User-Enforcement:**
 - Heartbeat-Mechanismus: Frontend sendet regelmäßig Keep-Alive-Requests
-- Nach **30 Minuten Inaktivität** wird der Seat automatisch freigegeben
+- Jede Lizenz erlaubt genau eine aktive Sitzung
+- Nach **7 Minuten Inaktivität** wird die Sitzung automatisch freigegeben
+- Wenn eine Lizenz belegt ist, versucht die App automatisch die nächste aktive Lizenz
 
 **Subscription-Flow (Stripe):**
-1. Nutzer klickt „Abonnieren" → Checkout-Session wird erstellt
-2. Stripe Checkout-Seite → Zahlung
-3. Lizenzstatus wird auf `active` gesetzt
-4. Stripe Customer Portal für Änderungen / Kündigung
+1. Owner/Admin klickt in `/licenses` auf „Lizenz hinzufügen"
+2. Normdex berechnet Vorschau, Hauptlizenz/Zusatzlizenz und Pool-Zuordnung
+3. Bei einem neuen Pool wird eine Stripe-Checkout-Session erstellt
+4. Bei bestehendem Pool wird die bestehende Stripe-Subscription direkt erweitert und anteilig verrechnet
+5. Neue Lizenzen werden nach erfolgreichem Checkout oder direkter Erweiterung aktiv
+
+**Rabattcodes:**
+- Rabattcodes werden aktuell ausschließlich im Stripe Checkout eingegeben
+- Das gilt nur, wenn eine neue Stripe-Subscription ausgelöst wird
+- Bei direkter Erweiterung einer bestehenden Pool-Subscription gibt es derzeit keinen separaten Rabattcode-Flow in Normdex
+
+**Kündigung:**
+- Nur Owner/Admin kann Lizenzen kaufen oder kündigen
+- Zusatzlizenzen werden vor der Hauptlizenz gekündigt
+- Gekündigte Lizenzen bleiben bis zum angezeigten Laufzeitende nutzbar (`scheduled_end`)
+- Kündigungen können bis zum endgültigen Ablaufdatum zurückgezogen werden
+- Nach Ablaufdatum ist keine Rücknahme mehr möglich; dann muss eine neue Lizenz gekauft werden
+- Rechnungen und Zahlungsmethoden werden über das Stripe-Portal verwaltet
 
 ---
 

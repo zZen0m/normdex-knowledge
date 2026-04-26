@@ -1,4 +1,4 @@
-﻿# KI Kontext - Einstieg
+# KI Kontext - Einstieg
 
 Dies ist die zentrale Wissensbasis für Normdex.
 

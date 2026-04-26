@@ -55,14 +55,17 @@
 
 ## Pricing-Positionierung
 
-| Aspekt | Wert |
-|---|---|
-| Einstiegspreispunkt (monatlich) | 49 €/Monat/Benutzer |
-| Jahresabo | 490 €/Jahr/Benutzer (≈ 40,83 €/Monat) |
-| Ersparnis jährlich | 17 % (entspricht 2 Monaten gratis) |
-| Testphase | 14 Tage kostenlos, ohne Kreditkarte |
-| Abrechnung | Stripe (Kreditkarte, SEPA-Lastschrift) |
-| Kündigung | Monatlich jederzeit; Jahresabo: 30 Tage zum Laufzeitende |
+| Aspekt                          | Wert                                                                     |
+| ------------------------------- | ------------------------------------------------------------------------ |
+| Einstiegspreispunkt (monatlich) | 49 €/Monat für die erste Lizenz                                          |
+| Zusatzlizenzen monatlich        | 29 €/Monat je weiterer Lizenz im Monatspool                              |
+| Jahresabo                       | 490 €/Jahr für die erste Lizenz                                          |
+| Zusatzlizenzen jährlich         | 290 €/Jahr je weiterer Lizenz im Jahrespool                              |
+| Ersparnis jährlich              | 17 % (entspricht 2 Monaten gratis)                                       |
+| Testphase                       | 14 Tage kostenlos, ohne Kreditkarte                                      |
+| Abrechnung                      | Stripe (Kreditkarte, Klarna), gebündelt je Monats-/Jahrespool            |
+| Kündigung                       | Lizenz endet zum jeweiligen Laufzeitende; Zusatzlizenzen vor Hauptlizenz |
+| Rabattcodes                     | Nur im Stripe Checkout bei neuer Subscription                            |
 
 ---
 
