@@ -21,6 +21,7 @@ Dies ist die zentrale Wissensbasis für Normdex.
 - `07_KI_Agenten` – Claude, Codex, Paperclip, Prompts und Arbeitsweisen
 - `08_Entscheidungen` – Architektur- und Produktentscheidungen
 - `09_Besprechungen` – Meetingnotizen und Protokolle
+- `10_Aufgaben` – zentrale Aufgabenübersicht mit Todo-Dateien
 - `90_Archiv` – alte oder nicht mehr aktive Inhalte
 - `99_Anhaenge` – Bilder, Screenshots und sonstige Anhänge
 
@@ -32,3 +33,4 @@ Dies ist die zentrale Wissensbasis für Normdex.
 4. Keine Git-Repositories in SharePoint verschieben.
 5. Keine SharePoint-Dateien versehentlich in Git-Repositories kopieren.
 6. Bei Änderungen an Code, Architektur, API, Datenmodell, Lizenzsystem, Pricing, Marketingtexten oder Supportlogik muss geprüft werden, ob diese Wissensbasis aktualisiert werden muss.
+7. Aufgaben werden nach der neuen Struktur in `10_Aufgaben/Aufgaben.md` verwaltet: Die Übersicht listet alle Todos, Details stehen in einzelnen Dateien unter `10_Aufgaben/offene Todos/`, erledigte Todos werden nach `10_Aufgaben/abgeschlossene Todos/` verschoben.

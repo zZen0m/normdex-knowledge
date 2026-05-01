@@ -21,6 +21,19 @@
 | **Support-Ticket geschlossen** | Abschlussnachricht an Kunden |
 | **Account-Löschung** | Bestätigung vor der Löschung |
 | **Daten-Export bereit** | Wenn DSGVO-Export abholbereit ist |
+| **Testzeitraum-Erinnerung** | Ca. 3 Tage vor Ablauf des 14-tägigen Testzeitraums (via Stripe-Webhook `customer.subscription.trial_will_end`); Empfänger: Org-Owner |
+
+---
+
+## Newsletter-Gutschein
+
+- E-Mail: Newsletter-Gutschein nach bestaetigter Aufnahme in die Brevo-Newsletter-Liste (`list_addition` Webhook).
+- Ausloeser: Brevo Outbound Webhook `list_addition` fuer die konfigurierte Newsletter-Liste.
+- Vor Double-Opt-in-Bestaetigung wird kein Gutschein versendet.
+- Normdex erzeugt einen individuellen Stripe Promotion Code auf Basis des Coupons `mbjs8wYE`.
+- Jeder Code ist einmalig einloesbar und 30 Tage gueltig.
+- Die Gutschein-Mail enthaelt Code, Ablaufdatum und Link zu `/licenses`.
+- Idempotenz: erneute Webhooks fuer dieselbe E-Mail erzeugen keinen zweiten Code und senden nach `coupon_sent_at` keine zweite Mail.
 
 ---
 

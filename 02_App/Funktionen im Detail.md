@@ -59,25 +59,33 @@ Normdex verwendet ein **Pool-Modell mit Einzellizenzen**. Jede Lizenz ist ein ei
 
 Die erste aktive oder noch laufende Lizenz in einem Pool ist die Hauptlizenz. Weitere Lizenzen im selben Pool sind Zusatzlizenzen. Monats- und Jahrespool werden getrennt bewertet.
 
-**Lizenz-Lebenszyklus:** `pending → active → scheduled_end → ended`, zusätzlich `payment_failed` bei Zahlungsproblemen.
+**Lizenz-Lebenszyklus:** `pending → trial → active → scheduled_end → ended`, zusätzlich `payment_failed` bei Zahlungsproblemen. `trial` ist ein eigener Status für qualifizierte Einzel-Erstkäufe mit 14-tägigem kostenlosem Testzeitraum.
+
+**14-Tage-Testvorteil / Erstbestellungsrabatt:**
+- Qualifizierter Einzel-Erstkauf: Stripe Checkout erstellt eine Subscription mit 14 Tagen Trial; Normdex führt die Lizenz lokal als `trial`.
+- Qualifizierter Mehrfach-Erstkauf: kein echter Trial, sondern einmaliger Erstbestellungsrabatt von 24,50 EUR über Stripe-Coupon `QHQESezY`.
+- Der Trial-Benefit wird dauerhaft pro Organisation über `organizations.trial_used_at` gesperrt. Zusätzliche Schutzschichten prüfen gleiche `stripe_customer_id`, gleiche `vat_id`, Pending Orders und Legacy-Metadaten.
+- Abgebrochene Trial-Checkouts geben den Lock nur frei, wenn Stripe keine Subscription erzeugt hat.
+- Zusatzkauf während Trial beendet/konvertiert die Trial-Lizenz zuerst; verbleibende Trial-Tage werden mit `24,50 EUR / 14 * Resttage` als Gutschrift angerechnet.
 
 **Concurrent-User-Enforcement:**
 - Heartbeat-Mechanismus: Frontend sendet regelmäßig Keep-Alive-Requests
 - Jede Lizenz erlaubt genau eine aktive Sitzung
 - Nach **7 Minuten Inaktivität** wird die Sitzung automatisch freigegeben
-- Wenn eine Lizenz belegt ist, versucht die App automatisch die nächste aktive Lizenz
+- Wenn eine Lizenz belegt ist, versucht die App automatisch die nächste aktive oder nicht abgelaufene Trial-Lizenz
 
 **Subscription-Flow (Stripe):**
 1. Owner/Admin klickt in `/licenses` auf „Lizenz hinzufügen"
 2. Normdex berechnet Vorschau, Hauptlizenz/Zusatzlizenz und Pool-Zuordnung
 3. Bei einem neuen Pool wird eine Stripe-Checkout-Session erstellt
 4. Bei bestehendem Pool wird die bestehende Stripe-Subscription direkt erweitert und anteilig verrechnet
-5. Neue Lizenzen werden nach erfolgreichem Checkout oder direkter Erweiterung aktiv
+5. Neue Lizenzen werden nach erfolgreichem Checkout aktiv, als Trial geführt oder bei direkter Erweiterung aktiviert
 
 **Rabattcodes:**
 - Rabattcodes werden aktuell ausschließlich im Stripe Checkout eingegeben
 - Das gilt nur, wenn eine neue Stripe-Subscription ausgelöst wird
 - Bei direkter Erweiterung einer bestehenden Pool-Subscription gibt es derzeit keinen separaten Rabattcode-Flow in Normdex
+- Der automatische Erstbestellungsrabatt nutzt den Stripe-Coupon `QHQESezY` und wird nicht als manueller Rabattcode eingegeben.
 
 **Kündigung:**
 - Nur Owner/Admin kann Lizenzen kaufen oder kündigen
@@ -165,6 +173,17 @@ Das Dashboard (`/app`) ist die Startseite nach dem Login:
 - Aktivitäts-Feed (Audit-Log-Auszug)
 - Team-Snippet (aktive Mitglieder mit Rollen)
 - Onboarding-Checkliste für neue Nutzer
+
+---
+
+## Newsletter-Gutschein
+
+- Landingpage und API bieten Newsletter-Anmeldung mit 10%-Gutschein an.
+- Der Gutschein wird nicht beim Formular-Submit erzeugt, sondern erst nach bestaetigtem Brevo Double-Opt-in.
+- Brevo sendet dafuer einen Outbound Webhook `list_addition` an `POST /newsletter/brevo/webhook?secret=...`.
+- Normdex erzeugt pro E-Mail einen individuellen Stripe Promotion Code auf Basis des Coupons `mbjs8wYE`.
+- Jeder Newsletter-Code ist einmalig einloesbar und 30 Tage gueltig.
+- Gueltige Codes werden im Lizenz-Checkout lokal geprueft und als Stripe Promotion Code an neue Checkout Sessions uebergeben.
 
 ---
 

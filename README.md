@@ -28,6 +28,7 @@ Dieser Obsidian-Vault enthält übergreifendes Wissen zu Normdex:
 - `07_KI_Agenten` – Claude, Codex, Paperclip, Prompts und Arbeitsweisen
 - `08_Entscheidungen` – Architektur- und Produktentscheidungen
 - `09_Besprechungen` – Meetingnotizen und Protokolle
+- `10_Aufgaben` – Aufgabenübersicht, offene Todos und abgeschlossene Todos
 - `90_Archiv` – alte oder nicht mehr aktive Inhalte
 - `99_Anhaenge` – Bilder, Screenshots und sonstige Anhänge
 
@@ -44,3 +45,4 @@ Dieser Obsidian-Vault enthält übergreifendes Wissen zu Normdex:
 3. Offizielle Dokumente, Verträge, Rechnungen und finale Assets bleiben in SharePoint.
 4. SharePoint-Dateien werden nicht in dieses Repository kopiert.
 5. Bei größeren Änderungen an Architektur, Lizenzsystem, Pricing, Marketing oder Supportlogik wird die passende Dokumentation hier aktualisiert.
+6. Aufgaben werden in `10_Aufgaben/Aufgaben.md` zentral gelistet. Jedes offene Todo bekommt eine eigene Datei unter `10_Aufgaben/offene Todos/` mit stabiler ID `T###`; erledigte Todos werden nach `10_Aufgaben/abgeschlossene Todos/` verschoben.

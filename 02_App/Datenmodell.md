@@ -18,6 +18,8 @@ id (UUID), name
 address (JSON: street, city, postal_code, country)
 billing_address (JSON)
 vat_id, customer_number
+stripe_customer_id
+trial_used_at (dauerhafter Lock für 14-Tage-Testvorteil)
 company_activity (JSON-Array)
 report_settings (JSON: logo_url, farben, kopfzeile)
 ```
@@ -38,12 +40,52 @@ role, created_by, expires_at
 ## License
 ```
 id (UUID), organization_id
-product_key (z.B. economics_basic)
-billing_period (monthly / yearly)
-status (active / canceled / expired / trial)
-valid_from, valid_until
-max_concurrent_users
-stripe_customer_id, stripe_subscription_id
+product_key (z.B. economics_v1)
+billing_pool (monthly / yearly)
+license_kind (base / addon)
+status (pending / trial / active / scheduled_end / ended / payment_failed)
+started_at
+trial_started_at, trial_ends_at, trial_converted_at
+current_term_start, current_term_end, committed_until
+cancel_requested_at, scheduled_end_at
+price_amount_gross, currency
+stripe_subscription_id, stripe_subscription_item_id, stripe_price_id
+assigned_user_id, created_by_user_id
+meta (JSON: u.a. license_order_id, Trial-Benefit-/Checkout-Informationen)
+```
+
+## LicenseOrder
+```
+id (UUID), organization_id, created_by_user_id
+promotion_code
+subtotal_gross, discount_total_gross, total_gross, currency
+status (pending / completed / failed)
+stripe_checkout_session_id
+meta (JSON: checkout_sessions, trial_benefit_kind, trial_benefit_applied, trial_benefit_released_at)
+```
+
+## NewsletterCouponClaim
+```
+id (UUID)
+email (unique, normalisiert)
+firstname, lastname, company, role, source
+status (pending / confirmed / coupon_created / coupon_sent / failed)
+stripe_coupon_id, stripe_promotion_code_id, code
+brevo_contact_id, brevo_event_id
+confirmed_at, coupon_sent_at, expires_at
+last_error
+created_at, updated_at
+```
+
+Verwendung: Speichert den Newsletter-Gutscheinprozess. `pending` entsteht bei `/newsletter/subscribe`; der Coupon wird erst nach Brevo `list_addition` erzeugt. `expires_at` ist die lokale Normdex-Gueltigkeit fuer den individuellen Code.
+
+## LicenseOrderItem
+```
+id (UUID), license_order_id
+billing_pool (monthly / yearly)
+license_kind (base / addon)
+quantity
+unit_price_gross, line_total_gross
 ```
 
 ## LicenseUsage

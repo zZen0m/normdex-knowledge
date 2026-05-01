@@ -2,122 +2,66 @@
 
 Zentrale Aufgabenliste für alle Bereiche des Normdex-Projekts.
 
-**Status-Symbole:** `[ ]` offen · `[x]` erledigt · `[~]` in Arbeit · `[-]` verworfen
+Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweiligen Todo-Datei unter `offene Todos/` oder `abgeschlossene Todos/`.
 
----
+## Aufgabenstruktur
 
-## Dokumentation & Vault
+- `Aufgaben.md` listet alle Todos und verweist auf die Detaildateien.
+- `offene Todos/` enthält alle offenen oder laufenden Todos.
+- `abgeschlossene Todos/` enthält erledigte Todos, die aus `offene Todos/` verschoben wurden.
+- Todo-Dateien haben stabile IDs im Format `T001-kurzer-titel.md`.
+- Nummern werden nie wiederverwendet.
 
-- [x] Ordnerstruktur `D:\Normdex` etabliert (01_repos, 02_knowledge, 03_external, 04_workspace)
-- [x] CLAUDE.md beider Repos um Workspace-Kontext ergänzt
-- [x] Branding-Guidelines in Vault überführt (Brand Identity & Voice, Designsystem & Farben)
-- [x] NORMDEX_COMPLETE_GUIDE vollständig in Vault migriert (alle 22 Abschnitte)
-- [x] NORMDEX_COMPLETE_GUIDE als veraltet markiert
-- [ ] NORMDEX_COMPLETE_GUIDE aus Repo löschen (`docs/NORMDEX_COMPLETE_GUIDE.md`)
-- [ ] Prüfen, ob weitere Docs im Repo (`docs/`) in den Vault gehören oder gelöscht werden können
+## Workflow
 
----
+### Neues Todo anlegen
 
-## App (`app.normdex.at`)
+1. Nächste freie ID aus dieser Datei wählen.
+2. Neue Datei unter `offene Todos/T###-kurzer-titel.md` anlegen.
+3. Todo in der Liste „Offene Todos“ verlinken.
+4. Ziel, Kontext, Akzeptanzkriterien und Fortschritt in der Detaildatei pflegen.
 
-### Lizenzsystem – Umbau auf Pool-Modell mit Sammelabrechnung
+### Todo bearbeiten
 
-Vollständige Spec: [[normdex_lizenzsystem_developer_spec]]
+- Status in der Detaildatei pflegen: `offen`, `in Arbeit`, `blockiert` oder `erledigt`.
+- Neue Erkenntnisse, Entscheidungen und Zwischenstände unter „Notizen / Fortschritt“ ergänzen.
+- Große Specs und Arbeitsprotokolle bleiben Referenzdokumente; daraus werden nur konkrete Arbeitspakete als Todos extrahiert.
 
-**Ziel:** Einzellizenzen pro Datensatz, zwei getrennte Billing-Pools (monthly/yearly), Staffelpreise, Sammelabrechnung über Stripe, Admin-only-Kündigung, Rabattcodes, Rebasierungslogik.
+### Todo abschließen
 
-**Aktueller Stand:** Phase 1–6 sind technisch umgesetzt und getestet. Die verbleibenden Punkte liegen vor allem in Rollout, Prod-Konfiguration, lokaler Stripe-Webhook-Verifikation und Dokumentation.
+1. Status in der Todo-Datei auf `erledigt` setzen.
+2. Abschlussdatum ergänzen.
+3. Datei unverändert nummeriert nach `abgeschlossene Todos/` verschieben.
+4. Link aus „Offene Todos“ nach „Abgeschlossene Todos“ verschieben.
 
-#### Phase 1 – Architektur & Datenmodell
-- [x] Bestehendes Lizenzmodell analysieren
-- [x] Neues Einzellizenzschema definieren
-- [x] Migration für `licenses`-Tabelle erstellen (neue Felder: `billing_pool`, `license_kind`, `committed_until`, `scheduled_end_at`, etc.)
-- [x] Tabellen `license_orders`, `license_order_items`, `license_events` anlegen
-- [x] `LicenseOrder.meta` ergänzen (Modell + Migration `342d48e1f270`)
-- [x] Rebasierungslogik fachlich finalisieren
+## Referenzdokumente
 
-#### Phase 2 – Stripe
-- [x] Vier Prices in Stripe Sandbox anlegen (`monthly_base` 49 €, `monthly_addon` 29 €, `yearly_base` 490 €, `yearly_addon` 290 €)
-- [x] Pool-Subscription-Konzept implementieren (max. 2 Subscriptions pro Org)
-- [x] Mapping `Lizenz ↔ Subscription Item` implementieren
-- [~] Rabattcode-/Promotion-Code-Handling definieren
-  - [x] Rabattcodes bei neuen Stripe-Checkout-Subscriptions über Stripe Checkout nutzbar
-  - [ ] Rabattcodes bei direkter Erweiterung bestehender Subscriptions bewusst nicht implementiert / fachlich noch offen
-- [x] Complimentary/Testlizenzen-Konzept ergänzen (intern ohne Stripe)
+## Offene Todos
 
-#### Phase 3 – Backend
-- [x] Preview-Endpunkt für Kauf (`POST /licenses/checkout/preview`)
-- [x] Kauf-/Checkout-Endpunkte (`POST /licenses/checkout/create`, `/confirm`)
-  - [x] Dev-Test 2026-04-26: Kauf einer monatlichen Basislizenz über Stripe Checkout erfolgreich; `/licenses/checkout/confirm` aktiviert die Lizenz in Normdex.
-  - [x] Bugfix 2026-04-26: Stripe Python 14 kompatibel gemacht (`subscription.items`-Kollision und Periodenfelder auf Subscription-Items).
-- [x] Admin-only-Checks für Kauf und Kündigung
-- [x] Kündigungslogik „Add-on zuerst" implementieren
-- [x] Sofortige Aktivierung + individuelle Mindestlaufzeit pro Lizenz
-- [x] Rebasierungslogik nach Beendigung der Basislizenz
-- [x] Lizenzhistorie / Events (`license_events`)
+| ID   | Todo                                                | Bereich                                       | Status    |
+| ---- | --------------------------------------------------- | --------------------------------------------- | --------- |
+| T019 | [[T019-newsletter-gutschein-brevo-webhook-rollout]] | App / Newsletter / Brevo / Stripe             | in Arbeit |
+| T017 | [[T017-testzeitraum-fuer-lizenzen]]                 | App / Lizenzen / Stripe / Legal               | in Arbeit |
+| T016 | [[T016-bericht-tab-pdf-export-ueberarbeiten]]       | App / Wirtschaftlichkeitsberechnung / Bericht | in Arbeit |
+| T014 | [[T014-kuendigungs-email-fuer-lizenzen]]            | App / Lizenzen / E-Mail                       | offen     |
+| T013 | [[T013-lizenzsystem-rollout-abschliessen]]          | App / Infrastruktur / Marketing               | in Arbeit |
+| T012 | [[T012-projektstatus-einfuehren]]                   | App                                           | offen     |
+| T020 | [[T020-allgemeine Todos]]                           | App                                           | offen     |
 
-#### Phase 4 – Webhooks & Synchronisierung
-- [x] Webhook-Handler erweitern (`checkout.session.completed`, `subscription.updated`, `invoice.paid`, `invoice.payment_failed`)
-- [x] Idempotenz aller Webhook-Handler absichern
-- [~] Statussynchronisierung Stripe ↔ Normdex lokal mit Stripe CLI final testen
-  - [~] Dev-Test 2026-04-26: Checkout-Session wurde erstellt und Stripe-Events kamen an; Webhook schlägt lokal noch mit `400 Ungültige Stripe-Signatur` fehl. Aktivierung wurde erfolgreich über `/licenses/checkout/confirm` nachgezogen.
-- [x] Fehlerfälle `invoice.payment_failed` + `past_due`/`unpaid` abbilden
+## Zusammengeführte Todo-IDs
 
-#### Phase 5 – Frontend
-- [x] Neue Lizenzverwaltung bauen (Monats-/Jahresblöcke getrennt, jede Lizenz als eigene Zeile/Karte)
-- [x] Lizenzstatus-Badges und Hinweistexte für gekündigte Lizenzen
-- [x] Kaufdialog mit Live-Kalkulation (Staffelpreise transparent, Mehrfachkauf)
-- [~] Rabattcode-Hinweise im Kaufdialog
-  - [x] Stripe Checkout verweist auf Rabattcode-Eingabe bei neuer Subscription
-  - [ ] Kein Rabattcode-Feld für direkte bestehende Pool-Erweiterungen
-- [x] Kündigungsdialog (zeigt Enddatum, Add-on-Priorisierung)
-- [x] Kündigung über das Drei-Punkte-Menü wieder zurückziehen (nur bis zum endgültigen Ablaufdatum)
-- [x] Rechteabhängige Buttons (Admin/Owner vs. Member)
-- [x] Aktive Sitzungen je Lizenz anzeigen (Avatar, Name, Startzeit)
-- [x] Statische Benutzerzuweisung in der UI ausblenden
+Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollout-abschliessen]] zusammengeführt. Diese IDs werden nicht wiederverwendet.
 
-#### Phase 6 – Tests
-- [x] Unit-Tests Preislogik (Staffelung, Mehrfachkauf, gemischte Pools)
-- [x] Unit-Tests Kündigungsreihenfolge (Add-on zuerst)
-- [x] Integrationstests Webhook-/Aktivierungslogik
-- [x] Tests für Rebasierung
-- [ ] Tests für UI-Hinweise gekündigter Lizenzen
-- [ ] Tests für Promotions und Complimentary-Lizenzen
+## Abgeschlossene Todos
 
-#### Phase 7 – Rollout
-- [ ] Prod-Migration vorbereiten und anwenden
-- [ ] Prod-Stripe-Keys / Live-Mode Prices konfigurieren
-- [ ] Lokalen Stripe-CLI-Webhooksignatur-Test abschließen
-- [ ] Migration bestehender Kunden planen
-- [ ] Bestandsdaten in neues Modell überführen
-- [x] Interne Dokumentation aktualisieren
-- [x] Support-/FAQ-Texte ergänzen
-- [ ] Launch-Kommunikation vorbereiten
+| ID   | Todo                                     | Bereich | Abgeschlossen |
+| ---- | ---------------------------------------- | ------- | ------------- |
+| T018 | [[T018-landingpage-kaufintent-in-app-checkout]] | Landingpage / App / Lizenzen | 2026-04-30 |
+| T015 | [[T015-toast-guideline-und-notify-helper]] | App / Designsystem / Frontend | 2026-04-27 |
+| T001 | [[T001-normdex-complete-guide-loeschen]] | Vault   | 2026-04-27    |
+| T002 | [[T002-repo-docs-vault-pruefung]]        | Vault   | 2026-04-27    |
 
-### Projekte
 
-- [ ] Projektstatus einführen (z. B. „in Bearbeitung", „abgeschlossen") – Auswahl im Projekt-Formular, Anzeige in der Projektliste und Detailansicht
+## Nächste freie ID
 
----
-
-## Landingpage (`normdex.at`)
-
-- [ ] 
-
----
-
-## Marketing
-
-- [ ] 
-
----
-
-## Geschäft & Rechtliches
-
-- [ ] 
-
----
-
-## Entwicklung & Infrastruktur
-
-- [ ] 
+`T021`

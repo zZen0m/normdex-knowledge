@@ -139,4 +139,3 @@ Für HTML-E-Mails wird ein vereinfachtes Subset der Markenpalette verwendet.
 
 - [[Brand Identity & Voice]]
 - Farb-Tokens (JSON): `D:\Normdex\01_repos\normdex-app\docs\brand\colors.json`
-- Vollständiger Guide: `D:\Normdex\01_repos\normdex-app\docs\NORMDEX_COMPLETE_GUIDE.md` (Abschnitt 5)

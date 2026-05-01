@@ -35,8 +35,11 @@
 | ÖNORM-Seite (primär) | „Kostenlos testen" | `https://app.normdex.at/auth/register` |
 | ÖNORM-Seite (sekundär) | „Alle Funktionen ansehen" | `/features` |
 | Über uns | „Jetzt starten" | `/preise` |
-| Header | „Registrieren" | `https://app.normdex.at/auth/register` |
+| Header | „Kostenlos testen →" | `https://app.normdex.at/auth/register` |
 | Header | „Anmelden" | `https://app.normdex.at/auth/login` |
+| Newsletter-Hook (Hero, CTA, Strip) | „Newsletter abonnieren — 10 % Rabatt im ersten Monat sichern" | `/newsletter` |
+| Newsletter-Strip | „Jetzt 10 % sichern →" | `/newsletter` |
+| Newsletter-Formular | „Anmelden & 10 % sichern" | (Submit-Button) |
 
 ---
 
@@ -62,10 +65,12 @@
 | Jahresabo                       | 490 €/Jahr für die erste Lizenz                                          |
 | Zusatzlizenzen jährlich         | 290 €/Jahr je weiterer Lizenz im Jahrespool                              |
 | Ersparnis jährlich              | 17 % (entspricht 2 Monaten gratis)                                       |
-| Testphase                       | 14 Tage kostenlos, ohne Kreditkarte                                      |
+| Testphase                       | 14 Tage kostenlos beim qualifizierten Einzel-Erstkauf; Zahlungsdaten werden im Checkout erfasst |
+| Erstbestellungsrabatt           | Bei qualifiziertem Mehrfach-Erstkauf statt Trial einmalig 24,50 € Rabatt auf die erste Rechnung |
 | Abrechnung                      | Stripe (Kreditkarte, Klarna), gebündelt je Monats-/Jahrespool            |
 | Kündigung                       | Lizenz endet zum jeweiligen Laufzeitende; Zusatzlizenzen vor Hauptlizenz |
 | Rabattcodes                     | Nur im Stripe Checkout bei neuer Subscription                            |
+| Newsletter-Coupon               | 10 % Rabatt im ersten Monat — individueller Stripe Promotion Code, wird nach Double-Opt-In-Bestätigung per E-Mail zugeschickt. Einmalig einlösbar, 30 Tage gültig. Backend-Umsetzung: [[T019-newsletter-gutschein-brevo-webhook-rollout]] |
 
 ---
 

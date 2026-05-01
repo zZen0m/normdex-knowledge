@@ -86,6 +86,17 @@ POST /licenses/promotions/validate      → Stripe Promotion Code prüfen
 POST /admin/licenses/grant-complimentary → Kostenlose/interne Lizenz vergeben (System-Admin)
 ```
 
+Newsletter-Gutscheincodes werden lokal gegen `newsletter_coupon_claims.expires_at` geprueft. Gueltige Newsletter-Codes werden als Stripe `promotion_code` an Checkout Sessions uebergeben.
+
+## Newsletter
+
+```
+POST /newsletter/subscribe                -> Brevo Double-Opt-in starten und Pending-Claim speichern
+POST /newsletter/brevo/webhook?secret=... -> Brevo list_addition verarbeiten und Gutschein versenden
+```
+
+Der Webhook verarbeitet nur `event = list_addition` und nur dann, wenn `list_id` die konfigurierte `BREVO_LIST_ID` enthaelt. Vor bestaetigtem Double-Opt-in wird kein Gutschein erzeugt.
+
 ## Abonnements (Stripe)
 
 ```

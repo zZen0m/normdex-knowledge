@@ -13,15 +13,44 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "02_App/Funktionen im Detail.md",
+                "file": "10_Aufgaben/offene Todos/T020-allgemeine Todos.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Funktionen im Detail"
+              "title": "T020-allgemeine Todos"
+            }
+          },
+          {
+            "id": "4327fb202f2bb849",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "10_Aufgaben/offene Todos/T020-allgemeine Todos.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "T020-allgemeine Todos"
+            }
+          },
+          {
+            "id": "f44290a100758839",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "01_Produkt/Brand Identity & Voice.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Brand Identity & Voice"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -78,7 +107,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 349.5
   },
   "right": {
     "id": "0f52576ef247b6d4",
@@ -183,40 +212,52 @@
       "bases:Neue Base erstellen": false
     }
   },
-  "active": "3890ecf958852619",
+  "active": "4327fb202f2bb849",
   "lastOpenFiles": [
+    "04_Marketing/Key Messages & CTAs.md.tmp.26844.1777647386231",
+    "03_Landingpage/Landingpage.md.tmp.26844.1777647383684",
+    "10_Aufgaben/offene Todos/T019-newsletter-coupon-backend.md.tmp.26844.1777647380784",
+    "10_Aufgaben/offene Todos/T019-newsletter-coupon-backend.md",
+    "10_Aufgaben/offene Todos/T019-newsletter-coupon-backend.md.tmp.26844.1777647351712",
+    "04_Marketing/Key Messages & CTAs.md.tmp.26844.1777647319432",
+    "04_Marketing/Key Messages & CTAs.md.tmp.26844.1777647312255",
+    "03_Landingpage/Landingpage.md.tmp.26844.1777647306208",
+    "03_Landingpage/Landingpage.md.tmp.26844.1777647299995",
+    "03_Landingpage/Landingpage.md.tmp.26844.1777647244807",
+    "03_Landingpage/Landingpage.md.tmp.26844.1777647228587",
+    "Pasted image 20260501162843.png",
+    "Pasted image 20260501162349.png",
+    "Pasted image 20260501162250.png",
+    "Pasted image 20260501162003.png",
+    "Pasted image 20260501161847.png",
+    "Pasted image 20260501161658.png",
+    "Pasted image 20260501161647.png",
+    "Pasted image 20260501161435.png",
+    "Pasted image 20260501161134.png",
+    "10_Aufgaben/Aufgaben.md",
+    "10_Aufgaben/offene Todos/T020-allgemeine Todos.md",
+    "10_Aufgaben/offene Todos/T019-newsletter-gutschein-brevo-webhook-rollout.md",
+    "10_Aufgaben/offene Todos/T012-projektstatus-einfuehren.md",
+    "01_Produkt/Brand Identity & Voice.md",
+    "10_Aufgaben/Aufgaben.md.tmp.27080.1777629741225",
+    "10_Aufgaben/abgeschlossene Todos/T018-landingpage-kaufintent-in-app-checkout.md",
+    "10_Aufgaben/offene Todos/T018-landingpage-kaufintent-in-app-checkout.md",
+    "10_Aufgaben/offene Todos/T017-testzeitraum-fuer-lizenzen.md",
+    "10_Aufgaben/offene Todos/T016-bericht-tab-pdf-export-ueberarbeiten.md",
+    "10_Aufgaben/offene Todos/T015-toast-guideline-und-notify-helper.md",
+    "02_App/Toast-Benachrichtigungen.md",
+    "10_Aufgaben/abgeschlossene Todos/T015-toast-guideline-und-notify-helper.md",
+    "10_Aufgaben/offene Todos/T014-kuendigungs-email-fuer-lizenzen.md",
+    "10_Aufgaben/abgeschlossene Todos/T002-repo-docs-vault-pruefung.md",
+    "10_Aufgaben/offene Todos/T001-normdex-complete-guide-loeschen.md",
+    "10_Aufgaben/abgeschlossene Todos/T001-normdex-complete-guide-loeschen.md",
+    "10_Aufgaben/offene Todos/T013-lizenzsystem-rollout-abschliessen.md",
+    "10_Aufgaben/lizenzsystem_implementierung_fortschritt.md",
+    "02_App/E-Mail-System.md",
+    "02_App/Funktionen im Detail.md",
     "09_Besprechungen/2026-04-26 Session – Lizenzverwaltung Abschluss.md",
     "04_Marketing/Key Messages & CTAs.md",
-    "10_Aufgaben/Aufgaben.md",
-    "10_Aufgaben/lizenzsystem_implementierung_fortschritt.md",
-    "10_Aufgaben/normdex_lizenzsystem_developer_spec.md.tmp.54520.1777226195946",
-    "10_Aufgaben/lizenzsystem_implementierung_fortschritt.md.tmp.54520.1777226186772",
-    "10_Aufgaben/lizenzsystem_implementierung_fortschritt.md.tmp.54520.1777226180314",
-    "10_Aufgaben/Aufgaben.md.tmp.8024.1777223332998",
-    "10_Aufgaben/lizenzsystem_implementierung_fortschritt.md.tmp.34152.1777222837388",
-    "10_Aufgaben/lizenzsystem_implementierung_fortschritt.md.tmp.34152.1777222815899",
-    "10_Aufgaben/lizenzsystem_implementierung_fortschritt.md.tmp.34152.1777222805599",
-    "10_Aufgaben/lizenzsystem_implementierung_fortschritt.md.tmp.34152.1777222781210",
-    "10_Aufgaben/normdex_lizenzsystem_developer_spec.md.tmp.34152.1777222776843",
-    "10_Aufgaben/normdex_lizenzsystem_developer_spec.md.tmp.34152.1777222770607",
     "10_Aufgaben/normdex_lizenzsystem_developer_spec.md",
-    "02_App/E-Mail-System.md",
-    "02_App/API-Endpunkte.md",
-    "01_Produkt/Produkt-Übersicht.md",
-    "01_Produkt/Designsystem & Farben.md",
-    "01_Produkt/Brand Identity & Voice.md",
-    "02_App/Wirtschaftlichkeitsrechner.md",
-    "02_App/Funktionen im Detail.md",
-    "02_App/Datenmodell.md",
-    "02_App/Authentifizierung & Sicherheit.md",
-    "09_Besprechungen/2026-04-24 Session – Vault-Aufbau & Lizenzsystem-Planung.md",
-    "05_Geschaeft/Unternehmensangaben.md",
-    "06_Entwicklung/Integrationen & externe Dienste.md",
-    "03_Landingpage/Landingpage.md",
-    "00_Start/AI Kontext - Einstieg.md",
-    "02_App/App-Routen.md",
-    "02_App/App-Architektur & Tech Stack.md",
-    "README.md",
-    "Willkommen.md"
+    "02_App/API-Endpunkte.md"
   ]
 }

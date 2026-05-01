@@ -48,17 +48,19 @@ Die Normdex-Landingpage ist die öffentliche Marketing-Website mit folgenden Zie
 | `/impressum` | Impressum – Normdex \| Permatec e.U. | `https://normdex.at/impressum` |
 | `/datenschutz` | Datenschutzerklärung – Normdex \| Permatec e.U. | `https://normdex.at/datenschutz` |
 | `/agb` | AGB – Allgemeine Geschäftsbedingungen \| Normdex | `https://normdex.at/agb` |
+| `/newsletter` | Newsletter & Updates – Normdex | `https://normdex.at/newsletter` |
 
 ---
 
 ## Header & Footer
 
-### Header
+### Header (Stand 2026-05-01)
 
-- **Styling:** Dunkler Teal-Hintergrund (`bg-foreground`), heller Text, sticky
-- **Logo:** `/Normdex_Logo_Horizontal_invert.svg` (h-12)
-- **Navigation:** Features / Preise / Über uns / Kontakt
-- **Buttons:** „Anmelden" (Ghost) → `https://app.normdex.at/auth/login` | „Registrieren" (Primary) → `https://app.normdex.at/auth/register`
+- **Styling:** Helles Glas-Header — `bg-white/85 backdrop-blur-md border-b border-border/60`, sticky, `h-[72px]`
+- **Logo:** `/Normdex_Logo_Horizontal.svg` (nicht invertiert, h-8)
+- **Navigation:** Features · So funktioniert's (`/#how`) · Preise · ÖNORM M 7140
+- **Buttons:** „Anmelden" (Ghost) → `https://app.normdex.at/auth/login` | „Kostenlos testen →" (Primary) → `https://app.normdex.at/auth/register`
+- **Mobile Sheet:** Dunkler Teal-Hintergrund (`bg-foreground text-background`)
 
 ### Footer
 
@@ -71,67 +73,147 @@ Die Normdex-Landingpage ist die öffentliche Marketing-Website mit folgenden Zie
 
 ---
 
-## Homepage-Sektionen (Reihenfolge)
+## Newsletter-Gutschein
+
+- Landingpage kommuniziert den 10%-Gutschein fuer Newsletter-Anmeldung.
+- Frontend liefert nur UI und sendet die Anmeldung an `POST /newsletter/subscribe`.
+- Gutschein wird nicht direkt beim Formular-Submit versendet.
+- Ablauf:
+  1. Besucher meldet sich auf der Landingpage zum Newsletter an.
+  2. Normdex API startet Brevo Double-Opt-in und speichert einen Pending-Claim.
+  3. Besucher bestaetigt die Brevo Double-Opt-in-Mail.
+  4. Brevo sendet `list_addition` an Normdex.
+  5. Normdex erzeugt einen individuellen 10%-Promotion-Code und sendet ihn per E-Mail.
+- Jeder Code ist individuell, einmalig einloesbar und 30 Tage gueltig.
+
+---
+
+## Homepage-Sektionen (Reihenfolge, Stand 2026-05-01)
 
 ### 1. Hero
 
-- **Badge:** *gemäß ÖNORM M 7140* (animierter Puls-Dot, Link zu `/oenorm-m-7140`)
+- **Badge:** *gemäß ÖNORM M 7140* (animierter Puls-Dot, Link zu `/oenorm-m-7140`, pink)
 - **H1:** ÖNORM-konforme Wirtschaftlichkeitsberechnungen für Energiesysteme
 - **Unterüberschrift:** *Normdex unterstützt die strukturierte Durchführung betriebswirtschaftlicher Vergleichsrechnungen für Energiesysteme — nachvollziehbar, validiert und auf professionelle Projektanwendungen ausgerichtet.*
-- **CTAs:** „Kostenlos testen" (primär) | „Features ansehen" (sekundär)
-- **Trust-Indicators:** ✓ Keine Kreditkarte | ✓ 14 Tage kostenlos
+- **CTAs:** „Kostenlos testen →" (primär) | „Features ansehen" (sekundär, → `/features`)
+- **Newsletter-Hook:** *„Newsletter abonnieren — 10 % Rabatt im ersten Monat sichern."* (Link → `/newsletter`, zwischen CTAs und Trust-Indicators)
+- **Trust-Indicators:** ✓ 14 Tage kostenlos · ✓ Keine Kreditkarte erforderlich · ✓ Jederzeit kündbar
 - **Validierungs-Badge:** 🛡 *Validiert nach Abschnitt 10 der ÖNORM M 7140*
+- **Rechte Seite:** Coded Mock-Dashboard (Browser-Chrome + Sidebar + 3 KPI-Karten + Balkendiagramm) — kein Foto
 - **Floating Cards:** Variantenvergleich / Beispiel Kapitalwert €45.200,-
 
 ### 2. TrustFactors
 
-**Eyebrow:** „Verlässliche Basis"
+Kompakter horizontaler Strip. Kein Eyebrow-Titel. **Styling:** `py-7 bg-white border-y border-border/60`
 
-| Icon | Titel | Beschreibung |
+| Icon | Titel | Sub |
 |---|---|---|
-| ShieldCheck | Validiert nach Abschnitt 10 | Die Berechnungsergebnisse werden anhand der Validierungsvorgaben in Abschnitt 10 der ÖNORM M 7140 geprüft und bestätigt. |
-| BookOpen | Gemäß ÖNORM M 7140 | Alle Kalkulationsverfahren — Kapitalwertmethode, Annuitätenmethode, Amortisationsrechnung — folgen den definierten Berechnungsvorschriften der Norm. |
-| FileSearch | Nachvollziehbare Ergebnisdokumentation | Jede Berechnung wird vollständig dokumentiert: Eingabeparameter, Zwischenwerte und Ergebnisse sind transparent und reproduzierbar dargestellt. |
+| ShieldCheck | ÖNORM-validiert | Nach Abschnitt 10 |
+| BookOpen | Nachvollziehbar | Transparente Rechenwege |
+| FileSearch | Prüfbar | Vollständige Dokumentation |
+| Lock | Datenschutz | DSGVO-konform, AT-Server |
 
-### 3. Features
+### 3. TargetAudience
 
-**H2:** Was Normdex für Ihre **Wirtschaftlichkeitsberechnung** leistet
+Strukturell unverändert. Durchgängig **Du-Form**. Icon-Boxen teal (`bg-secondary text-foreground`).
+
+| Zielgruppe | Kernaussage (Du-Form) |
+|---|---|
+| Energieberater | Du berechnest Rentabilität von PV-Anlagen, Wärmepumpen und Speichern normkonform — und dokumentierst die Ergebnisse als professionellen PDF-Report. |
+| Planungs- & Ingenieurbüros | Du erstellst Wirtschaftlichkeitsgutachten mit Firmenbranding und validierten Berechnungen — für Auftraggeber und Ausschreibungsunterlagen. |
+| Technische Sachverständige | Du erhältst nachvollziehbare, normkonforme Ergebnisse gemäß ÖNORM M 7140 — für belastbare Gutachten mit vollständiger Dokumentation. |
+| Privatpersonen | Du rechnest Sanierungsprojekte oder Energiesystemvergleiche strukturiert und korrekt — ohne Fachkenntnisse der Norm. |
+
+### 4. NewsletterStrip (NEU, 2026-05-01)
+
+Inline-Sektion zwischen TargetAudience und Features. Primärer Newsletter-Touchpoint mit 10%-Hook.
+
+- **Links:** EyebrowPill pink „10 % Rabatt" + H3 „Newsletter abonnieren — 10 % im ersten Monat sichern." + Sub „Code per Mail nach Bestätigung. Einlösbar einmalig im Stripe-Checkout."
+- **Rechts:** Button „Jetzt 10 % sichern →" → `/newsletter`
+
+### 5. Features
+
+Gleichmäßiges 3-Spalten-Grid (6 Karten, alle gleich groß). Durchgängig **Du-Form**. Icon-Boxen teal.
+
+**H2:** Was Normdex **für dich leistet**
 
 | Nr. | Titel | Beschreibung |
 |---|---|---|
-| 01 | Alle drei Berechnungsverfahren | Kapitalwert, Annuität und Amortisation sind vollständig implementiert — inklusive dynamischer Preisentwicklung und Kalkulationszinssatz. |
-| 02 | Strukturierter Variantenvergleich | Vergleichen Sie beliebig viele Energiesystem-Varianten direkt nebeneinander — mit einheitlicher Kostenstruktur und normkonformer Bewertung. |
-| 03 | Sensitivitätsanalyse | Untersuchen Sie die Auswirkungen veränderter Energiepreise und Zinssätze auf Ihre Ergebnisse — systematisch und reproduzierbar. |
-| 04 | Normkonforme PDF-Reports | Erstellen Sie auf Knopfdruck vollständige Berechnungsberichte mit allen Eingabeparametern, Zwischenergebnissen und Kennzahlen. |
-| 05 | Gesamtkostenübersicht auf einen Blick | Visualisieren Sie kapital-, betriebs- und verbrauchsgebundene Kosten über die gesamte Nutzungsdauer — aufgeschlüsselt und vergleichbar. |
-| 06 | Validierte Berechnungslogik | Die Berechnungsergebnisse werden gemäß Abschnitt 10 der ÖNORM M 7140 validiert — für nachvollziehbare und belastbare Projektergebnisse. |
+| 01 | Alle drei Verfahren | Kapitalwert-, Annuitäten- und Amortisationsmethode — nach ÖNORM M 7140 implementiert. |
+| 02 | Varianten vergleichen | Mehrere Energiesysteme nebeneinander rechnen und die wirtschaftlichste Option identifizieren. |
+| 03 | Dynamische Auswertung | Kapitalwert-, Cashflow- und Amortisationsdiagramme aus deinen Projektdaten. |
+| 04 | PDF-Report | Prüfungsfähige Dokumentation mit allen Annahmen und Rechenwegen — nach Norm-Vorgabe. |
+| 05 | Sensitivitätsanalyse | Energiepreise, Zinsen, Nutzungsdauer flexibel variieren. |
+| 06 | Team-Workspace | Mehrere Nutzer:innen in einer Organisation, gemeinsame Projekte, Rollenverwaltung. |
 
-### 4. HowItWorks
+### 6. HowItWorks
 
-**H2:** Einwandfrei in 3 Schritten starten
+4 Schritte mit nummerierten Teal-Pills und Verbindungslinien. **Du-Form.**
+
+**H2:** In vier Schritten zur **Entscheidung**
 
 | Schritt | Titel | Beschreibung |
 |---|---|---|
-| 1 | Einfacher Projektstart | Legen Sie Ihr erstes Projekt an. Normdex führt Sie durch die notwendigen Basisdaten und gibt typische Kalkulationszinssätze der ÖNORM M 7140 vor. |
-| 2 | Beliebig viele Varianten | Ergänzen Sie strukturierte Kosten (Investition, Betrieb, Verbrauch) pro Variante. Normdex berechnet Kapitalwert, Annuität und Amortisation automatisch im Hintergrund. |
-| 3 | Fertiger Report | Ein Klick genügt und Sie erhalten einen vollständig formatierten PDF-Report für Ihre Auftraggeber oder Geschäftsführung. |
+| 1 | Projekt anlegen | Varianten definieren, Rahmenbedingungen festlegen. |
+| 2 | Daten eingeben | Investitionen, Energiepreise, Nutzungsdauer — geführt und validiert. |
+| 3 | Rechnen lassen | Kapitalwert, Annuität, Amortisation automatisch nach Norm. |
+| 4 | Report exportieren | PDF-Dokumentation mit allen Annahmen und Rechenwegen. |
 
-### 5. CTA-Section
+### 7. CTA-Section
 
-- **H2:** Bereit für normkonforme Wirtschaftlichkeitsberechnungen?
-- **Benefits:** 14 Tage kostenlos / Keine Kreditkarte / Vollzugriff / Kostenloser Support
-- **Button:** „Jetzt kostenlos testen" → `https://app.normdex.at/auth/register`
+- **H2:** Bereit für **ÖNORM-konforme** Berechnungen?
+- **Lead:** 14 Tage kostenlos — keine Kreditkarte erforderlich.
+- **Buttons:** „Jetzt kostenlos testen →" (primary, → `https://app.normdex.at/auth/register`) | „Kontakt aufnehmen" (ghost, → `/kontakt`)
+- **Newsletter-Hook:** *„Lieber erst informieren? Newsletter abonnieren und 10 % Rabatt im ersten Monat sichern."*
 
 ---
 
 ## Preise (`/preise`)
 
-| Plan | Preis | Besonderheit |
-|---|---|---|
-| **Monatlich** | 49 €/Monat/Benutzer | Maximale Flexibilität, monatlich kündbar |
-| **Jährlich** | 490 €/Jahr/Benutzer (= 40,83 €/Monat) | -17%, 2 Monate geschenkt |
+### Preismodell
+
+| Plan | Preis | Ab 2. Lizenz | Besonderheit |
+|---|---|---|---|
+| **Monatlich** | 49 €/Monat | 29 €/Monat | Maximale Flexibilität — ideal für Projektphasen |
+| **Jährlich** | 490 €/Jahr | 290 €/Jahr | −17% ggü. monatlich, entspricht 40,83 €/Monat |
 
 **Enthaltene Funktionen (beide Pläne):** ÖNORM-konforme Wirtschaftlichkeitsberechnung / Automatisierte Berechnungen und Reports / Datenverwaltung und Export-Funktionen / E-Mail Support / Regelmäßige Updates / Sichere Cloud-Speicherung / Multi-Projekt-Verwaltung / PDF-Export der Berechnungen
+
+### UX-Konzept der Preisseite (Stand 2026-05-01)
+
+Die Preisseite setzt auf ein **Hybrid-Modell**: Plan-Karten zum Vergleich + dauerhaft sichtbarer „Deine Auswahl"-Panel.
+
+**Plan-Karten (klickbare Radio-Flächen):**
+- Monatlich / Jährlich als nebeneinander liegende Karten
+- Klick auf eine Karte → Karte wird aktiv (Ring + Shadow), andere wird inaktiv
+- Yearly-Karte hat „Beliebteste Wahl"-Badge und „17% günstiger"-Chip mit TrendingDown-Icon
+- Monatlich-Karte zeigt: „Mit dem Jahresplan sparst du 98€/Jahr pro Lizenz"
+- Am Kartenende: ÖNORM-Validierungs-Badge (ShieldCheck + „Validiert gemäß Abschnitt 10")
+- Kein Mengenregler in den Karten (wurde entfernt)
+
+**„Deine Auswahl"-Panel (immer sichtbar, unterhalb der Karten):**
+- Trial-Banner: pulsierender Dot + „14 Tage kostenlos testen — keine Abbuchung während der Testphase"
+- Tabs-Toggle: „Monatlich" / „Jährlich — 17% sparen" (synchronisiert mit Kartenwahl)
+- Mengenregler: große Buttons (h-10 w-10), Anzeige: Zahl + „Lizenz/en", Minimum 1, Maximum 20
+- Live-Preisanzeige: Gesamtbetrag + bei Jährlich: „entspricht X€/Monat im Schnitt"
+- Ersparnis-Chip (nur bei Jährlich): „Du sparst X€/Monat gegenüber dem Monatsabo" (grün)
+- CTA: „Jetzt kostenlos starten" (volle Breite, immer sichtbar)
+- Trust-Zeile: 🔒 Kein Risiko · Jederzeit kündbar · Deine Karte wird erst nach 14 Tagen belastet
+
+**Checkout-URL-Schema (via T018):**
+- `https://app.normdex.at/auth/register?plan=yearly&qty=2`
+- `https://app.normdex.at/auth/register?plan=monthly&qty=1`
+
+**Sprache:** Durchgängig Du-Form (gemäß Brand Identity & Voice)
+
+### FAQ auf /preise
+
+1. Was passiert nach den 14 Tagen?
+2. Kann ich jederzeit wechseln?
+3. Gibt es eine kostenlose Testphase?
+4. Wie funktioniert die Abrechnung?
+5. Kann ich jederzeit kündigen?
+6. Wie funktioniert das Lizenzsystem?
 
 ---
 
@@ -160,3 +242,4 @@ Die Normdex-Landingpage ist die öffentliche Marketing-Website mit folgenden Zie
 - [[Key Messages & CTAs]]
 - [[Designsystem & Farben]]
 - [[Unternehmensangaben]]
+- [[T019-newsletter-gutschein-brevo-webhook-rollout]]

@@ -59,4 +59,3 @@ Diese Abgrenzungen helfen beim Texten und bei Produktentscheidungen:
 ## Verwandte Dokumente
 
 - [[Designsystem & Farben]]
-- Vollständiger Guide: `D:\Normdex\01_repos\normdex-app\docs\NORMDEX_COMPLETE_GUIDE.md` (Abschnitte 4 & 5)
