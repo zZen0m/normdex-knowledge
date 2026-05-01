@@ -1,5 +1,37 @@
 Es gibt noch allgemeine Dinge, die mir aufgefallen sind und die ich hier nun einzeln aufführe. Diese Punkte sollen dann nach der Reihe abgearbeitet werden.
 
+---
+
+## Aufteilung in Sub-To-dos & Reihenfolge
+
+Die ursprünglichen Punkte wurden in zwölf einzelne, atomar umsetzbare Sub-To-dos zerlegt und priorisiert.
+Plan-Datei: `C:\Users\Andreas\.claude\plans\lies-dir-das-to-do-virtual-matsumoto.md`
+
+### Phase 1 — Quick Wins (UI-Polish, niedriges Risiko)
+1. [[T020-01-Economics-Label entfernen]]
+2. [[T020-02-Spilling-Portal neuer Tab]]
+3. [[T020-03-Projekttabelle Layout]]
+4. [[T020-04-Char-Counter Projekt bearbeiten]]
+5. [[T020-05-3 Karten Polish]]
+
+### Phase 2 — Funktionale Lücken (Bug-artig)
+6. [[T020-06-Stripe Adress-Sync]]
+7. [[T020-07-Testlizenz kuendigen]]
+
+### Phase 3 — Mittlere Features
+8. [[T020-08-Lizenz hinzufuegen Redesign]]
+9. [[T020-09-Berechnungen-Karte Hero]]
+10. [[T020-10-Export-Tab Umbau]]
+11. [[T020-11-Resuemee-Tab]]  *(abhängig von T020-10)*
+
+### Phase 4 — Konzept
+12. [[T020-12-Konzept Verwaltungsportal]]  *(vorgelagert; Implementierungs-To-dos folgen nach Freigabe)*
+
+---
+
+## Original-Notizen
+
+
 
 
 ## Lizenzverwaltung
