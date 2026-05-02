@@ -38,6 +38,11 @@ Dieser Obsidian-Vault enthält übergreifendes Wissen zu Normdex:
 - Landingpage-Repo: `D:\Normdex\01_repos\normdex-landingpage`
 - SharePoint-Junction: `D:\Normdex\03_external\sharepoint-normdex`
 
+## Wichtige Betriebsdokumentation
+
+- [[IT-Workflow Branches Deployments Backups Migrationen]] - Standardablauf fuer Branches, Dev-/Produktivdeployments, Backups, Migrationen und Rollback-Grundsaetze.
+- [[VPS-Serverstruktur und Deployment-Architektur]] - Serverstruktur, `/opt/repos`, `/opt/stacks`, Docker-Stacks, Traefik, Secrets, Backups und grundlegende Pruefkommandos.
+
 ## Regeln
 
 1. Code bleibt in den jeweiligen GitHub-Repositories.

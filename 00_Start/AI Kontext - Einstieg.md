@@ -9,6 +9,12 @@ Dies ist die zentrale Wissensbasis für Normdex.
 - Obsidian Vault: `D:\Normdex\02_knowledge\normdex-vault`
 - SharePoint-Dokumente: `D:\Normdex\03_external\sharepoint-normdex`
 
+## Wichtige Betriebsdokumentation
+
+- [[IT-Workflow Branches Deployments Backups Migrationen]] beschreibt den verbindlichen Ablauf `develop -> dev-server -> main` sowie Backups, Migrationen, Dev-/Produktivdeployment und Rollback.
+- [[VPS-Serverstruktur und Deployment-Architektur]] beschreibt `/opt/repos`, `/opt/stacks`, Docker-Stacks, Traefik, Secrets, Backups und grundlegende Pruefkommandos.
+- Merksatz fuer Deployments mit Datenbankaenderungen: `Backup -> Deploy -> Migration -> Test`.
+
 ## Ordnerstruktur im Vault
 
 - `00_Start` – Einstieg, Übersicht, zentrale Kontextdateien
