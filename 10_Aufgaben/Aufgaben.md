@@ -45,7 +45,6 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 | T016 | [[T016-bericht-tab-pdf-export-ueberarbeiten]]       | App / Wirtschaftlichkeitsberechnung / Bericht | in Arbeit |
 | T014 | [[T014-kuendigungs-email-fuer-lizenzen]]            | App / Lizenzen / E-Mail                       | offen     |
 | T013 | [[T013-lizenzsystem-rollout-abschliessen]]          | App / Infrastruktur / Marketing               | in Arbeit |
-| T012 | [[T012-projektstatus-einfuehren]]                   | App                                           | offen     |
 | T020 | [[T020-allgemeine Todos]]                           | App                                           | offen     |
 
 ## Zusammengeführte Todo-IDs
@@ -56,6 +55,7 @@ Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollo
 
 | ID   | Todo                                     | Bereich | Abgeschlossen |
 | ---- | ---------------------------------------- | ------- | ------------- |
+| T012 | [[T012-projektstatus-einfuehren]]        | App     | 2026-04-27    |
 | T018 | [[T018-landingpage-kaufintent-in-app-checkout]] | Landingpage / App / Lizenzen | 2026-04-30 |
 | T015 | [[T015-toast-guideline-und-notify-helper]] | App / Designsystem / Frontend | 2026-04-27 |
 | T001 | [[T001-normdex-complete-guide-loeschen]] | Vault   | 2026-04-27    |

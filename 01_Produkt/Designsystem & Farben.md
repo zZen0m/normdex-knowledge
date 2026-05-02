@@ -4,12 +4,12 @@
 
 Beide Produkte (App und Landingpage) verwenden dasselbe konzeptionelle Farbschema, unterscheiden sich aber in den CSS-Variablen-Namen:
 
-| Konzept | Farbe | Hex / HSL | Verwendung |
-|---|---|---|---|
-| **Dunkel-Teal** | Primary (App) / Foreground (LP) | `#003c3e` / `hsl(182 100% 12%)` | Navigation, Header, Footer, Hauptelemente |
-| **Magenta/Pink** | Accent (App) / Primary (LP) | `#ff2d58` / `hsl(343 100% 59%)` | Call-to-Actions, Highlights, fokussierte Zustände |
-| **Hellcyan** | Secondary (LP) | `hsl(182 50% 96%)` | Sektionshintergründe auf der Landingpage |
-| **Off-White** | Background | `#fafafa` / `hsl(0 0% 98%)` | Seitenhintergrund |
+| Konzept          | Farbe                           | Hex / HSL                       | Verwendung                                        |
+| ---------------- | ------------------------------- | ------------------------------- | ------------------------------------------------- |
+| **Dunkel-Teal**  | Primary (App) / Foreground (LP) | `#003c3e` / `hsl(182 100% 12%)` | Navigation, Header, Footer, Hauptelemente         |
+| **Magenta/Pink** | Accent (App) / Primary (LP)     | `#ff2d58` / `hsl(343 100% 59%)` | Call-to-Actions, Highlights, fokussierte Zustände |
+| **Hellcyan**     | Secondary (LP)                  | `hsl(182 50% 96%)`              | Sektionshintergründe auf der Landingpage          |
+| **Off-White**    | Background                      | `#fafafa` / `hsl(0 0% 98%)`     | Seitenhintergrund                                 |
 
 ---
 
