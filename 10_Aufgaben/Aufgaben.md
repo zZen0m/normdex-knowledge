@@ -46,6 +46,7 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 | T014 | [[T014-kuendigungs-email-fuer-lizenzen]]            | App / Lizenzen / E-Mail                       | offen     |
 | T013 | [[T013-lizenzsystem-rollout-abschliessen]]          | App / Infrastruktur / Marketing               | in Arbeit |
 | T020 | [[T020-allgemeine Todos]]                           | App                                           | offen     |
+| T021 | [[T021-rechnungslegung-individuelle-rechnungen]]    | App / Lizenzen / Stripe / Rechnungslegung     | offen     |
 
 ## Zusammengeführte Todo-IDs
 
@@ -64,4 +65,4 @@ Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollo
 
 ## Nächste freie ID
 
-`T021`
+`T022`
