@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Auffälligkeiten.md",
+                "file": "10_Aufgaben/Aufgaben.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Auffälligkeiten"
+              "title": "Aufgaben"
             }
           }
         ],
@@ -200,9 +200,9 @@
   },
   "active": "9dff221ec61e77ce",
   "lastOpenFiles": [
+    "Auffälligkeiten.md",
     "Pasted image 20260503134652.png",
     "06_Entwicklung/IT-Workflow Branches Deployments Backups Migrationen.md",
-    "Auffälligkeiten.md",
     "06_Entwicklung/Integrationen & externe Dienste.md",
     "README.md",
     "06_Entwicklung/VPS-Serverstruktur und Deployment-Architektur.md",
