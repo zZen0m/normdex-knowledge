@@ -29,6 +29,7 @@ Dieser Obsidian-Vault enthält übergreifendes Wissen zu Normdex:
 - `08_Entscheidungen` – Architektur- und Produktentscheidungen
 - `09_Besprechungen` – Meetingnotizen und Protokolle
 - `10_Aufgaben` – Aufgabenübersicht, offene Todos und abgeschlossene Todos
+- `11_Audits` – strukturierte Audit-Berichte, unterteilt nach Bereich (Landingpage, Webapp)
 - `90_Archiv` – alte oder nicht mehr aktive Inhalte
 - `99_Anhaenge` – Bilder, Screenshots und sonstige Anhänge
 

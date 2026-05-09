@@ -28,6 +28,7 @@ Dies ist die zentrale Wissensbasis für Normdex.
 - `08_Entscheidungen` – Architektur- und Produktentscheidungen
 - `09_Besprechungen` – Meetingnotizen und Protokolle
 - `10_Aufgaben` – zentrale Aufgabenübersicht mit Todo-Dateien
+- `11_Audits` – strukturierte Audit-Berichte, unterteilt in `Landingpage/` und `Webapp/`
 - `90_Archiv` – alte oder nicht mehr aktive Inhalte
 - `99_Anhaenge` – Bilder, Screenshots und sonstige Anhänge
 
