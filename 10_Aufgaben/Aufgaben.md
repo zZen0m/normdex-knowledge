@@ -40,12 +40,19 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 
 | ID   | Todo                                                | Bereich                                       | Status    |
 | ---- | --------------------------------------------------- | --------------------------------------------- | --------- |
+| T021 | [[T021-rechnungslegung-individuelle-rechnungen]]    | App / Lizenzen / Stripe / Rechnungslegung / Rechtliches | offen |
 | T019 | [[T019-newsletter-gutschein-brevo-webhook-rollout]] | App / Newsletter / Brevo / Stripe             | in Arbeit |
 | T017 | [[T017-testzeitraum-fuer-lizenzen]]                 | App / Lizenzen / Stripe / Legal               | in Arbeit |
 | T016 | [[T016-bericht-tab-pdf-export-ueberarbeiten]]       | App / Wirtschaftlichkeitsberechnung / Bericht | in Arbeit |
 | T014 | [[T014-kuendigungs-email-fuer-lizenzen]]            | App / Lizenzen / E-Mail                       | offen     |
 | T013 | [[T013-lizenzsystem-rollout-abschliessen]]          | App / Infrastruktur / Marketing               | in Arbeit |
 | T020 | [[T020-allgemeine Todos]]                           | App                                           | offen     |
+
+### Offene Unteraufgaben zu T020
+
+| ID      | Todo                                  | Bereich | Status |
+| ------- | ------------------------------------- | ------- | ------ |
+| T020-12 | [[T020-12-Konzept Verwaltungsportal]] | App / Verwaltungsportal | offen |
 
 ## Zusammengeführte Todo-IDs
 
@@ -61,7 +68,23 @@ Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollo
 | T001 | [[T001-normdex-complete-guide-loeschen]] | Vault   | 2026-04-27    |
 | T002 | [[T002-repo-docs-vault-pruefung]]        | Vault   | 2026-04-27    |
 
+### Abgeschlossene Unteraufgaben zu T020
+
+| ID      | Todo                                       | Bereich | Abgeschlossen |
+| ------- | ------------------------------------------ | ------- | ------------- |
+| T020-01 | [[T020-01-Economics-Label entfernen]]      | App / UI | -            |
+| T020-02 | [[T020-02-Spilling-Portal neuer Tab]]      | App / UI | -            |
+| T020-03 | [[T020-03-Projekttabelle Layout]]          | App / UI | -            |
+| T020-04 | [[T020-04-Char-Counter Projekt bearbeiten]]| App / UI | -            |
+| T020-05 | [[T020-05-3 Karten Polish]]                | App / UI | -            |
+| T020-06 | [[T020-06-Stripe Adress-Sync]]             | App / Stripe | -        |
+| T020-07 | [[T020-07-Testlizenz kuendigen]]           | App / Lizenzen | -      |
+| T020-08 | [[T020-08-Lizenz hinzufuegen Redesign]]    | App / Lizenzen | -      |
+| T020-09 | [[T020-09-Berechnungen-Karte Hero]]        | App / UI | -            |
+| T020-10 | [[T020-10-Export-Tab Umbau]]               | App / Wirtschaftlichkeitsberechnung | - |
+| T020-11 | [[T020-11-Resuemee-Tab]]                   | App / Wirtschaftlichkeitsberechnung | - |
+
 
 ## Nächste freie ID
 
-`T021`
+`T022`
