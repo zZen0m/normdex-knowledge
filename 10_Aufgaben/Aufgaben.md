@@ -40,6 +40,7 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 
 | ID   | Todo                                                | Bereich                                       | Status    |
 | ---- | --------------------------------------------------- | --------------------------------------------- | --------- |
+| T021 | [[T021-rechnungslegung-individuelle-rechnungen]]    | App / Lizenzen / Stripe / Rechnungslegung / Rechtliches | offen     |
 | T019 | [[T019-newsletter-gutschein-brevo-webhook-rollout]] | App / Newsletter / Brevo / Stripe             | in Arbeit |
 | T017 | [[T017-testzeitraum-fuer-lizenzen]]                 | App / Lizenzen / Stripe / Legal               | in Arbeit |
 | T016 | [[T016-bericht-tab-pdf-export-ueberarbeiten]]       | App / Wirtschaftlichkeitsberechnung / Bericht | in Arbeit |
@@ -64,4 +65,4 @@ Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollo
 
 ## Nächste freie ID
 
-`T021`
+`T022`
