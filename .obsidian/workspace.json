@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "10_Aufgaben/Aufgaben.md",
+                "file": "10_Aufgaben/offene Todos/T020-12-Konzept Verwaltungsportal.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Aufgaben"
+              "title": "T020-12-Konzept Verwaltungsportal"
             }
           }
         ],
@@ -200,13 +200,26 @@
   },
   "active": "9dff221ec61e77ce",
   "lastOpenFiles": [
+    "10_Aufgaben/Aufgaben.md",
+    "10_Aufgaben/offene Todos/T020-allgemeine Todos.md",
+    "10_Aufgaben/abgeschlossene Todos/T020-07-Testlizenz kuendigen.md",
+    "10_Aufgaben/abgeschlossene Todos/T020-06-Stripe Adress-Sync.md",
+    "10_Aufgaben/abgeschlossene Todos/T020-05-3 Karten Polish.md",
+    "10_Aufgaben/abgeschlossene Todos/T020-04-Char-Counter Projekt bearbeiten.md",
+    "10_Aufgaben/abgeschlossene Todos/T020-03-Projekttabelle Layout.md",
+    "10_Aufgaben/abgeschlossene Todos/T020-02-Spilling-Portal neuer Tab.md",
+    "10_Aufgaben/abgeschlossene Todos/T020-01-Economics-Label entfernen.md",
+    "99_Anhaenge/Pasted image 20260503134652.png",
+    "99_Anhaenge",
+    "90_Archiv/T019-newsletter-coupon-backend-REDIRECT.md",
+    "90_Archiv/T015-toast-guideline-und-notify-helper-DUPLIKAT.md",
+    "11_Audits/Webapp/2026-05-14-smoke-test-checkliste-webapp.md",
     "Auffälligkeiten.md",
     "Pasted image 20260503134652.png",
     "06_Entwicklung/IT-Workflow Branches Deployments Backups Migrationen.md",
     "06_Entwicklung/Integrationen & externe Dienste.md",
     "README.md",
     "06_Entwicklung/VPS-Serverstruktur und Deployment-Architektur.md",
-    "10_Aufgaben/Aufgaben.md",
     "Pasted image 20260501161134.png",
     "10_Aufgaben/abgeschlossene Todos/T012-projektstatus-einfuehren.md",
     "01_Produkt/Brand Identity & Voice.md",
@@ -217,16 +230,6 @@
     "01_Produkt/Verwaltungsportal-Ausbau.md",
     "10_Aufgaben/abgeschlossene Todos/T020-08-Lizenz hinzufuegen Redesign.md",
     "10_Aufgaben/abgeschlossene Todos/T020-09-Berechnungen-Karte Hero.md",
-    "10_Aufgaben/abgeschlossene Todos/T020-07-Testlizenz kuendigen.md",
-    "10_Aufgaben/abgeschlossene Todos/T020-03-Projekttabelle Layout.md",
-    "10_Aufgaben/offene Todos/T020-06-Stripe Adress-Sync.md",
-    "10_Aufgaben/abgeschlossene Todos/T020-11-Resuemee-Tab.md",
-    "10_Aufgaben/abgeschlossene Todos/T020-10-Export-Tab Umbau.md",
-    "10_Aufgaben/abgeschlossene Todos/T020-06-Stripe Adress-Sync.md",
-    "10_Aufgaben/offene Todos/T020-05-3 Karten Polish.md",
-    "10_Aufgaben/abgeschlossene Todos/T020-05-3 Karten Polish.md",
-    "10_Aufgaben/offene Todos/T020-04-Char-Counter Projekt bearbeiten.md",
-    "10_Aufgaben/abgeschlossene Todos/T020-04-Char-Counter Projekt bearbeiten.md",
     "10_Aufgaben/abgeschlossene Todos/T020-04-Char-Counter Projekt bearbeiten.md.tmp.51468.1777651943402",
     "10_Aufgaben/abgeschlossene Todos/T020-03-Projekttabelle Layout.md.tmp.51468.1777651745889",
     "10_Aufgaben/abgeschlossene Todos/T020-02-Spilling-Portal neuer Tab.md.tmp.51468.1777651585901",
@@ -236,14 +239,12 @@
     "10_Aufgaben/offene Todos/T020-12-Konzept Verwaltungsportal.md.tmp.20872.1777650796481",
     "10_Aufgaben/offene Todos/T020-11-Resuemee-Tab.md.tmp.20872.1777650776827",
     "10_Aufgaben/offene Todos/T020-10-Export-Tab Umbau.md.tmp.20872.1777650759863",
-    "10_Aufgaben/offene Todos/T020-09-Berechnungen-Karte Hero.md.tmp.20872.1777650734921",
     "Pasted image 20260501162843.png",
     "Pasted image 20260501162349.png",
     "Pasted image 20260501162250.png",
     "Pasted image 20260501162003.png",
     "Pasted image 20260501161847.png",
     "Pasted image 20260501161658.png",
-    "Pasted image 20260501161647.png",
-    "Pasted image 20260501161435.png"
+    "Pasted image 20260501161647.png"
   ]
 }
