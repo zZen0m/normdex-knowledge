@@ -238,9 +238,27 @@ https://api.normdex.at
 Deployment:
 
 ```bash
-cd /opt/stacks/normdex
-docker compose up -d --build
+cd /opt/repos/normdex-webapp
+./deploy/prod-compose.sh up -d --build
 ```
+
+Der Produktiv-Stack nutzt für die App-Compose-Kommandos den Wrapper `deploy/prod-compose.sh` aus dem Repo. Er liest `deploy/env/.env.deploy.prod` und entscheidet darüber, ob `app.normdex.at` mit Traefik BasicAuth geschützt bleibt. Wenn auf dem Server weiterhin eine getrennte Stack-Kopie unter `/opt/stacks/normdex` verwendet wird, muss diese Konfiguration aus dem Repo synchron sein.
+
+BasicAuth-Gate:
+
+```env
+NORMDEX_FRONTEND_BASIC_AUTH_ENABLED=true
+```
+
+`true` ist der Zustand für die geschlossene Live-Testphase. Damit können Stripe, E-Mail, Webhooks und Lizenzflüsse produktionsnah getestet werden, ohne dass Kunden sich bereits registrieren oder kaufen können.
+
+```env
+NORMDEX_FRONTEND_BASIC_AUTH_ENABLED=false
+```
+
+`false` ist der Zustand für den öffentlichen Kundenstart. Dann entfernt der Compose-Override die Frontend-Middleware und `app.normdex.at` ist ohne vorgelagertes BasicAuth-Passwort erreichbar.
+
+Merksatz: Vor dem Kundenstart explizit `deploy/env/.env.deploy.prod` prüfen. BasicAuth schützt immer das gesamte Frontend; wenn nur Registrierung oder Checkout gesperrt werden sollen, braucht es einen separaten App-Schalter.
 
 Status pruefen:
 

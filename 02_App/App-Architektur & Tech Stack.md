@@ -119,6 +119,19 @@ N8N_SUPPORT_WEBHOOK_URL=https://...
 N8N_SUPPORT_WEBHOOK_SECRET=...
 ```
 
+**Deployment-Schalter außerhalb der API-Env:**
+
+Die Datei `deploy/env/.env.deploy.prod` steuert den vorgelagerten BasicAuth-Schutz des produktiven Frontends:
+
+```env
+NORMDEX_FRONTEND_BASIC_AUTH_ENABLED=true
+```
+
+- `true`: geschlossene Live-Testphase; `app.normdex.at` bleibt hinter Traefik BasicAuth.
+- `false`: öffentlicher Kundenstart; `app.normdex.at` ist ohne BasicAuth erreichbar.
+
+Produktiv-Kommandos dafür immer über `deploy/prod-compose.sh` ausführen, damit der Schalter angewendet wird.
+
 ---
 
 ## Verwandte Dokumente

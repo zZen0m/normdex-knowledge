@@ -381,13 +381,13 @@ ls -lh backups
 Erst danach deployen:
 
 ```bash
-docker compose up -d --build
+./deploy/prod-compose.sh up -d --build
 ```
 
 Falls Migrationen vorhanden sind:
 
 ```bash
-docker compose exec api alembic upgrade head
+./deploy/prod-compose.sh --profile tools run --rm api-migrate
 ```
 
 Danach pruefen:
@@ -403,6 +403,37 @@ Produktivsystem testen:
 https://app.normdex.at
 https://api.normdex.at
 ```
+
+### Produktiv-Gate für geschlossene Live-Testphase
+
+`app.normdex.at` kann bewusst hinter Traefik BasicAuth bleiben, solange Stripe, E-Mail, Webhooks, Lizenzkauf und weitere Anbindungen noch privat getestet werden. Dieser Schutz ist kein Fehler, sondern die aktuelle geschlossene Live-Testphase.
+
+Der Schalter liegt im App-Repo unter:
+
+```text
+deploy/env/.env.deploy.prod
+```
+
+Werte:
+
+```env
+NORMDEX_FRONTEND_BASIC_AUTH_ENABLED=true
+```
+
+`true` bedeutet: `app.normdex.at` bleibt per BasicAuth geschützt. Das ist der gewollte Zustand, solange noch keine Kundenregistrierung möglich sein soll.
+
+```env
+NORMDEX_FRONTEND_BASIC_AUTH_ENABLED=false
+```
+
+`false` bedeutet: `app.normdex.at` ist öffentlich erreichbar. Registrierung, Login und Checkout sind dann ohne vorgelagertes BasicAuth-Passwort erreichbar. Dieser Wert wird erst für den echten Kundenstart gesetzt.
+
+Wichtig:
+
+- Produktivdeployments der App laufen über `./deploy/prod-compose.sh`, damit der Schalter angewendet wird.
+- Nicht direkt `docker compose -f deploy/docker-compose.prod.yml ...` verwenden, wenn der Gate-Schalter gelten soll.
+- Vor Kundenstart bewusst prüfen: Ist `NORMDEX_FRONTEND_BASIC_AUTH_ENABLED=false` gesetzt?
+- Wenn die App öffentlich sichtbar sein soll, Registrierung aber weiterhin blockiert bleiben muss, braucht es zusätzlich einen App-/Backend-Schalter für Registrierungen; BasicAuth sperrt immer das gesamte Frontend.
 
 ## Wichtige Regel fuer Migrationen
 
