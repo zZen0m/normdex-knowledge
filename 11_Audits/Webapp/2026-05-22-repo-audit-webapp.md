@@ -192,13 +192,15 @@ Der aktuelle Branch ist funktional weit entwickelt, aber nicht release-sauber. F
 
 ## 8. Quick Wins
 
-- `tremor` aus `apps/frontend/package.json` entfernen, falls ungenutzt, danach `npm install` und `npm audit --omit=dev` erneut ausführen.
-- Die zwei fehlgeschlagenen Backend-Tests priorisiert fixen und `.\venv\Scripts\python -m pytest` erneut komplett laufen lassen.
-- `apps/api/dev.db` bewusst als anonymisierten Dev-Snapshot beibehalten, Regeln dokumentieren und `apps/api/scripts/verify_dev_fixture.py` vor DB-Snapshot-Commits ausführen.
-- Deployment-Env-Beispiele mit den aktuellen `STRIPE_PRICE_ID_BASIC_*`-, Product- und Coupon-Variablen aktualisieren.
-- Last-Owner-Schutz in `teams.py` ergänzen und zwei Tests dafür anlegen.
-- Server-Limits für `/support/upload` hinzufügen.
-- Public/Auth/App-Layout-Trennung in `App.tsx` bereinigen.
+Alle Quick Wins **erledigt am 2026-05-22**.
+
+- ✅ `tremor` aus `apps/frontend/package.json` entfernen — bereits weder in `package.json` noch in `apps/frontend/src/` referenziert.
+- ✅ Zwei fehlgeschlagene Backend-Tests fixen — `.\venv\Scripts\python -m pytest` meldet aktuell **190 passed** (kein Failure).
+- ✅ `apps/api/dev.db` als anonymisierten Dev-Snapshot dokumentieren — Regeln und Prüf-Workflow in `apps/api/docs/development-dev-db.md`; `apps/api/scripts/verify_dev_fixture.py` läuft sauber und meldet nur informelle Domain-Review-Hinweise.
+- ✅ Deployment-Env-Beispiele mit den aktuellen `STRIPE_PRICE_ID_BASIC_*`-, Product- und Coupon-Variablen aktualisieren — in `deploy/env/.env.api.dev.example` und `deploy/env/.env.api.prod.example` enthalten (Test- bzw. Live-Mode).
+- ✅ Last-Owner-Schutz in `teams.py` ergänzen (Finding 6, Commit `8a4da8f`).
+- ✅ Server-Limits für `/support/upload` hinzufügen (Finding 8, Commit `c67dc8c`).
+- ✅ Public/Auth/App-Layout-Trennung in `App.tsx` bereinigen (Finding 9, Commit `d1d17c9`).
 
 ## 9. Strategische Empfehlungen
 
