@@ -1,5 +1,7 @@
 # Session – Lizenzverwaltung Abschluss
 
+> Hinweis 2026-05-22: Die Rabattcode-Aussagen in dieser historischen Notiz sind überholt. Aktueller Stand: Rabattcodes werden im Normdex-Kaufdialog eingegeben und gelten sowohl für neue Stripe-Checkout-Subscriptions als auch für direkte Pool-Erweiterungen.
+
 ## Kontext
 
 Die Lizenzverwaltung wurde auf das neue Pool-Modell mit Einzellizenzen umgestellt und in App, API, Tests und Vault-Dokumentation nachgezogen.

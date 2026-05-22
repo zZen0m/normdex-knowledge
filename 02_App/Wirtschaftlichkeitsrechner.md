@@ -53,6 +53,7 @@ Vollständiger **PDF-Bericht** mit:
 - Jahres-Cashflow-Tabelle
 - Diagramme (Kumulierter Cashflow, Sensitivitätskurven)
 - Normdex-Version und Erstellungsdatum
+- Optional ein-/ausblendbaren Berichtsteilen inklusive Deckblatt, Inhaltsverzeichnis, Projektdaten, Abbildungs-/Tabellenverzeichnis, Glossar, Systemdetails, Gesamtkosten, Annuitäten, Amortisation, Sensitivität und Resümee
 
 ---
 
@@ -61,6 +62,11 @@ Vollständiger **PDF-Bericht** mit:
 - Berechnung kann **standalone** oder **projektgebunden** durchgeführt werden
 - Berechnungsergebnisse werden persistent gespeichert
 - Mehrere Berechnungen pro Projekt möglich (verschiedene Szenarien)
+- Die Eingabeoberfläche ist in eine linke Outline-Navigation und fachliche Abschnitte gegliedert: Projektdaten, Rahmenbedingungen, Systeme, Ergebnisse, Resümee und Export.
+- Die Outline zeigt pro Abschnitt Statussymbole, Fehleranzahl und bei Systemen die Anzahl der angelegten Systeme.
+- Auf breiten Bildschirmen zeigt ein rechtes **Live-Vorschau**-Panel nach kurzer Verzögerung die wichtigsten Kennzahlen je System: Gesamtkosten/Barwert, Amortisation und Annuität. Fehlende Pflichtangaben werden mit Sprungzielen angezeigt.
+- Der Export-Bereich bündelt die PDF-Erstellung und eine ausklappbare Inhaltskonfiguration. Konfigurierbar sind allgemeine Berichtsteile, sichtbare Systeme, Kostenbereiche je System, Gesamtkosten, Annuitäten, Gesamtkostenverlauf/Amortisation und Sensitivitätsanalyse.
+- Kostenmindernde Positionen werden in Webbericht und PDF getrennt von Betriebs- und Verbrauchskosten ausgewiesen; beim PDF-Export werden Betriebs- und Kostenminderungsdaten korrekt an die API übergeben.
 
 ---
 

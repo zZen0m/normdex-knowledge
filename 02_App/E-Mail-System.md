@@ -25,6 +25,13 @@
 
 ---
 
+## Lizenz- und Bestell-E-Mails
+
+- Produktlabels in Bestell-/Lizenz-E-Mails verwenden den zentralen Economics-Produktnamen aus den App-Konstanten. Legacy-Key `economics_v1` und aktueller Produkt-Key werden auf denselben sichtbaren Produktnamen gemappt.
+- Dadurch erscheinen Trial-, Zusatzkauf- und Bestellbestätigungen konsistent mit dem Namen der App-Oberfläche und nicht mehr mit dem alten Label `Normdex ÖNORM M 7140 Basic`.
+
+---
+
 ## Newsletter-Gutschein
 
 - E-Mail: Newsletter-Gutschein nach bestaetigter Aufnahme in die Brevo-Newsletter-Liste (`list_addition` Webhook).

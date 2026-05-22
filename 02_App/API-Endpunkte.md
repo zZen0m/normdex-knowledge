@@ -69,8 +69,8 @@ GET  /licenses/                         → Aktive Lizenzen der Organisation (Le
 GET  /licenses/pools                    → Pool-Zusammenfassung monatlich/jährlich
 GET  /licenses/pools/{pool}/items       → Einzellizenzen eines Pools
 GET  /licenses/{id}/history             → Lizenzhistorie
-POST /licenses/checkout/preview         → Kaufvorschau mit Staffelpreisen
-POST /licenses/checkout/create          → Kauf starten oder bestehende Subscription erweitern
+POST /licenses/checkout/preview         → Kaufvorschau mit Staffelpreisen, Erstbestellungsrabatt und Trial-Konvertierungsgutschrift
+POST /licenses/checkout/create          → Kauf starten oder bestehende Subscription atomar erweitern
 POST /licenses/checkout/confirm         → Stripe Checkout nach Redirect bestätigen
 POST /licenses/checkout/cancel          → Abgebrochenen Checkout bereinigen
 POST /licenses/{id}/cancel              → Lizenz zum Laufzeitende kündigen
@@ -104,7 +104,7 @@ GET  /subscriptions/config                → Stripe Public Key
 POST /subscriptions/create-portal-session → Stripe Customer Portal öffnen
 ```
 
-Käufe und Kündigungen laufen über die neuen `/licenses/...`-Endpunkte. Rabattcodes werden aktuell nur im Stripe Checkout eingegeben, wenn eine neue Subscription entsteht.
+Käufe und Kündigungen laufen über die neuen `/licenses/...`-Endpunkte. Rabattcodes werden im Normdex-Kaufdialog validiert und bei neuen Checkout-Subscriptions sowie bei direkter Pool-Erweiterung als Stripe Promotion Code an Stripe übergeben.
 
 ## Support (öffentlich)
 
@@ -124,6 +124,8 @@ POST   /admin/users/{id}/password          → Passwort setzen
 DELETE /admin/users/{id}                   → Nutzer löschen
 GET    /admin/audit                        → Audit-Log
 GET    /admin/organizations                → Organisationsliste
+GET    /admin/organizations/{id}           → Organisationsdetails
+GET    /admin/organizations/{id}/case      → Organisationsakte mit Timeline, Lizenzen, Bestellungen, Projekten und Tickets
 PATCH  /admin/organizations/{id}           → Organisation bearbeiten
 GET    /admin/projects                     → Alle Projekte (plattformweit)
 GET    /admin/support/tickets              → Ticket-Liste

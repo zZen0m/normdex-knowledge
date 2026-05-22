@@ -66,7 +66,8 @@ Die erste aktive oder noch laufende Lizenz in einem Pool ist die Hauptlizenz. We
 - Qualifizierter Mehrfach-Erstkauf: kein echter Trial, sondern einmaliger Erstbestellungsrabatt von 24,50 EUR über Stripe-Coupon `QHQESezY`.
 - Der Trial-Benefit wird dauerhaft pro Organisation über `organizations.trial_used_at` gesperrt. Zusätzliche Schutzschichten prüfen gleiche `stripe_customer_id`, gleiche `vat_id`, Pending Orders und Legacy-Metadaten.
 - Abgebrochene Trial-Checkouts geben den Lock nur frei, wenn Stripe keine Subscription erzeugt hat.
-- Zusatzkauf während Trial beendet/konvertiert die Trial-Lizenz zuerst; verbleibende Trial-Tage werden mit `24,50 EUR / 14 * Resttage` als Gutschrift angerechnet.
+- Zusatzkauf während Trial wird als Trial-Konvertierung behandelt: Die bestehende Trial-Subscription wird nur nach erfolgreicher Stripe-Zahlung beendet, verbleibende Trial-Tage werden mit `24,50 EUR / 14 * Resttage` als Gutschrift angerechnet und im Order-/Lizenz-Meta dokumentiert.
+- Die Checkout-Vorschau zeigt bei Trial-Konvertierung Resttage, Bruttobetrag der umgewandelten Trial-Lizenz und Gutschrift separat an.
 
 **Concurrent-User-Enforcement:**
 - Heartbeat-Mechanismus: Frontend sendet regelmäßig Keep-Alive-Requests
@@ -78,13 +79,14 @@ Die erste aktive oder noch laufende Lizenz in einem Pool ist die Hauptlizenz. We
 1. Owner/Admin klickt in `/licenses` auf „Lizenz hinzufügen"
 2. Normdex berechnet Vorschau, Hauptlizenz/Zusatzlizenz und Pool-Zuordnung
 3. Bei einem neuen Pool wird eine Stripe-Checkout-Session erstellt
-4. Bei bestehendem Pool wird die bestehende Stripe-Subscription direkt erweitert und anteilig verrechnet
-5. Neue Lizenzen werden nach erfolgreichem Checkout aktiv, als Trial geführt oder bei direkter Erweiterung aktiviert
+4. Bei bestehendem Pool wird die bestehende Stripe-Subscription direkt erweitert und anteilig verrechnet (`payment_behavior = error_if_incomplete`)
+5. Neue Lizenzen werden erst nach erfolgreicher Stripe-Annahme und Zahlung aktiv; bei Zahlungsfehlern werden lokale Pending-Lizenzen verworfen und jüngste offene Subscription-Update-Rechnungen nach Möglichkeit voided
+6. Trial-Konvertierungen während Zusatzkäufen laufen im gleichen atomaren Stripe-Update mit, damit die Testphase nicht endet, wenn die Zahlung fehlschlägt
 
 **Rabattcodes:**
-- Rabattcodes werden aktuell ausschließlich im Stripe Checkout eingegeben
-- Das gilt nur, wenn eine neue Stripe-Subscription ausgelöst wird
-- Bei direkter Erweiterung einer bestehenden Pool-Subscription gibt es derzeit keinen separaten Rabattcode-Flow in Normdex
+- Rabattcodes können im Normdex-Kaufdialog eingegeben werden
+- Bei neuer Stripe-Subscription wird der Code als Stripe Promotion Code an die Checkout Session übergeben
+- Bei direkter Erweiterung einer bestehenden Pool-Subscription wird der Code als Stripe Promotion Code an `Subscription.modify` übergeben
 - Der automatische Erstbestellungsrabatt nutzt den Stripe-Coupon `QHQESezY` und wird nicht als manueller Rabattcode eingegeben.
 
 **Kündigung:**
@@ -93,6 +95,7 @@ Die erste aktive oder noch laufende Lizenz in einem Pool ist die Hauptlizenz. We
 - Gekündigte Lizenzen bleiben bis zum angezeigten Laufzeitende nutzbar (`scheduled_end`)
 - Kündigungen können bis zum endgültigen Ablaufdatum zurückgezogen werden
 - Nach Ablaufdatum ist keine Rücknahme mehr möglich; dann muss eine neue Lizenz gekauft werden
+- Gerade aktivierte Direktkäufe können innerhalb von 10 Minuten über „Kauf rückgängig machen" zurückgenommen werden, solange die Lizenz noch nicht regulär weitergelaufen ist
 - Rechnungen und Zahlungsmethoden werden über das Stripe-Portal verwaltet
 
 ---
@@ -129,6 +132,12 @@ new → triaged → in_progress → waiting_on_customer → resolved → closed
 **Prioritäten:** P1 (Kritisch) / P2 (Hoch) / P3 (Mittel) / P4 (Niedrig)
 
 **Ticket-Quellen:** Webapp (`/support`) / Landingpage-Kontaktformular / E-Mail (`support@normdex.at`)
+
+**Webapp-Supportformular (`/support`):**
+- Kategorien: Produkt & Anwendung, Technisches Problem, Störung/Ausfall, Abrechnung/Vertrag/Lizenz, Zugang & Konto, Funktionswunsch/Feedback, Sonstiges
+- Die Kategorie kann per URL vorausgewählt werden, z. B. `/support?category=feature` aus What's-New-CTAs.
+- Anhänge werden vor Ticketerstellung über `/support/upload` hochgeladen und anschließend als Attachment-Liste am Ticket gespeichert.
+- Die neue Oberfläche nutzt ein zweispaltiges Layout: links Formular, rechts Hinweise zu Kontaktweg, erwarteter Reaktionszeit und benötigten Angaben.
 
 ### Webhook-Integration (n8n)
 
@@ -183,7 +192,7 @@ Das Dashboard (`/app`) ist die Startseite nach dem Login:
 - Brevo sendet dafuer einen Outbound Webhook `list_addition` an `POST /newsletter/brevo/webhook?secret=...`.
 - Normdex erzeugt pro E-Mail einen individuellen Stripe Promotion Code auf Basis des Coupons `mbjs8wYE`.
 - Jeder Newsletter-Code ist einmalig einloesbar und 30 Tage gueltig.
-- Gueltige Codes werden im Lizenz-Checkout lokal geprueft und als Stripe Promotion Code an neue Checkout Sessions uebergeben.
+- Gueltige Codes werden im Lizenz-Checkout lokal geprueft und als Stripe Promotion Code an neue Checkout Sessions oder direkte Subscription-Updates uebergeben.
 
 ---
 
@@ -194,6 +203,8 @@ Nur für Nutzer mit dem Flag `is_admin = true`.
 **Benutzerverwaltung (`/admin/users`):** Profil einsehen/bearbeiten, E-Mail-Verifizierung setzen, Account aktivieren/deaktivieren, Admin-Flag vergeben.
 
 **Support-Admin (`/admin/support`):** Tickets filtern, Status ändern, Priorität setzen, Antwort senden, interne Notizen, Statistiken.
+
+**Organisationsakte (`/admin/organizations/:orgId`):** Admin-Detailansicht pro Organisation mit Organisation, Nutzer:innen, Projekten, Lizenzen, Bestellungen, Tickets und Timeline. Datumswerte aus verschiedenen Quellen werden zeitzonensicher sortiert, damit gemischte naive/aware Python-`datetime`-Werte keine Sortierfehler auslösen.
 
 ---
 

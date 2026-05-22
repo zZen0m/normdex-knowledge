@@ -69,7 +69,7 @@
 | Erstbestellungsrabatt           | Bei qualifiziertem Mehrfach-Erstkauf statt Trial einmalig 24,50 € Rabatt auf die erste Rechnung |
 | Abrechnung                      | Stripe (Kreditkarte, Klarna), gebündelt je Monats-/Jahrespool            |
 | Kündigung                       | Lizenz endet zum jeweiligen Laufzeitende; Zusatzlizenzen vor Hauptlizenz |
-| Rabattcodes                     | Nur im Stripe Checkout bei neuer Subscription                            |
+| Rabattcodes                     | Im Normdex-Kaufdialog einlösbar; gilt für neue Subscriptions und direkte Pool-Erweiterungen |
 | Newsletter-Coupon               | 10 % Rabatt im ersten Monat — individueller Stripe Promotion Code, wird nach Double-Opt-In-Bestätigung per E-Mail zugeschickt. Einmalig einlösbar, 30 Tage gültig. Backend-Umsetzung: [[T019-newsletter-gutschein-brevo-webhook-rollout]] |
 
 ---

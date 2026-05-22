@@ -1,6 +1,6 @@
 # T013 - Lizenzsystem-Rollout abschließen
 
-**Status:** in Arbeit  
+**Status:** in Arbeit (App-seitig eingeführt; Rollout-/Prod-Abschluss offen)  
 **Bereich:** App / Infrastruktur / Marketing  
 **Erstellt:** 2026-04-27  
 **Abgeschlossen:** -
@@ -229,97 +229,83 @@ Technische Regeln:
 
 ## Aktueller Implementierungsstand
 
-### Abgeschlossen
+### App-seitig abgeschlossen / statisch verifiziert
 
-- Neues Datenmodell für `licenses`, `license_orders`, `license_order_items`, `license_events`.
-- Migrationen für das neue Lizenzmodell inklusive `LicenseOrder.meta`.
-- SQLite-kompatible Migrationen über `op.batch_alter_table()`.
-- `Organization.stripe_customer_id`.
-- Domänenlogik für Preisberechnung und Kündigungskandidaten.
-- Neue Lizenz-v2-Endpunkte.
-- Admin-/Owner-Checks für schreibende Lizenzaktionen.
-- Kündigungslogik: Add-on zuerst, Basis erst wenn zulässig.
-- Stripe-Checkout für neue Pool-Subscriptions.
-- Direkte Erweiterung bestehender Pool-Subscriptions über Stripe Subscription-Änderung mit anteiliger Verrechnung.
-- Gemischte Orders monthly/yearly über getrennte Checkout-Sessions, gespeichert in `order.meta.checkout_sessions`.
-- Webhook-Handler neu aufgebaut.
-- Idempotenz bei `checkout.session.completed`.
-- Rebasierungslogik: ältestes aktives Add-on wird Basis, wenn keine aktive Basis mehr vorhanden ist.
-- Stripe-Seiteneffekt beim Kündigen: Subscription-Item-Menge reduzieren, Item löschen, `cancel_at_period_end=True` bei letzter Lizenz im Pool.
-- Neue Lizenzverwaltung im Frontend.
-- Kaufdialog, Kündigungsdialog und Rücknahme einer Kündigung.
-- Statische Benutzerzuweisung ist zwar im Code vorhanden, aber in der UI ausgeblendet.
-- `SubscriptionPlans.tsx` leitet auf `/licenses` um.
-- App-Hilfe und interne Doku zu Lizenzpool, Kündigung, Abrechnung und Stripe-Checkout-only-Rabattcodes wurden aktualisiert.
-- Abgebrochene Stripe-Checkouts werden bereinigt: Pending-Lizenzen werden `ended`, Order wird `failed`, Pending-Lizenzen zählen nicht in die Preislogik.
-- `payment_failed` wird bei Pool-Subscription-Suche berücksichtigt, damit keine doppelten Stripe-Subscriptions entstehen.
-- Kündigung zurückziehen ist umgesetzt: `POST /licenses/{id}/reactivate-cancel`, solange `scheduled_end_at` noch in der Zukunft liegt.
+- Neues Pool-Datenmodell ist vorhanden: `licenses`, `license_orders`, `license_order_items`, `license_events`, `Organization.stripe_customer_id`.
+- Preislogik, Trial-Benefit, Trial-Konvertierung, Add-on-/Basis-Splitting und Pool-Trennung sind in `license_pricing.py` und `licenses_v2.py` umgesetzt.
+- Neue Lizenz-v2-Endpunkte sind vorhanden: Pool-Übersicht, Checkout-Preview/Create/Confirm/Cancel, Kündigung, Kündigungsrücknahme, Promotion-Validierung und Complimentary-Lizenz.
+- Neue Pool-Subscriptions werden per Stripe Checkout erstellt; bestehende Pool-Subscriptions werden direkt per `Subscription.modify` erweitert.
+- Gemischte monatliche/jährliche Orders werden getrennt je Pool verarbeitet und in `order.meta.checkout_sessions` abgebildet.
+- Webhook-Handler für `checkout.session.completed`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.paid` und `invoice.payment_failed` sind umgesetzt.
+- Idempotenz ist für abgeschlossene/fehlgeschlagene Orders abgesichert; späte Webhooks reaktivieren keine verworfenen Orders.
+- Rebasierung ist umgesetzt: Wenn keine aktive Basislizenz mehr vorhanden ist, wird das älteste aktive Add-on im Pool zur Basislizenz.
+- Kündigungslogik ist umgesetzt: Add-ons zuerst, Basis nur wenn zulässig; gekündigte Lizenzen bleiben bis `scheduled_end_at` nutzbar.
+- Rücknahme einer Kündigung ist umgesetzt: `POST /licenses/{id}/reactivate-cancel`, solange `scheduled_end_at` in der Zukunft liegt.
+- Abgebrochene Checkouts werden bereinigt: Pending-Lizenzen werden beendet, Orders werden `failed`, Trial-Locks werden nur ohne entstandene Stripe-Subscription freigegeben.
+- Lizenzverwaltung im Frontend ist eingeführt: getrennte Monats-/Jahrespools, Einzellizenzen, Statusanzeige, Kaufdialog, Kündigung, Rücknahme, Checkout-Cancel/Confirm und Stripe-Portal.
+- `SubscriptionPlans.tsx` leitet auf `/licenses` um; die Landingpage-/Kaufintent-Übergabe in die App ist separat mit T018 abgeschlossen.
+- App-Hilfe und Vault-Doku beschreiben das Pool-Modell, Trial/Erstbestellungsrabatt, Kündigung, Stripe-Flows und Newsletter-Gutscheine.
+- Rabattcodes werden sowohl bei neuen Stripe-Checkout-Subscriptions als auch bei direkter Erweiterung bestehender Pool-Subscriptions an Stripe übergeben.
+- Deployment-Env-Beispiele enthalten seit 2026-05-22 die vier Pool-Price-IDs, Product-IDs, Coupon-IDs und `APP_ENV`.
 
-### Tests / Verifikation bisher
+### Tests / Verifikation
 
-- Früherer Stand: 33/33 Tests grün.
-- Nach Pricing/Webhook-Tests: 91/91 Tests grün.
-- Nach späteren Bugfixes: 60/60 bzw. 67/67 relevante Lizenztests grün.
-- Frontend-TypeScript-Compile war ohne Fehler.
-- Frontend-Build war nach Checkout-Cancel-Bugfix grün.
-- `py_compile` für `licenses_v2.py` und `subscriptions.py` war erfolgreich.
-- Ein Dev-Test am 2026-04-26 kaufte eine monatliche Basislizenz über Stripe Checkout erfolgreich; Aktivierung wurde wegen lokalem Webhook-Signaturproblem über `/licenses/checkout/confirm` nachgezogen.
+- 2026-05-22 ausgeführt: `.\venv\Scripts\python -m pytest tests/test_license_pricing.py tests/test_license_checkout_trial.py tests/test_license_webhooks.py tests/test_license_cancel_reactivation.py tests/test_subscription_portal.py tests/test_newsletter.py` → **117 passed**.
+- 2026-05-22 ausgeführt: `npm test -- --run` in `apps/frontend/` → **12 passed**; Hinweis: npm meldet `Unknown cli config "--run"`, Vitest lief trotzdem erfolgreich.
+- 2026-05-22 ausgeführt: `npm run build` in `apps/frontend/` → erfolgreich; Vite meldet nur den bekannten Chunk-Size-Hinweis.
+- Noch nicht vorhanden: gezielte Komponententests für `Licenses.tsx` selbst. Die UI wurde statisch gegen den aktuellen Code abgeglichen, aber nicht per RTL/Playwright automatisiert getestet.
 
 ## Bekannte Probleme und Stolpersteine
 
-- Lokales Stripe-Webhook-Forwarding empfing Events, aber Signaturprüfung schlug mit `400 Ungültige Stripe-Signatur` fehl.
-- Rabattcodes sind aktuell bewusst Stripe-Checkout-only: Sie können bei neuer Stripe-Checkout-Subscription genutzt werden, aber nicht bei direkter Erweiterung einer bestehenden Pool-Subscription.
-- Die Rücknahme einer Kündigung ist nur möglich, solange `scheduled_end_at` in der Zukunft liegt. Nach Ablauf muss eine neue Lizenz gekauft werden.
-- Prod-Migration ist noch offen.
-- Live-Mode Stripe Products/Prices/Keys sind noch offen.
+- Lokales Stripe-Webhook-Forwarding war früher wegen Signaturprüfung blockiert; ein aktuell erfolgreicher echter Stripe-CLI-Test mit gültigem Webhook-Secret ist in diesem Todo nicht dokumentiert.
+- Rabattcodes werden bei direkter Pool-Erweiterung per `discounts=[{"promotion_code": ...}]` an `Subscription.modify` übergeben. Vor Livegang sollte das einmal gegen Stripe-Testmode/Staging mit einem echten Promotion-Code verifiziert werden.
+- Prod-Migration, Live-Mode Stripe Products/Prices/Keys und produktiver Testkauf/Dry-Run sind aus Repo und Vault nicht als erledigt belegbar.
+- Bestandskunden- und Stripe-Bestandsdatenmigration ist weiterhin nicht abgeschlossen dokumentiert.
 - Für Migrationen gilt: vor Alembic-Aktionen im App-Repo den DB-Migration-Skill lesen.
 - Dev-Testdaten: `Licenses` und `LicenseUsages` können gelöscht werden, aber `Projects`, `Organizations` und `Users` müssen erhalten bleiben.
 - Stripe-Subscriptions können in Dev und Prod gelöscht werden, sofern bewusst im Rahmen der Migration entschieden.
 
 ## Offene To-do-Liste
 
-### 1. Fachliche Entscheidung Rabattcodes
+### 1. Rabattcode-Strategie final glätten
 
-- [ ] Entscheiden, ob Rabattcodes bei direkter Erweiterung bestehender Pool-Subscriptions unterstützt werden.
-- [ ] Falls nein: Einschränkung in UI, Supporttexten und interner Dokumentation klar dokumentieren.
-- [ ] Falls ja: Backend-, Frontend-, Stripe- und Testumfang definieren und umsetzen.
-- [ ] Sicherstellen, dass Staffelpreise immer Grundmodell bleiben und Rabattcodes nur zusätzlich auf den berechneten Warenkorb/Kaufpreis wirken.
-- [ ] Zielgruppen berücksichtigen: Launch-Rabatt, private/limitierte Aktionen, Testuser/Pilotkunden, manuelle Sonderrabatte.
+- [x] Grundentscheidung dokumentiert: Rabattcodes gelten auch bei direkter Pool-Erweiterung.
+- [x] Newsletter-Codes werden validiert und als Stripe Promotion Code an Checkout Sessions übergeben.
+- [x] Direkte Pool-Erweiterungen übergeben den Promotion-Code an `Subscription.modify`.
+- [x] Backend-Tests für Newsletter-Code, abgelaufene Codes, Stripe-Checkout-Übergabe und Direct-Subscription-Update-Übergabe vorhanden.
+- [ ] Verhalten mit echtem Stripe-Testmode-Promotion-Code auf Staging prüfen und Ergebnis dokumentieren.
 
-### 2. Lokale Stripe-Verifikation
+### 2. Stripe-Verifikation abschließen
 
-- [ ] Stripe CLI lokal korrekt mit Webhook-Secret konfigurieren.
-- [ ] `checkout.session.completed` lokal mit gültiger Signatur verarbeiten.
-- [ ] `customer.subscription.updated` lokal testen.
-- [ ] `invoice.paid` lokal testen.
-- [ ] `invoice.payment_failed` lokal testen.
-- [ ] Prüfen, ob `current_period_start`/`current_period_end` korrekt von Subscription-Items gelesen werden.
-- [ ] Ergebnis direkt in diesem Todo unter „Notizen / Fortschritt“ dokumentieren.
+- [x] Webhook-Handler sind per automatisierten Backend-Tests abgedeckt.
+- [x] Subscription-Item-Perioden werden im Code berücksichtigt und in Webhook-Tests abgedeckt.
+- [ ] Stripe CLI lokal oder auf Staging mit gültigem Webhook-Secret konfigurieren.
+- [ ] `checkout.session.completed` mit echter Stripe-Signatur verarbeiten.
+- [ ] `customer.subscription.updated`, `invoice.paid` und `invoice.payment_failed` gegen Staging/Stripe-Testmode dokumentiert testen.
+- [ ] Ergebnis direkt unter „Notizen / Fortschritt“ dokumentieren.
 
-### 3. Tests ergänzen
+### 3. Testabdeckung ergänzen
 
-- [ ] UI-Tests für gekündigte Lizenzen ergänzen.
-- [ ] UI-Tests für Statusunterscheidung `active`, `scheduled_end`, `ended`, `payment_failed`, `pending` ergänzen.
-- [ ] Tests für Promotions: Validierung und Discount-Berechnung.
-- [ ] Tests für Complimentary-Lizenzen über `/admin/licenses/grant-complimentary`.
-- [ ] Tests für abgebrochene Checkout-Flows absichern, falls noch nicht vollständig abgedeckt.
-- [ ] Relevante Backend- und Frontend-Testbefehle ausführen und Ergebnis dokumentieren.
+- [x] Backend-Tests für Pricing, Trial, Checkout-Cancel, Webhooks, Kündigungsrücknahme, Newsletter-Promotions und Subscription-Portal laufen.
+- [x] Frontend-Basistests und Build laufen.
+- [ ] UI-Komponententests für `Licenses.tsx` ergänzen: Status `active`, `trial`, `scheduled_end`, `ended`, `payment_failed`, `pending`.
+- [ ] UI-Komponententests für gekündigte Lizenzen, Rücknahme-Button, Checkout-Cancel und Gutscheinfeld je Flow ergänzen.
+- [ ] Backend-Test für `/admin/licenses/grant-complimentary` ergänzen oder vorhandene Abdeckung eindeutig nachweisen.
 
 ### 4. Produktion und Infrastruktur
 
-- [ ] Prod-Migration vorbereiten.
-- [ ] Backup- und Rollback-Vorgehen dokumentieren.
-- [ ] Migration auf Staging oder vergleichbarer Umgebung validieren.
+- [x] Deployment-Env-Beispiele auf Pool-Price-IDs und `APP_ENV` aktualisiert.
+- [x] `deploy/README.md` dokumentiert die vier Price-IDs monatlich/jährlich × Basis/Add-on.
+- [ ] Prod-Migration vorbereiten, Backup-/Rollback-Vorgehen konkret für diesen Rollout festhalten.
+- [ ] Migration auf Dev-Server/Staging validieren.
 - [ ] Prod-Migration nach Freigabe anwenden.
 - [ ] Stripe-Live-Mode Products und Prices anlegen.
-- [ ] Produktive Stripe-Keys sicher konfigurieren.
-- [ ] App-Konfiguration auf korrekte Live-Price-IDs setzen.
+- [ ] Produktive Stripe-Keys und Live-Price-IDs sicher konfigurieren.
 - [ ] Produktiven Testkauf oder geeigneten Dry-Run dokumentieren.
 
 ### 5. Bestandskunden und Datenmigration
 
-- [ ] Migration bestehender Kunden fachlich planen.
-- [ ] Betroffene Kunden- und Lizenzdaten identifizieren.
+- [ ] Betroffene Bestandskunden, Organisationen, Lizenzen und Stripe-Subscriptions identifizieren.
 - [ ] Zielzustand pro Kundentyp beschreiben.
 - [ ] Entscheiden, welche bestehenden Lizenzen/Subscriptions gelöscht, übernommen oder neu aufgebaut werden.
 - [ ] Migrationsreihenfolge, Verantwortlichkeiten und Prüfschritte dokumentieren.
@@ -329,18 +315,19 @@ Technische Regeln:
 
 ### 6. Launch und Kommunikation
 
-- [ ] Launch-Kommunikation vorbereiten.
-- [ ] Kernbotschaften für Kunden formulieren.
+- [x] Grundlegende App-/Vault-Doku zum Lizenzsystem ist aktualisiert.
+- [ ] Launch-Kommunikation final vorbereiten.
+- [ ] Kernbotschaften für Kunden final formulieren.
 - [ ] Support-/FAQ-Hinweise final abstimmen.
 - [ ] Kommunikationskanäle und Veröffentlichungszeitpunkt festlegen.
 - [ ] Interne Hinweise für Support und Vertrieb vorbereiten.
 
 ## Abschlusskriterien
 
-- Alle offenen fachlichen Entscheidungen sind getroffen und dokumentiert.
-- Lokale Stripe-Webhooks sind erfolgreich verifiziert oder eine bewusst akzeptierte Abweichung ist dokumentiert.
-- Rabattcode-Strategie für neue Subscriptions und bestehende Pool-Erweiterungen ist final.
-- UI-, Promotions- und Complimentary-Lizenztests sind ergänzt.
+- App-seitige Lizenzsystem-Einführung ist abgeschlossen und durch Tests belegt.
+- Rabattcode-Verhalten ist zwischen UI, Backend, Stripe und Doku konsistent und in Staging/Stripe-Testmode verifiziert.
+- Lokale oder Staging-Stripe-Webhooks sind mit gültiger Signatur erfolgreich verifiziert oder eine bewusst akzeptierte Abweichung ist dokumentiert.
+- UI-Tests für die zentralen Lizenzstatus und Kündigungs-/Checkout-Zustände sind ergänzt oder bewusst als manuelle Abnahme dokumentiert.
 - Prod-Migration ist vorbereitet, angewendet und geprüft.
 - Stripe-Live-Konfiguration ist vollständig hinterlegt und getestet.
 - Bestandskundenmigration ist geplant, durchgeführt und abgeglichen.
@@ -351,3 +338,6 @@ Technische Regeln:
 
 - 2026-04-27: Bisherige Einzel-Todos `T003` bis `T011` in diese Großaufgabe zusammengeführt.
 - 2026-04-27: Inhalte aus den früheren Lizenzsystem-Dateien in dieses Todo konsolidiert, damit die Ordnerstruktur schlank bleiben kann.
+- 2026-05-22: Finding 4 aus dem Webapp-Audit umgesetzt: Deployment-Env-Beispiele auf das Lizenz-Pool-Modell mit vier Stripe-Price-IDs, Product-IDs, Coupon-IDs und explizitem `APP_ENV` aktualisiert; `deploy/README.md` um die Price-ID-Matrix ergänzt.
+- 2026-05-22: T013 gegen aktuellen App-Stand abgeglichen. Ergebnis: Lizenzsystem ist app-seitig eingeführt und zentrale Backend-/Frontend-Prüfungen sind grün; offen bleiben echte Stripe-/Staging-Verifikation, Prod-/Live-Konfiguration, Bestandskundenmigration und Launch-Kommunikation.
+- 2026-05-22: Rabattcodes für direkte Pool-Erweiterungen umgesetzt: `licenses_v2.py` übergibt validierte Promotion-Codes nun auch bei `Subscription.modify`; Regressionstest `test_direct_activation_passes_promotion_code_to_subscription_update` ergänzt. Relevante Backend-Tests: 104/104 grün.
