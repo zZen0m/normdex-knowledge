@@ -173,6 +173,13 @@ Der aktuelle Branch ist funktional weit entwickelt, aber nicht release-sauber. F
 
 ### Finding 10 - Frontend-Hauptbundle ist groß und nicht gesplittet
 
+- Status: **erledigt am 2026-05-22**
+  - Route-Level Lazy Loading via `React.lazy` + `Suspense` in `apps/frontend/src/App.tsx` eingeführt.
+  - Eager bleiben nur Auth-Pfad (Login, Register, ForgotPassword, ResetPassword, VerifyEmail) sowie Layout-Chrome (Header, Sidebar) und Route-Guards (ProtectedRoute, AdminRoute).
+  - Lazy gesplittet: AppHome, Projects/ProjectDetail/NewProject, Team, Licenses, WhatsNew, Help, Support, EconomicsForm, EconomicsReport, Settings (Profile/Organization), SubscriptionPlans, Admin (Users/Support/OrganizationCase), DeleteConfirm, Goodbye, Impressum, Datenschutz, NotFound.
+  - Initial-JS: **1.409 kB → 502 kB** (-64 %), gzip **394 kB → 154 kB** (-61 %).
+  - Recharts/html2pdf landen automatisch in einem gemeinsamen 333-kB-Chunk (`ReportTypes-*.js`), der nur beim Öffnen der Economics-Routen geladen wird.
+  - Frontend-Tests grün (12/12).
 - Kategorie: Optimization
 - Priorität: mittel
 - Verifizierungsstatus: statisch verifiziert
