@@ -155,6 +155,12 @@ Der aktuelle Branch ist funktional weit entwickelt, aber nicht release-sauber. F
 
 ### Finding 9 - Frontend-Routing und Public-Chrome sind inkonsistent
 
+- Status: **erledigt am 2026-05-22**
+  - Chrome-Erkennung in `apps/frontend/src/App.tsx` umgestellt: statt einer Blacklist (`hideSidebarRoutes`) wird über eine Whitelist von App-Pfad-Präfixen (`APP_PATH_PREFIXES` + `isAppPath()`) entschieden, ob Sidebar/Header gezeigt werden.
+  - `/auth/verify`, `/impressum` und `/datenschutz` rendern jetzt explizit ohne App-Chrome (eigener Block in den Routes).
+  - Catch-all 404-Route mit neuer Seite `apps/frontend/src/pages/NotFound.tsx` ergänzt (ohne App-Chrome).
+  - Unbenutzter `Landing`-Import aus `App.tsx` entfernt; `/` bleibt bewusst Redirect auf `/auth/login` (Landingpage ist eigenes Repo).
+  - Verifikation: `npm run build` und `npm test` in `apps/frontend` grün (12 Tests passed).
 - Kategorie: Improvement
 - Priorität: mittel
 - Verifizierungsstatus: statisch verifiziert
