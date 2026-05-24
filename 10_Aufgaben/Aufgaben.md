@@ -40,6 +40,7 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 
 | ID     | Todo                                                | Bereich                                       | Status    |
 | ------ | --------------------------------------------------- | --------------------------------------------- | --------- |
+| T022   | [[T022-notifications-system]]                       | App / Backend / Frontend / Sidebar            | offen     |
 | T021   | [[T021-rechnungslegung-individuelle-rechnungen]]    | App / Lizenzen / Stripe / Rechnungslegung     | offen     |
 | T020-12| [[T020-12-Konzept Verwaltungsportal]]               | App / Verwaltungsportal                       | offen     |
 | T020   | [[T020-allgemeine Todos]]                           | App                                           | offen     |
@@ -77,4 +78,4 @@ Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollo
 
 ## Nächste freie ID
 
-`T022`
+`T023`
