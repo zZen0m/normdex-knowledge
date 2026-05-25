@@ -47,8 +47,6 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 | T019   | [[T019-newsletter-gutschein-brevo-webhook-rollout]] | App / Newsletter / Brevo / Stripe             | in Arbeit |
 | T017   | [[T017-testzeitraum-fuer-lizenzen]]                 | App / Lizenzen / Stripe / Legal               | in Arbeit |
 | T016   | [[T016-bericht-tab-pdf-export-ueberarbeiten]]       | App / Wirtschaftlichkeitsberechnung / Bericht | in Arbeit |
-| T014   | [[T014-kuendigungs-email-fuer-lizenzen]]            | App / Lizenzen / E-Mail                       | offen     |
-| T013   | [[T013-lizenzsystem-rollout-abschliessen]]          | App / Infrastruktur / Marketing               | in Arbeit |
 
 ## Zusammengeführte Todo-IDs
 
@@ -71,6 +69,8 @@ Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollo
 | T020-01 | [[T020-01-Economics-Label entfernen]]               | App / WBR / Projektdetail        | 2026-05-01    |
 | T018    | [[T018-landingpage-kaufintent-in-app-checkout]]     | Landingpage / App / Lizenzen     | 2026-04-30    |
 | T015    | [[T015-toast-guideline-und-notify-helper]]          | App / Designsystem / Frontend    | 2026-04-27    |
+| T014    | [[T014-kuendigungs-email-fuer-lizenzen]]            | App / Lizenzen / E-Mail          | 2026-05-25    |
+| T013    | [[T013-lizenzsystem-rollout-abschliessen]]          | App / Infrastruktur / Marketing  | 2026-05-25    |
 | T012    | [[T012-projektstatus-einfuehren]]                   | App                              | 2026-04-27    |
 | T002    | [[T002-repo-docs-vault-pruefung]]                   | Vault                            | 2026-04-27    |
 | T001    | [[T001-normdex-complete-guide-loeschen]]            | Vault                            | 2026-04-27    |

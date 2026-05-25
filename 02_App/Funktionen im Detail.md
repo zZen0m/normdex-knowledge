@@ -82,6 +82,7 @@ Die erste aktive oder noch laufende Lizenz in einem Pool ist die Hauptlizenz. We
 4. Bei bestehendem Pool wird die bestehende Stripe-Subscription direkt erweitert und anteilig verrechnet (`payment_behavior = error_if_incomplete`)
 5. Neue Lizenzen werden erst nach erfolgreicher Stripe-Annahme und Zahlung aktiv; bei Zahlungsfehlern werden lokale Pending-Lizenzen verworfen und jüngste offene Subscription-Update-Rechnungen nach Möglichkeit voided
 6. Trial-Konvertierungen während Zusatzkäufen laufen im gleichen atomaren Stripe-Update mit, damit die Testphase nicht endet, wenn die Zahlung fehlschlägt
+7. Wenn die Hauptlizenz eines Pools bereits zum Laufzeitende gekündigt ist (`scheduled_end`), sind weitere Käufe in diesem Pool blockiert. Der Kunde muss die Kündigung der Hauptlizenz zuerst zurückziehen oder bis zum Laufzeitende warten.
 
 **Rabattcodes:**
 - Rabattcodes können im Normdex-Kaufdialog eingegeben werden

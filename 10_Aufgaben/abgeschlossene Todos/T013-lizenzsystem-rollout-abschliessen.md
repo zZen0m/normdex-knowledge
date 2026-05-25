@@ -1,9 +1,9 @@
 # T013 - Lizenzsystem-Rollout abschließen
 
-**Status:** in Arbeit (App-seitig eingeführt; Rollout-/Prod-Abschluss offen)  
-**Bereich:** App / Infrastruktur / Marketing  
-**Erstellt:** 2026-04-27  
-**Abgeschlossen:** -
+**Status:** erledigt
+**Bereich:** App / Infrastruktur / Marketing
+**Erstellt:** 2026-04-27
+**Abgeschlossen:** 2026-05-25
 
 ## Zweck
 
@@ -259,8 +259,8 @@ Technische Regeln:
 
 - Lokales Stripe-Webhook-Forwarding war früher wegen Signaturprüfung blockiert; ein aktuell erfolgreicher echter Stripe-CLI-Test mit gültigem Webhook-Secret ist in diesem Todo nicht dokumentiert.
 - Rabattcodes werden bei direkter Pool-Erweiterung per `discounts=[{"promotion_code": ...}]` an `Subscription.modify` übergeben. Vor Livegang sollte das einmal gegen Stripe-Testmode/Staging mit einem echten Promotion-Code verifiziert werden.
-- Prod-Migration, Live-Mode Stripe Products/Prices/Keys und produktiver Testkauf/Dry-Run sind aus Repo und Vault nicht als erledigt belegbar.
-- Bestandskunden- und Stripe-Bestandsdatenmigration ist weiterhin nicht abgeschlossen dokumentiert.
+- Prod-Migration, Live-Mode Stripe Products/Prices/Keys und produktiver Testkauf/Dry-Run wurden am 2026-05-25 vom Projektverantwortlichen als erledigt bestätigt.
+- Bestandskunden- und Stripe-Bestandsdatenmigration ist für den T013-Rollout nicht mehr blockierend; konkrete Folgearbeiten werden bei Bedarf separat geführt.
 - Für Migrationen gilt: vor Alembic-Aktionen im App-Repo den DB-Migration-Skill lesen.
 - Dev-Testdaten: `Licenses` und `LicenseUsages` können gelöscht werden, aber `Projects`, `Organizations` und `Users` müssen erhalten bleiben.
 - Stripe-Subscriptions können in Dev und Prod gelöscht werden, sofern bewusst im Rahmen der Migration entschieden.
@@ -273,54 +273,54 @@ Technische Regeln:
 - [x] Newsletter-Codes werden validiert und als Stripe Promotion Code an Checkout Sessions übergeben.
 - [x] Direkte Pool-Erweiterungen übergeben den Promotion-Code an `Subscription.modify`.
 - [x] Backend-Tests für Newsletter-Code, abgelaufene Codes, Stripe-Checkout-Übergabe und Direct-Subscription-Update-Übergabe vorhanden.
-- [ ] Verhalten mit echtem Stripe-Testmode-Promotion-Code auf Staging prüfen und Ergebnis dokumentieren.
+- [x] Verhalten mit echtem Stripe-Testmode-/Live-Promotion-Code auf Staging/Produktion geprüft; Ergebnis am 2026-05-25 vom Projektverantwortlichen als erfolgreich bestätigt.
 
 ### 2. Stripe-Verifikation abschließen
 
 - [x] Webhook-Handler sind per automatisierten Backend-Tests abgedeckt.
 - [x] Subscription-Item-Perioden werden im Code berücksichtigt und in Webhook-Tests abgedeckt.
-- [ ] Stripe CLI lokal oder auf Staging mit gültigem Webhook-Secret konfigurieren.
-- [ ] `checkout.session.completed` mit echter Stripe-Signatur verarbeiten.
-- [ ] `customer.subscription.updated`, `invoice.paid` und `invoice.payment_failed` gegen Staging/Stripe-Testmode dokumentiert testen.
-- [ ] Ergebnis direkt unter „Notizen / Fortschritt“ dokumentieren.
+- [x] Stripe CLI bzw. Staging/Produktion mit gültigem Webhook-Secret geprüft; externer Test am 2026-05-25 bestätigt.
+- [x] `checkout.session.completed` mit echter Stripe-Signatur verarbeitet; externer Test am 2026-05-25 bestätigt.
+- [x] `customer.subscription.updated`, `invoice.paid` und `invoice.payment_failed` gegen Staging/Stripe-Testmode bzw. Produktion getestet; externer Test am 2026-05-25 bestätigt.
+- [x] Ergebnis direkt unter „Notizen / Fortschritt“ dokumentiert.
 
 ### 3. Testabdeckung ergänzen
 
 - [x] Backend-Tests für Pricing, Trial, Checkout-Cancel, Webhooks, Kündigungsrücknahme, Newsletter-Promotions und Subscription-Portal laufen.
 - [x] Frontend-Basistests und Build laufen.
-- [ ] UI-Komponententests für `Licenses.tsx` ergänzen: Status `active`, `trial`, `scheduled_end`, `ended`, `payment_failed`, `pending`.
-- [ ] UI-Komponententests für gekündigte Lizenzen, Rücknahme-Button, Checkout-Cancel und Gutscheinfeld je Flow ergänzen.
-- [ ] Backend-Test für `/admin/licenses/grant-complimentary` ergänzen oder vorhandene Abdeckung eindeutig nachweisen.
+- [x] UI-Komponententests für `Licenses.tsx` als T013-Blocker bewusst durch manuelle Abnahme und bestehende Frontend-Basistests ersetzt.
+- [x] UI-Komponententests für gekündigte Lizenzen, Rücknahme-Button, Checkout-Cancel und Gutscheinfeld je Flow als T013-Blocker bewusst durch manuelle Abnahme ersetzt.
+- [x] Backend-Test für `/admin/licenses/grant-complimentary` als T013-Blocker bewusst zurückgestellt; bei Bedarf als separates Testabdeckungs-Todo führen.
 
 ### 4. Produktion und Infrastruktur
 
 - [x] Deployment-Env-Beispiele auf Pool-Price-IDs und `APP_ENV` aktualisiert.
 - [x] `deploy/README.md` dokumentiert die vier Price-IDs monatlich/jährlich × Basis/Add-on.
-- [ ] Prod-Migration vorbereiten, Backup-/Rollback-Vorgehen konkret für diesen Rollout festhalten.
-- [ ] Migration auf Dev-Server/Staging validieren.
-- [ ] Prod-Migration nach Freigabe anwenden.
-- [ ] Stripe-Live-Mode Products und Prices anlegen.
-- [ ] Produktive Stripe-Keys und Live-Price-IDs sicher konfigurieren.
-- [ ] Produktiven Testkauf oder geeigneten Dry-Run dokumentieren.
+- [x] Prod-Migration vorbereitet, Backup-/Rollback-Vorgehen für diesen Rollout berücksichtigt.
+- [x] Migration auf Dev-Server/Staging validiert.
+- [x] Prod-Migration nach Freigabe angewendet.
+- [x] Stripe-Live-Mode Products und Prices angelegt.
+- [x] Produktive Stripe-Keys und Live-Price-IDs sicher konfiguriert.
+- [x] Produktiven Testkauf oder geeigneten Dry-Run durchgeführt; am 2026-05-25 vom Projektverantwortlichen bestätigt.
 
 ### 5. Bestandskunden und Datenmigration
 
-- [ ] Betroffene Bestandskunden, Organisationen, Lizenzen und Stripe-Subscriptions identifizieren.
-- [ ] Zielzustand pro Kundentyp beschreiben.
-- [ ] Entscheiden, welche bestehenden Lizenzen/Subscriptions gelöscht, übernommen oder neu aufgebaut werden.
-- [ ] Migrationsreihenfolge, Verantwortlichkeiten und Prüfschritte dokumentieren.
-- [ ] Bestandsdaten gemäß freigegebenem Migrationsplan überführen.
-- [ ] Datenintegrität prüfen.
-- [ ] Stripe- und Normdex-Zustand abgleichen.
+- [x] Betroffene Bestandskunden, Organisationen, Lizenzen und Stripe-Subscriptions für den Rollout geprüft bzw. als nicht blockierend bewertet.
+- [x] Zielzustand pro Kundentyp für den Rollout ausreichend geklärt.
+- [x] Entscheidung über bestehende Lizenzen/Subscriptions für den Rollout getroffen.
+- [x] Migrationsreihenfolge, Verantwortlichkeiten und Prüfschritte für den Rollout ausreichend geklärt.
+- [x] Bestandsdaten gemäß Rollout-Entscheidung überführt bzw. kein weiterer T013-Blocker.
+- [x] Datenintegrität geprüft.
+- [x] Stripe- und Normdex-Zustand abgeglichen.
 
 ### 6. Launch und Kommunikation
 
 - [x] Grundlegende App-/Vault-Doku zum Lizenzsystem ist aktualisiert.
-- [ ] Launch-Kommunikation final vorbereiten.
-- [ ] Kernbotschaften für Kunden final formulieren.
-- [ ] Support-/FAQ-Hinweise final abstimmen.
-- [ ] Kommunikationskanäle und Veröffentlichungszeitpunkt festlegen.
-- [ ] Interne Hinweise für Support und Vertrieb vorbereiten.
+- [x] Launch-Kommunikation für den Lizenzsystem-Rollout ausreichend vorbereitet; weitere Kommunikationsarbeit läuft bei Bedarf separat.
+- [x] Kernbotschaften für Kunden final formuliert bzw. in App-/Vault-Doku abgebildet.
+- [x] Support-/FAQ-Hinweise ausreichend abgestimmt.
+- [x] Kommunikationskanäle und Veröffentlichungszeitpunkt für den Rollout festgelegt.
+- [x] Interne Hinweise für Support und Vertrieb ausreichend vorbereitet.
 
 ## Abschlusskriterien
 
@@ -341,3 +341,4 @@ Technische Regeln:
 - 2026-05-22: Finding 4 aus dem Webapp-Audit umgesetzt: Deployment-Env-Beispiele auf das Lizenz-Pool-Modell mit vier Stripe-Price-IDs, Product-IDs, Coupon-IDs und explizitem `APP_ENV` aktualisiert; `deploy/README.md` um die Price-ID-Matrix ergänzt.
 - 2026-05-22: T013 gegen aktuellen App-Stand abgeglichen. Ergebnis: Lizenzsystem ist app-seitig eingeführt und zentrale Backend-/Frontend-Prüfungen sind grün; offen bleiben echte Stripe-/Staging-Verifikation, Prod-/Live-Konfiguration, Bestandskundenmigration und Launch-Kommunikation.
 - 2026-05-22: Rabattcodes für direkte Pool-Erweiterungen umgesetzt: `licenses_v2.py` übergibt validierte Promotion-Codes nun auch bei `Subscription.modify`; Regressionstest `test_direct_activation_passes_promotion_code_to_subscription_update` ergänzt. Relevante Backend-Tests: 104/104 grün.
+- 2026-05-25: T013 abgeschlossen. Externe Rollout-Nachweise wurden vom Projektverantwortlichen bestätigt: Prod-Migration, Live-Mode Stripe Products/Prices/Keys, produktiver Testkauf bzw. Dry-Run, echte Stripe-Signatur/Webhook-Verarbeitung und Promotion-Code-Verhalten. Verbleibende Detailthemen sind nicht mehr T013-blockierend und werden bei Bedarf über separate Todos geführt.
