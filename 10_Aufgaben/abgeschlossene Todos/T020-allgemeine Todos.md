@@ -6,7 +6,7 @@
 
 Es gibt noch allgemeine Dinge, die mir aufgefallen sind und die ich hier nun einzeln aufführe. Diese Punkte sollen dann nach der Reihe abgearbeitet werden.
 
-Alle Sub-Todos T020-01 bis T020-11 sind abgeschlossen. T020-12 (Konzept Verwaltungsportal) wird als eigenständiges Konzept-Todo weitergeführt.
+Alle Sub-Todos T020-01 bis T020-12 sind abgeschlossen. Der weitere Verwaltungsportal-Ausbau wird über separate Folge-Todos wie [[T020-16-Lizenz-und-Billing-Support-Aktionen]] geführt.
 
 ---
 
@@ -33,7 +33,7 @@ Plan-Datei: `C:\Users\Andreas\.claude\plans\lies-dir-das-to-do-virtual-matsumoto
 11. [[T020-11-Resuemee-Tab]]  *(abhängig von T020-10)*
 
 ### Phase 4 — Konzept
-12. [[T020-12-Konzept Verwaltungsportal]]  *(vorgelagert; Implementierungs-To-dos folgen nach Freigabe)*
+12. [[T020-12-Konzept Verwaltungsportal]]  *(Konzept abgeschlossen; Implementierungs-To-dos folgen separat)*
 
 ---
 

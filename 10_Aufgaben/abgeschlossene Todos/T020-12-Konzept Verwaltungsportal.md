@@ -3,6 +3,8 @@
 **Phase:** 4 (Konzept-Phase)  
 **Priorität:** P3 · vorgelagert vor Implementierung  
 **Parent:** [[T020-allgemeine Todos]]
+**Status:** erledigt  
+**Abgeschlossen:** 2026-05-30
 
 ## Beschreibung
 Vor der Implementierung des erweiterten Verwaltungsportals wird ein Konzept-Dokument erstellt, das die fehlenden Funktionen detailliert definiert. Erst nach Konzept-Freigabe entstehen Implementierungs-To-dos (T020-13 ff.).
@@ -140,3 +142,7 @@ Nach Freigabe entstehen getrennte Implementierungs-To-dos, z.B.:
 - T020-19 DSGVO-Wipe / Datenexport.
 - T020-20 Projekt-Supportzugriff mit Protokollierung.
 - T020-21 RBAC-Konzept für Verwaltung und Support.
+
+## Abschlussnotiz
+
+Abgeschlossen am 2026-05-30. Das Konzept liegt unter [[Verwaltungsportal-Ausbau]]. Der Billing- und Abo-Support wurde als vertiefendes Konzept unter [[Verwaltungsportal-Billing-und-Abo-Support]] ausgearbeitet; die Umsetzung startet mit [[T020-16-Lizenz-und-Billing-Support-Aktionen]].
