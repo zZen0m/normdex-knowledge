@@ -173,6 +173,18 @@ Das Verwaltungsportal hat seit dem 2026-05-23 massiv ausgebaut: `apps/api/app/ro
 - Business Impact: Wartungs- und Upgrade-Risiko, latente Inkonsistenzen bei Lizenz-Statussynchronisationen.
 - Konkrete Handlungsempfehlung: Einen `app/util/dt.py` mit `now_utc() -> datetime` (tz-aware) einführen und alle neuen Admin-Module migrieren. Optional `pytest -W error::DeprecationWarning::app\.routers\.admin` als Gate für neue Änderungen.
 
+#### Status: **behoben (2026-05-30)**
+
+- Umsetzung: Neues Modul [apps/api/app/util/dt.py](../../../01_repos/normdex-app/apps/api/app/util/dt.py) stellt `now_utc()` (tz-aware), `now_utc_naive()` (für die Migrationsphase, solange Modellspalten `Column(DateTime)` ohne `timezone=True` sind, z. B. `License.scheduled_end_at`, `License.current_term_end`) sowie `ensure_utc` / `utc_naive` als Konverter bereit. Damit lässt sich der Deprecation-Warn-Pfad sauber schließen, ohne `TypeError: can't compare offset-naive and offset-aware datetimes` zu provozieren.
+- Migrierte Admin-Module:
+    - [apps/api/app/routers/admin.py](../../../01_repos/normdex-app/apps/api/app/routers/admin.py): alle sieben `datetime.utcnow()`-Stellen (Z. 622/652/770/784/972/1857/1996 — Cancel-/Reactivate-Preview, `_admin_license_status_sync_target`, `email_verified_at`, `_admin_license_cancel`, `_admin_license_usage_release`) auf `now_utc_naive()` umgezogen; redundanter Inline-Import `from datetime import datetime` entfernt.
+    - [apps/api/app/routers/support_admin.py](../../../01_repos/normdex-app/apps/api/app/routers/support_admin.py): alle sieben Stellen (Status-/Priority-/Category-Update + Auto-Close-Timer + `last_agent_activity_at`) migriert.
+    - [apps/api/app/routers/notifications.py](../../../01_repos/normdex-app/apps/api/app/routers/notifications.py): beide Stellen (`read_at` beim Mark-Read und `now` im Read-All-Pfad) migriert.
+    - Admin-bezogene Tests: [apps/api/tests/test_admin_org_case.py](../../../01_repos/normdex-app/apps/api/tests/test_admin_org_case.py) (14 Stellen), [apps/api/tests/test_admin_delete_user.py](../../../01_repos/normdex-app/apps/api/tests/test_admin_delete_user.py) (1 Stelle), [apps/api/tests/test_notifications.py](../../../01_repos/normdex-app/apps/api/tests/test_notifications.py) (4 Stellen) verwenden jetzt `now_utc_naive()`.
+- Regressions-Gate: [apps/api/pytest.ini](../../../01_repos/normdex-app/apps/api/pytest.ini) hat einen `filterwarnings`-Block, der `datetime.utcnow`-Deprecation-Warnungen aus `app.routers.admin`, `app.routers.support_admin` und `app.routers.notifications` zu Errors eskaliert. Damit fällt jeder neue `datetime.utcnow()`-Aufruf in diesen Modulen sofort im Test auf.
+- Verifikation: `pytest -q` → **265 passed, 972 warnings** (vorher 996 warnings nach den Findings-1/2/4-Fixes; die im Audit dokumentierten 918 sind nicht direkt vergleichbar, weil seither weitere Cleanup-Tests dazugekommen sind, die ihrerseits noch nicht migrierte Codepfade triggern). Die Admin-Module selbst tragen jetzt **keine** Datetime-Deprecation-Warnung mehr bei.
+- Offen: Nicht-Admin-Module (`licenses_v2.py`, `scheduler.py`, `webhook_service.py`, `auth.py`, `licenses.py` u. a.) und die zugehörigen Test-Fixtures nutzen weiterhin `datetime.utcnow()` — sie sind außerhalb des Audit-Scopes ("alle neuen Admin-Module"), aber `now_utc_naive()` / `now_utc()` steht für die schrittweise Migration bereit. Der mittelfristige Endzustand bleibt: Modellspalten auf `DateTime(timezone=True)` heben und auf `now_utc()` (tz-aware) wechseln.
+
 ### Finding 6 - AdminUsers verwendet native `prompt()`/`confirm()` und nennt eine falsche Passwortlänge
 
 - Kategorie: Improvement
