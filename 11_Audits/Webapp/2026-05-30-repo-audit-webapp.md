@@ -153,6 +153,13 @@ Das Verwaltungsportal hat seit dem 2026-05-23 massiv ausgebaut: `apps/api/app/ro
 - Business Impact: Aktuell kein Impact. Mittelfristig Risiko, dass User Notifications nur per Polling sehen und die "Live"-Versprechung im UX bricht.
 - Konkrete Handlungsempfehlung: README/Deployment-Doku mit `Hinweis: Notifications-SSE setzt Single-Worker voraus` ergänzen oder den Broker auf Redis Pub/Sub umstellen, bevor `--workers > 1` aktiviert wird.
 
+#### Status: **behoben (2026-05-30)**
+
+- Umsetzung: Neue Funktion `assert_single_process_or_warn()` in [apps/api/app/services/notifications.py](../../../01_repos/normdex-app/apps/api/app/services/notifications.py) prüft `WEB_CONCURRENCY` (der von uvicorn/Gunicorn gelesene De-facto-Env-Var). Bei `> 1` wirft der API-Startup einen `RuntimeError`, der die Migrationsschuld explizit benennt; Operatoren können den Guard bewusst per `NORMDEX_ALLOW_MULTIPROCESS_SSE=1` auf Warning herunterstufen (z. B. übergangsweise mit Sticky-Sessions am Reverse-Proxy). Der Guard hängt im Lifespan von [apps/api/app/main.py](../../../01_repos/normdex-app/apps/api/app/main.py) neben den anderen Startup-Validierungen.
+- Doku: [deploy/README.md](../../../01_repos/normdex-app/deploy/README.md) enthält jetzt einen eigenen Abschnitt **2.5 Notifications / SSE-Broker** mit den drei Optionen (Single-Worker bleiben / Opt-in Multi-Worker / Redis-Migration). Das [apps/api/Dockerfile](../../../01_repos/normdex-app/apps/api/Dockerfile) bekommt einen `IMPORTANT`-Kommentar direkt am `CMD`, damit niemand stillschweigend `--workers` ergänzt.
+- Verifikation: 5 neue Tests in [apps/api/tests/test_notifications.py](../../../01_repos/normdex-app/apps/api/tests/test_notifications.py) decken die Guard-Pfade ab (Default / `WEB_CONCURRENCY=1` / Multi-Worker raise / Opt-in Warning / ungültiger Env-Wert). `pytest -q` jetzt **264 passed** (vorher 259, +5).
+- Offen: Die echte Redis-Pub/Sub-Migration steht weiter aus — der Guard ist die Brücke, die verhindert, dass ein Operator versehentlich vor der Migration auf Multi-Worker hochskaliert.
+
 ### Finding 5 - Deprecation-Warnungen sind von 616 auf 918 gestiegen (Regression)
 
 - Kategorie: Improvement
