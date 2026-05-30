@@ -115,6 +115,18 @@ Das Verwaltungsportal hat seit dem 2026-05-23 massiv ausgebaut: `apps/api/app/ro
 - Business Impact: Support-Mitarbeitende denken, sie haben dokumentiert; bei einem späteren Streit (Kündigung, Refund) fehlt der Beleg.
 - Konkrete Handlungsempfehlung: Entweder die drei Buttons aus der UI entfernen, bis das Backend bereit ist, oder die fehlenden Endpunkte ergänzen (`POST /admin/organizations/{id}/notes`, `GET /admin/organizations/{id}/billing/check`, `POST /admin/.../subscriptions/{id}/check`) und im `AuditLog` speichern. Übergangsweise konsistent zum Rest disablen statt einen Erfolgs-Toast anzuzeigen.
 
+#### Status: **behoben (2026-05-30)**
+
+- Umsetzung: Drei neue Backend-Endpoints in [apps/api/app/routers/admin.py:2108-2295](../../../01_repos/normdex-app/apps/api/app/routers/admin.py#L2108-L2295), jeweils hinter `require_admin`, mit Pflicht-`reason` (≥3 Zeichen), `confirm`-Flag und optionaler Ticket-Verknüpfung:
+    - `POST /admin/organizations/{org_id}/notes` → schreibt AuditLog-Event `admin_org_note_added` (Notiztext landet in `meta["note"]`, optional verknüpft mit Support-Ticket-ID).
+    - `POST /admin/organizations/{org_id}/billing/check` → läuft `_billing_diagnostics` gegen Stripe (Customer, Subscriptions, Invoices) und protokolliert das Ergebnis als `admin_org_billing_checked` (Warnungen + Kennzahlen im AuditLog-Meta). Funktioniert auch ohne Stripe-Config — schreibt dann `stripe_error` ins AuditLog.
+    - `POST /admin/organizations/{org_id}/billing/subscriptions/{subscription_id}/check` → vergleicht Stripe-Status mit lokaler Lizenztabelle und schreibt `admin_org_subscription_checked` mit Issue-Liste (`subscription_past_due`, `scheduled_to_cancel`, `stripe_canceled_but_local_active`, `stripe_cancels_but_local_not_scheduled_end`, `subscription_missing_in_stripe`, `stripe_error`).
+- Frontend: API-Client um `adminOrgAddNote`, `adminOrgBillingCheck`, `adminOrgSubscriptionCheck` ergänzt ([apps/frontend/src/api.ts:270-275](../../../01_repos/normdex-app/apps/frontend/src/api.ts#L270-L275)). Der `submit`-Dispatcher in [apps/frontend/src/pages/admin/OrganizationCase.tsx:335-419](../../../01_repos/normdex-app/apps/frontend/src/pages/admin/OrganizationCase.tsx#L335-L419) bedient jetzt alle 12 `ActionKind`-Werte; der irreführende `"Workflow noch nicht angebunden."`-Toast ist entfernt. Billing- und Subscription-Check zeigen Hinweise/Warnungen kontextspezifisch im Toast (`notify.warning` mit Warnungsliste vs. `notify.success` bei sauberem Ergebnis), Notiz quittiert mit `"Notiz im Audit-Log gespeichert."`.
+- Verifikation:
+    - 8 neue Tests in [apps/api/tests/test_admin_org_case.py](../../../01_repos/normdex-app/apps/api/tests/test_admin_org_case.py): Admin-Gate, Confirm-Pflicht, AuditLog-Schreibpfad mit Ticket-Bindung, Behandlung unbekannter Ticket-IDs, Diagnostics ohne Stripe-Config, Stripe-Aggregation (offene Rechnung + fehlende Subscription), Inkonsistenz-Flags für Subscription-Check, Stripe-Fehlerpfad. `pytest -q` jetzt **259 passed** (vorher 250).
+    - `npm run build` in `apps/frontend`: erfolgreich (Hauptbundle 533.91 kB; +0.35 kB für die drei neuen Dispatcher-Zweige — Finding 8 dadurch nicht spürbar verändert).
+- Offen: Die drei Aktionen werfen das Aktion-Dialog-Result derzeit nur als Toast aus; eine reichere Inline-Anzeige (z. B. eine Diagnostik-Card mit allen Warnungen) bleibt aufgespart für ein späteres UX-Inkrement. Für die Audit-Tickets-Querbindung gilt weiterhin: der Endpoint validiert die übergebene `ticket_id` gegen `SupportTicket.ticket_id` und verweigert unbekannte Werte (HTTP 400).
+
 ### Finding 3 - support_admin.py umgeht die zentrale `require_admin`-Dependency
 
 - Kategorie: Risk
@@ -196,7 +208,7 @@ Das Verwaltungsportal hat seit dem 2026-05-23 massiv ausgebaut: `apps/api/app/ro
 ## 8. Quick Wins
 
 - `support_admin.py` mit `Depends(require_admin)` umstellen und die manuellen `if not user.is_admin`-Zeilen entfernen.
-- `OrganizationCase.tsx` Buttons `Notiz/Aktion erfassen`, `Billing prüfen` und `Subscription prüfen` als `disabled` markieren, bis ein Backend-Endpoint existiert.
+- ~~`OrganizationCase.tsx` Buttons `Notiz/Aktion erfassen`, `Billing prüfen` und `Subscription prüfen` als `disabled` markieren, bis ein Backend-Endpoint existiert.~~ → **behoben am 2026-05-30** (Finding 2): Backend-Endpoints + AuditLog statt nur Toast; Buttons sind jetzt voll angebunden.
 - In `AdminUsers.tsx` die Passwort-Mindestlänge-Mitteilung von "mind. 10" auf den Backend-Wert ("mind. 8") angleichen.
 - `admin.py:1741` `reason` mit explizitem Refund-Code-Mapping ergänzen.
 - `apps/api/alembic/versions/unleash-*.json` aus dem Migrations-Ordner verschieben (persistent seit 2026-05-23).
@@ -211,7 +223,7 @@ Das Verwaltungsportal hat seit dem 2026-05-23 massiv ausgebaut: `apps/api/app/ro
 
 ## 10. Empfohlene nächste Aktion
 
-Vor dem nächsten Produktiv-Release das Verwaltungsportal in drei Punkten absichern: (1) `admin.delete_user` kaskadiert oder verweigert User mit aktiven Beziehungen, (2) die drei "noch nicht angebunden"-Buttons in `OrganizationCase` werden disabled oder serverseitig ergänzt, (3) `support_admin.py` wird auf `require_admin` umgestellt.
+Vor dem nächsten Produktiv-Release das Verwaltungsportal in drei Punkten absichern: (1) ~~`admin.delete_user` kaskadiert oder verweigert User mit aktiven Beziehungen~~ (Finding 1 behoben 2026-05-30), (2) ~~die drei "noch nicht angebunden"-Buttons in `OrganizationCase` werden disabled oder serverseitig ergänzt~~ (Finding 2 behoben 2026-05-30 — Backend-Endpoints + AuditLog), (3) `support_admin.py` wird auf `require_admin` umgestellt.
 
 ## 11. Offene Unsicherheiten / Punkte zur manuellen Prüfung
 
