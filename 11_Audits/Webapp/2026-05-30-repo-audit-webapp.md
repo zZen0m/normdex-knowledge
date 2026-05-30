@@ -204,6 +204,12 @@ Das Verwaltungsportal hat seit dem 2026-05-23 massiv ausgebaut: `apps/api/app/ro
 - Business Impact: Niedrig — Berichtsqualität in Stripe.
 - Konkrete Handlungsempfehlung: `AdminBillingRefundSchema` um ein `reason_code: Literal["requested_by_customer","duplicate","fraudulent"]` erweitern und an Stripe durchreichen. Default bei fehlendem Wert weiter `requested_by_customer`.
 
+#### Status: **behoben (2026-05-30)**
+
+- Umsetzung: `AdminBillingRefundSchema` in [apps/api/app/routers/admin.py](../../../01_repos/normdex-app/apps/api/app/routers/admin.py) hat jetzt `reason_code: Literal["requested_by_customer", "duplicate", "fraudulent"]` mit Default `requested_by_customer`. Der Refund-Endpoint reicht `data.reason_code` direkt an `stripe.Refund.create(..., reason=...)` durch und speichert den Code zusätzlich in Refund-`metadata` sowie im `AuditLog`; der freie Admin-Grund bleibt unverändert in `metadata["support_reason"]` und `AuditLog.meta["reason"]`.
+- Frontend: Die Organisationsakte zeigt beim Refund-Dialog ein Feld `Stripe-Grund` mit den drei Stripe-Codes (`Kundenwunsch`, `Doppelte Zahlung`, `Betrug / Missbrauch`) und sendet den gewählten Wert über den API-Client mit.
+- Verifikation: `.\venv\Scripts\python -m pytest tests/test_admin_org_case.py -q` in `apps/api` erfolgreich (**42 passed**). `npm run build` in `apps/frontend` erfolgreich; die bestehende Vite-Warnung für das Hauptbundle bleibt als separates Finding 8 offen.
+
 ### Finding 8 - Frontend-Hauptbundle weiter gewachsen
 
 - Kategorie: Optimization
@@ -222,7 +228,7 @@ Das Verwaltungsportal hat seit dem 2026-05-23 massiv ausgebaut: `apps/api/app/ro
 - `support_admin.py` mit `Depends(require_admin)` umstellen und die manuellen `if not user.is_admin`-Zeilen entfernen.
 - ~~`OrganizationCase.tsx` Buttons `Notiz/Aktion erfassen`, `Billing prüfen` und `Subscription prüfen` als `disabled` markieren, bis ein Backend-Endpoint existiert.~~ → **behoben am 2026-05-30** (Finding 2): Backend-Endpoints + AuditLog statt nur Toast; Buttons sind jetzt voll angebunden.
 - In `AdminUsers.tsx` die Passwort-Mindestlänge-Mitteilung von "mind. 10" auf den Backend-Wert ("mind. 8") angleichen.
-- `admin.py:1741` `reason` mit explizitem Refund-Code-Mapping ergänzen.
+- ~~`admin.py:1741` `reason` mit explizitem Refund-Code-Mapping ergänzen.~~ → **behoben am 2026-05-30** (Finding 7): Refund-Reason-Code wird jetzt explizit im Backend validiert, an Stripe durchgereicht und im AuditLog protokolliert.
 - `apps/api/alembic/versions/unleash-*.json` aus dem Migrations-Ordner verschieben (persistent seit 2026-05-23).
 
 ## 9. Strategische Empfehlungen
