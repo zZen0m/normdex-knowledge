@@ -1,8 +1,29 @@
 # Datenschutzprozess
 
-Stand: 2026-05-22
+Stand: 2026-05-30
 
 Dieses Dokument beschreibt den aktuellen operativen Umgang mit Auskunfts-, Datenkopie- und Kontolöschanfragen in der Normdex-App.
+
+## Externe Dienste in der Datenschutzerklärung
+
+Die öffentliche Datenschutzerklärung (`https://normdex.at/datenschutz`, Quelle: [normdex-landingpage/src/pages/Datenschutz.tsx](../../../01_repos/normdex-landingpage/src/pages/Datenschutz.tsx)) deklariert folgende Datenverarbeitungen:
+
+| Dienst | Anbieter | Rolle | Standort |
+|---|---|---|---|
+| Hosting | IONOS (1&1 IONOS SE) | Auftragsverarbeiter Art. 28 | DE (Berlin) |
+| Transaktions-E-Mail | Brevo (Sendinblue SAS) | Auftragsverarbeiter Art. 28 | EU (FR) |
+| Web-Analyse | Google Analytics (Google Ireland Ltd.) | Auftragsverarbeiter, DPF-zertifiziert | EU/US |
+| Bot-Schutz | Google reCAPTCHA v2 (Google Ireland Ltd.) | Auftragsverarbeiter, DPF-zertifiziert | EU/US |
+| Zahlung | Stripe Payments Europe Ltd. | Eigener Verantwortlicher | EU (IE) |
+| UID-Prüfung | VIES (EU-Kommission, GD TAXUD) | Kein Auftragsverarbeiter (offizieller EU-Dienst) | EU (BE) |
+
+Bei neuen externen Diensten (z. B. CRM, Tracking-Tools, KI-APIs) ist die Datenschutzerklärung zu erweitern, **bevor** der Dienst produktiv geht.
+
+### VIES-spezifisch
+
+- Übermittelt werden ausschließlich `countryCode` + `vatNumber` (siehe `apps/api/app/services/vat_validation.py`).
+- Kein AVV erforderlich (offizieller EU-Dienst).
+- Rechtsgrundlage: Art. 6 Abs. 1 lit. c (UStG-Pflicht) und lit. f (berechtigtes Interesse).
 
 ## Grundsatz
 
