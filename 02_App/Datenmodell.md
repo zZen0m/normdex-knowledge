@@ -156,6 +156,19 @@ status (pending / delivered / failed)
 retry_count, last_error, next_delivery_at
 ```
 
+## Notification
+```
+id (UUID), user_id (FK users, ondelete CASCADE)
+type (z.B. welcome / license_purchased / license_expiring_soon / license_expired)
+title, body, link (optional, interne Route)
+meta (JSON, typ-spezifisch: license_id, organization_id, order_id, ...)
+read_at (NULL = ungelesen)
+created_at
+```
+
+Indizes: `(user_id)`, `(read_at)`, `(created_at)`, `(user_id, read_at)`, `(user_id, created_at)`.
+Persistente In-App-Benachrichtigungen je User. Cascade-Delete beim User. Siehe [[Funktionen im Detail#Benachrichtigungen]] und [[API-Endpunkte#Benachrichtigungen]].
+
 ---
 
 ## Verwandte Dokumente

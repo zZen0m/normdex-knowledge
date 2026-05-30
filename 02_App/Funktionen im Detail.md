@@ -198,6 +198,39 @@ Das Dashboard (`/app`) ist die Startseite nach dem Login:
 
 ---
 
+## Benachrichtigungen
+
+In-App-Benachrichtigungssystem mit persistenter Historie pro User und Live-Updates über Server-Sent Events.
+
+**UI-Einstiege:**
+- **Bell-Icon** in der Sidebar mit pinkem Badge (Anzahl Ungelesene, `9+` bei mehr als 9). Klick öffnet ein Popover mit den 8 jüngsten Einträgen.
+- **Vollansicht** unter `/notifications` mit Tab-Filter (Alle/Ungelesen), Hover-Delete und „Alle als gelesen“-Aktion.
+
+**Verhalten:**
+- Klick auf eine Notification → Sprung zur Ziel-Route (`link`-Feld) und automatisches Mark-as-Read.
+- Live-Push: Beim Erzeugen einer Notification erscheint sofort ein `notify.info`-Toast (sonner) und der Badge zählt hoch — ohne Reload.
+- Bei Verbindungsabbruch reconnected der Browser automatisch (`EventSource`-Default). Zusätzlich läuft alle 5 Minuten und beim Tab-Focus ein leichter Refetch der Unread-Anzahl als Safety-Net.
+
+**Notification-Typen (MVP):**
+
+| Typ | Trigger | Empfänger |
+|---|---|---|
+| `welcome` | Registrierung (Self oder Invite-Annahme) | Neuer User; bei Invite org-spezifisch |
+| `license_purchased` | Stripe `checkout.session.completed` (idempotent über `order.meta`) | `LicenseOrder.created_by_user_id` |
+| `license_expiring_soon` | Täglicher Scheduler 06:00 für Buckets 14/7/1 Tage | `created_by_user_id` → `assigned_user_id` → Org-Owner |
+| `license_expired` | Täglicher Scheduler 06:00 (Bucket 0 Tage) | wie oben |
+
+Nur Lizenzen mit `cancel_at_period_end=True` werden im Scheduler berücksichtigt — Auto-Renew-Lizenzen laufen nicht aus und brauchen keine Warnung.
+
+**Architektur-Hinweise:**
+- Persistenz in Tabelle `notifications` (siehe [[Datenmodell#Notification]]).
+- Service-Layer `app/services/notifications.py` mit `create_notification(...)` als zentralem Schreibpfad — Trigger nutzen niemals direkt das ORM.
+- Live-Push via In-Process-SSE-Broker (`asyncio.Queue` pro `user_id`). **Single-Worker-tauglich** — bei Multi-Worker-Deployment ist Redis Pub/Sub nötig.
+- Endpoints: siehe [[API-Endpunkte#Benachrichtigungen]]. Für End-to-End-Verifikation des SSE-Pfads existiert `POST /notifications/_admin/test` (Admin only).
+- Abgrenzung zu [[Toast-Benachrichtigungen]]: Toasts sind flüchtige UI-Signale (sonner), Notifications sind persistente Datensätze. Live-Notifications zeigen beim Empfang zusätzlich einen Toast als Aufmerksamkeitssignal.
+
+---
+
 ## Admin-Panel
 
 Nur für Nutzer mit dem Flag `is_admin = true`.

@@ -1,9 +1,9 @@
 # T022 - Notifications-System (Bell-Icon, Backend-API, Frontend-Panel)
 
-**Status:** offen
+**Status:** erledigt
 **Bereich:** App / Backend / Frontend / Sidebar
 **Erstellt:** 2026-05-24
-**Abgeschlossen:** -
+**Abgeschlossen:** 2026-05-30
 
 ## Ziel
 
@@ -170,3 +170,52 @@ Frontend:
 ## Notizen / Fortschritt
 
 - 2026-05-24: Todo angelegt nach Sidebar-Redesign. Bell-Icon und Badge-Mechanik sind bereits in [Sidebar.tsx](apps/frontend/src/components/layout/Sidebar.tsx) vorbereitet, `notifCount` und `handleBellClick` warten auf Anbindung.
+- 2026-05-30: Implementiert und abgeschlossen.
+
+## Implementation-Notes (2026-05-30)
+
+### MVP-Scope (vom User bestätigt)
+
+- Trigger: `welcome`, `license_purchased`, `license_expiring_soon` (Buckets 14/7/1), `license_expired`
+- UI: Popover am Bell-Icon **plus** dedizierte Seite `/notifications`
+- Live-Updates: **Server-Sent Events** via `/notifications/stream` (nicht Polling)
+- **Bewusst nicht im MVP:** Support-Reply-Trigger, Browser-Push, Admin-Announcement-Tool, E-Mail-Spiegelung
+- **Team-Invite-Trigger gestrichen:** Stellte sich heraus, dass Einladungen nur an noch-nicht-registrierte E-Mails gehen (Invite-Link → `/auth/register`). Bestehende User können nie eine Notification empfangen. Stattdessen: org-spezifischer Welcome bei Invite-Annahme im Register-Endpoint. Siehe Memory `project_team_invites_new_emails_only`.
+
+### Architektur
+
+- **DB-Tabelle** `notifications`: UUID-PK, FK `user_id` mit `ondelete=CASCADE`, `type` als String (kein Enum, damit neue Typen ohne Migration), `meta` als JSON (SQLite + Postgres kompatibel), 5 Indizes (3 Single-Column aus autogenerate + 2 Composites `(user_id, read_at)` und `(user_id, created_at)`).
+- **Alembic-Migration:** `apps/api/alembic/versions/995d14683241_add_notifications_table.py`. Autogenerate erfasste viel Schema-Drift — Migration wurde manuell auf die Notifications-Änderungen reduziert.
+- **Service-Layer** `apps/api/app/services/notifications.py`: `create_notification(...)` ist der einzige öffentliche Schreibpfad. Inkludiert einen In-Process-SSE-Broker (`asyncio.Queue` pro `user_id`, `call_soon_threadsafe` für sync→async Bridging, drop-on-full statt blocken).
+- **Router** `apps/api/app/routers/notifications.py`: 6 Endpoints (List / unread-count / mark-read / read-all / DELETE / stream). SSE-Endpoint nutzt `StreamingResponse(media_type="text/event-stream")` + 15s-Keepalive-Kommentare + `X-Accel-Buffering: no`-Header für nginx.
+- **Cookie-Auth funktioniert mit EventSource**, weil `CORSMiddleware` schon `allow_credentials=True` hat.
+
+### Trigger-Integration
+
+- **Welcome** in `apps/api/app/routers/auth.py:register` — wird sowohl für Self-Register als auch Invite-Register erzeugt. Bei Invite: Titel/Body org-spezifisch, Link auf `/team`.
+- **license_purchased** in `apps/api/app/routers/subscriptions.py:_handle_checkout_completed` via Helper `_maybe_notify_license_purchased`. Idempotenz über `order.meta["purchase_notification_sent_at"]` analog zur existierenden E-Mail-Idempotenz. Singular/Plural je Anzahl.
+- **license_expiring_soon / license_expired** als APScheduler-Cron in `apps/api/app/services/scheduler.py:check_expiring_licenses`. Läuft täglich um 06:00. Trifft nur Lizenzen mit `cancel_at_period_end=True` (Auto-Renew-Lizenzen werden zu Recht ignoriert). Empfänger-Logik: `created_by_user_id` → `assigned_user_id` → Org-Owner. Dedupe per Day-Bucket + `meta.license_id`.
+
+### Frontend
+
+- **API-Client** in `apps/frontend/src/api.ts`: 5 Methoden + `NotificationItem`-Typ + `API_BASE`-Export für EventSource.
+- **`NotificationsContext`** in `apps/frontend/src/context/NotificationsContext.tsx`: Provider mit `useUser()`-Gate (kein Fetch ohne Login), EventSource mit `withCredentials`, sonner-Toast bei Live-Empfang, Polling auf 5 Min Fallback reduziert + focus-Listener.
+- **Wichtig**: Provider muss in `App.tsx` AppContent UMSCHLIESSEN (nicht nur ProtectedRoute), weil `<Sidebar />` außerhalb von ProtectedRoute gemountet wird. Konsequenz: Provider muss tolerant gegenüber „kein User" sein → kein Fetch in dem Fall.
+- **shadcn Popover** via `npx shadcn@latest add popover` nachgezogen. `BellItem` wurde auf `forwardRef` umgestellt, damit `PopoverTrigger asChild` funktioniert.
+- **NotificationPanel** in `apps/frontend/src/components/notifications/NotificationPanel.tsx`: 380 px, max 8 jüngste Einträge, typ-spezifische Icons, `formatDistanceToNow` mit `deAT`-Locale.
+- **`/notifications`-Seite** mit Filter-Tabs („Alle"/„Ungelesen") und Hover-Delete.
+
+### Bekannte Caveats
+
+- **SSE-Broker ist Single-Process.** Bei Gunicorn `-w >1` würde jeder Worker einen eigenen Broker haben → Notification wird nur in dem Worker live gepusht, in dem `create_notification` aufgerufen wurde. Subscriber in anderen Workern bekommen es erst beim Reconnect/Polling. Falls je Multi-Worker: Redis Pub/Sub.
+- **nginx in Prod:** Für `/notifications/stream` muss `proxy_buffering off;` gesetzt sein. Der `X-Accel-Buffering: no`-Header deckt das ab, falls er durchgelassen wird — sonst manuell konfigurieren.
+- **Seed/Test-Scripts** triggern keine SSE-Live-Pushes, da sie in einem anderen Prozess als das Backend laufen. Helper-Script: `apps/api/scripts/_seed_notification.py`.
+- **DSGVO/Retention:** Aktuell kein Auto-Delete alter Notifications. Falls relevant: zusätzlicher Cron-Job, z.B. gelesene älter als 90 Tage löschen.
+
+### Nicht erledigt (out-of-scope MVP)
+
+- Backend-Unit-Tests für Service + Endpoints (Folge-Todo möglich)
+- Admin-only Test-Endpoint für End-to-End-SSE-Verifikation
+- Browser-Push-Notifications (Service Worker / Web Push API)
+- E-Mail-Spiegelung bestimmter Notification-Typen mit User-Settings-Opt-in
+- Admin-Tool für manuelle System-Announcements an alle User

@@ -39,6 +39,7 @@
 | `/settings/subscription/plans` | **Abopläne** – Preisübersicht, Upgrade |
 | `/help` | **Hilfe & Dokumentation** – Sticky-TOC + Schnellstart und 6 Bereiche (Team, Lizenz, Projekt/Berechnung, Benutzerkonto, Unternehmen, Support & Community) mit Step-by-Step-Anleitungen. User-Facing Single Source of Truth für die App-Bedienung. |
 | `/support` | **Support-Formular** – Ticket erstellen, Kategorie per URL vorauswählen (`?category=feature`), Anhänge hochladen, seitliche Kontakt-/Erwartungsinfos |
+| `/notifications` | **Benachrichtigungen** – Vollansicht aller In-App-Notifications mit Tab-Filter (Alle/Ungelesen), Löschen per Hover. Quick-View per Popover am Bell-Icon in der Sidebar. |
 
 ## Admin-Routen (nur für Admins)
 

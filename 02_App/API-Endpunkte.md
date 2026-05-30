@@ -135,6 +135,20 @@ PATCH  /admin/support/tickets/{id}         → Status/Priorität/Kategorie/Assig
 GET    /admin/support/stats                → Support-Metriken
 ```
 
+## Benachrichtigungen
+
+```
+GET    /notifications                  → Liste (paginiert; unread_only optional)
+GET    /notifications/unread-count     → Schneller Badge-Endpunkt
+GET    /notifications/stream           → Server-Sent-Events Live-Stream
+POST   /notifications/{id}/read        → Einzeln als gelesen markieren
+POST   /notifications/read-all         → Alle Ungelesenen markieren
+DELETE /notifications/{id}             → Einzeln löschen
+POST   /notifications/_admin/test      → Test-Notification erzeugen (Admin)
+```
+
+`/stream` liefert Live-Updates über den In-Process-Broker; Cookie-Auth funktioniert via `EventSource` + `withCredentials`. 15s-Keepalive-Kommentare verhindern Proxy-Timeouts. Trigger laufen serverseitig in `auth.register` (Welcome), `subscriptions._handle_checkout_completed` (license_purchased) sowie als täglicher APScheduler-Job (license_expiring_soon, license_expired).
+
 ## Stats & Health (API-Key geschützt)
 
 ```

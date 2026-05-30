@@ -40,8 +40,7 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 
 | ID      | Todo                                  | Bereich                            | Status |
 | ------- | ------------------------------------- | ---------------------------------- | ------ |
-| T022    | [[T022-notifications-system]]         | App / Backend / Frontend / Sidebar | offen  |
-| T020-12 | [[T020-12-Konzept Verwaltungsportal]] | App / Verwaltungsportal            | offen  |
+| T020-16 | [[T020-16-Lizenz-und-Billing-Support-Aktionen]] | App / Verwaltungsportal / Stripe   | offen  |
 
 ## Zusammengeführte Todo-IDs
 
@@ -59,6 +58,8 @@ Diese Todos sind konzeptionell ausgearbeitet, aber bewusst zurückgestellt. Sie 
 
 | ID      | Todo                                                | Bereich                          | Abgeschlossen |
 | ------- | --------------------------------------------------- | -------------------------------- | ------------- |
+| T022    | [[T022-notifications-system]]                       | App / Backend / Frontend / Sidebar | 2026-05-30  |
+| T020-12 | [[T020-12-Konzept Verwaltungsportal]]               | App / Verwaltungsportal          | 2026-05-30    |
 | T020    | [[T020-allgemeine Todos]]                           | App                              | 2026-05-30    |
 | T017    | [[T017-testzeitraum-fuer-lizenzen]]                 | App / Lizenzen / Stripe / Legal  | 2026-05-30    |
 | T019    | [[T019-newsletter-gutschein-brevo-webhook-rollout]] | App / Newsletter / Brevo / Stripe | 2026-05-30    |

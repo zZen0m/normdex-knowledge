@@ -16,7 +16,8 @@ Normdex
     ├── SMTP (Brevo) für E-Mails
     ├── Stripe für Zahlungen
     ├── Microsoft Graph API (Support-Mailbox)
-    └── APScheduler für Hintergrund-Jobs
+    ├── APScheduler für Hintergrund-Jobs
+    └── Server-Sent Events (In-Process-Broker, Single-Worker) für Live-Benachrichtigungen
 ```
 
 **Monorepo-Struktur:**

@@ -4,6 +4,12 @@
 
 Toast-Benachrichtigungen geben kurzes, nicht-blockierendes Feedback zu abgeschlossenen oder fehlgeschlagenen Aktionen in der Normdex App. Sie ersetzen keine Formularvalidierung im Feld und keine Bestätigungsdialoge für irreversible Aktionen.
 
+## Abgrenzung: Toasts vs. persistente Benachrichtigungen
+
+Toasts sind **flüchtige UI-Signale**: sie reagieren auf die unmittelbare Aktion des Nutzers und sind nach wenigen Sekunden weg. Persistente **In-App-Benachrichtigungen** (siehe [[Funktionen im Detail#Benachrichtigungen]]) sind dagegen Datensätze in der Datenbank, die auch nach Reload oder Re-Login sichtbar bleiben und ungelesen/gelesen-Status tragen.
+
+Bei einer Live-Notification (über SSE empfangen) wird **zusätzlich** ein `notify.info`-Toast angezeigt, damit der User die neue Notification sofort wahrnimmt — der Toast ist hier das Aufmerksamkeitssignal, die persistente Notification der eigentliche Inhalt.
+
 ## Technische Grundlage
 
 - Toast-System: Sonner
