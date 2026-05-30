@@ -2,7 +2,11 @@
 
 ## Status
 
-in Arbeit
+erledigt
+
+## Abgeschlossen
+
+2026-05-30
 
 ## Bereich
 
@@ -164,15 +168,15 @@ Die Darstellung muss einfach, transparent und vor Kaufabschluss sichtbar sein. K
 
 ## Offene Prüfpunkte
 
-- Exakte Stripe-Konfiguration für Trial und Zahlungsdatenerfassung mit aktueller Stripe-API prüfen.
+- Erledigt: Stripe-Konfiguration für Trial in `licenses_v2.py:1482` umgesetzt (`subscription_data["trial_period_days"] = LICENSE_TRIAL_BENEFIT_DAYS`). Stripe erfasst Zahlungsdaten im Checkout und bucht erst nach Trial-Ablauf ab.
 - Erledigt: Stripe-Gutschein für den einheitlichen Erstbestellungsrabatt ist `ÖNORM M 7140 Basic – Neukundenrabatt`, Coupon-ID `QHQESezY`, fixer Betrag 24,50 EUR.
 - Erledigt: `trial` wird als eigener Status modelliert, ergänzt um Trial-Felder. Begründung: UI, API, Statuszählung, Webhooks und Audit-Events bleiben dadurch eindeutig.
 - Erledigt: Missbrauchsschutz-Grundlage ist implementiert: `organizations.trial_used_at`, Pending-Order-Sperre, Cross-Checks über `stripe_customer_id` und `vat_id`, Checkout-Cancel-Freigabe nur ohne Stripe-Subscription, sowie Backfill-Migration für bestehende Trial-/Benefit-Historie.
-- Erledigt: Marketing-Grundformulierung angepasst: kein „ohne Kreditkarte“, da Stripe Zahlungsdaten im Checkout erfasst.
-- Prüfen, ob es im Landingpage-Repo bereits einen Checkout-Einstieg gibt oder ob die App weiterhin `/licenses` als Kaufoberfläche nutzt.
-- Produktentscheidung für gemischte Erstbestellungen prüfen: Wenn monatliche und jährliche Lizenzen gleichzeitig in einer ersten Bestellung gekauft werden, entstehen technisch zwei Pool-Hauptlizenzen. Der einheitliche Erstbestellungsrabatt beträgt trotzdem nur einmal 24,50 EUR; final klären, ob gemischte Erstbestellungen erlaubt, getrennt geführt oder besonders erklärt werden sollen.
-- Kommunikationsdetail prüfen: Im Kaufdialog bei Zusatzkauf während Trial muss klar stehen, dass die Testlizenz jetzt zahlungspflichtig wird und die verbleibenden Trial-Tage als Gutschrift abgezogen werden.
-- Juristische Prüfung des AGB-/Legal-Textentwurfs einplanen.
+- Erledigt: Marketing-Grundformulierung angepasst: kein „ohne Kreditkarte", da Stripe Zahlungsdaten im Checkout erfasst.
+- Erledigt: Landingpage-Repo nutzt App-Route `/auth/register?plan=...&qty=...` als Checkout-Einstieg. Die App `/licenses` bleibt zusätzliche Kaufoberfläche für bestehende Organisationen.
+- Erledigt: Produktentscheidung gemischte Erstbestellung: erlaubt; `calculate_trial_benefit()` wählt deterministisch den ersten verfügbaren Pool (monatlich vor jährlich), Rabatt wird einmalig in Höhe von 24,50 EUR auf eine Hauptlizenz angewendet. Dokumentiert in [[Funktionen im Detail]] und [[AGB]] §4.2.2.
+- Erledigt: Kommunikationsdetail im Kaufdialog bei Zusatzkauf während Trial: Banner „Die Testphase endet bei erfolgreicher Zahlung. X verbleibende Testtage werden als Gutschrift abgezogen." plus separate Zeile „Gutschrift für verbleibende Testtage". Siehe [Licenses.tsx:563-591](apps/frontend/src/pages/Licenses.tsx).
+- Juristische Prüfung des AGB-Textentwurfs (§4.2.1 - §4.2.4) einplanen.
 
 ## Notizen / Fortschritt
 
@@ -195,3 +199,8 @@ Die Darstellung muss einfach, transparent und vor Kaufabschluss sichtbar sein. K
 - 2026-05-01: Missbrauchsschutz nachgeschärft: `checkout/cancel` markiert freigegebene Trial-Benefits jetzt mit `trial_benefit_released_at` und `trial_benefit_release_reason`, wenn Stripe keine Subscription erzeugt hat. `_has_trial_benefit_history()` ignoriert verworfene Pending-Lizenzen mit `checkout_discarded_at` sowie fehlgeschlagene/freigegebene Orders, sodass ein sauber abgebrochener Checkout den Trial nicht dauerhaft blockiert. Bei kompletter Stripe-Session oder Stripe-Fehler bleibt der Org-Lock bestehen.
 - 2026-05-01: Backfill-Migration ergänzt: `c1d2e3f4a5b6_add_org_trial_used_at.py` setzt `organizations.trial_used_at` anhand bestehender `licenses.meta` und `license_orders.meta`, ignoriert aber verworfene/fehlgeschlagene Checkout-Artefakte. JSON-Metadaten werden robust als Dict oder JSON-Text verarbeitet.
 - 2026-05-01: Verifikation nach Missbrauchsschutz-Fix: `.\venv\Scripts\python -m pytest` in `apps/api` ergibt 127/127 grün. AST-Syntaxcheck für `licenses_v2.py`, neue/angepasste Tests und `c1d2e3f4a5b6_add_org_trial_used_at.py` grün. `py_compile` bleibt wegen `__pycache__`-Rechten ungeeignet.
+- 2026-05-30: Landingpage-Update: `Pricing.tsx` zeigt jetzt dynamisch je nach Mengenauswahl entweder den 14-Tage-Trial-Banner oder den Erstbestellungsrabatt-Hinweis (24,50 EUR auf die Hauptlizenz). Zwei neue FAQ-Einträge zum Mehrfachkauf und zum Zusatzkauf während Trial. `Hero.tsx` und `CTA.tsx` enthalten keine fachlich falsche "Keine Kreditkarte erforderlich"-Aussage mehr, sondern erklären Trial vs. Erstbestellungsrabatt.
+- 2026-05-30: AGB §4.2 aufgeteilt in §4.2.1 (Kostenloser Testzeitraum beim Einzel-Erstkauf), §4.2.2 (Erstbestellungsrabatt 24,50 EUR bei Mehrfachkauf, inkl. gemischter Erstbestellungen), §4.2.3 (vorzeitige Trial-Umwandlung mit aliquoter Gutschrift `24,50 EUR / 14 * verbleibende Tage`) und §4.2.4 (kein neuer Testvorteil bei bestehenden Kunden). Entwurf ist mit "juristisch prüfen" markiert.
+- 2026-05-30: Produktentscheidung gemischte Erstbestellung: erlaubt, einmaliger Rabatt von 24,50 EUR auf eine Hauptlizenz; deterministische Pool-Wahl (monatlich vor jährlich) durch `calculate_trial_benefit()`. Vault-Doku [[Funktionen im Detail]] entsprechend ergänzt.
+- 2026-05-30: Frontend-Helfer in `apps/frontend/src/lib/licenseTrial.ts` extrahiert (`trialDaysLeft`, `trialBadgeLabel`, `deriveCheckoutHint`). Zugehöriger Vitest-Test deckt Trial-Badge-Label, Tageszähler-Edge-Cases und Kaufdialog-Hint-Priorität (Trial-Conversion vor Free-Trial vor First-Order-Discount) ab — 12/12 grün. `Licenses.tsx` nutzt nun `trialBadgeLabel` im StatusBadge.
+- 2026-05-30: Stripe-Testmode End-to-end-Prüfablauf dokumentiert in [[Stripe Testmode Dry-Run - Trial und Erstbestellungsrabatt]] (7 Szenarien: Einzel-Trial, Mehrfach-Rabatt, gemischter Kauf, Trial-Konvertierung mit Gutschrift, Trial-Abbruch, Bestandskunde, Trial-Erinnerungs-E-Mail).

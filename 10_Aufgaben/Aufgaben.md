@@ -38,23 +38,30 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 
 ## Offene Todos
 
-| ID     | Todo                                                | Bereich                                       | Status    |
-| ------ | --------------------------------------------------- | --------------------------------------------- | --------- |
-| T022   | [[T022-notifications-system]]                       | App / Backend / Frontend / Sidebar            | offen     |
-| T021   | [[T021-rechnungslegung-individuelle-rechnungen]]    | App / Lizenzen / Stripe / Rechnungslegung     | offen     |
-| T020-12| [[T020-12-Konzept Verwaltungsportal]]               | App / Verwaltungsportal                       | offen     |
-| T020   | [[T020-allgemeine Todos]]                           | App                                           | offen     |
-| T019   | [[T019-newsletter-gutschein-brevo-webhook-rollout]] | App / Newsletter / Brevo / Stripe             | in Arbeit |
-| T017   | [[T017-testzeitraum-fuer-lizenzen]]                 | App / Lizenzen / Stripe / Legal               | in Arbeit |
+| ID      | Todo                                  | Bereich                            | Status |
+| ------- | ------------------------------------- | ---------------------------------- | ------ |
+| T022    | [[T022-notifications-system]]         | App / Backend / Frontend / Sidebar | offen  |
+| T020-12 | [[T020-12-Konzept Verwaltungsportal]] | App / Verwaltungsportal            | offen  |
 
 ## Zusammengeführte Todo-IDs
 
 Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollout-abschliessen]] zusammengeführt. Diese IDs werden nicht wiederverwendet.
 
+## Zurückgestellte / Geplante Erweiterungen
+
+Diese Todos sind konzeptionell ausgearbeitet, aber bewusst zurückgestellt. Sie sollen zu einem späteren Zeitpunkt umgesetzt werden. Die Detaildateien liegen unter `90_Archiv/`.
+
+| ID   | Todo                                                                           | Bereich                                   | Zurückgestellt |
+| ---- | ------------------------------------------------------------------------------ | ----------------------------------------- | -------------- |
+| T021 | [[90_Archiv/T021-rechnungslegung-individuelle-rechnungen\|T021-rechnungslegung-individuelle-rechnungen]] | App / Lizenzen / Stripe / Rechnungslegung | 2026-05-30     |
+
 ## Abgeschlossene Todos
 
 | ID      | Todo                                                | Bereich                          | Abgeschlossen |
 | ------- | --------------------------------------------------- | -------------------------------- | ------------- |
+| T020    | [[T020-allgemeine Todos]]                           | App                              | 2026-05-30    |
+| T017    | [[T017-testzeitraum-fuer-lizenzen]]                 | App / Lizenzen / Stripe / Legal  | 2026-05-30    |
+| T019    | [[T019-newsletter-gutschein-brevo-webhook-rollout]] | App / Newsletter / Brevo / Stripe | 2026-05-30    |
 | T016    | [[T016-bericht-tab-pdf-export-ueberarbeiten]]       | App / WBR / Bericht              | 2026-05-30    |
 | T020-11 | [[T020-11-Resuemee-Tab]]                            | App / WBR / PDF                  | 2026-05-01    |
 | T020-10 | [[T020-10-Export-Tab Umbau]]                        | App / WBR / Export               | 2026-05-01    |

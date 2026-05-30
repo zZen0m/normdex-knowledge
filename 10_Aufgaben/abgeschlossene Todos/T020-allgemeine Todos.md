@@ -1,4 +1,12 @@
+# T020 - Allgemeine Todos (Sammelaufgabe)
+
+**Status:** erledigt
+**Abgeschlossen:** 2026-05-30
+**Bereich:** App
+
 Es gibt noch allgemeine Dinge, die mir aufgefallen sind und die ich hier nun einzeln aufführe. Diese Punkte sollen dann nach der Reihe abgearbeitet werden.
+
+Alle Sub-Todos T020-01 bis T020-11 sind abgeschlossen. T020-12 (Konzept Verwaltungsportal) wird als eigenständiges Konzept-Todo weitergeführt.
 
 ---
 

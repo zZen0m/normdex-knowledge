@@ -1,9 +1,12 @@
 # T021 - Rechnungslegung: eigene Rechnungsnummern und individuelles Rechnungsdesign
 
-**Status:** offen  
-**Bereich:** App / Lizenzen / Stripe / Rechnungslegung / Rechtliches  
-**Erstellt:** 2026-05-02  
+**Status:** zurückgestellt (geplante Erweiterung für später)
+**Bereich:** App / Lizenzen / Stripe / Rechnungslegung / Rechtliches
+**Erstellt:** 2026-05-02
+**Zurückgestellt:** 2026-05-30
 **Abgeschlossen:** -
+
+> Hinweis: Dieses Todo ist zurückgestellt und nicht aktuell in Arbeit. Es beschreibt eine geplante Erweiterung der Rechnungslegung, die zu einem späteren Zeitpunkt umgesetzt wird. Konzept, Akzeptanzkriterien und technische Anforderungen bleiben als Grundlage für die spätere Umsetzung erhalten.
 
 ## Ziel
 

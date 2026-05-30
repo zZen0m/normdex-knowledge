@@ -64,6 +64,7 @@ Die erste aktive oder noch laufende Lizenz in einem Pool ist die Hauptlizenz. We
 **14-Tage-Testvorteil / Erstbestellungsrabatt:**
 - Qualifizierter Einzel-Erstkauf: Stripe Checkout erstellt eine Subscription mit 14 Tagen Trial; Normdex führt die Lizenz lokal als `trial`.
 - Qualifizierter Mehrfach-Erstkauf: kein echter Trial, sondern einmaliger Erstbestellungsrabatt von 24,50 EUR über Stripe-Coupon `QHQESezY`.
+- Gemischte Erstbestellung (monatliche und jährliche Lizenzen in einer Bestellung): erlaubt; es wird genau einmal 24,50 EUR Rabatt auf eine Hauptlizenz angewendet. `calculate_trial_benefit()` wählt deterministisch den ersten verfügbaren Pool aus `discount_options` (Reihenfolge: monatlich vor jährlich), d. h. bei gemischten Bestellungen erhält die monatliche Hauptlizenz den Rabatt. Alle weiteren Lizenzen (auch eine evtl. jährliche Hauptlizenz) werden regulär berechnet.
 - Der Trial-Benefit wird dauerhaft pro Organisation über `organizations.trial_used_at` gesperrt. Zusätzliche Schutzschichten prüfen gleiche `stripe_customer_id`, gleiche `vat_id`, Pending Orders und Legacy-Metadaten.
 - Abgebrochene Trial-Checkouts geben den Lock nur frei, wenn Stripe keine Subscription erzeugt hat.
 - Zusatzkauf während Trial wird als Trial-Konvertierung behandelt: Die bestehende Trial-Subscription wird nur nach erfolgreicher Stripe-Zahlung beendet, verbleibende Trial-Tage werden mit `24,50 EUR / 14 * Resttage` als Gutschrift angerechnet und im Order-/Lizenz-Meta dokumentiert.
