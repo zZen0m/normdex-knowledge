@@ -2,7 +2,11 @@
 
 ## Status
 
-in Arbeit
+erledigt
+
+## Abgeschlossen
+
+2026-05-30
 
 ## Bereich
 
@@ -27,15 +31,15 @@ Zusätzlich war der Header der Wirtschaftlichkeitsberechnung nicht bündig mit d
 
 ## Akzeptanzkriterien
 
-- [ ] Header der Wirtschaftlichkeitsberechnung ist bündig mit Tabs und Seiteninhalt.
-- [ ] Bericht-Tab zeigt keine veraltete Berichtsvorschau mehr.
-- [ ] Bericht-Tab enthält einen direkt sichtbaren PDF-Export.
-- [ ] Bericht-Tab enthält die Konfiguration der Berichtsinhalte direkt auf der Seite.
-- [ ] PDF-Export funktioniert auch ohne vorherige Berechnung im Ergebnistab.
-- [ ] Wenn keine Ergebnisse im Frontend-State vorhanden sind, wird für den Export automatisch eine Berechnung angestoßen.
-- [ ] Während der PDF-Erstellung erscheint eine Toast-Benachrichtigung.
-- [ ] Erfolgreicher Export und Fehlerfall zeigen passende Toasts.
-- [ ] Bestehender Backend-Endpunkt `/reports/economics/pdf` bleibt unverändert.
+- [x] Header der Wirtschaftlichkeitsberechnung ist bündig mit Tabs und Seiteninhalt.
+- [x] Bericht-Tab zeigt keine veraltete Berichtsvorschau mehr.
+- [x] Bericht-Tab enthält einen direkt sichtbaren PDF-Export.
+- [x] Bericht-Tab enthält die Konfiguration der Berichtsinhalte direkt auf der Seite.
+- [x] PDF-Export funktioniert auch ohne vorherige Berechnung im Ergebnistab.
+- [x] Wenn keine Ergebnisse im Frontend-State vorhanden sind, wird für den Export automatisch eine Berechnung angestoßen.
+- [x] Während der PDF-Erstellung erscheint eine Toast-Benachrichtigung.
+- [x] Erfolgreicher Export und Fehlerfall zeigen passende Toasts.
+- [x] Bestehender Backend-Endpunkt `/reports/economics/pdf` bleibt unverändert.
 
 ## Notizen / Fortschritt
 
@@ -47,3 +51,10 @@ Zusätzlich war der Header der Wirtschaftlichkeitsberechnung nicht bündig mit d
 - Neue Berichtsschalter in Frontend, API-Schema und PDF-Generator verdrahtet.
 - Berichtskonfiguration als einklappbare Hauptpunkte mit Unterpunkten strukturiert.
 - Sensitivitätsanalyse im Export berücksichtigt nur auswählbare/durchgeführte Szenarien; Projektdaten zeigen bei abgewählter Sensitivität „Nicht durchgeführt“.
+- 2026-05-30: Exportbereich bleibt ohne vorhandene Ergebnisse erreichbar; PDF-Export validiert die Eingaben und startet bei Bedarf automatisch eine Berechnung.
+- 2026-05-30: Resümee-Schreibweise im Frontend und serverseitigen Bericht vereinheitlicht; Resümee-Tab zeigt das rechnerisch günstigste System als Hinweis und verwendet ein gestyltes Dropdown.
+- 2026-05-30: Ergebnisse-Subnavigation und Berechnen-Buttons aus dem Sticky-Header in den Inhaltsbereich verschoben und als kompakte Auswahlkarten umgesetzt.
+- 2026-05-30: Bearbeiten-/Speichern-Aktionen für Systeme und Rahmenbedingungen aus dem Sticky-Header in die jeweiligen Inhalte verschoben.
+- 2026-05-30: App-Ansprache im Export- und WBR-Umfeld auf Du-Form vereinheitlicht.
+- 2026-05-30: Abschnittsstatus für neue Projekte korrigiert: Defaultwerte erzeugen keinen voreiligen Haken; Rahmenbedingungen können durch Speichern als geprüft markiert werden.
+- 2026-05-30: Frontend-Build `npm run build` erfolgreich ausgeführt; nur bekannte Vite-Chunk-Warnung bleibt.

@@ -46,7 +46,6 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 | T020   | [[T020-allgemeine Todos]]                           | App                                           | offen     |
 | T019   | [[T019-newsletter-gutschein-brevo-webhook-rollout]] | App / Newsletter / Brevo / Stripe             | in Arbeit |
 | T017   | [[T017-testzeitraum-fuer-lizenzen]]                 | App / Lizenzen / Stripe / Legal               | in Arbeit |
-| T016   | [[T016-bericht-tab-pdf-export-ueberarbeiten]]       | App / Wirtschaftlichkeitsberechnung / Bericht | in Arbeit |
 
 ## Zusammengeführte Todo-IDs
 
@@ -56,6 +55,7 @@ Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollo
 
 | ID      | Todo                                                | Bereich                          | Abgeschlossen |
 | ------- | --------------------------------------------------- | -------------------------------- | ------------- |
+| T016    | [[T016-bericht-tab-pdf-export-ueberarbeiten]]       | App / WBR / Bericht              | 2026-05-30    |
 | T020-11 | [[T020-11-Resuemee-Tab]]                            | App / WBR / PDF                  | 2026-05-01    |
 | T020-10 | [[T020-10-Export-Tab Umbau]]                        | App / WBR / Export               | 2026-05-01    |
 | T020-09 | [[T020-09-Berechnungen-Karte Hero]]                 | App / Projektdetail              | 2026-05-01    |
