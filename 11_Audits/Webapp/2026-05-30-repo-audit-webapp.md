@@ -186,6 +186,11 @@ Das Verwaltungsportal hat seit dem 2026-05-23 massiv ausgebaut: `apps/api/app/ro
 - Business Impact: Niedrig — UX-Reibung, kein Funktions- oder Sicherheitsbruch.
 - Konkrete Handlungsempfehlung: `prompt()`/`confirm()` durch existierende `Dialog`-Komponenten ersetzen und den Mindestwert mit der Backend-Policy abgleichen (entweder Schema auf 10 oder Hint auf 8 anpassen).
 
+#### Status: **behoben (2026-05-30)**
+
+- Umsetzung: `apps/frontend/src/pages/AdminUsers.tsx` nutzt für Passwortänderung und Benutzerlöschung jetzt kontrollierte `Dialog`-Komponenten statt nativer Browser-Dialoge. Der Passwort-Hinweis und die lokale Validierung sind auf den Backend-Wert `min_length=8` abgeglichen (`Mindestens 8 Zeichen`); `prompt()`/`confirm()` kommen in der Datei nicht mehr vor.
+- Verifikation: `npm run build` in `apps/frontend` erfolgreich. Die bestehende Vite-Chunk-Warnung für das Hauptbundle bleibt unverändert als separates Finding 8 offen.
+
 ### Finding 7 - Refund-Endpoint überschreibt Admin-Begründung mit hartem Stripe-Wert
 
 - Kategorie: Improvement
