@@ -8,7 +8,7 @@ Die Kernfunktion ist ein professionelles Berechnungswerkzeug, mit dem Energiepro
 
 | Eigenschaft | Wert |
 |---|---|
-| **Aktuelle Version** | `v0.1.0` |
+| **Aktuelle Version** | `v0.0.1` |
 | **App-URL** | `https://app.normdex.at` |
 | **Landingpage-URL** | `https://normdex.at` |
 | **E-Mail-Domain** | `normdex.at` |

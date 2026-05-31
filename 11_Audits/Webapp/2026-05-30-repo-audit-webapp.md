@@ -5,8 +5,8 @@
 - Repository: `D:\Normdex\01_repos\normdex-app`
 - Branch: `develop`
 - Commit: `ea46e79`
-- Version laut `package.json`: `0.2.0`
-- Letzter Git-Tag: `v0.2.0`
+- Version laut `package.json`: `0.0.1`
+- Letzter Git-Tag: `v0.0.1`
 - Audit-Datum: `2026-05-30`
 - Speicherort: `D:\Normdex\02_knowledge\normdex-vault\11_Audits\Webapp\2026-05-30-repo-audit-webapp.md`
 - Vorheriger Audit: `2026-05-23-repo-audit-webapp.md`

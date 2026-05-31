@@ -80,8 +80,8 @@ deploy/      → Deployment-Konfiguration
 ## Versionierung & Deployment
 
 **Semantic Versioning** (`MAJOR.MINOR.PATCH`):
-- **Patch** (`v0.1.1`): Bugfixes
-- **Minor** (`v0.2.0`): Neue Features (abwärtskompatibel)
+- **Patch** (`v0.0.2`): Bugfixes
+- **Minor** (`v0.1.0`): Neue Features (abwärtskompatibel)
 - **Major** (`v1.0.0`): Große Änderungen / Breaking Changes
 
 Die Versionsnummer liegt in `apps/frontend/package.json` und wird via Vite in die App injiziert (Sidebar, PDF-Reports).
