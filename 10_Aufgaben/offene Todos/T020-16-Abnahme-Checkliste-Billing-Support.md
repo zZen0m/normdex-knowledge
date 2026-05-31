@@ -6,38 +6,38 @@
 
 ## Vorbereitung
 
-- [ ] Lokale App starten und als Admin anmelden.
-- [ ] Einen Testkunden mit Stripe Customer ID öffnen.
-- [ ] Sicherstellen, dass Stripe-Testmodus verwendet wird, wenn echte Stripe-Aktionen getestet werden.
-- [ ] Einen Testkunden wählen, der mindestens eine Subscription und eine Rechnung in Stripe hat.
-- [ ] Optional ein offenes Support-Ticket beim Testkunden bereithalten, um Ticket-Verknüpfung zu prüfen.
+- [x] Lokale App starten und als Admin anmelden.
+- [x] Einen Testkunden mit Stripe Customer ID öffnen.
+- [x] Sicherstellen, dass Stripe-Testmodus verwendet wird, wenn echte Stripe-Aktionen getestet werden.
+- [x] Einen Testkunden wählen, der mindestens eine Subscription und eine Rechnung in Stripe hat.
+- [x] Optional ein offenes Support-Ticket beim Testkunden bereithalten, um Ticket-Verknüpfung zu prüfen.
 
 ## Billing-Diagnose
 
-- [ ] Organisationsakte öffnen und Tab `Billing & Stripe` auswählen.
-- [ ] `Diagnose laden` ausführen.
-- [ ] Stripe Customer wird angezeigt.
-- [ ] Stripe Subscriptions werden angezeigt.
-- [ ] Stripe Rechnungen werden angezeigt.
-- [ ] Lokale Lizenzen werden angezeigt.
+- [x] Organisationsakte öffnen und Tab `Billing & Stripe` auswählen.
+- [x] `Diagnose laden` ausführen.
+- [x] Stripe Customer wird angezeigt.
+- [ ] Stripe Subscriptions werden angezeigt. --> wird angezeigt, aber es steht nur "sub_1TRz4bF05ipkEAzmWvq9cvRa". Ich weiß daher nicht, ob das eine Haupt-oder Zusatzlizenz ist und ob es eine monatl. oder jährliche Lizenz ist.
+- [x] Stripe Rechnungen werden angezeigt.
+- [ ] Lokale Lizenzen werden angezeigt. --> Was sind lokale Lizenzen?
 - [ ] Offene Rechnungen werden als Hinweis sichtbar.
 - [ ] Zahlungsprobleme oder Past-Due-Zustände werden als Hinweis sichtbar.
 - [ ] Abweichungen zwischen lokalen Lizenzdaten und Stripe werden als Diagnose-Warnung sichtbar.
 
 ## Stripe-Deep-Links
 
-- [ ] `Stripe Customer öffnen` führt zum richtigen Stripe Customer.
-- [ ] `Stripe` bei einer Subscription führt zur richtigen Stripe Subscription.
-- [ ] `Stripe` bei einer Rechnung führt zur richtigen Stripe Invoice.
-- [ ] `Zahlung` bei einer Rechnung führt zur passenden Stripe Payment-/Charge-Ansicht.
-- [ ] Links öffnen im Testmodus unter `dashboard.stripe.com/test`, wenn ein Test-Secret-Key aktiv ist.
+- [x] `Stripe Customer öffnen` führt zum richtigen Stripe Customer.
+- [x] `Stripe` bei einer Subscription führt zur richtigen Stripe Subscription.
+- [x] `Stripe` bei einer Rechnung führt zur richtigen Stripe Invoice.
+- [x] `Zahlung` bei einer Rechnung führt zur passenden Stripe Payment-/Charge-Ansicht.
+- [x] Links öffnen im Testmodus unter `dashboard.stripe.com/test`, wenn ein Test-Secret-Key aktiv ist.
 
 ## Kundendaten-Sync
 
 - [ ] Aktion `Billing-Adresse synchronisieren` öffnen.
 - [ ] Vorschau zeigt Vorher/Nachher für Name, E-Mail, Rechnungsadresse und USt-ID.
-- [ ] Ausführung ohne Grund wird blockiert.
-- [ ] Ausführung ohne Bestätigung wird blockiert.
+- [x] Ausführung ohne Grund wird blockiert.
+- [x] Ausführung ohne Bestätigung wird blockiert.
 - [ ] Ausführung mit Grund und Bestätigung synchronisiert nach Stripe.
 - [ ] Optionales Support-Ticket kann ausgewählt werden.
 - [ ] Nach erfolgreicher Ausführung wird die Billing-Diagnose aktualisiert.
