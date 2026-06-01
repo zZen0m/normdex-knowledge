@@ -68,6 +68,7 @@ DELETE /organizations/{org_id}/logo                   → Logo löschen
 GET  /licenses/                         → Aktive Lizenzen der Organisation (Legacy-/Usage-kompatibel)
 GET  /licenses/pools                    → Pool-Zusammenfassung monatlich/jährlich
 GET  /licenses/pools/{pool}/items       → Einzellizenzen eines Pools
+GET  /licenses/usage-stats              → Nutzungsstatistik der Org (Sessions + Nutzer:innen diesen/letzten Monat, Europe/Vienna)
 GET  /licenses/{id}/history             → Lizenzhistorie
 POST /licenses/checkout/preview         → Kaufvorschau mit Staffelpreisen, Erstbestellungsrabatt und Trial-Konvertierungsgutschrift
 POST /licenses/checkout/create          → Kauf starten oder bestehende Subscription atomar erweitern

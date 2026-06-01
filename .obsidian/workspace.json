@@ -8,20 +8,35 @@
         "type": "tabs",
         "children": [
           {
-            "id": "d0dd73277d479a65",
+            "id": "f8c94fc6a291a981",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "10_Aufgaben/offene Todos/T020-16-Abnahme-Checkliste-Billing-Support.md",
+                "file": "10_Aufgaben/Aufgaben.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "T020-16-Abnahme-Checkliste-Billing-Support"
+              "title": "Aufgaben"
+            }
+          },
+          {
+            "id": "851d8c0ddc7aa94b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "10_Aufgaben/offene Todos/T024-account-einrichtung-onboarding-hinweise.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "T024-account-einrichtung-onboarding-hinweise"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -183,25 +198,28 @@
       "bases:Neue Base erstellen": false
     }
   },
-  "active": "7d03a8fb3b6cfe36",
+  "active": "851d8c0ddc7aa94b",
   "lastOpenFiles": [
+    "10_Aufgaben/Aufgaben.md",
+    "10_Aufgaben/Aufgaben.md.tmp.29060.6a564420a16f",
+    "10_Aufgaben/Aufgaben.md.tmp.29060.0391c7c03c6a",
+    "10_Aufgaben/offene Todos/T024-account-einrichtung-onboarding-hinweise.md",
+    "10_Aufgaben/offene Todos/T024-account-einrichtung-onboarding-hinweise.md.tmp.29060.6c3b115c7fb4",
+    "10_Aufgaben/offene Todos/T020-16-Lizenz-und-Billing-Support-Aktionen.md",
+    "02_App/Funktionen im Detail.md.tmp.39604.a0c0a98f60ff",
+    "02_App/Funktionen im Detail.md.tmp.39604.2b2fc975143f",
+    "02_App/API-Endpunkte.md.tmp.39604.bb832a35eced",
+    "10_Aufgaben/offene Todos/T023-app-ux-workflow-und-aktivitaetsverlauf.md",
+    "10_Aufgaben/abgeschlossene Todos/T023-app-ux-workflow-und-aktivitaetsverlauf.md",
+    "10_Aufgaben/offene Todos/T023-app-ux-workflow-und-aktivitaetsverlauf.md.tmp.24824.bbf10966f37d",
+    "10_Aufgaben/offene Todos/T023-app-ux-workflow-und-aktivitaetsverlauf.md.tmp.24824.f326616a32e7",
+    "10_Aufgaben/offene Todos/T020-16-Abnahme-Checkliste-Billing-Support.md",
     "06_Entwicklung/Lizenz-Kuendigung – Robuster Fallback und Auto-Beendigung.md",
     "06_Entwicklung/Lizenz-Kuendigung – Robuster Fallback und Auto-Beendigung.md.tmp.45232.545ec155667a",
     "01_Produkt/Verwaltungsportal-Ausbau.md",
     "01_Produkt/Verwaltungsportal-Billing-und-Abo-Support.md",
     "11_Audits/Webapp/2026-05-30-repo-audit-webapp.md",
     "11_Audits/Webapp/2026-05-30-repo-audit-webapp.md.tmp.57492.3c684df61fec",
-    "11_Audits/Webapp/2026-05-30-repo-audit-webapp.md.tmp.49928.801473b9fe3e",
-    "11_Audits/Webapp/2026-05-30-repo-audit-webapp.md.tmp.36244.77178686e5b6",
-    "11_Audits/Webapp/2026-05-30-repo-audit-webapp.md.tmp.36244.b6850b45cad8",
-    "11_Audits/Webapp/2026-05-30-repo-audit-webapp.md.tmp.36244.e9b2a032a276",
-    "11_Audits/Webapp/2026-05-30-repo-audit-webapp.md.tmp.51984.a70aa7b7be03",
-    "10_Aufgaben/Aufgaben.md",
-    "11_Audits/Webapp/2026-05-30-repo-audit-webapp.md.tmp.49868.4562f3ad64b2",
-    "10_Aufgaben/offene Todos/T020-16-Abnahme-Checkliste-Billing-Support.md",
-    "02_App/Datenschutzprozess.md.tmp.55268.95adb0d8c251",
-    "02_App/Toast-Benachrichtigungen.md.tmp.18228.2caaa3fadb0d",
-    "10_Aufgaben/offene Todos/T020-16-Lizenz-und-Billing-Support-Aktionen.md",
     "10_Aufgaben/abgeschlossene Todos/T020-12-Konzept Verwaltungsportal.md",
     "10_Aufgaben/abgeschlossene Todos/T022-notifications-system.md",
     "10_Aufgaben/offene Todos/T022-notifications-system.md",
@@ -217,10 +235,6 @@
     "10_Aufgaben/abgeschlossene Todos/T019-newsletter-gutschein-brevo-webhook-rollout.md",
     "10_Aufgaben/abgeschlossene Todos/T016-bericht-tab-pdf-export-ueberarbeiten.md",
     "10_Aufgaben/offene Todos/T016-bericht-tab-pdf-export-ueberarbeiten.md",
-    "10_Aufgaben/abgeschlossene Todos/T014-kuendigungs-email-fuer-lizenzen.md",
-    "10_Aufgaben/offene Todos/T014-kuendigungs-email-fuer-lizenzen.md",
-    "10_Aufgaben/offene Todos/T013-lizenzsystem-rollout-abschliessen.md",
-    "10_Aufgaben/abgeschlossene Todos/T013-lizenzsystem-rollout-abschliessen.md",
     "99_Anhaenge/Pasted image 20260503134652.png",
     "Pasted image 20260503134652.png",
     "Pasted image 20260501161134.png",

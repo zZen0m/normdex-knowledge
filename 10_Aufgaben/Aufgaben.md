@@ -38,9 +38,10 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 
 ## Offene Todos
 
-| ID      | Todo                                  | Bereich                            | Status |
-| ------- | ------------------------------------- | ---------------------------------- | ------ |
-| T020-16 | [[T020-16-Lizenz-und-Billing-Support-Aktionen]] | App / Verwaltungsportal / Stripe   | offen  |
+| ID      | Todo                                            | Bereich                          | Status |
+| ------- | ----------------------------------------------- | -------------------------------- | ------ |
+| T024    | [[T024-account-einrichtung-onboarding-hinweise]] | App / UX / Onboarding / Notifications | offen  |
+| T020-16 | [[T020-16-Lizenz-und-Billing-Support-Aktionen]] | App / Verwaltungsportal / Stripe | offen  |
 
 ## Zusammengeführte Todo-IDs
 
@@ -87,4 +88,4 @@ Diese Todos sind konzeptionell ausgearbeitet, aber bewusst zurückgestellt. Sie 
 
 ## Nächste freie ID
 
-`T024`
+`T025`

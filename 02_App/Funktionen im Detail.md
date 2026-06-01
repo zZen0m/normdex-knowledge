@@ -100,6 +100,19 @@ Die erste aktive oder noch laufende Lizenz in einem Pool ist die Hauptlizenz. We
 - Gerade aktivierte Direktkäufe können innerhalb von 10 Minuten über „Kauf rückgängig machen" zurückgenommen werden, solange die Lizenz noch nicht regulär weitergelaufen ist
 - Rechnungen und Zahlungsmethoden werden über das Stripe-Portal verwaltet
 
+**Lizenzseite `/licenses` (Oberfläche):**
+- Kopfbereich mit nutzungsbasierter **KPI-Übersicht** (für alle Rollen sichtbar, ohne Kosten): Lizenzen gesamt, aktuell aktive Sitzungen, Nutzungen diesen Monat, Nutzungen letzten Monat (jeweils mit Anzahl Nutzer:innen). Datenquelle: `GET /licenses/usage-stats` (Monatsgrenzen in Europe/Vienna).
+- **Aktualisieren**-Button lädt Pool-, Lizenz- und Nutzungsdaten neu (Sitzungen sind live).
+- „Lizenz hinzufügen" nur für Owner/Admin.
+- Optik einheitlich zur Teamseite (geteilte `StatCard`-Komponente, `rounded-2xl` + `shadow-soft`, Icon-Chips).
+- Eine feste Lizenz-Zuweisung pro Nutzer:in ist bewusst **nicht** in der UI exponiert; es gilt das Floating-Seat-Modell (freie Sitzungen). Die Assign-/Unassign-Endpunkte bleiben backendseitig bestehen.
+
+**Kaufdialog „Lizenzen hinzufügen" (Oberfläche):**
+- Plan-Wahl als zwei **Auswahlkarten** (monatlich/jährlich) mit Icon-Chip, Preis, integriertem Mengen-Stepper und Aktiv-Zustand (Ring + Häkchen); beide Pools können gleichzeitig gewählt werden (getrennte Stripe-Checkouts, Hinweis-Banner).
+- Jährliche Option trägt ein **„2 Monate gratis"-Badge** (rechnerisch exakt: 49 €×12 = 588 € vs. 490 €; Addon 29 €×12 = 348 € vs. 290 €).
+- Gutscheincode wird als entfernbarer Chip mit Häkchen angezeigt; Bestellübersicht mit Hero-Summe (`tabular-nums`) und **„Sichere Zahlung über Stripe"**-Trust-Hinweis.
+- Optik auf neue Designsprache gehoben (`rounded-2xl`/`shadow-soft`, Icon-Chip-Header, dark-taugliche Hinweisfarben). Kauf-/Preview-/Promo-Logik unverändert.
+
 ---
 
 ## Support-Ticket-System

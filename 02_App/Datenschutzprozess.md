@@ -81,6 +81,12 @@ Ein Konto kann nicht gelöscht werden, wenn es der letzte Owner einer Organisati
 
 Vor der Löschung muss in diesem Fall zuerst ein anderer Owner bestimmt werden.
 
+Erweitertes Lösch-Gate:
+
+- Team-Administrator:innen (`owner`/`admin`) können ihr Konto nicht löschen, solange weitere Teammitglieder in der Organisation vorhanden sind. Vorher müssen die Adminrechte an ein anderes Teammitglied übergeben oder entzogen werden.
+- Team-Administrator:innen können ihr Konto nicht löschen, solange in der Organisation offene Lizenzen bestehen.
+- Als offene Lizenzen gelten `pending`, `trial`, `active`, `scheduled_end` und `payment_failed`. `ended` blockiert die Kontolöschung nicht.
+
 ## UI-Kommunikation
 
 Die UI darf nicht behaupten, dass alle verbundenen Daten unwiderruflich gelöscht werden.
