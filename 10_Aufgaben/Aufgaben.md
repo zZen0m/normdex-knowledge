@@ -40,7 +40,6 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 
 | ID      | Todo                                  | Bereich                            | Status |
 | ------- | ------------------------------------- | ---------------------------------- | ------ |
-| T023    | [[T023-app-ux-workflow-und-aktivitaetsverlauf]] | App / UX / Workflows / Notifications | offen |
 | T020-16 | [[T020-16-Lizenz-und-Billing-Support-Aktionen]] | App / Verwaltungsportal / Stripe   | offen  |
 
 ## Zusammengeführte Todo-IDs
@@ -59,6 +58,7 @@ Diese Todos sind konzeptionell ausgearbeitet, aber bewusst zurückgestellt. Sie 
 
 | ID      | Todo                                                | Bereich                          | Abgeschlossen |
 | ------- | --------------------------------------------------- | -------------------------------- | ------------- |
+| T023    | [[T023-app-ux-workflow-und-aktivitaetsverlauf]]     | App / UX / Workflows / Notifications | 2026-06-01  |
 | T022    | [[T022-notifications-system]]                       | App / Backend / Frontend / Sidebar | 2026-05-30  |
 | T020-12 | [[T020-12-Konzept Verwaltungsportal]]               | App / Verwaltungsportal          | 2026-05-30    |
 | T020    | [[T020-allgemeine Todos]]                           | App                              | 2026-05-30    |
