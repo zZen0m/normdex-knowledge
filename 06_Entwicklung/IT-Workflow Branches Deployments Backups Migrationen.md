@@ -507,3 +507,4 @@ Das ist unser sauberer Standard-Workflow.
 ## Verwandte Dokumente
 
 - [[VPS-Serverstruktur und Deployment-Architektur]]
+- [[Automatisierter Backup-Service]] – täglicher automatischer Backup mit SharePoint-Offsite
