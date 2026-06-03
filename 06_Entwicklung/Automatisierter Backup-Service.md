@@ -34,6 +34,13 @@ Die Verbindung läuft über rclone mit einer Azure App Registration:
 | SharePoint Drive | Normdex – Dokumente (documentLibrary) |
 | Drive ID | `b!vU7cHYgueEm3nFz3uq-D3n7DUYwwn-xBvnwt8HYELr_zbjzOJJCsR4HZAyb8DCqs` |
 
+Wichtig: Die Azure App ist single-tenant. rclone muss deshalb tenant-spezifische OAuth-Endpunkte verwenden, sonst versucht der Token-Refresh den `/common`-Endpoint und wird von Microsoft abgelehnt:
+
+```env
+RCLONE_CONFIG_SHAREPOINT_AUTH_URL=https://login.microsoftonline.com/4099f674-ae6c-47ab-a7bd-2d2e582ac426/oauth2/v2.0/authorize
+RCLONE_CONFIG_SHAREPOINT_TOKEN_URL=https://login.microsoftonline.com/4099f674-ae6c-47ab-a7bd-2d2e582ac426/oauth2/v2.0/token
+```
+
 Credentials (Client Secret, OAuth-Token) liegen ausschliesslich in `/opt/repos/normdex-backup/env/.env.backup` auf dem Server – diese Datei ist in `.gitignore` und wird nie committet.
 
 ## Backup-Ablauf

@@ -40,6 +40,7 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 
 | ID      | Todo                                            | Bereich                          | Status |
 | ------- | ----------------------------------------------- | -------------------------------- | ------ |
+| T025    | [[T025-upload-retention-und-avatar-loeschung]]  | App / Support / Dateien / Datenschutz | offen  |
 | T024    | [[T024-account-einrichtung-onboarding-hinweise]] | App / UX / Onboarding / Notifications | offen  |
 | T020-16 | [[T020-16-Lizenz-und-Billing-Support-Aktionen]] | App / Verwaltungsportal / Stripe | offen  |
 
@@ -88,4 +89,4 @@ Diese Todos sind konzeptionell ausgearbeitet, aber bewusst zurückgestellt. Sie 
 
 ## Nächste freie ID
 
-`T025`
+`T026`
