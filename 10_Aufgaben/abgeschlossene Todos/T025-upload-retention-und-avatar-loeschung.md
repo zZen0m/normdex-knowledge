@@ -2,8 +2,9 @@
 
 **Phase:** App-Betrieb / Datenschutz / Storage-Hygiene  
 **Priorität:** P2 · Support / Benutzerprofil / Dateien  
-**Status:** offen  
+**Status:** erledigt  
 **Datum:** 2026-06-03  
+**Abgeschlossen:** 2026-06-04  
 
 ## Ziel
 
@@ -52,16 +53,16 @@ Aktueller Stand laut Codeprüfung am 2026-06-03:
 
 ## Akzeptanzkriterien
 
-- [ ] Ein geschlossener Supportfall mit `closed_at` älter als 365 Tage verliert seine physischen Anhänge beim Cleanup-Lauf.
-- [ ] Tickets, die weniger als 365 Tage geschlossen sind, behalten ihre Anhänge.
-- [ ] Offene, neue, in Bearbeitung befindliche, wartende oder gelöste Tickets werden nicht von der Retention gelöscht.
-- [ ] Der Cleanup-Lauf ist idempotent und bricht nicht ab, wenn eine Datei bereits fehlt.
-- [ ] Die Support-UI zeigt gelöschte Anhänge verständlich an oder blendet sie bewusst aus.
-- [ ] Backend-Tests decken Grenzfälle ab: genau 365 Tage, jünger als 365 Tage, fehlende Datei, mehrere Anhänge pro Ticket.
-- [ ] Nutzer können ihr Avatarbild explizit löschen.
-- [ ] Beim Avatar-Löschen wird die Datei aus `uploads/avatars/` entfernt und `avatar_url` geleert.
-- [ ] Avatar-Löschung ist im Frontend sichtbar und nach Reload konsistent.
-- [ ] Backend-Tests prüfen, dass Avatar-Datei und DB-Feld gemeinsam bereinigt werden.
+- [x] Ein geschlossener Supportfall mit `closed_at` älter als 365 Tage verliert seine physischen Anhänge beim Cleanup-Lauf.
+- [x] Tickets, die weniger als 365 Tage geschlossen sind, behalten ihre Anhänge.
+- [x] Offene, neue, in Bearbeitung befindliche, wartende oder gelöste Tickets werden nicht von der Retention gelöscht.
+- [x] Der Cleanup-Lauf ist idempotent und bricht nicht ab, wenn eine Datei bereits fehlt.
+- [x] Die Support-UI zeigt gelöschte Anhänge verständlich an oder blendet sie bewusst aus.
+- [x] Backend-Tests decken Grenzfälle ab: genau 365 Tage, jünger als 365 Tage, fehlende Datei, mehrere Anhänge pro Ticket.
+- [x] Nutzer können ihr Avatarbild explizit löschen.
+- [x] Beim Avatar-Löschen wird die Datei aus `uploads/avatars/` entfernt und `avatar_url` geleert.
+- [x] Avatar-Löschung ist im Frontend sichtbar und nach Reload konsistent.
+- [x] Backend-Tests prüfen, dass Avatar-Datei und DB-Feld gemeinsam bereinigt werden.
 
 ## Hinweise
 
@@ -72,3 +73,14 @@ Aktueller Stand laut Codeprüfung am 2026-06-03:
 ## Notizen / Fortschritt
 
 - 2026-06-03: Todo aus Betriebsfrage zu Backup, Support-Anhängen, Avataren und Logos angelegt.
+- 2026-06-04: Umgesetzt und mit 15 neuen Backend-Tests abgesichert (gesamte Suite grün: 292 Tests, Frontend-Typecheck sauber).
+  - **Support-Anhang-Retention:**
+    - Neue Spalte `support_ticket_attachments.deleted_at` (Alembic-Migration `ffd3bbde6b6a`). Anhänge werden *als gelöscht markiert*, die DB-Zeile + `storage_key` bleiben für die Ticket-Historie erhalten.
+    - Cleanup-Job `cleanup_support_attachments()` in `apps/api/app/services/scheduler.py`, registriert täglich um 03:30 (`CronTrigger`). Kernlogik in der testbaren Helper-Funktion `_cleanup_due_attachments(db)` (Muster wie `_expire_due_licenses`). Frist: `SUPPORT_ATTACHMENT_RETENTION_DAYS = 365` ab `closed_at`, nur Status `closed`. Idempotent, robustes Logging je Datei, fehlende Datei ist kein Fehler.
+    - Serializer `SupportAttachmentOut` um `deleted_at` erweitert; `SupportTicketDetail.tsx` zeigt statt Download-Link den Hinweis „Anhang aus Aufbewahrungsgründen gelöscht".
+  - **Avatar-Löschung:**
+    - Neuer Endpoint `DELETE /users/me/avatar` (`apps/api/app/routers/users.py`): nutzt den bestehenden Helper `_delete_avatar_file()`, setzt `avatar_url = None`, schreibt Audit-Event `avatar_removed`. Datei-Löschung und Feld-Reset sind gekoppelt.
+    - `PUT /users/me/profile` setzt `avatar_url` bewusst nicht mehr — Avatar-Änderungen laufen ausschließlich über die dedizierten Upload-/Delete-Endpoints (keine verwaisten Dateien, kein Setzen ohne Datei).
+    - Admin-Delete (`DELETE /admin/users/{id}`) entfernt jetzt ebenfalls die Avatar-Datei (war zuvor ein Leak — nur DB-Zeile gelöscht).
+    - Frontend: `api.deleteAvatar()` + „Profilbild entfernen"-Button im Avatar-Dialog (`SettingsProfile.tsx`), sichtbar nur bei vorhandenem Avatar, mit Bestätigung und `refetch()`.
+  - **Prod-Hinweis:** Migration `ffd3bbde6b6a` muss in Prod via Docker-Profil angewendet werden (`docker compose -f deploy/docker-compose.prod.yml --profile tools run --rm api-migrate`).

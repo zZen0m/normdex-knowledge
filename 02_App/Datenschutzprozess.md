@@ -87,6 +87,26 @@ Erweitertes Lösch-Gate:
 - Team-Administrator:innen können ihr Konto nicht löschen, solange in der Organisation offene Lizenzen bestehen.
 - Als offene Lizenzen gelten `pending`, `trial`, `active`, `scheduled_end` und `payment_failed`. `ended` blockiert die Kontolöschung nicht.
 
+## Upload-Aufbewahrung und Datei-Hygiene
+
+Hochgeladene Dateien werden kontrolliert aufbewahrt und gelöscht, damit kein unnötiger personenbezogener Datenbestand wächst (umgesetzt in [[T025-upload-retention-und-avatar-loeschung]], Stand 2026-06-04).
+
+### Support-Ticket-Anhänge
+
+- Anhänge geschlossener Tickets (Status `closed`) werden **365 Tage nach `closed_at`** automatisch bereinigt.
+- Der geplante Job `cleanup_support_attachments` läuft täglich um 03:30 (`apps/api/app/services/scheduler.py`, Kernlogik in `_cleanup_due_attachments`). Frist als Konstante `SUPPORT_ATTACHMENT_RETENTION_DAYS = 365`.
+- Nur die **physische Datei** unter `uploads/attachments/` wird entfernt; der DB-Eintrag bleibt erhalten und wird über `support_ticket_attachments.deleted_at` als gelöscht markiert. So bleibt die Ticket-Historie nachvollziehbar.
+- Die Support-UI zeigt für solche Anhänge den Hinweis „Anhang aus Aufbewahrungsgründen gelöscht" statt eines Download-Links.
+- Der Lauf ist idempotent; fehlende Dateien führen nicht zum Abbruch.
+- Nur lokale App-Dateien sind betroffen. Verbleiben E-Mail-Anhänge zusätzlich in Microsoft 365, ist deren Aufbewahrung separat über Microsoft-/Mailbox-Policies zu regeln.
+- Backups enthalten gelöschte Dateien noch bis zum Ablauf der Backup-Retention (`LOCAL_KEEP`, `REMOTE_KEEP`).
+
+### Avatare (Profilbilder)
+
+- Nutzer können ihr Profilbild explizit entfernen: `DELETE /users/me/avatar` löscht die Datei aus `uploads/avatars/`, setzt `avatar_url = null` und schreibt das Audit-Event `avatar_removed`. Datei-Löschung und Feld-Reset sind gekoppelt — `avatar_url` lässt sich nicht mehr über das Profil-Update (`PUT /users/me/profile`) ohne Datei-Cleanup setzen.
+- Beim Ersetzen eines Avatars, bei Selbst-Kontolöschung und bei Admin-Löschung (`DELETE /admin/users/{id}`) wird die alte Avatar-Datei jeweils mit entfernt.
+- Firmenlogos werden bereits beim Ersetzen und beim expliziten Löschen vom Server entfernt.
+
 ## UI-Kommunikation
 
 Die UI darf nicht behaupten, dass alle verbundenen Daten unwiderruflich gelöscht werden.
