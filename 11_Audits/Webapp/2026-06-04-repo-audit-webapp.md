@@ -5,6 +5,10 @@
 > - **Finding 2 (divergierende Lösch-Strategien): behoben.** Beide Pfade nutzen jetzt EINE Strategie (Anonymisierung) über den gemeinsamen Service `apps/api/app/services/account_deletion.py` (`anonymize_user_account`). Der Admin-Pfad anonymisiert statt hart zu löschen; der 409-Eigentums-Blocker entfällt, da org-gebundene Projekte an einen Team-Owner übertragen werden und keine NOT-NULL-Referenz mehr verwaisen kann. Tests in `tests/test_admin_delete_user.py` auf Anonymisierungs-Semantik umgestellt, gesamte Suite 297 grün.
 > - **Finding 3 (Versionsdrift): geklärt — kein Code-Handlungsbedarf.** Version `0.0.1` in `package.json` und `version.py` ist die korrekte aktuelle Version (vom Produktinhaber bestätigt). Die Git-Tags `v0.1.0` und `v0.2.0` wurden für experimentelle Zwecke erstellt und spiegeln keinen tatsächlichen Release-Stand wider; sie sind zu bereinigen (lokal + remote `git tag -d` / `git push origin --delete`). Kein normdex-version-update-Lauf notwendig.
 > - **Finding 4 (support_admin.py umgeht require_admin): behoben.** Alle 5 Handler migriert: `get_current_user` + manuelle `is_admin`-Checks entfernt, stattdessen `admin: User = Depends(require_admin)` in jedem Handler. 297 Tests grün.
+> - **Finding 7 (Tippfehler „Ur JPG"): behoben.** `apps/api/app/routers/users.py:143` korrigiert auf „Nur JPG, PNG oder WebP erlaubt."
+> - **Finding 8 (Frontend-Bundle >500 kB): behoben.** `manualChunks` in `vite.config.ts` eingeführt: vendor-react / vendor-radix / vendor-ui / vendor-forms als eigene Cache-Chunks. `index.js` sinkt von 533 kB auf 105 kB; kein Chunk überschreitet mehr 500 kB; Vite-Warnung entfällt.
+> - **Finding 6 (dev.db-Backup-Binärdatei in Git getrackt): behoben.** `apps/api/dev.db.backup-reset-414345-20260430-201116` per `git rm --cached` aus dem Tracking entfernt; Muster `apps/api/dev.db.backup*` in `.gitignore` ergänzt. `dev.db` bleibt bewusst getrackt (Dummy-Daten). Commit `71378ef`.
+> - **Finding 9 (unleash-*.json im Migrations-Ordner): behoben.** Beide Dateien per `git rm --cached` aus dem Tracking entfernt; Muster `apps/api/alembic/versions/unleash-*.json` in `.gitignore` ergänzt. Commit `71378ef`.
 
 ## 1. Geprüfter Stand
 
@@ -138,7 +142,7 @@ Der Webapp-Stand hat sich seit 2026-05-30 fachlich klar verbessert: sechs der ac
 - Konkrete Handlungsempfehlung: Auf `admin: User = Depends(require_admin)` migrieren, manuelle Checks entfernen, und einen Test ergänzen, der für alle Routen unter `/admin/support/*` einen 403 für Nicht-Admins erzwingt.
 - **Behebung (2026-06-04):** Alle 5 Handler in `support_admin.py` migriert: `from app.deps import get_current_user` → `require_admin`; Parameter `user: User = Depends(get_current_user)` → `admin: User = Depends(require_admin)`; manuelle `if not user.is_admin`-Checks entfernt; alle `user.id`-Referenzen in Nachrichten-Konstruktoren auf `admin.id` umgestellt. 297 Tests grün.
 
-### Finding 5 - Datetime-Deprecations weiter gestiegen (972 → 1121)
+### Finding 5 - Datetime-Deprecations weiter gestiegen (972 → 1121) ✅ behoben 2026-06-04
 
 - Kategorie: Improvement
 - Priorität: mittel
@@ -150,12 +154,13 @@ Der Webapp-Stand hat sich seit 2026-05-30 fachlich klar verbessert: sechs der ac
 - Warum das relevant ist: Erschwert Python-/Pydantic-Upgrades, verschleiert echte Warnungen, latente Zeitvergleichs-Bugs.
 - Business Impact: Wartungs-/Upgrade-Risiko, potenzielle Zeitlogik-Fehler bei Lizenz-/Token-Ablauf.
 - Konkrete Handlungsempfehlung: `now_utc_naive()`/`now_utc()` schrittweise in `users.py`, `scheduler.py`, `licenses_v2.py`, `auth.py` ausrollen und den `filterwarnings`-Gate in `pytest.ini` modulweise erweitern, sobald ein Modul migriert ist.
+- **Behebung (2026-06-04):** Alle `datetime.utcnow()`-Aufrufe in `users.py` (3×), `scheduler.py` (8×), `licenses_v2.py` (17×) und `auth.py` (15×) auf `now_utc_naive()` aus `app.util.dt` migriert. `pytest.ini`-Gate auf alle 4 Module erweitert. Warnings 1121 → 1068; 297 Tests grün.
 
-### Finding 6 - dev.db und dev.db-Backup-Binärdatei in Git getrackt
+### Finding 6 - dev.db und dev.db-Backup-Binärdatei in Git getrackt ✅ behoben 2026-06-04
 
 - Kategorie: Risk
 - Priorität: mittel
-- Verifizierungsstatus: statisch verifiziert
+- Verifizierungsstatus: behoben
 - Kontinuität: neu (explizit benannt)
 - Betroffene Datei(en) oder Pfade: `apps/api/dev.db`, `apps/api/dev.db.backup-reset-414345-20260430-201116`, `.gitignore:14-16`
 - Evidenz: `git ls-files` listet `dev.db` und `dev.db.backup-reset-414345-20260430-201116` als getrackt. In dieser Session hat sich `dev.db` allein durch das Test-/Devverhalten von 3.149.824 auf 3.248.128 Bytes geändert (Arbeitskopie). `.gitignore` ignoriert zwar `db_backups/*`, aber die im Repo-Root-Verzeichnis liegende `dev.db.backup-*` ist davon nicht erfasst.
@@ -166,32 +171,37 @@ Der Webapp-Stand hat sich seit 2026-05-30 fachlich klar verbessert: sechs der ac
 
 ### Finding 7 - Tippfehler in nutzersichtbarer Avatar-Fehlermeldung
 
+- **Status: behoben (2026-06-04).**
 - Kategorie: Bug
 - Priorität: niedrig
 - Verifizierungsstatus: statisch verifiziert
 - Kontinuität: neu
-- Betroffene Datei(en) oder Pfade: `apps/api/app/routers/users.py:138`
+- Betroffene Datei(en) oder Pfade: `apps/api/app/routers/users.py:143`
 - Evidenz: `raise HTTPException(status_code=400, detail="Ur JPG, PNG oder WebP erlaubt.")` — „Ur" statt „Nur".
 - Beschreibung des Problems: Die Fehlermeldung bei falschem Avatar-Dateityp ist orthografisch fehlerhaft und wird dem Endnutzer direkt angezeigt.
 - Warum das relevant ist: Sichtbares Qualitätssignal im Profilbereich.
 - Business Impact: Sehr niedrig (Vertrauens-/Politur-Aspekt).
 - Konkrete Handlungsempfehlung: Auf „Nur JPG, PNG oder WebP erlaubt." korrigieren.
+- **Behebung (2026-06-04):** `detail`-String in `users.py:143` von „Ur JPG …" auf „Nur JPG, PNG oder WebP erlaubt." korrigiert.
 
 ### Finding 8 - Frontend-Hauptbundle über 500 kB, Chunk-Warnung aktiv
 
+- **Status: behoben (2026-06-04).**
 - Kategorie: Optimization
 - Priorität: niedrig
 - Verifizierungsstatus: statisch verifiziert
 - Kontinuität: persistent (seit 2026-05-23)
-- Betroffene Datei(en) oder Pfade: `apps/frontend/dist/assets/index-*.js`, `apps/frontend/vite.config.*`
+- Betroffene Datei(en) oder Pfade: `apps/frontend/dist/assets/index-*.js`, `apps/frontend/vite.config.ts`
 - Evidenz: `npm run build` meldet `index-*.js` = 533,75 kB (gzip 162,62 kB) und „Some chunks are larger than 500 kB after minification". Kein `manualChunks`/`lazy()`-Splitting eingeführt.
 - Beschreibung des Problems: Das App-Chrome (Sidebar, Notifications, Bell-Popover) liegt vollständig im Eintritts-Bundle und wächst kontinuierlich.
 - Warum das relevant ist: Kumulativ steigende Initial-Ladezeit für jede geschützte Route.
 - Business Impact: Niedrig, aber kumulativ; spürbar auf langsamen Verbindungen.
 - Konkrete Handlungsempfehlung: Route-basiertes Code-Splitting (`React.lazy` für Admin-/Report-Seiten), `recharts`/`html2pdf.js` dynamisch laden, oder bewusst `build.chunkSizeWarningLimit` setzen und als CI-Budget-Gate führen.
+- **Behebung (2026-06-04):** `manualChunks` in `apps/frontend/vite.config.ts` eingeführt: vendor-react (react/react-dom/react-router-dom → 164 kB), vendor-radix (alle @radix-ui/* → 115 kB), vendor-ui (lucide-react/sonner/date-fns/clsx → 105 kB), vendor-forms (react-hook-form/zod/@hookform → 84 kB) als eigenständige Cache-Chunks. Hauptbundle `index.js` sinkt von 533 kB auf **105 kB** (−80 %); kein Chunk überschreitet 500 kB; Vite-Chunk-Warnung entfällt; Build grün.
 
 ### Finding 9 - unleash-*.json-Artefakte im Migrations-Ordner
 
+- **Status: behoben (2026-06-04).**
 - Kategorie: Improvement
 - Priorität: niedrig
 - Verifizierungsstatus: statisch verifiziert
@@ -202,13 +212,14 @@ Der Webapp-Stand hat sich seit 2026-05-30 fachlich klar verbessert: sechs der ac
 - Warum das relevant ist: Verwirrt bei Migrations-Reviews; potenziell irritierend für Tools, die das Verzeichnis scannen.
 - Business Impact: Sehr niedrig.
 - Konkrete Handlungsempfehlung: Beide Dateien aus `alembic/versions/` entfernen (`git rm`) und ein `.gitignore`-Muster für `unleash-*.json` ergänzen.
+- **Behebung (2026-06-04):** Beide Dateien per `git rm --cached` aus dem Tracking entfernt. Muster `apps/api/alembic/versions/unleash-*.json` in `.gitignore` ergänzt; Dateien bleiben lokal erhalten, werden aber nicht mehr getrackt.
 
 ## 8. Quick Wins
 
 - Tippfehler „Ur JPG …" → „Nur JPG …" in `users.py:138` korrigieren (Finding 7).
 - `support_admin.py` auf `Depends(require_admin)` umstellen und manuelle `is_admin`-Checks entfernen (Finding 4).
 - `unleash-*.json` aus `alembic/versions/` entfernen und ignorieren (Finding 9).
-- `dev.db.backup-*` per `git rm --cached` aus dem Tracking nehmen und `.gitignore` ergänzen (Finding 6).
+- ~~`dev.db.backup-*` per `git rm --cached` aus dem Tracking nehmen und `.gitignore` ergänzen (Finding 6).~~ **Erledigt 2026-06-04**
 - `normdex-version-update`-Skill ausführen, um `package.json`/`version.py`/CHANGELOG mit Tag `v0.2.0` zu synchronisieren (Finding 3).
 
 ## 9. Strategische Empfehlungen
