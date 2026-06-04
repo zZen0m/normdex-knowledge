@@ -1,6 +1,6 @@
 # Datenschutzprozess
 
-Stand: 2026-05-30
+Stand: 2026-06-04
 
 Dieses Dokument beschreibt den aktuellen operativen Umgang mit Auskunfts-, Datenkopie- und Kontolöschanfragen in der Normdex-App.
 
@@ -74,6 +74,27 @@ Technischer Zielzustand:
 - Bestell-, Lizenz-, Audit- und Abrechnungskontext kann erhalten bleiben, sofern er für rechtliche, abrechnungsbezogene, Sicherheits- oder Nachweiszwecke benötigt wird.
 
 Der anonymisierte Nutzer bleibt als technischer Platzhalter bestehen, damit bestehende Fremdschlüssel, Lizenzbestellungen und Auditkontexte konsistent bleiben.
+
+### Technische Umsetzung der Anonymisierung
+
+Umgesetzt in `_anonymize_user_account` (`apps/api/app/routers/users.py`), ausgelöst über `POST /users/me/delete/confirm` nach E-Mail-Bestätigung. Der dreistufige Ablauf (Passwort → Dialog-Bestätigung → E-Mail-Link mit 24h-Token) ist vollständig implementiert. Der Lösch-Token kann nicht erneut verwendet werden, da im selben Commit **alle** Token des Kontos gelöscht werden.
+
+### Abrechnungs-Snapshot bei früherer bezahlter Subscription
+
+Buchhaltungsrelevante Daten liegen primär an der **Organisation** (Rechnungsadresse, USt-ID, Kundennummer, `stripe_customer_id`) und in **Stripe** selbst — beide werden bei der Kontolöschung nicht angetastet. `LicenseOrder` (Bestellungen, Beträge, Stripe-Checkout-ID) bleibt erhalten und über die anonymisierte Platzhalter-Zeile referenziert.
+
+Damit der buchhalterische Bezug **Person ↔ Bestellung** auch nach dem Nullen der Profilfelder nachvollziehbar bleibt, sichert `_snapshot_billing_data` vor der Anonymisierung einen unveränderlichen Snapshot:
+
+- Betroffen sind ausschließlich Bestellungen des Nutzers mit Status `completed` (= bezahlte, buchhaltungsrelevante Belege).
+- Gesichert werden Vor-/Nachname, Anzeigename, Firma, E-Mail, Kontotyp und Zeitstempel in `license_orders.meta.billing_snapshot` (`reason: "account_deletion"`).
+- Der Vorgang ist idempotent: ein bestehender Snapshot wird nicht überschrieben.
+- Hat der Nutzer keine bezahlte Bestellung getätigt, wird kein Snapshot erzeugt (Org-/Stripe-Daten genügen für die Buchhaltung).
+
+Grundsatz: Personenbezug bleibt nur dort erhalten, wo er buchhalterisch erforderlich ist; alles Übrige wird anonymisiert (Datenminimierung gem. Art. 5 Abs. 1 lit. c DSGVO).
+
+### Audit-Trail
+
+Beim Start der Löschung wird `account_delete_requested`, nach erfolgreichem Abschluss `account_deleted` als Audit-Event protokolliert (`apps/api/app/audit.py`).
 
 ## Owner-Schutz bei Löschung
 
