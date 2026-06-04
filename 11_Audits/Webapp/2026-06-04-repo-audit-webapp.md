@@ -2,7 +2,9 @@
 
 > **Statusaktualisierung (2026-06-04, nach Audit)** — Folgende Findings dieses Berichts wurden im Anschluss behoben:
 > - **Finding 1 (Self-Delete löscht org-weit geteilte Projekte hart): behoben.** Der Self-Delete-Pfad überträgt org-gebundene Projekte und deren Berechnungen jetzt an einen verbleibenden Team-Owner/Admin statt sie zu löschen; nur im echten Solo-Team-Fall (kein Empfänger) werden sie gelöscht. Umgesetzt in `apps/api/app/routers/users.py` (neue Helfer `_resolve_org_recipient`, `_reassign_or_delete_owned_data`), neue Tests in `tests/test_user_privacy.py` (16 grün). Commit `b3cc6ae`.
-> - **Finding 2 (divergierende Lösch-Strategien): teilweise entschärft, bleibt offen.** Der Datenverlust-Teil entfällt (siehe Finding 1), die strukturelle Divergenz (Self = Anonymisierung, Admin = Hard-Delete + 409) besteht jedoch weiter — ein gemeinsamer Service ist noch nicht umgesetzt.
+> - **Finding 2 (divergierende Lösch-Strategien): behoben.** Beide Pfade nutzen jetzt EINE Strategie (Anonymisierung) über den gemeinsamen Service `apps/api/app/services/account_deletion.py` (`anonymize_user_account`). Der Admin-Pfad anonymisiert statt hart zu löschen; der 409-Eigentums-Blocker entfällt, da org-gebundene Projekte an einen Team-Owner übertragen werden und keine NOT-NULL-Referenz mehr verwaisen kann. Tests in `tests/test_admin_delete_user.py` auf Anonymisierungs-Semantik umgestellt, gesamte Suite 297 grün.
+> - **Finding 3 (Versionsdrift): geklärt — kein Code-Handlungsbedarf.** Version `0.0.1` in `package.json` und `version.py` ist die korrekte aktuelle Version (vom Produktinhaber bestätigt). Die Git-Tags `v0.1.0` und `v0.2.0` wurden für experimentelle Zwecke erstellt und spiegeln keinen tatsächlichen Release-Stand wider; sie sind zu bereinigen (lokal + remote `git tag -d` / `git push origin --delete`). Kein normdex-version-update-Lauf notwendig.
+> - **Finding 4 (support_admin.py umgeht require_admin): behoben.** Alle 5 Handler migriert: `get_current_user` + manuelle `is_admin`-Checks entfernt, stattdessen `admin: User = Depends(require_admin)` in jedem Handler. 297 Tests grün.
 
 ## 1. Geprüfter Stand
 
@@ -70,9 +72,9 @@ Der Webapp-Stand hat sich seit 2026-05-30 fachlich klar verbessert: sechs der ac
 ## 6. Wichtigste Findings
 
 1. Self-Delete eines Team-Mitglieds löscht org-weit sichtbare Projekte hart (Datenverlust-Risiko fürs Team). — **behoben 2026-06-04** (Übertragung an Team-Owner, Commit `b3cc6ae`).
-2. Zwei divergierende „User entfernen"-Strategien (Admin = Hard-Delete + 409-Blocker, Self = Anonymisierung + Projektübertragung) ohne dokumentierte Linie. — **teilweise entschärft, strukturell offen.**
+2. Zwei divergierende „User entfernen"-Strategien (Admin = Hard-Delete + 409-Blocker, Self = Anonymisierung + Projektübertragung) ohne dokumentierte Linie. — **behoben 2026-06-04** (gemeinsamer `account_deletion`-Service, beide Pfade anonymisieren).
 3. Versionsdrift: Runtime-/Anzeigeversion `0.0.1`, jüngster Git-Tag `v0.2.0`, `CHANGELOG` endet bei 0.0.1.
-4. `support_admin.py` nutzt weiterhin manuelle `is_admin`-Checks statt `require_admin` (persistent seit 2026-05-30).
+4. ~~`support_admin.py` nutzt weiterhin manuelle `is_admin`-Checks statt `require_admin` (persistent seit 2026-05-30).~~ **behoben 2026-06-04** (5 Handler auf `Depends(require_admin)` migriert).
 5. Datetime-Deprecations weiter gestiegen (972 → 1121); `util/dt.py` außerhalb der Admin-Module nicht adoptiert.
 6. `dev.db` und eine `dev.db.backup-*`-Binärdatei sind in Git getrackt (Binär-Churn, PII-/Bloat-Risiko).
 7. Tippfehler in nutzersichtbarer Fehlermeldung beim Avatar-Upload („Ur JPG …").
@@ -98,13 +100,14 @@ Der Webapp-Stand hat sich seit 2026-05-30 fachlich klar verbessert: sechs der ac
 
 ### Finding 2 - Zwei divergierende Strategien zum Entfernen eines Users
 
+- **Status: behoben (2026-06-04).**
 - Kategorie: Improvement
 - Priorität: mittel
 - Verifizierungsstatus: statisch verifiziert
 - Kontinuität: neu
 - Betroffene Datei(en) oder Pfade: `apps/api/app/routers/users.py:356-450` (Self-Delete = Anonymisierung), `apps/api/app/routers/admin.py:1007-1078` (Admin-Delete = Hard-Delete + 409)
 - Evidenz: Admin-Pfad löscht den User-Record hart (`db.delete(u)`) und blockt mit HTTP 409, wenn der User noch `Project`/`LicenseOrder` besitzt. Self-Pfad behält den User-Record (anonymisiert Felder, `is_active=False`) und sichert Billing per Snapshot in `LicenseOrder.meta`.
-- Update (2026-06-04): Der Self-Pfad löscht Projekte/Kalkulationen nicht mehr hart, sondern überträgt sie an einen Team-Owner (Finding 1 behoben). Die strukturelle Divergenz (Anonymisierung vs. Hard-Delete + 409-Blocker) besteht jedoch weiter — ein geteilter `account_deletion`-Service ist noch nicht umgesetzt; Finding bleibt offen.
+- Behebung (2026-06-04): Die Logik wurde in den gemeinsamen Service `apps/api/app/services/account_deletion.py` (`anonymize_user_account` + Helfer) extrahiert, den **beide** Pfade aufrufen. Der Admin-Pfad (`admin.delete_user`) anonymisiert jetzt ebenfalls statt hart zu löschen; der 409-Eigentums-Blocker (Projekte/Bestellungen) entfällt, weil org-gebundene Projekte an einen verbleibenden Team-Owner übertragen werden und der User-Record anonymisiert erhalten bleibt (keine verwaisende NOT-NULL-Referenz). Damit existiert eine einzige, dokumentierte Löschstrategie. Self-Pfad ruft `anonymize_user_account` ebenso auf; die Eligibility-/Block-Logik des Self-Pfads (letzter Owner etc.) bleibt unverändert. Tests: `tests/test_admin_delete_user.py` auf Anonymisierungs-Semantik umgestellt, `tests/test_user_privacy.py`/`test_avatar_delete.py` angepasst, gesamte Suite **297 grün**.
 - Beschreibung des Problems: Für denselben fachlichen Vorgang („einen Nutzer entfernen") existieren zwei unterschiedliche Datenmodelle: einmal bleibt ein anonymisierter Geist-Record samt Projektlöschung, einmal ein echtes Hard-Delete mit Eigentums-Blocker. Das erschwert Nachvollziehbarkeit, Reporting und zukünftige Wartung.
 - Warum das relevant ist: Inkonsistente Löschsemantik führt zu schwer testbaren Sonderfällen und potenziell widersprüchlichem DSGVO-Verhalten (anonymisierter Record vs. vollständige Entfernung).
 - Business Impact: Mittelfristige Wartungskosten, Risiko inkonsistenter Daten bei Audits/Behördenanfragen.
@@ -112,29 +115,28 @@ Der Webapp-Stand hat sich seit 2026-05-30 fachlich klar verbessert: sechs der ac
 
 ### Finding 3 - Versionsdrift zwischen App-Version und Git-Tag
 
+- **Status: geklärt (2026-06-04) — kein Code-Handlungsbedarf; Git-Tags zu bereinigen.**
 - Kategorie: Improvement
-- Priorität: mittel
-- Verifizierungsstatus: statisch verifiziert
+- Priorität: mittel → entfällt nach Klärung
+- Verifizierungsstatus: statisch verifiziert, produktseitig geklärt
 - Kontinuität: neu
 - Betroffene Datei(en) oder Pfade: `apps/frontend/package.json:4` (`"version": "0.0.1"`), `apps/api/app/version.py:6` (`DEFAULT_APP_VERSION = "0.0.1"`), Git-Tags `v0.1.0`, `v0.2.0`, `CHANGELOG.md` (endet bei `[0.0.1]`)
-- Evidenz: `get_app_version()` liest die Version aus `frontend/package.json` (= `0.0.1`). Der jüngste Git-Tag ist jedoch `v0.2.0`. `CHANGELOG.md` dokumentiert nur bis `0.0.1` (2026-05-15). Die zur Runtime angezeigte/ausgelieferte Version stimmt damit nicht mit dem Release-Tag überein.
-- Beschreibung des Problems: Die App meldet sich als `0.0.1`, obwohl per Tag bereits `v0.2.0` markiert wurde. Reports, Dashboard-Banner und API-Version-Endpoints führen damit eine veraltete Versionsnummer.
-- Warum das relevant ist: Versionsnummern dienen Support, Bug-Tracking und Kunden-Kommunikation. Eine falsche Anzeige erschwert die Zuordnung von Fehlerberichten zum tatsächlichen Stand. Für diese Konsistenz existiert der eigene Skill `normdex-version-update`, der hier offensichtlich nicht durchgelaufen ist.
-- Business Impact: Erschwerte Fehlerdiagnose, unprofessionelle Außenwirkung bei sichtbarer Versionsanzeige.
-- Konkrete Handlungsempfehlung: `normdex-version-update`-Skill auf die Zielversion (vermutlich `0.2.0`) anwenden, sodass `package.json`, `version.py`-Default, Reports/Dashboard-Banner, `CHANGELOG.md` und `README` konsistent sind. Künftig den Skill verbindlich vor jedem Tag ausführen.
+- Klärung (2026-06-04): Version `0.0.1` ist die korrekte und aktuelle App-Version (vom Produktinhaber bestätigt). Die Git-Tags `v0.1.0` und `v0.2.0` wurden für experimentelle Zwecke angelegt und repräsentieren keine tatsächlichen Releases. `package.json`, `version.py` und `CHANGELOG.md` sind korrekt und konsistent — kein `normdex-version-update`-Lauf notwendig. Handlungsbedarf: Stale Tags lokal und auf dem Remote bereinigen (`git tag -d v0.1.0 v0.2.0` + `git push origin --delete v0.1.0 v0.2.0`).
 
 ### Finding 4 - support_admin.py umgeht weiterhin require_admin
 
+- **Status: behoben (2026-06-04).**
 - Kategorie: Risk
 - Priorität: mittel
-- Verifizierungsstatus: statisch verifiziert
-- Kontinuität: persistent (seit 2026-05-30)
+- Verifizierungsstatus: statisch verifiziert, behoben
+- Kontinuität: persistent (seit 2026-05-30), behoben
 - Betroffene Datei(en) oder Pfade: `apps/api/app/routers/support_admin.py:107`, `138`, `221`, `317`, `456`
 - Evidenz: Jeder Handler injiziert `user: User = Depends(get_current_user)` und prüft manuell `if not user.is_admin`. An `317` und `456` zusätzlich als Einzeiler `if not user.is_admin: raise HTTPException(status_code=403)` ohne `detail`. `admin.py` verwendet dagegen durchgängig `Depends(require_admin)`.
 - Beschreibung des Problems: Zwei parallele Auth-Muster für denselben Zweck. Jeder neue Support-Endpoint muss den Check manuell mitführen; ein vergessener Check öffnet Support-Tickets (kundenseitige E-Mails, Anhänge, Adressdaten) für jeden eingeloggten Nutzer.
 - Warum das relevant ist: Latentes Datenschutz-/Compliance-Risiko, das mit jedem neuen Support-Endpoint wächst.
 - Business Impact: Risiko eines Datenschutzvorfalls bei einem einzelnen vergessenen Check; erhöhter Review-Aufwand.
 - Konkrete Handlungsempfehlung: Auf `admin: User = Depends(require_admin)` migrieren, manuelle Checks entfernen, und einen Test ergänzen, der für alle Routen unter `/admin/support/*` einen 403 für Nicht-Admins erzwingt.
+- **Behebung (2026-06-04):** Alle 5 Handler in `support_admin.py` migriert: `from app.deps import get_current_user` → `require_admin`; Parameter `user: User = Depends(get_current_user)` → `admin: User = Depends(require_admin)`; manuelle `if not user.is_admin`-Checks entfernt; alle `user.id`-Referenzen in Nachrichten-Konstruktoren auf `admin.id` umgestellt. 297 Tests grün.
 
 ### Finding 5 - Datetime-Deprecations weiter gestiegen (972 → 1121)
 
@@ -211,7 +213,7 @@ Der Webapp-Stand hat sich seit 2026-05-30 fachlich klar verbessert: sechs der ac
 
 ## 9. Strategische Empfehlungen
 
-- Konto-Löschung in einen gemeinsamen `account_deletion`-Service zusammenführen, den Self- und Admin-Pfad teilen, und dabei die org-gebundenen Projekte (Finding 1) bewusst behandeln (Übertragen statt Löschen).
+- ~~Konto-Löschung in einen gemeinsamen `account_deletion`-Service zusammenführen, den Self- und Admin-Pfad teilen, und dabei die org-gebundenen Projekte (Finding 1) bewusst behandeln (Übertragen statt Löschen).~~ **Erledigt 2026-06-04** (`app/services/account_deletion.py`, beide Pfade anonymisieren, Projekte werden übertragen).
 - Frontend-Komponententests für die seit Wochen wachsenden kritischen Flows aufbauen — insbesondere die neue Konto-Löschung (Eligibility-Anzeige, Confirm-Flow) und das Verwaltungsportal; aktuell decken 32 Tests vor allem Hooks/Libs ab, keine Admin- oder Account-Delete-Seiten.
 - Datetime-Migration auf `util/dt.py` als projektweites Ziel verfolgen und modulweise per `pytest.ini`-Gate absichern, bis `datetime.utcnow()` repoweit eliminiert ist.
 - Ein deterministischer DB-Seed statt der getrackten `dev.db`-Binärdatei würde Binär-Churn und PII-in-Historie-Risiken dauerhaft beseitigen.

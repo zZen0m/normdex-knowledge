@@ -37,8 +37,29 @@ Mitglieds an einen **verbleibenden Owner/Admin der jeweiligen Organisation
 - Keine DB-Migration nötig: Der User-Datensatz wird anonymisiert (nicht gelöscht),
   der `ondelete="CASCADE"` auf `projects.user_id` feuert in diesem Flow nicht.
 
+## Vereinheitlichung beider Lösch-Pfade (Audit-Finding 2)
+
+Im Anschluss wurde die gesamte Lösch-/Anonymisierungslogik in den gemeinsamen
+Service `apps/api/app/services/account_deletion.py` (`anonymize_user_account` +
+Helfer) extrahiert. **Beide** Pfade nutzen jetzt dieselbe, einzige Strategie:
+
+- **Self-Service** (`users.py` → `delete_confirm`) ruft `anonymize_user_account`.
+- **Admin** (`admin.py` → `delete_user`) ruft denselben Service und **anonymisiert
+  ebenfalls** statt hart zu löschen. Der bisherige HTTP-409-Eigentums-Blocker
+  (Projekte/Bestellungen) entfällt, weil org-gebundene Projekte übertragen werden
+  und der User-Record anonymisiert erhalten bleibt — keine NOT-NULL-Referenz kann
+  mehr verwaisen.
+
+Konsequenz der Anonymisierung (statt Hard-Delete) im Admin-Pfad: `AuditLog` und
+`Notification` des Users bleiben am anonymisierten Datensatz erhalten (vorher hart
+gelöscht); der DB-`ondelete="CASCADE"` auf `projects.user_id` feuert in keinem Pfad.
+
 ## Tests
 
-`apps/api/tests/test_user_privacy.py` – neue Fälle: Übertragung an verbleibenden
-Owner, Solo-Team-Löschung, Legacy-Projekt ohne `organization_id`, `updated_by`-Null.
-Alle 16 Tests grün.
+- `apps/api/tests/test_user_privacy.py` – Übertragung an verbleibenden Owner,
+  Solo-Team-Löschung, Legacy-Projekt ohne `organization_id`, `updated_by`-Null.
+- `apps/api/tests/test_admin_delete_user.py` – auf Anonymisierungs-Semantik
+  umgestellt (User anonymisiert statt gelöscht, Projekt-Übertragung, Billing-Snapshot).
+- `apps/api/tests/test_avatar_delete.py` – Admin-Avatar-Löschung an Anonymisierung
+  angepasst.
+- Gesamte Backend-Suite **297 grün**.
