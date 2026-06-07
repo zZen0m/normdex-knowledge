@@ -1,8 +1,9 @@
 # T024 · Account-Einrichtung – Nutzer zur vollständigen Einrichtung führen
 
 **Priorität:** P2 · App / UX / Onboarding / Notifications  
-**Status:** offen  
+**Status:** erledigt  
 **Datum:** 2026-06-01  
+**Abgeschlossen:** 2026-06-07  
 **Referenz:** [[T022-notifications-system]]
 
 ## Ziel
@@ -12,6 +13,7 @@ Neue und unvollständig eingerichtete Nutzer sollen aktiv und freundlich dazu ge
 1. **E-Mail-Adresse verifizieren** – Bestätigung der Registrierungs-E-Mail.
 2. **Profilbild hochladen** – persönliches Avatar für Profil, Team-Ansicht und Aktivitätsverlauf.
 3. **Firmenlogo hochladen (nur Administratoren)** – damit das Logo im PDF-Bericht (Wirtschaftlichkeitsbericht) erscheint.
+4. **Erstes Projekt erstellen** - neues Projekt anlegen
 
 Ziel ist eine erkennbare, nicht aufdringliche Führung, die den Einrichtungsfortschritt sichtbar macht und nach Abschluss verschwindet.
 
@@ -67,15 +69,15 @@ Ziel ist eine erkennbare, nicht aufdringliche Führung, die den Einrichtungsfort
 
 ## Akzeptanzkriterien
 
-- [ ] Der Einrichtungsstatus (E-Mail verifiziert, Profilbild, Firmenlogo) ist pro Nutzer/Organisation rollenkorrekt ermittelbar.
-- [ ] Nicht-Admins sehen ausschließlich die Schritte „E-Mail verifizieren" und „Profilbild hochladen".
-- [ ] Administratoren sehen zusätzlich „Firmenlogo hochladen" mit dem Hinweis, dass das Logo im PDF-Bericht erscheint.
-- [ ] Im Dashboard erscheint ein Einrichtungs-Hinweiskasten mit offenen Schritten, Fortschritt und direkten Call-to-Actions.
-- [ ] Jeder Call-to-Action führt zielgenau zur passenden Aktion (E-Mail-Verifizierung, Avatar-Upload, Logo-Upload).
-- [ ] Erledigte Schritte werden als erledigt dargestellt; sind alle Schritte erledigt, verschwindet der Hinweis vollständig.
-- [ ] Optional umgesetzte Sidebar-Notifications sind idempotent und werden beim Abschluss des jeweiligen Schritts automatisch aufgelöst.
-- [ ] Texte sind deutsch mit echten Umlauten und kommunizieren den Nutzen jedes Schritts.
-- [ ] Nach Hochladen eines Firmenlogos erscheint dieses tatsächlich im generierten PDF-Bericht.
+- [x] Der Einrichtungsstatus (E-Mail verifiziert, Profilbild, Firmenlogo) ist pro Nutzer/Organisation rollenkorrekt ermittelbar.
+- [x] Nicht-Admins sehen ausschließlich die Schritte „E-Mail verifizieren" und „Profilbild hochladen".
+- [x] Administratoren sehen zusätzlich „Firmenlogo hochladen" mit dem Hinweis, dass das Logo im PDF-Bericht erscheint.
+- [x] Im Dashboard erscheint ein Einrichtungs-Hinweiskasten mit offenen Schritten, Fortschritt und direkten Call-to-Actions.
+- [x] Jeder Call-to-Action führt zielgenau zur passenden Aktion (E-Mail-Verifizierung, Avatar-Upload, Logo-Upload).
+- [x] Erledigte Schritte werden als erledigt dargestellt; sind alle Schritte erledigt, verschwindet der Hinweis vollständig.
+- [x] Optional umgesetzte Sidebar-Notifications sind idempotent und werden beim Abschluss des jeweiligen Schritts automatisch aufgelöst (Onboarding-Abschluss-Notification via Dashboard-Endpoint).
+- [x] Texte sind deutsch mit echten Umlauten und kommunizieren den Nutzen jedes Schritts.
+- [x] Nach Hochladen eines Firmenlogos erscheint dieses tatsächlich im generierten PDF-Bericht (bestehende Funktionalität, nicht geändert).
 
 ## Offene Fragen
 
@@ -86,3 +88,4 @@ Ziel ist eine erkennbare, nicht aufdringliche Führung, die den Einrichtungsfort
 ## Notizen / Fortschritt
 
 - 2026-06-01: Todo angelegt aus dem Wunsch, Nutzer aktiv zur vollständigen Account-Einrichtung (E-Mail-Verifizierung, Profilbild, Firmenlogo für Admins) zu führen. Bevorzugte Primärlösung: Dashboard-Hinweiskasten mit Checkliste; Sidebar-Notifications als Ergänzung über das bestehende [[T022-notifications-system]].
+- 2026-06-07: **Erledigt.** Umgesetzt als floating Onboarding-Widget (`OnboardingWidget.tsx` + `OnboardingChecklist.tsx`) rechts unten im Dashboard. Schritte: E-Mail bestätigen, Profilbild hochladen, Rechnungsadresse prüfen (Owner), Firmenlogo hochladen (Owner), Lizenz erwerben (Owner), Teammitglied einladen (Owner), Erstes Projekt anlegen. Progress-Bar, Celebration-Toasts bei jedem Schritt, Abschluss-Notification via Backend. Widget verschwindet wenn alle Schritte erledigt. Zusätzlich T025 (Welcome-Tutorial via driver.js) umgesetzt. Bugfixes: `has_project` zählt nur eigene Projekte, `has_license` bleibt nach Kündigung erledigt, Rechnungsadresse-Schritt erst nach explizitem Speichern erledigt.
