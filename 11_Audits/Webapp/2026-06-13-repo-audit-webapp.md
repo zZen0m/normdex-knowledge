@@ -14,6 +14,7 @@
 - Nachtrag vom 2026-06-13: Finding 1 wurde repo-seitig teilweise behoben und erneut verifiziert; die Audit-Baseline aus Commit `3651038` bleibt unverändert.
 - Nachtrag vom 2026-06-13: Finding 2 wurde behoben und mit neuen Backend-Tests sowie Frontend-Typecheck verifiziert.
 - Nachtrag vom 2026-06-13: Finding 3 wurde behoben; Support-Anhänge sind nicht mehr statisch öffentlich erreichbar und werden ausschließlich über einen admin-geschützten Download-Endpunkt ausgeliefert.
+- Nachtrag vom 2026-06-13: Finding 5 wurde behoben; die veralteten Undo-Kauf-Tests wurden an den aktuellen Lizenzvertrag angepasst und die vollständige Backend-Suite läuft ohne Ausschlüsse.
 
 ## 2. Audit-Abdeckung
 
@@ -25,8 +26,9 @@
 - Nachbearbeitung zu Finding 1: vollständiger Gitleaks-Lauf mit Version `8.30.1` über 417 erreichbare Commits, zusätzliche Pfadprüfung für `.env*`-Dateien und Datenbank-Backups sowie Negativtests für beide Dateiklassen
 - Nachbearbeitung zu Finding 1: lokale Legacy-Refs neu geschrieben, Reflogs und alte Objekte gepruned; danach keine unerreichbaren Git-Objekte mehr vorhanden
 - Nachbearbeitung zu Finding 2: 4 neue Invite-Sicherheitstests, 12 fokussierte Backend-Tests, eine breitere synchrone Suite mit 249 Tests und 32 Frontend-Tests grün; TypeScript-Compile erfolgreich
-- Nachbearbeitung zu Finding 3: 7 neue Attachment-Download-Sicherheitstests; zusammen mit Upload- und Retention-Tests 25 Backend-Tests grün. Breiter Restlauf mit den zwei bekannten, nicht sammelbaren Lizenzmodulen ausgeschlossen: **287 Tests grün, 167 Warnungen**. Zusätzlich 32 Frontend-Tests und TypeScript-Compile erfolgreich.
-- Backend-Tests isoliert in Python 3.11 ausgeführt: Gesamtsuite durch 2 Collection-Fehler blockiert; aktueller Restlauf mit den beiden betroffenen Modulen ausgeschlossen: **287 Tests grün, 167 Warnungen**
+- Nachbearbeitung zu Finding 3: 7 neue Attachment-Download-Sicherheitstests; zusammen mit Upload- und Retention-Tests 25 Backend-Tests grün. Zusätzlich 32 Frontend-Tests und TypeScript-Compile erfolgreich.
+- Nachbearbeitung zu Finding 5: Die sechs ausschließlich auf den am 2026-06-07 entfernten Undo-Kauf-Flow bezogenen Tests und Imports wurden entfernt. Die verbleibenden 27 Tests der beiden Lizenzmodule laufen grün; der Checkout-Confirm-Test sichert explizit ab, dass keine Legacy-Metadaten `direct_activation` oder `undo_until` mehr erzeugt werden.
+- Backend-Gesamtsuite isoliert in Python 3.11 ausgeführt: **314 Tests grün, 167 Warnungen**, keine Ausschlüsse und keine Collection-Fehler
 - Frontend-Tests isoliert ausgeführt: **32 Tests grün**
 - Frontend-Build ausgeführt: **erfolgreich**
 - Dependency-Scans ausgeführt: `pip-audit` und `npm audit`
@@ -66,18 +68,18 @@ Keine formale Regression gegenüber dem Vorbericht.
 
 - Confidence: **hoch**
 
-Die wesentlichen Findings sind direkt im aktuellen Commit belegt und wurden durch reale Test-, Build-, Dependency- und History-Scans ergänzt. Der Refund-Flow und die Test-Collection-Fehler sind ohne Annahmen aus dem Code ableitbar. Finding 2 ist durch Negativ-, Replay- und Datenminimierungstests abgesichert. Finding 3 ist durch Authentifizierungs-, Autorisierungs-, Ticketbindungs-, Löschstatus- und Pfadvalidierungstests abgesichert. Die lokale Bereinigung von Finding 1 und das neue Secret-Scan-Gate wurden zusätzlich statisch und mit Negativtests verifiziert. Einschränkungen bestehen weiterhin bei der Gültigkeit historischer Zugangsdaten, der vollständigen Bereinigung der aktiven GitHub-Historie und dem Verhalten realer Stripe-/Produktivsysteme.
+Die wesentlichen Findings sind direkt im aktuellen Commit belegt und wurden durch reale Test-, Build-, Dependency- und History-Scans ergänzt. Der Refund-Flow ist ohne Annahmen aus dem Code ableitbar. Finding 2 ist durch Negativ-, Replay- und Datenminimierungstests abgesichert. Finding 3 ist durch Authentifizierungs-, Autorisierungs-, Ticketbindungs-, Löschstatus- und Pfadvalidierungstests abgesichert. Finding 5 ist durch eine vollständige Backend-Suite ohne Ausschlüsse verifiziert. Die lokale Bereinigung von Finding 1 und das neue Secret-Scan-Gate wurden zusätzlich statisch und mit Negativtests verifiziert. Einschränkungen bestehen weiterhin bei der Gültigkeit historischer Zugangsdaten, der vollständigen Bereinigung der aktiven GitHub-Historie und dem Verhalten realer Stripe-/Produktivsysteme.
 
 ## 5. Kurzfazit
 
-Der Branch enthält mehrere solide Sicherheitsverbesserungen. Finding 2 ist behoben: Einladungen sind jetzt serverseitig an die normalisierte E-Mail-Adresse gebunden, Replay wird abgelehnt und die öffentliche Invite-Antwort ist minimiert. Finding 3 ist ebenfalls behoben: Support-Anhänge liegen außerhalb öffentlicher Static-Routen und der Download verlangt eine aktive Admin-Session sowie die korrekte Ticket-/Attachment-Zuordnung. Für einen Release ist der Stand trotzdem nicht freigabefähig: Zwei Testmodule mit 33 Lizenztests werden gar nicht gesammelt, und die neue Sofortkündigung kann eine Erstattung dem falschen Stripe-Charge zuordnen oder einen Refund-Fehler trotz erfolgter Kündigung verschweigen. Zusätzlich enthalten Backend und Frontend bekannte verwundbare Abhängigkeiten. Finding 1 ist repo-seitig teilweise entschärft, benötigt aber weiterhin Provider-Rotation und einen koordinierten Remote-History-Rewrite.
+Der Branch enthält mehrere solide Sicherheitsverbesserungen. Findings 2 und 3 sind behoben, und die Backend-Gesamtsuite läuft nach Behebung von Finding 5 mit 314 Tests ohne Ausschlüsse durch. Für einen Release ist der Stand trotzdem nicht freigabefähig: Die neue Sofortkündigung kann eine Erstattung dem falschen Stripe-Charge zuordnen oder einen Refund-Fehler trotz erfolgter Kündigung verschweigen. Zusätzlich enthalten Backend und Frontend bekannte verwundbare Abhängigkeiten. Finding 1 ist repo-seitig teilweise entschärft, benötigt aber weiterhin Provider-Rotation und einen koordinierten Remote-History-Rewrite.
 
 ## 6. Wichtigste Findings
 
 1. Historische SMTP-, Stripe- und Microsoft-Secrets bleiben teilweise in aktiven Branch-Historien erreichbar; lokale Legacy-Refs sind bereinigt. - Risk, **hoch**, **teilweise umgesetzt**
 2. Support-Anhänge werden ohne Authentifizierung über `/static/attachments/...` ausgeliefert. - Bug, **hoch**, **behoben**
 3. Die Sofortkündigung kann den falschen Stripe-Charge erstatten und Refund-Fehler als Erfolg zurückgeben. - Bug, **hoch**
-4. Die Backend-Gesamtsuite scheitert bei der Collection; 33 Lizenztests laufen nicht. - Bug, **hoch**
+4. Die Backend-Gesamtsuite scheitert bei der Collection; 33 Lizenztests laufen nicht. - Bug, **hoch**, **behoben**
 5. `pip-audit` und `npm audit` melden verwundbare Runtime- und Tooling-Abhängigkeiten. - Risk, **hoch**
 6. Verifizierungs- und Passwort-Reset-Endpunkte erlauben Account-Enumeration über unterschiedliche Antworten. - Risk, **mittel**
 7. Das Brevo-Webhook-Secret bleibt in der Query-String. - Risk, **mittel**
@@ -153,6 +155,7 @@ Der Branch enthält mehrere solide Sicherheitsverbesserungen. Finding 2 ist beho
 - Warum das relevant ist: Gerade Lizenz-, Trial-, Checkout-, Kündigungs- und Reaktivierungslogik haben hohe finanzielle Auswirkung. Zusätzlich fehlen Tests für die neue Bulk-Sofortkündigung.
 - Business Impact: Erhöhtes Release-Risiko und fehlende Absicherung von zahlungsrelevanten Kernflows.
 - Konkrete Handlungsempfehlung: Veraltete Undo-Tests fachlich auf den aktuellen Kündigungs-/Reaktivierungsflow migrieren und die Imports bereinigen. Danach die Bulk-Sofortkündigung einschließlich Refund-Fehlern ergänzen und `pytest` als verpflichtendes CI-Gate setzen.
+- Umsetzungsstand 2026-06-13: **behoben**. Die sechs Tests, die ausschließlich den am 2026-06-07 bewusst entfernten 10-Minuten-Undo-Flow und dessen E-Mail prüften, wurden einschließlich ungültiger Imports entfernt. Die verbleibenden 27 Checkout-, Trial-, Kündigungs- und Reaktivierungstests beider Module laufen vollständig. Der Checkout-Confirm-Test prüft nun den aktuellen Vertrag und stellt sicher, dass keine Legacy-Undo-Metadaten mehr geschrieben werden. Die komplette Backend-Suite sammelt und besteht ohne Ausschlüsse mit **314 Tests und 167 Warnungen**.
 
 ### Finding 6 - Bekannte Schwachstellen in Backend- und Frontend-Abhängigkeiten
 
@@ -225,7 +228,7 @@ Der Branch enthält mehrere solide Sicherheitsverbesserungen. Finding 2 ist beho
 - SMTP-, Stripe- und Microsoft-Zugangsdaten rotieren beziehungsweise widerrufen und Provider-Logs prüfen.
 - Den neuen Secret-Scan-Workflow pushen und als verpflichtenden Branch-Check aktivieren.
 - `python-multipart`, Pillow, Vitest und `react-router-dom` auf gepatchte Versionen aktualisieren.
-- Die zwei veralteten `undo_license_purchase`-Imports entfernen beziehungsweise die 33 Tests auf den aktuellen Flow migrieren.
+- `pytest` als verpflichtendes CI-Gate konfigurieren; die Suite ist nach der Testmigration vollständig grün.
 - Brevo-Secret aus der Query entfernen oder den Query-String am Proxy gezielt vom Logging ausschließen.
 - Den veralteten Sidebar-TODO löschen.
 

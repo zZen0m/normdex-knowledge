@@ -37,5 +37,6 @@ Der Inhalt soll abhängig vom Kündigungsfall variieren:
 - Angelegt am 2026-04-27 aus App-Feedback zur Lizenzverwaltung.
 - 2026-05-25: Implementiert. Lizenzkündigungen über `POST /licenses/{license_id}/cancel` senden eine Kündigungsbestätigung an den kündigenden User. Der Text unterscheidet zwischen Zusatzlizenz und organisationsweit letzter Lizenz, verwendet `ÖNORM M 7140 Basic`, enthält Laufzeitende und Link zur Lizenzverwaltung. Mailfehler werden als `EMAIL_ERROR` protokolliert und blockieren die Kündigung nicht.
 - 2026-05-25: Kündigungsbestätigung optisch an Bestellbestätigung angeglichen: HTML-Mail mit Tabelle für Produkt, Lizenzart, Abrechnung, Menge, Einzelpreis und Summe, CTA „Lizenzen verwalten“ und Abrechnungsportal-Hinweis im Footer.
-- 2026-05-25: Ergänzt. Der 10-Minuten-Flow `POST /licenses/{license_id}/undo-purchase` sendet nun im gleichen Mail-Flow eine Bestätigung „Kauf rückgängig gemacht“. Die HTML-Mail ist wie die Bestellbestätigung aufgebaut, mit Tabelle für Produkt, Lizenzart, Abrechnung, Menge, Einzelpreis und Summe sowie CTA „Lizenzen verwalten“.
+- 2026-05-25: Der damalige 10-Minuten-Flow `POST /licenses/{license_id}/undo-purchase` erhielt eine Bestätigungsmail.
+- 2026-06-07: Der 10-Minuten-Undo-Flow wurde produktseitig vollständig entfernt. Käufe können nicht mehr sofort rückgängig gemacht werden; reguläre Kündigungen und deren Bestätigungsmails bleiben bestehen.
 - 2026-05-25: Verifiziert mit `.\venv\Scripts\python -m pytest tests/test_license_cancel_reactivation.py` in `apps/api/` → 11 passed.

@@ -79,7 +79,6 @@ POST /licenses/checkout/confirm         → Stripe Checkout nach Redirect bestä
 POST /licenses/checkout/cancel          → Abgebrochenen Checkout bereinigen
 POST /licenses/{id}/cancel              → Lizenz zum Laufzeitende kündigen
 POST /licenses/{id}/reactivate-cancel   → Kündigung innerhalb der Restlaufzeit zurückziehen
-POST /licenses/{id}/undo-purchase       → Direkten Zusatzkauf innerhalb von 10 Minuten rückgängig machen
 POST /licenses/{id}/start-usage         → Session starten (Lizenz belegen)
 POST /licenses/{id}/heartbeat           → Keep-Alive
 POST /licenses/{id}/end-usage           → Session beenden (Lizenz freigeben)
