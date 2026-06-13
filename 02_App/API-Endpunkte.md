@@ -58,9 +58,12 @@ PATCH  /organizations/{org_id}/members/{user_id}      → Rolle ändern
 GET    /organizations/{org_id}/invites                → Einladungen
 POST   /organizations/{org_id}/invites                → Einladung senden
 DELETE /organizations/{org_id}/invites/{invite_id}    → Einladung widerrufen
+GET    /organizations/invites/{token}                  → Minimale öffentliche Invite-Info
 POST   /organizations/{org_id}/logo                   → Logo hochladen
 DELETE /organizations/{org_id}/logo                   → Logo löschen
 ```
+
+Bei der Registrierung mit `invite_token` muss die normalisierte Registrierungsadresse exakt der eingeladenen E-Mail-Adresse entsprechen. Ungültige oder bereits verwendete Einladungen erzeugen kein Konto und keine Ersatzorganisation.
 
 ## Lizenzen
 

@@ -10,7 +10,9 @@
 - Audit-Datum: `2026-06-13`
 - Speicherort: `D:\Normdex\02_knowledge\normdex-vault\11_Audits\Webapp\2026-06-13-repo-audit-webapp.md`
 - Vorheriger Audit: `2026-06-07-repo-audit-webapp.md`
-- Git-Status: Arbeitsbaum sauber; lokaler Branch liegt 4 Commits vor `origin/dev-server`
+- Git-Status zum Audit-Zeitpunkt: Arbeitsbaum sauber; lokaler Branch liegt 4 Commits vor `origin/dev-server`
+- Nachtrag vom 2026-06-13: Finding 1 wurde repo-seitig teilweise behoben und erneut verifiziert; die Audit-Baseline aus Commit `3651038` bleibt unverändert.
+- Nachtrag vom 2026-06-13: Finding 2 wurde behoben und mit neuen Backend-Tests sowie Frontend-Typecheck verifiziert.
 
 ## 2. Audit-Abdeckung
 
@@ -19,6 +21,9 @@
 - Frontend-Prüfung von Registrierung, Admin-Support, geschützten Routen, API-Nutzung und sicherheitsrelevanten DOM-Ausgaben
 - Datenbank- und Migrationsprüfung: 40 Alembic-Migrationen, genau ein Head (`ffd3bbde6b6a`), keine fehlenden Vorgänger
 - Git-Historie und aktuelle Remote-Refs auf versehentlich eingecheckte Secrets geprüft, ohne Secret-Werte auszugeben
+- Nachbearbeitung zu Finding 1: vollständiger Gitleaks-Lauf mit Version `8.30.1` über 417 erreichbare Commits, zusätzliche Pfadprüfung für `.env*`-Dateien und Datenbank-Backups sowie Negativtests für beide Dateiklassen
+- Nachbearbeitung zu Finding 1: lokale Legacy-Refs neu geschrieben, Reflogs und alte Objekte gepruned; danach keine unerreichbaren Git-Objekte mehr vorhanden
+- Nachbearbeitung zu Finding 2: 4 neue Invite-Sicherheitstests, 12 fokussierte Backend-Tests, eine breitere synchrone Suite mit 249 Tests und 32 Frontend-Tests grün; TypeScript-Compile erfolgreich
 - Backend-Tests isoliert in Python 3.11 ausgeführt: Gesamtsuite durch 2 Collection-Fehler blockiert; Restlauf mit den beiden betroffenen Modulen ausgeschlossen: **276 Tests grün, 162 Warnungen**
 - Frontend-Tests isoliert ausgeführt: **32 Tests grün**
 - Frontend-Build ausgeführt: **erfolgreich**
@@ -59,39 +64,39 @@ Keine formale Regression gegenüber dem Vorbericht.
 
 - Confidence: **hoch**
 
-Die wesentlichen Findings sind direkt im aktuellen Commit belegt und wurden durch reale Test-, Build-, Dependency- und History-Scans ergänzt. Die Einladungslücke, der öffentliche Attachment-Zugriff, der Refund-Flow und die Test-Collection-Fehler sind ohne Annahmen aus dem Code ableitbar. Einschränkungen bestehen bei der tatsächlichen Erreichbarkeit alter Git-Objekte auf GitHub, der Gültigkeit externer Zugangsdaten und dem Verhalten realer Stripe-/Produktivsysteme.
+Die wesentlichen Findings sind direkt im aktuellen Commit belegt und wurden durch reale Test-, Build-, Dependency- und History-Scans ergänzt. Der öffentliche Attachment-Zugriff, der Refund-Flow und die Test-Collection-Fehler sind ohne Annahmen aus dem Code ableitbar. Finding 2 ist inzwischen behoben und durch Negativ-, Replay- und Datenminimierungstests abgesichert. Die lokale Bereinigung von Finding 1 und das neue Secret-Scan-Gate wurden zusätzlich statisch und mit Negativtests verifiziert. Einschränkungen bestehen weiterhin bei der Gültigkeit historischer Zugangsdaten, der vollständigen Bereinigung der aktiven GitHub-Historie und dem Verhalten realer Stripe-/Produktivsysteme.
 
 ## 5. Kurzfazit
 
-Der Branch enthält mehrere solide Verbesserungen und 276 der ausführbaren Backend-Tests sowie alle 32 Frontend-Tests laufen grün. Für einen Release ist der Stand trotzdem nicht freigabefähig: Zwei Testmodule mit 33 Lizenztests werden gar nicht gesammelt, und die neue Sofortkündigung kann eine Erstattung dem falschen Stripe-Charge zuordnen oder einen Refund-Fehler trotz erfolgter Kündigung verschweigen. Sicherheitsseitig sind die fehlende E-Mail-Bindung von Einladungen und öffentlich ausgelieferte Support-Anhänge die wichtigsten Anwendungsrisiken. Zusätzlich enthalten Backend und Frontend bekannte verwundbare Abhängigkeiten; bei Starlette und `python-multipart` ist der konkrete Normdex-Einsatz direkt betroffen. Alte lokale Git-Refs enthalten historische SMTP-Zugangsdaten, die mit der aktuellen Dev-Konfiguration übereinstimmen, auch wenn diese Legacy-Branches derzeit nicht mehr als Remote-Refs auf GitHub sichtbar sind. Der Trend gegenüber dem 2026-06-07-Audit ist deshalb gemischt: frühere Qualitätsprobleme wurden behoben, gleichzeitig sind neue Release- und Sicherheitsrisiken hinzugekommen.
+Der Branch enthält mehrere solide Verbesserungen. Finding 2 ist behoben: Einladungen sind jetzt serverseitig an die normalisierte E-Mail-Adresse gebunden, Replay wird abgelehnt und die öffentliche Invite-Antwort enthält keine Rechnungsadresse, UID oder Tätigkeitsdaten mehr. Für einen Release ist der Stand trotzdem nicht freigabefähig: Zwei Testmodule mit 33 Lizenztests werden gar nicht gesammelt, und die neue Sofortkündigung kann eine Erstattung dem falschen Stripe-Charge zuordnen oder einen Refund-Fehler trotz erfolgter Kündigung verschweigen. Sicherheitsseitig sind öffentlich ausgelieferte Support-Anhänge nun das wichtigste direkte Anwendungsrisiko. Zusätzlich enthalten Backend und Frontend bekannte verwundbare Abhängigkeiten; bei Starlette und `python-multipart` ist der konkrete Normdex-Einsatz direkt betroffen. Finding 1 ist repo-seitig teilweise entschärft, benötigt aber weiterhin Provider-Rotation und einen koordinierten Remote-History-Rewrite. Der Trend gegenüber dem 2026-06-07-Audit bleibt gemischt, zeigt durch die behobene Einladungslücke aber eine konkrete Verbesserung.
 
 ## 6. Wichtigste Findings
 
-1. Historische SMTP-Zugangsdaten liegen in lokalen Git-Refs und entsprechen weiterhin der Dev-Konfiguration. - Risk, **hoch**
-2. Ein Einladungstoken ist backendseitig nicht an die eingeladene E-Mail-Adresse gebunden. - Bug, **hoch**
-3. Support-Anhänge werden ohne Authentifizierung über `/static/attachments/...` ausgeliefert. - Bug, **hoch**
-4. Die Sofortkündigung kann den falschen Stripe-Charge erstatten und Refund-Fehler als Erfolg zurückgeben. - Bug, **hoch**
-5. Die Backend-Gesamtsuite scheitert bei der Collection; 33 Lizenztests laufen nicht. - Bug, **hoch**
-6. `pip-audit` und `npm audit` melden verwundbare Runtime- und Tooling-Abhängigkeiten. - Risk, **hoch**
-7. Verifizierungs- und Passwort-Reset-Endpunkte erlauben Account-Enumeration über unterschiedliche Antworten. - Risk, **mittel**
-8. Das Brevo-Webhook-Secret bleibt in der Query-String. - Risk, **mittel**
-9. Die versionierte Dev-Fixture enthält weiterhin nicht reservierte, real wirkende E-Mail-Domains und fehlende Asset-Referenzen. - Risk, **mittel**
-10. Der Notifications-TODO in der Sidebar ist veraltet. - Improvement, **niedrig**
+1. Historische SMTP-, Stripe- und Microsoft-Secrets bleiben teilweise in aktiven Branch-Historien erreichbar; lokale Legacy-Refs sind bereinigt. - Risk, **hoch**, **teilweise umgesetzt**
+2. Support-Anhänge werden ohne Authentifizierung über `/static/attachments/...` ausgeliefert. - Bug, **hoch**
+3. Die Sofortkündigung kann den falschen Stripe-Charge erstatten und Refund-Fehler als Erfolg zurückgeben. - Bug, **hoch**
+4. Die Backend-Gesamtsuite scheitert bei der Collection; 33 Lizenztests laufen nicht. - Bug, **hoch**
+5. `pip-audit` und `npm audit` melden verwundbare Runtime- und Tooling-Abhängigkeiten. - Risk, **hoch**
+6. Verifizierungs- und Passwort-Reset-Endpunkte erlauben Account-Enumeration über unterschiedliche Antworten. - Risk, **mittel**
+7. Das Brevo-Webhook-Secret bleibt in der Query-String. - Risk, **mittel**
+8. Die versionierte Dev-Fixture enthält weiterhin nicht reservierte, real wirkende E-Mail-Domains und fehlende Asset-Referenzen. - Risk, **mittel**
+9. Der Notifications-TODO in der Sidebar ist veraltet. - Improvement, **niedrig**
 
 ## 7. Detaillierte Findings je Punkt
 
-### Finding 1 - Historische SMTP-Zugangsdaten entsprechen der aktuellen Dev-Konfiguration
+### Finding 1 - Historische Zugangsdaten in Git-Historien
 
 - Kategorie: Risk
 - Priorität: hoch
 - Verifizierungsstatus: wahrscheinlich / manuell prüfen
 - Kontinuität: neu
-- Betroffene Datei(en) oder Pfade: lokale Git-Branches `06.02.2026`, `21.02.2026`, `v0.0.1`, `v0.1.0`; historische Datei `apps/api/.env`; aktuelle ignorierte Datei `deploy/env/.env.api.dev`
-- Evidenz: `apps/api/.env` war in den Commits `488d69d`, `6065d52`, `902f95b` und `b2c558e` versioniert. Ein wertfreier Hashvergleich bestätigt, dass `SMTP_USERNAME` und `SMTP_PASSWORD` aus diesen Commits mit der aktuellen Dev-Konfiguration übereinstimmen. Die Legacy-Branches sind lokal erreichbar; `git ls-remote` zeigt sie aktuell nicht mehr als GitHub-Remote-Refs.
-- Beschreibung des Problems: Ein Secret, das einmal in Git gespeichert war, muss als potenziell offengelegt behandelt werden. Das Löschen der Datei oder des Remote-Branches entfernt den Wert nicht zuverlässig aus allen vorhandenen Klonen, Backups oder GitHub-Caches.
-- Warum das relevant ist: Bei weiterhin gültigen SMTP-Zugangsdaten könnten Angreifer E-Mails im Namen von Normdex versenden oder die Absenderreputation beschädigen. Ob die Credentials extern noch akzeptiert werden und ob die alten Branches früher gepusht waren, wurde nicht aktiv getestet.
-- Business Impact: Phishing-, Zustellbarkeits- und Reputationsrisiko; möglicher Datenschutzvorfall bei missbräuchlichem Zugriff auf das Mailkonto.
-- Konkrete Handlungsempfehlung: SMTP-Benutzer beziehungsweise Passwort sofort rotieren, alle Deployments aktualisieren, Provider-Logs auf Missbrauch prüfen und die Legacy-Refs nach gesicherter Archivierung bereinigen. Zusätzlich GitHub Secret Scanning/Push Protection aktivieren und die alte Historie gezielt mit `git filter-repo` bereinigen, falls sie jemals remote veröffentlicht war.
+- Betroffene Datei(en) oder Pfade: historische Datei `apps/api/.env`; historische Versionen von `apps/api/.env.example` und `deploy/env/.env.api.prod.example`; lokale Legacy-Branches `06.02.2026`, `21.02.2026`, `v0.0.1`, `v0.1.0`; `.gitleaksignore`; `.github/workflows/secret-scan.yml`
+- Evidenz: Der ursprüngliche Audit belegte historische SMTP-Zugangsdaten in vier lokalen Legacy-Branches. Diese Branch-Historien wurden anschließend ohne `.env`-Dateien und Datenbank-Backups neu geschrieben; die ursprünglichen Commitobjekte sind lokal nicht mehr vorhanden. Ein vollständiger Gitleaks-Scan identifizierte zusätzlich neun historische Fingerprints für SMTP-, Stripe- und Microsoft-Secrets in den weiterhin aktiven Branch-Historien. Die Werte werden im Bericht bewusst nicht ausgegeben. Nach Aufnahme dieser bekannten Altlasten in die dokumentierte Baseline läuft Gitleaks über 417 erreichbare Commits ohne neue Funde.
+- Beschreibung des Problems: Ein Secret, das einmal in Git gespeichert war, muss unabhängig vom aktuellen Dateistand als potenziell offengelegt behandelt werden. Die lokale Legacy-Bereinigung reduziert die Erreichbarkeit in diesem Klon, entfernt Werte aber nicht aus aktiven Remote-Historien, vorhandenen Klonen, Backups oder GitHub-Caches.
+- Warum das relevant ist: Bei weiterhin gültigen SMTP-, Stripe- oder Microsoft-Zugangsdaten könnten Angreifer E-Mails versenden, Zahlungs- beziehungsweise Webhook-Flows manipulieren oder auf angebundene Microsoft-Dienste zugreifen. Ob die Credentials noch gültig sind oder missbräuchlich verwendet wurden, wurde nicht aktiv getestet.
+- Business Impact: Phishing-, Zahlungs-, Datenschutz-, Zustellbarkeits- und Reputationsrisiko; außerdem hoher operativer Aufwand bei verspäteter Rotation.
+- Konkrete Handlungsempfehlung: Alle betroffenen Provider-Secrets rotieren beziehungsweise widerrufen, Deployments aktualisieren und Provider-Logs prüfen. Danach die aktiven Remote-Historien koordiniert neu schreiben, alle Klone aktualisieren, die neun Baseline-Einträge entfernen und Gitleaks ohne Ausnahmen ausführen. GitHub Secret Scanning und Push Protection zusätzlich aktivieren.
+- Umsetzungsstand 2026-06-13: **teilweise umgesetzt**. Lokale Legacy-Historien und historische Datenbank-Backups sind bereinigt; Reflogs und alte Objekte wurden gepruned. Das neue CI-Gate kombiniert Gitleaks `8.30.1` mit einer Prüfung, die echte `.env*`-Dateien und Datenbank-Backups in aktiven Refs blockiert. Positiv- und Negativtests waren erfolgreich. Provider-Rotation, Logprüfung, GitHub Push Protection und der Remote-History-Rewrite bleiben unter [[T026-secret-rotation-und-history-cleanup]] offen.
 
 ### Finding 2 - Einladungstoken ist nicht an die eingeladene E-Mail-Adresse gebunden
 
@@ -105,6 +110,7 @@ Der Branch enthält mehrere solide Verbesserungen und 276 der ausführbaren Back
 - Warum das relevant ist: Die UI-Sperre ist keine Sicherheitskontrolle. Die fehlende Serverprüfung betrifft unmittelbar die Mandantentrennung.
 - Business Impact: Unberechtigter Zugriff auf Team-, Projekt- und Lizenzdaten einer Organisation; potenzieller Datenschutz- und Vertrauensschaden.
 - Konkrete Handlungsempfehlung: Normalisierte E-Mail-Adressen serverseitig exakt vergleichen und bei Abweichung mit HTTP 400/403 abbrechen. Invite-Nutzung atomar gegen Parallelverwendung absichern, die öffentliche Invite-Antwort minimieren und Tests für falsche E-Mail, Replay und parallele Annahme ergänzen.
+- Umsetzungsstand 2026-06-13: **behoben**. Der Registrierungs-Endpunkt lädt und sperrt den Invite-Datensatz vor der Benutzeranlage, prüft Tokenstatus und normalisierte E-Mail und speichert Benutzer, Mitgliedschaft sowie `accepted_at` in einer gemeinsamen Transaktion. Ungültige oder bereits verwendete Tokens erzeugen keine Ersatzorganisation mehr. Die öffentliche Invite-Antwort enthält nur noch E-Mail, Organisationsname und Rolle. Vier neue Tests decken normalisierte E-Mail, Mismatch ohne Teilregistrierung, Replay und Datenminimierung ab.
 
 ### Finding 3 - Support-Anhänge sind ohne Authentifizierung abrufbar
 
@@ -213,8 +219,8 @@ Der Branch enthält mehrere solide Verbesserungen und 276 der ausführbaren Back
 
 ## 8. Quick Wins
 
-- SMTP-Zugangsdaten rotieren und Provider-Logs prüfen.
-- Invite-Annahme um den normalisierten E-Mail-Vergleich ergänzen und einen Negativtest hinzufügen.
+- SMTP-, Stripe- und Microsoft-Zugangsdaten rotieren beziehungsweise widerrufen und Provider-Logs prüfen.
+- Den neuen Secret-Scan-Workflow pushen und als verpflichtenden Branch-Check aktivieren.
 - `python-multipart`, Pillow, Vitest und `react-router-dom` auf gepatchte Versionen aktualisieren.
 - Die zwei veralteten `undo_license_purchase`-Imports entfernen beziehungsweise die 33 Tests auf den aktuellen Flow migrieren.
 - Brevo-Secret aus der Query entfernen oder den Query-String am Proxy gezielt vom Logging ausschließen.
@@ -222,23 +228,25 @@ Der Branch enthält mehrere solide Verbesserungen und 276 der ausführbaren Back
 
 ## 9. Strategische Empfehlungen
 
-- Sicherheitsrelevante Endpunkte mit einem kleinen, verpflichtenden Testpaket absichern: Invite-E-Mail-Bindung, Mandantentrennung, Attachment-Download, Account-Enumeration und Stripe-Teilfehler.
+- Sicherheitsrelevante Endpunkte mit einem kleinen, verpflichtenden Testpaket absichern: Mandantentrennung, Attachment-Download, Account-Enumeration und Stripe-Teilfehler. Die Invite-E-Mail-Bindung ist inzwischen abgedeckt.
 - Externe Zahlungsoperationen als nachvollziehbare Zustandsmaschine mit Idempotency Keys, Pending-/Failed-Zuständen und Reconciliation-Job modellieren. Ein Datenbank-Rollback kann Stripe-Änderungen nicht zurückrollen.
 - Vertrauliche Uploads nicht im selben öffentlichen Static-Storage wie Avatare und Logos halten. Ein separates Storage- und Berechtigungsmodell reduziert den künftigen Prüfaufwand.
-- Dependency- und Secret-Scanning als CI-Gates etablieren: `pip-audit`, `npm audit`, GitHub Secret Scanning und ein grünes `pytest` müssen vor Merge erfüllt sein.
-- Lokale Legacy-Branches und alte Tags inventarisieren. Nicht mehr benötigte Refs nach Secret-Rotation und Archivierung entfernen, damit versehentlich enthaltene Daten nicht dauerhaft in Entwicklerklonen bleiben.
+- Das bereits ergänzte Secret-Scan-Gate nach dem Push als verpflichtenden Branch-Check konfigurieren. Ergänzend `pip-audit`, `npm audit` und ein grünes `pytest` als Merge-Gates etablieren.
+- Nach der Provider-Rotation die aktiven Remote-Historien koordiniert bereinigen und alle Entwicklerklone neu synchronisieren. Erst danach die temporäre Gitleaks-Baseline entfernen.
 
 ## 10. Empfohlene nächste Aktion
 
-**Vor dem Push beziehungsweise Release der vier lokalen Commits einen kurzen Security-/Billing-Fix-Sprint durchführen: SMTP rotieren, Invite-E-Mail serverseitig binden, Support-Anhänge schützen, den Sofortkündigungs-Refund korrigieren und die vollständige Backend-Suite wieder grün machen.**
+**Vor dem nächsten Release zuerst T026 abschließen: betroffene SMTP-, Stripe- und Microsoft-Secrets rotieren, Provider-Logs prüfen und anschließend die aktive Remote-Historie koordiniert bereinigen.**
 
 ## 11. Offene Unsicherheiten / Punkte zur manuellen Prüfung
 
-- Waren die lokalen Legacy-Branches mit der alten `.env` früher auf GitHub oder in anderen Remotes veröffentlicht? Aktuell zeigt `git ls-remote` nur `dev-server`, `develop` und `main`.
-- Sind die historischen SMTP-Credentials beim Provider noch gültig, und gibt es verdächtige Login-/Versandereignisse?
+- Waren die inzwischen lokal bereinigten Legacy-Branches früher auf GitHub, in Backups oder in anderen Entwicklerklonen vorhanden?
+- Sind die historischen SMTP-, Stripe- und Microsoft-Credentials beim jeweiligen Provider noch gültig, und gibt es verdächtige Zugriffe oder Transaktionen?
+- Wann kann der koordinierte History-Rewrite der aktiven Remote-Branches und Tags durchgeführt werden, ohne laufende Arbeiten oder Deployments zu verlieren?
 - Welche Dependency-Versionen laufen tatsächlich in Dev und Produktion? Der Audit bewertet Lockfile/Requirements, nicht bereits gebaute Images.
 - Sind Support-Attachment-URLs in Traefik-, Browser-, Monitoring- oder E-Mail-Logs enthalten?
 - Wie verhält sich die Bulk-Sofortkündigung bei realen Organisationen mit mehreren Stripe-Subscriptions, Schedules und Teilrefunds?
 - Sind die Produktivschalter für BasicAuth, Stripe-Live-Modus, reCAPTCHA, `COOKIE_SECURE` und `APP_ENV=prod` korrekt gesetzt?
 - Enthält `apps/api/dev.db` ausschließlich synthetische beziehungsweise ausdrücklich freigegebene Daten?
 - Kein Live-Penetrationstest, keine PostgreSQL-Prüfung und kein vollständiger E2E-Test wurden durchgeführt.
+- Der Frontend-Produktionsbuild konnte in dieser Nachbearbeitung nicht wiederholt werden, weil im vorhandenen root-eigenen `node_modules` das laut `package.json` erwartete Paket `@fontsource/jetbrains-mono` fehlt; TypeScript-Compile und alle 32 Frontend-Tests waren erfolgreich.

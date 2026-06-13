@@ -21,6 +21,14 @@
 UPDATE users SET is_admin = true WHERE email = 'admin@normdex.at';
 ```
 
+## Team-Einladungen
+
+- Einladungstokens werden bei der Registrierung serverseitig an die normalisierte eingeladene E-Mail-Adresse gebunden.
+- Abweichende E-Mail-Adressen werden mit HTTP 403 abgelehnt, bevor ein Benutzerkonto angelegt wird.
+- Ungültige, abgelaufene, widerrufene oder bereits verwendete Tokens werden mit HTTP 400 abgelehnt; es gibt keinen Fallback auf eine eigene Organisation.
+- Die Annahme sperrt den Invite-Datensatz per `SELECT ... FOR UPDATE`. Benutzer, Mitgliedschaft und `accepted_at` werden in einer gemeinsamen Datenbanktransaktion gespeichert.
+- Der öffentliche Invite-Info-Endpunkt liefert nur eingeladene E-Mail-Adresse, Organisationsname und Rolle. Rechnungsadresse, UID und Tätigkeitsdaten werden nicht öffentlich ausgegeben.
+
 ---
 
 ## Verwandte Dokumente

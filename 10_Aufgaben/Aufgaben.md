@@ -41,6 +41,7 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 | ID      | Todo                                            | Bereich                          | Status |
 | ------- | ----------------------------------------------- | -------------------------------- | ------ |
 | T020-16 | [[T020-16-Lizenz-und-Billing-Support-Aktionen]] | App / Verwaltungsportal / Stripe | offen  |
+| T026    | [[T026-secret-rotation-und-history-cleanup]]     | App / Security / Infrastruktur   | in Arbeit |
 
 ## Zusammengeführte Todo-IDs
 
@@ -89,4 +90,4 @@ Diese Todos sind konzeptionell ausgearbeitet, aber bewusst zurückgestellt. Sie 
 
 ## Nächste freie ID
 
-`T026`
+`T027`
