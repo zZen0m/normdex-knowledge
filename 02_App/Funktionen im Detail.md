@@ -152,6 +152,7 @@ new → triaged → in_progress → waiting_on_customer → resolved → closed
 - Kategorien: Produkt & Anwendung, Technisches Problem, Störung/Ausfall, Abrechnung/Vertrag/Lizenz, Zugang & Konto, Funktionswunsch/Feedback, Sonstiges
 - Die Kategorie kann per URL vorausgewählt werden, z. B. `/support?category=feature` aus What's-New-CTAs.
 - Anhänge werden vor Ticketerstellung über `/support/upload` hochgeladen und anschließend als Attachment-Liste am Ticket gespeichert.
+- Gespeicherte Anhänge sind nicht öffentlich über `/static` abrufbar. Im Support-Admin erfolgt der Download über einen authentifizierten, ticketgebundenen Admin-Endpunkt.
 - Die neue Oberfläche nutzt ein zweispaltiges Layout: links Formular, rechts Hinweise zu Kontaktweg, erwarteter Reaktionszeit und benötigten Angaben.
 
 ### Webhook-Integration (n8n)

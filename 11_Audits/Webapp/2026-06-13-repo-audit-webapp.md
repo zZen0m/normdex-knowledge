@@ -13,6 +13,7 @@
 - Git-Status zum Audit-Zeitpunkt: Arbeitsbaum sauber; lokaler Branch liegt 4 Commits vor `origin/dev-server`
 - Nachtrag vom 2026-06-13: Finding 1 wurde repo-seitig teilweise behoben und erneut verifiziert; die Audit-Baseline aus Commit `3651038` bleibt unverändert.
 - Nachtrag vom 2026-06-13: Finding 2 wurde behoben und mit neuen Backend-Tests sowie Frontend-Typecheck verifiziert.
+- Nachtrag vom 2026-06-13: Finding 3 wurde behoben; Support-Anhänge sind nicht mehr statisch öffentlich erreichbar und werden ausschließlich über einen admin-geschützten Download-Endpunkt ausgeliefert.
 
 ## 2. Audit-Abdeckung
 
@@ -24,7 +25,8 @@
 - Nachbearbeitung zu Finding 1: vollständiger Gitleaks-Lauf mit Version `8.30.1` über 417 erreichbare Commits, zusätzliche Pfadprüfung für `.env*`-Dateien und Datenbank-Backups sowie Negativtests für beide Dateiklassen
 - Nachbearbeitung zu Finding 1: lokale Legacy-Refs neu geschrieben, Reflogs und alte Objekte gepruned; danach keine unerreichbaren Git-Objekte mehr vorhanden
 - Nachbearbeitung zu Finding 2: 4 neue Invite-Sicherheitstests, 12 fokussierte Backend-Tests, eine breitere synchrone Suite mit 249 Tests und 32 Frontend-Tests grün; TypeScript-Compile erfolgreich
-- Backend-Tests isoliert in Python 3.11 ausgeführt: Gesamtsuite durch 2 Collection-Fehler blockiert; Restlauf mit den beiden betroffenen Modulen ausgeschlossen: **276 Tests grün, 162 Warnungen**
+- Nachbearbeitung zu Finding 3: 7 neue Attachment-Download-Sicherheitstests; zusammen mit Upload- und Retention-Tests 25 Backend-Tests grün. Breiter Restlauf mit den zwei bekannten, nicht sammelbaren Lizenzmodulen ausgeschlossen: **287 Tests grün, 167 Warnungen**. Zusätzlich 32 Frontend-Tests und TypeScript-Compile erfolgreich.
+- Backend-Tests isoliert in Python 3.11 ausgeführt: Gesamtsuite durch 2 Collection-Fehler blockiert; aktueller Restlauf mit den beiden betroffenen Modulen ausgeschlossen: **287 Tests grün, 167 Warnungen**
 - Frontend-Tests isoliert ausgeführt: **32 Tests grün**
 - Frontend-Build ausgeführt: **erfolgreich**
 - Dependency-Scans ausgeführt: `pip-audit` und `npm audit`
@@ -64,16 +66,16 @@ Keine formale Regression gegenüber dem Vorbericht.
 
 - Confidence: **hoch**
 
-Die wesentlichen Findings sind direkt im aktuellen Commit belegt und wurden durch reale Test-, Build-, Dependency- und History-Scans ergänzt. Der öffentliche Attachment-Zugriff, der Refund-Flow und die Test-Collection-Fehler sind ohne Annahmen aus dem Code ableitbar. Finding 2 ist inzwischen behoben und durch Negativ-, Replay- und Datenminimierungstests abgesichert. Die lokale Bereinigung von Finding 1 und das neue Secret-Scan-Gate wurden zusätzlich statisch und mit Negativtests verifiziert. Einschränkungen bestehen weiterhin bei der Gültigkeit historischer Zugangsdaten, der vollständigen Bereinigung der aktiven GitHub-Historie und dem Verhalten realer Stripe-/Produktivsysteme.
+Die wesentlichen Findings sind direkt im aktuellen Commit belegt und wurden durch reale Test-, Build-, Dependency- und History-Scans ergänzt. Der Refund-Flow und die Test-Collection-Fehler sind ohne Annahmen aus dem Code ableitbar. Finding 2 ist durch Negativ-, Replay- und Datenminimierungstests abgesichert. Finding 3 ist durch Authentifizierungs-, Autorisierungs-, Ticketbindungs-, Löschstatus- und Pfadvalidierungstests abgesichert. Die lokale Bereinigung von Finding 1 und das neue Secret-Scan-Gate wurden zusätzlich statisch und mit Negativtests verifiziert. Einschränkungen bestehen weiterhin bei der Gültigkeit historischer Zugangsdaten, der vollständigen Bereinigung der aktiven GitHub-Historie und dem Verhalten realer Stripe-/Produktivsysteme.
 
 ## 5. Kurzfazit
 
-Der Branch enthält mehrere solide Verbesserungen. Finding 2 ist behoben: Einladungen sind jetzt serverseitig an die normalisierte E-Mail-Adresse gebunden, Replay wird abgelehnt und die öffentliche Invite-Antwort enthält keine Rechnungsadresse, UID oder Tätigkeitsdaten mehr. Für einen Release ist der Stand trotzdem nicht freigabefähig: Zwei Testmodule mit 33 Lizenztests werden gar nicht gesammelt, und die neue Sofortkündigung kann eine Erstattung dem falschen Stripe-Charge zuordnen oder einen Refund-Fehler trotz erfolgter Kündigung verschweigen. Sicherheitsseitig sind öffentlich ausgelieferte Support-Anhänge nun das wichtigste direkte Anwendungsrisiko. Zusätzlich enthalten Backend und Frontend bekannte verwundbare Abhängigkeiten; bei Starlette und `python-multipart` ist der konkrete Normdex-Einsatz direkt betroffen. Finding 1 ist repo-seitig teilweise entschärft, benötigt aber weiterhin Provider-Rotation und einen koordinierten Remote-History-Rewrite. Der Trend gegenüber dem 2026-06-07-Audit bleibt gemischt, zeigt durch die behobene Einladungslücke aber eine konkrete Verbesserung.
+Der Branch enthält mehrere solide Sicherheitsverbesserungen. Finding 2 ist behoben: Einladungen sind jetzt serverseitig an die normalisierte E-Mail-Adresse gebunden, Replay wird abgelehnt und die öffentliche Invite-Antwort ist minimiert. Finding 3 ist ebenfalls behoben: Support-Anhänge liegen außerhalb öffentlicher Static-Routen und der Download verlangt eine aktive Admin-Session sowie die korrekte Ticket-/Attachment-Zuordnung. Für einen Release ist der Stand trotzdem nicht freigabefähig: Zwei Testmodule mit 33 Lizenztests werden gar nicht gesammelt, und die neue Sofortkündigung kann eine Erstattung dem falschen Stripe-Charge zuordnen oder einen Refund-Fehler trotz erfolgter Kündigung verschweigen. Zusätzlich enthalten Backend und Frontend bekannte verwundbare Abhängigkeiten. Finding 1 ist repo-seitig teilweise entschärft, benötigt aber weiterhin Provider-Rotation und einen koordinierten Remote-History-Rewrite.
 
 ## 6. Wichtigste Findings
 
 1. Historische SMTP-, Stripe- und Microsoft-Secrets bleiben teilweise in aktiven Branch-Historien erreichbar; lokale Legacy-Refs sind bereinigt. - Risk, **hoch**, **teilweise umgesetzt**
-2. Support-Anhänge werden ohne Authentifizierung über `/static/attachments/...` ausgeliefert. - Bug, **hoch**
+2. Support-Anhänge werden ohne Authentifizierung über `/static/attachments/...` ausgeliefert. - Bug, **hoch**, **behoben**
 3. Die Sofortkündigung kann den falschen Stripe-Charge erstatten und Refund-Fehler als Erfolg zurückgeben. - Bug, **hoch**
 4. Die Backend-Gesamtsuite scheitert bei der Collection; 33 Lizenztests laufen nicht. - Bug, **hoch**
 5. `pip-audit` und `npm audit` melden verwundbare Runtime- und Tooling-Abhängigkeiten. - Risk, **hoch**
@@ -124,6 +126,7 @@ Der Branch enthält mehrere solide Verbesserungen. Finding 2 ist behoben: Einlad
 - Warum das relevant ist: Support-Anhänge können Verträge, Screenshots, personenbezogene Daten oder technische Kundendetails enthalten.
 - Business Impact: Vertraulichkeits- und DSGVO-Risiko sowie möglicher meldepflichtiger Datenabfluss.
 - Konkrete Handlungsempfehlung: Anhänge aus dem öffentlichen Static-Mount entfernen und über einen authentifizierten Download-Endpunkt mit Admin-/Ticketberechtigungsprüfung ausliefern. Alternativ nur kurzlebige signierte URLs verwenden. Avatare/Logos und vertrauliche Support-Dateien in getrennten Storage-Bereichen halten.
+- Umsetzungsstand 2026-06-13: **behoben**. `/static` veröffentlicht nur noch die getrennten Bereiche `/static/avatars` und `/static/logos`; `/static/attachments/...` liefert 404. Der neue Endpunkt `GET /admin/support/tickets/{ticket_id}/attachments/{attachment_id}` verlangt `require_admin`, bindet den Anhang per Datenbank-Join an das angeforderte Ticket, lehnt gelöschte Anhänge mit HTTP 410 ab und validiert den lokalen Storage-Pfad gegen Traversal. Die Admin-Oberfläche verwendet ausschließlich diesen Endpunkt; `storage_key` wird nicht mehr an das Frontend ausgegeben. Sieben neue Tests decken öffentlichen Zugriff, 401, 403, erfolgreichen Download, Ticket-Mismatch, Retention-Löschung und ungültige Storage-Pfade ab.
 
 ### Finding 4 - Sofortkündigung ordnet Refund nicht zuverlässig den gewählten Lizenzen zu
 
@@ -228,7 +231,7 @@ Der Branch enthält mehrere solide Verbesserungen. Finding 2 ist behoben: Einlad
 
 ## 9. Strategische Empfehlungen
 
-- Sicherheitsrelevante Endpunkte mit einem kleinen, verpflichtenden Testpaket absichern: Mandantentrennung, Attachment-Download, Account-Enumeration und Stripe-Teilfehler. Die Invite-E-Mail-Bindung ist inzwischen abgedeckt.
+- Sicherheitsrelevante Endpunkte mit einem kleinen, verpflichtenden Testpaket absichern: Mandantentrennung, Account-Enumeration und Stripe-Teilfehler. Invite-E-Mail-Bindung und Attachment-Download sind inzwischen abgedeckt.
 - Externe Zahlungsoperationen als nachvollziehbare Zustandsmaschine mit Idempotency Keys, Pending-/Failed-Zuständen und Reconciliation-Job modellieren. Ein Datenbank-Rollback kann Stripe-Änderungen nicht zurückrollen.
 - Vertrauliche Uploads nicht im selben öffentlichen Static-Storage wie Avatare und Logos halten. Ein separates Storage- und Berechtigungsmodell reduziert den künftigen Prüfaufwand.
 - Das bereits ergänzte Secret-Scan-Gate nach dem Push als verpflichtenden Branch-Check konfigurieren. Ergänzend `pip-audit`, `npm audit` und ein grünes `pytest` als Merge-Gates etablieren.
@@ -244,7 +247,7 @@ Der Branch enthält mehrere solide Verbesserungen. Finding 2 ist behoben: Einlad
 - Sind die historischen SMTP-, Stripe- und Microsoft-Credentials beim jeweiligen Provider noch gültig, und gibt es verdächtige Zugriffe oder Transaktionen?
 - Wann kann der koordinierte History-Rewrite der aktiven Remote-Branches und Tags durchgeführt werden, ohne laufende Arbeiten oder Deployments zu verlieren?
 - Welche Dependency-Versionen laufen tatsächlich in Dev und Produktion? Der Audit bewertet Lockfile/Requirements, nicht bereits gebaute Images.
-- Sind Support-Attachment-URLs in Traefik-, Browser-, Monitoring- oder E-Mail-Logs enthalten?
+- Sind ältere öffentliche Support-Attachment-URLs in Traefik-, Browser-, Monitoring- oder E-Mail-Logs enthalten? Die URLs funktionieren nach Deployment nicht mehr, vorhandene Logdaten können aber weiterhin sensible Pfade enthalten.
 - Wie verhält sich die Bulk-Sofortkündigung bei realen Organisationen mit mehreren Stripe-Subscriptions, Schedules und Teilrefunds?
 - Sind die Produktivschalter für BasicAuth, Stripe-Live-Modus, reCAPTCHA, `COOKIE_SECURE` und `APP_ENV=prod` korrekt gesetzt?
 - Enthält `apps/api/dev.db` ausschließlich synthetische beziehungsweise ausdrücklich freigegebene Daten?

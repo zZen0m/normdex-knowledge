@@ -118,6 +118,8 @@ POST /support/upload    → Anhang hochladen
 POST /support/public-tickets → Ticket via Landingpage-Kontaktformular
 ```
 
+Support-Anhänge werden nicht über `/static` veröffentlicht. Der Upload liefert nur einen internen Storage-Verweis, der bei der Ticketerstellung einem Support-Message-Datensatz zugeordnet wird.
+
 ## Admin
 
 ```
@@ -134,10 +136,13 @@ PATCH  /admin/organizations/{id}           → Organisation bearbeiten
 GET    /admin/projects                     → Alle Projekte (plattformweit)
 GET    /admin/support/tickets              → Ticket-Liste
 GET    /admin/support/tickets/{id}         → Ticket-Detail
+GET    /admin/support/tickets/{id}/attachments/{attachment_id} → Anhang herunterladen (nur Admin)
 POST   /admin/support/tickets/{id}/reply   → Antwort / Status-Update
 PATCH  /admin/support/tickets/{id}         → Status/Priorität/Kategorie/Assignee
 GET    /admin/support/stats                → Support-Metriken
 ```
+
+Der Attachment-Download prüft Admin-Session, Ticket-/Attachment-Zuordnung, Retention-Löschstatus und den zulässigen Storage-Pfad. Gelöschte Anhänge liefern HTTP 410; nicht vorhandene oder ungültige Zuordnungen HTTP 404.
 
 ## Benachrichtigungen
 

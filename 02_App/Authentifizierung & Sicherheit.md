@@ -29,6 +29,13 @@ UPDATE users SET is_admin = true WHERE email = 'admin@normdex.at';
 - Die Annahme sperrt den Invite-Datensatz per `SELECT ... FOR UPDATE`. Benutzer, Mitgliedschaft und `accepted_at` werden in einer gemeinsamen Datenbanktransaktion gespeichert.
 - Der öffentliche Invite-Info-Endpunkt liefert nur eingeladene E-Mail-Adresse, Organisationsname und Rolle. Rechnungsadresse, UID und Tätigkeitsdaten werden nicht öffentlich ausgegeben.
 
+## Support-Anhänge
+
+- Öffentliche Static-Routen existieren nur für Avatare und Organisationslogos.
+- Support-Anhänge unter `uploads/attachments/` sind nicht direkt öffentlich erreichbar.
+- Downloads erfolgen über `GET /admin/support/tickets/{ticket_id}/attachments/{attachment_id}` und erfordern eine aktive Admin-Session.
+- Der Endpunkt prüft die Datenbankzuordnung zum Ticket, den Retention-Löschstatus und den Storage-Pfad. Der interne `storage_key` wird nicht an das Frontend ausgegeben.
+
 ---
 
 ## Verwandte Dokumente
