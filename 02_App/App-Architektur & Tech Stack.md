@@ -38,7 +38,8 @@ deploy/      → Deployment-Konfiguration
 |---|---|
 | React 18.2 | UI Framework |
 | TypeScript | Typsicherheit |
-| Vite 7.2 (SWC) | Build-Tool |
+| Vite 8.0 (SWC, Node 20.19) | Build-Tool |
+| Vitest 4.1 | Frontend-Tests |
 | React Router v6 | Client-seitiges Routing |
 | Tailwind CSS v3.3 | Styling |
 | Radix UI | Accessible UI Primitives |
@@ -60,7 +61,7 @@ deploy/      → Deployment-Konfiguration
 
 | Technologie | Zweck |
 |---|---|
-| FastAPI | REST API Framework (async) |
+| FastAPI 0.136 + Starlette 1.3 | REST API Framework (async) |
 | Python 3.10+ | Sprache |
 | Uvicorn | ASGI Server |
 | SQLAlchemy 2.0+ | ORM |
@@ -71,7 +72,8 @@ deploy/      → Deployment-Konfiguration
 | jose | JWT (JSON Web Tokens) |
 | SlowAPI | Rate Limiting |
 | APScheduler | Hintergrund-Jobs (async) |
-| Pillow | Bild-Verarbeitung (Avatar-Resize) |
+| Pillow 12.2 | Bild-Verarbeitung (Avatar-Resize) |
+| python-multipart 0.0.32 | Multipart- und Datei-Uploads |
 | httpx | Async HTTP Client (Graph API, Webhooks) |
 | Stripe SDK | Zahlungsintegration |
 
