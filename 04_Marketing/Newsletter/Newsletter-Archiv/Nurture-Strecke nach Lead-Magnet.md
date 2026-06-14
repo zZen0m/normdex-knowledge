@@ -132,4 +132,9 @@ Wenn du die normkonforme Berechnung an einem echten Projekt ausprobieren willst,
 
 Dein Code: **{{coupon_code}}**
 
-[T
+[Testphase starten]
+
+Falls du Fragen hast, antworte einfach auf diese Mail.
+
+Beste Grüße
+Dein Normdex-Team
