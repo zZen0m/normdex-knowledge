@@ -4,7 +4,7 @@
 
 1. **Normkonform & validiert:** Berechnungen gemäß ÖNORM M 7140, validiert nach Abschnitt 10 – belegbar, nicht nur behauptet
 2. **Strukturiert & professionell:** Von der Dateneingabe bis zum fertigen PDF-Report in wenigen Klicks
-3. **Risikofrei starten:** 14 Tage kostenlos, keine Kreditkarte erforderlich
+3. **Risikofrei starten:** 14 Tage kostenlos, während der Testphase keine Abbuchung, jederzeit kündbar. Registrierung, Team und Projekte gehen ohne Zahlungsdaten, erst die Berechnung startet die Testlizenz
 4. **Österreichisch:** Entwickelt für österreichische Anforderungen (ÖNORM, Recht, Sprache)
 
 ---
@@ -12,8 +12,11 @@
 ## Trust-Signals (wiederkehrend)
 
 - „Validiert nach Abschnitt 10 der ÖNORM M 7140"
-- „Keine Kreditkarte erforderlich"
+- „Keine Abbuchung während der Testphase"
 - „14 Tage kostenlos testen"
+- „Im Browser, ohne Installation"
+- „Im Team an Projekten arbeiten"
+- „Server in der EU, DSGVO-konform"
 - „Vollzugriff auf alle Berechnungsverfahren"
 - „Kostenloser Support per E-Mail"
 - „Normkonforme PDF-Reports"
@@ -37,9 +40,9 @@
 | Über uns | „Jetzt starten" | `/preise` |
 | Header | „Kostenlos testen →" | `https://app.normdex.at/auth/register` |
 | Header | „Anmelden" | `https://app.normdex.at/auth/login` |
-| Newsletter-Hook (Hero, CTA, Strip) | „Newsletter abonnieren — 10 % Rabatt im ersten Monat sichern" | `/newsletter` |
-| Newsletter-Strip | „Jetzt 10 % sichern →" | `/newsletter` |
-| Newsletter-Formular | „Anmelden & 10 % sichern" | (Submit-Button) |
+| Newsletter-Hook (Hero, CTA, Strip) | „Praxisleitfaden zur ÖNORM M 7140 gratis sichern" (Lead-Magnet als Hauptanreiz, 10 % als Bonus) | `/newsletter` |
+| Newsletter-Strip | „Leitfaden gratis laden →" | `/newsletter` |
+| Newsletter-Formular | „Leitfaden sichern" | (Submit-Button) |
 
 ---
 

@@ -48,7 +48,7 @@ Die Normdex-Landingpage ist die öffentliche Marketing-Website mit folgenden Zie
 | `/impressum` | Impressum – Normdex \| Permatec e.U. | `https://normdex.at/impressum` |
 | `/datenschutz` | Datenschutzerklärung – Normdex \| Permatec e.U. | `https://normdex.at/datenschutz` |
 | `/agb` | AGB – Allgemeine Geschäftsbedingungen \| Normdex | `https://normdex.at/agb` |
-| `/newsletter` | Newsletter & Updates – Normdex | `https://normdex.at/newsletter` |
+| `/newsletter` | Praxisleitfaden ÖNORM M 7140 – Normdex | `https://normdex.at/newsletter` |
 
 ---
 
@@ -73,13 +73,14 @@ Die Normdex-Landingpage ist die öffentliche Marketing-Website mit folgenden Zie
 
 ---
 
-## Newsletter-Gutschein
+## Newsletter / Lead-Magnet (Stand 2026-06-13, T027)
 
-- Landingpage kommuniziert den 10%-Gutschein fuer Newsletter-Anmeldung.
+Der Hauptanreiz ist der **kostenlose Praxisleitfaden** (Checkliste + Beispielbericht), der 10%-Gutschein ist nur der Bonus.
+
+- **Lead-Magnet:** Praxisleitfaden als PDF, direkter Download auf der Newsletter-Seite und im Erfolgs-State des Formulars. Dateipfad: `public/Normdex_Praxisleitfaden_OENORM_M7140.pdf` (vom Betreiber bereitzustellen).
 - Frontend liefert nur UI und sendet die Anmeldung an `POST /newsletter/subscribe`.
-- Gutschein wird nicht direkt beim Formular-Submit versendet.
-- Ablauf:
-  1. Besucher meldet sich auf der Landingpage zum Newsletter an.
+- 10%-Gutschein wird weiter über die bestehende Brevo-Double-Opt-in-Strecke per E-Mail versendet (nicht beim Formular-Submit):
+  1. Besucher meldet sich auf der Landingpage an und erhält den Leitfaden sofort als Download.
   2. Normdex API startet Brevo Double-Opt-in und speichert einen Pending-Claim.
   3. Besucher bestaetigt die Brevo Double-Opt-in-Mail.
   4. Brevo sendet `list_addition` an Normdex.
@@ -88,19 +89,23 @@ Die Normdex-Landingpage ist die öffentliche Marketing-Website mit folgenden Zie
 
 ---
 
-## Homepage-Sektionen (Reihenfolge, Stand 2026-05-01)
+## Homepage-Sektionen (Reihenfolge, Stand 2026-06-13, T027)
+
+Reihenfolge in `Index.tsx`: Hero → TrustFactors → TargetAudience → ComparisonSection → NewsletterStrip → Features (`#features`) → HowItWorks (`#how`) → ReportPreview → Pricing (`#pricing`) → CTA.
+
+> Positionierungs-Schwenk (T027): weg von „normkonform" als Hauptversprechen, hin zu „moderne, web-basierte Lösung" (im Browser, im Team, prüffähig). Normkonformität bleibt als Beleg. Verbindlich: kein Mitbewerber namentlich, Du-Form, echte Umlaute, keine Gedankenstriche als Satzzeichen.
 
 ### 1. Hero
 
 - **Badge:** *gemäß ÖNORM M 7140* (animierter Puls-Dot, Link zu `/oenorm-m-7140`, pink)
-- **H1:** ÖNORM-konforme Wirtschaftlichkeitsberechnungen für Energiesysteme
-- **Unterüberschrift:** *Normdex unterstützt die strukturierte Durchführung betriebswirtschaftlicher Vergleichsrechnungen für Energiesysteme — nachvollziehbar, validiert und auf professionelle Projektanwendungen ausgerichtet.*
-- **CTAs:** „Kostenlos testen →" (primär) | „Features ansehen" (sekundär, → `/features`)
-- **Newsletter-Hook:** *„Newsletter abonnieren — 10 % Rabatt im ersten Monat sichern."* (Link → `/newsletter`, zwischen CTAs und Trust-Indicators)
-- **Trust-Indicators:** ✓ 14 Tage kostenlos · ✓ Keine Kreditkarte erforderlich · ✓ Jederzeit kündbar
+- **H1:** „Im Browser. Im Team. Prüffähig." (pink) + „Wirtschaftlichkeitsberechnungen für Energiesysteme"
+- **Unterüberschrift:** *Normdex ist die zeitgemäße Wirtschaftlichkeitsberechnung für Energiesysteme. Ohne Installation, überall im Browser, gemeinsam im Team und mit prüffähigen PDF-Reports. Validiert nach ÖNORM M 7140.*
+- **CTAs:** „Kostenlos testen →" (primär, → `#pricing`) | „Beispielbericht ansehen" (sekundär, scrollt zu `#report-preview`)
+- **Newsletter-Hook:** *„Kostenlosen Praxisleitfaden sichern — inkl. Checkliste und Beispielbericht."* (Link → `/newsletter`)
+- **Trust-Indicators:** ✓ 14 Tage kostenlos beim Erstkauf einer Lizenz · ✓ Keine Abbuchung während der Testphase · ✓ Jederzeit kündbar
 - **Validierungs-Badge:** 🛡 *Validiert nach Abschnitt 10 der ÖNORM M 7140*
-- **Rechte Seite:** Coded Mock-Dashboard (Browser-Chrome + Sidebar + 3 KPI-Karten + Balkendiagramm) — kein Foto
-- **Floating Cards:** Variantenvergleich / Beispiel Kapitalwert €45.200,-
+- **Rechte Seite:** Komponente `HeroAppMock.tsx` — gecodeter Mock der App-Ergebnisseite (Browser-Chrome), Tab **Gesamtkosten** mit gestapeltem Balkendiagramm (Barwert je System: Kapital blau / Verbrauch grün / Betrieb gelb), Wärmepumpe als günstigste Variante markiert + Sieger-Banner. Werte konsistent zum Beispielbericht (WP 2,97 Mio. € < Pellet 3,85 Mio. € < Gas 7,13 Mio. €).
+- **Floating-Badge:** „€ 4,16 Mio. günstiger als Gas"
 
 ### 2. TrustFactors
 
@@ -109,9 +114,9 @@ Kompakter horizontaler Strip. Kein Eyebrow-Titel. **Styling:** `py-7 bg-white bo
 | Icon | Titel | Sub |
 |---|---|---|
 | ShieldCheck | ÖNORM-validiert | Nach Abschnitt 10 |
-| BookOpen | Nachvollziehbar | Transparente Rechenwege |
-| FileSearch | Prüfbar | Vollständige Dokumentation |
-| Lock | Datenschutz | DSGVO-konform, AT-Server |
+| Globe | Ohne Installation | Direkt im Browser |
+| Users | Im Team | Gemeinsame Projekte |
+| Lock | Datenschutz | Server in der EU, DSGVO-konform |
 
 ### 3. TargetAudience
 
@@ -119,19 +124,23 @@ Strukturell unverändert. Durchgängig **Du-Form**. Icon-Boxen teal (`bg-seconda
 
 | Zielgruppe | Kernaussage (Du-Form) |
 |---|---|
-| Energieberater | Du berechnest Rentabilität von PV-Anlagen, Wärmepumpen und Speichern normkonform — und dokumentierst die Ergebnisse als professionellen PDF-Report. |
-| Planungs- & Ingenieurbüros | Du erstellst Wirtschaftlichkeitsgutachten mit Firmenbranding und validierten Berechnungen — für Auftraggeber und Ausschreibungsunterlagen. |
-| Technische Sachverständige | Du erhältst nachvollziehbare, normkonforme Ergebnisse gemäß ÖNORM M 7140 — für belastbare Gutachten mit vollständiger Dokumentation. |
-| Privatpersonen | Du rechnest Sanierungsprojekte oder Energiesystemvergleiche strukturiert und korrekt — ohne Fachkenntnisse der Norm. |
+| Energieberater | Du berechnest Rentabilität von PV-Anlagen, Wärmepumpen und Speichern normkonform und dokumentierst die Ergebnisse direkt als professionellen PDF-Report. |
+| Planungs- & Ingenieurbüros | Du erstellst Wirtschaftlichkeitsgutachten mit Firmenbranding und validierten Berechnungen für Auftraggeber und Ausschreibungsunterlagen. |
+| Technische Sachverständige | Du erhältst nachvollziehbare, normkonforme Ergebnisse gemäß ÖNORM M 7140 für belastbare Gutachten mit vollständiger Dokumentation. |
+| Privatpersonen | Du rechnest Sanierungsprojekte oder Energiesystemvergleiche strukturiert und korrekt, auch ohne Fachkenntnisse der Norm. |
 
-### 4. NewsletterStrip (NEU, 2026-05-01)
+### 4. ComparisonSection (NEU, T027)
 
-Inline-Sektion zwischen TargetAudience und Features. Primärer Newsletter-Touchpoint mit 10%-Hook.
+Sachliche Kategorie-Gegenüberstellung **„klassische Desktop-Software" gegen „moderne Web-Lösung"**, ohne Firmennamen. Zwei Karten (klassisch gedämpft, modern hervorgehoben mit „Normdex"-Badge). Aspekte: Zugang (Installation gegen Browser), Zusammenarbeit (Einzelplatz gegen Team), Verfügbarkeit, Report (starrer Ausdruck gegen prüffähiges PDF), Updates. Komponente `ComparisonSection.tsx`.
 
-- **Links:** EyebrowPill pink „10 % Rabatt" + H3 „Newsletter abonnieren — 10 % im ersten Monat sichern." + Sub „Code per Mail nach Bestätigung. Einlösbar einmalig im Stripe-Checkout."
-- **Rechts:** Button „Jetzt 10 % sichern →" → `/newsletter`
+### 5. NewsletterStrip (Lead-Magnet, T027)
 
-### 5. Features
+Inline-Sektion. Hauptanreiz ist jetzt der kostenlose Praxisleitfaden, 10 % nur als Bonus.
+
+- **Links:** EyebrowPill pink „Kostenloser Praxisleitfaden" + H3 „Praxisleitfaden zur ÖNORM M 7140 gratis holen." + Sub (Checkliste + Beispielbericht, plus 10 % Rabatt im ersten Monat).
+- **Rechts:** Button „Leitfaden holen →" → `/newsletter`
+
+### 6. Features
 
 Gleichmäßiges 3-Spalten-Grid (6 Karten, alle gleich groß). Durchgängig **Du-Form**. Icon-Boxen teal.
 
@@ -146,7 +155,7 @@ Gleichmäßiges 3-Spalten-Grid (6 Karten, alle gleich groß). Durchgängig **Du-
 | 05 | Sensitivitätsanalyse | Energiepreise, Zinsen, Nutzungsdauer flexibel variieren. |
 | 06 | Team-Workspace | Mehrere Nutzer:innen in einer Organisation, gemeinsame Projekte, Rollenverwaltung. |
 
-### 6. HowItWorks
+### 7. HowItWorks
 
 4 Schritte mit nummerierten Teal-Pills und Verbindungslinien. **Du-Form.**
 
@@ -159,11 +168,15 @@ Gleichmäßiges 3-Spalten-Grid (6 Karten, alle gleich groß). Durchgängig **Du-
 | 3 | Rechnen lassen | Kapitalwert, Annuität, Amortisation automatisch nach Norm. |
 | 4 | Report exportieren | PDF-Dokumentation mit allen Annahmen und Rechenwegen. |
 
-### 7. CTA-Section
+### 8. ReportPreview (NEU, T027)
+
+Berichtsvorschau auf der Seite (kein Download). Galerie von sechs echten Berichtsseiten als anklickbare Thumbnails, die per Lightbox/Dialog im Browser geöffnet werden. Belegt die Output-Qualität (saubere Darstellung auch großer Beträge) und verweist für den Vollbericht auf den Newsletter-Praxisleitfaden. Komponente `ReportPreview.tsx`, Anker `#report-preview`. Bilder: `public/report-preview/seite-1..6.png` (Deckblatt, Projektdaten, Gesamtkosten, Annuitäten, Kostenverlauf/Amortisation, Resümee). Generiert aus dem kuratierten Beispielbericht via `apps/api/preview_report_demo.py` (Repo normdex-app).
+
+### 9. CTA-Section
 
 - **H2:** Bereit für **ÖNORM-konforme** Berechnungen?
-- **Lead:** 14 Tage kostenlos — keine Kreditkarte erforderlich.
-- **Buttons:** „Jetzt kostenlos testen →" (primary, → `https://app.normdex.at/auth/register`) | „Kontakt aufnehmen" (ghost, → `/kontakt`)
+- **Lead:** 14 Tage kostenlos beim Erstkauf einer Lizenz. Bei mehreren Lizenzen einmalig 24,50 € Erstbestellungsrabatt auf die Hauptlizenz.
+- **Buttons:** „Jetzt kostenlos testen →" (primary, → `#pricing`) | „Kontakt aufnehmen" (ghost, → `/kontakt`)
 - **Newsletter-Hook:** *„Lieber erst informieren? Newsletter abonnieren und 10 % Rabatt im ersten Monat sichern."*
 
 ---
@@ -232,8 +245,8 @@ Die Preisseite setzt auf ein **Hybrid-Modell**: Plan-Karten zum Vergleich + daue
 | Card | Titel | Text |
 |---|---|---|
 | Mission | Unsere Mission | Wirtschaftlichkeitsberechnungen für Energiesysteme strukturiert, nachvollziehbar und normkonform gemäß ÖNORM M 7140 durchführbar zu machen. |
-| Anspruch | Unser Anspruch | Validierte Berechnungslogik nach Abschnitt 10 der ÖNORM M 7140 — für belastbare Ergebnisse in professionellen Projektanwendungen. |
-| Werte | Unsere Werte | Präzision, Nachvollziehbarkeit und Normkonformität stehen bei uns an erster Stelle — in jeder Berechnung und jedem Report. |
+| Anspruch | Unser Anspruch | Validierte Berechnungslogik nach Abschnitt 10 der ÖNORM M 7140 für belastbare Ergebnisse in professionellen Projektanwendungen. |
+| Werte | Unsere Werte | Präzision, Nachvollziehbarkeit und Normkonformität stehen bei uns an erster Stelle, in jeder Berechnung und jedem Report. |
 
 ---
 

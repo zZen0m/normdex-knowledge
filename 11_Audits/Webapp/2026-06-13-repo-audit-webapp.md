@@ -144,6 +144,7 @@ Der Branch enthält mehrere solide Sicherheitsverbesserungen. Findings 2, 3, 5 u
 - Warum das relevant ist: Der Flow verändert Zahlung und Vertragsstatus irreversibel über mehrere Systeme hinweg.
 - Business Impact: Falsche Erstattungen, fehlende Rückzahlungen, manueller Buchhaltungsaufwand, Kundenbeschwerden und mögliche finanzielle Verluste.
 - Konkrete Handlungsempfehlung: Refunds über Invoice/Charge eindeutig an Subscription und Lizenzpositionen binden, Mehrdeutigkeit ablehnen und die maximale Refundhöhe serverseitig prüfen. Refund-Fehler als partiellen Fehler zurückgeben, Idempotency Keys und einen Reconciliation-/Compensation-Flow ergänzen. Tests für mehrere Subscriptions, falschen Charge, zu hohen Refund und Stripe-Teilfehler sind vor Nutzung des Features erforderlich.
+- Umsetzungsstand 2026-06-13: **behoben**.
 
 ### Finding 5 - Backend-Gesamtsuite scheitert vor der Testausführung
 

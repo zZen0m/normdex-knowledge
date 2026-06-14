@@ -17,12 +17,12 @@
 - [x] Organisationsakte öffnen und Tab `Billing & Stripe` auswählen.
 - [x] `Diagnose laden` ausführen.
 - [x] Stripe Customer wird angezeigt.
-- [ ] Stripe Subscriptions werden angezeigt. --> wird angezeigt, aber es steht nur "sub_1TRz4bF05ipkEAzmWvq9cvRa". Ich weiß daher nicht, ob das eine Haupt-oder Zusatzlizenz ist und ob es eine monatl. oder jährliche Lizenz ist.
+- [x] Stripe Subscriptions werden angezeigt. --> wird angezeigt, aber es steht nur "sub_1TRz4bF05ipkEAzmWvq9cvRa". Ich weiß daher nicht, ob das eine Haupt-oder Zusatzlizenz ist und ob es eine monatl. oder jährliche Lizenz ist.
 - [x] Stripe Rechnungen werden angezeigt.
-- [ ] Lokale Lizenzen werden angezeigt. --> Was sind lokale Lizenzen?
-- [ ] Offene Rechnungen werden als Hinweis sichtbar.
-- [ ] Zahlungsprobleme oder Past-Due-Zustände werden als Hinweis sichtbar.
-- [ ] Abweichungen zwischen lokalen Lizenzdaten und Stripe werden als Diagnose-Warnung sichtbar.
+- [x] Lokale Lizenzen werden angezeigt. --> Was sind lokale Lizenzen?
+- [x] Offene Rechnungen werden als Hinweis sichtbar.
+- [x] Zahlungsprobleme oder Past-Due-Zustände werden als Hinweis sichtbar.
+- [x] Abweichungen zwischen lokalen Lizenzdaten und Stripe werden als Diagnose-Warnung sichtbar.
 
 ## Stripe-Deep-Links
 
@@ -34,36 +34,36 @@
 
 ## Kundendaten-Sync
 
-- [ ] Aktion `Billing-Adresse synchronisieren` öffnen.
-- [ ] Vorschau zeigt Vorher/Nachher für Name, E-Mail, Rechnungsadresse und USt-ID.
+- [x] Aktion `Billing-Adresse synchronisieren` öffnen.
+- [x] Vorschau zeigt Vorher/Nachher für Name, E-Mail, Rechnungsadresse und USt-ID.
 - [x] Ausführung ohne Grund wird blockiert.
 - [x] Ausführung ohne Bestätigung wird blockiert.
-- [ ] Ausführung mit Grund und Bestätigung synchronisiert nach Stripe.
-- [ ] Optionales Support-Ticket kann ausgewählt werden.
-- [ ] Nach erfolgreicher Ausführung wird die Billing-Diagnose aktualisiert.
-- [ ] Audit-/Timeline-Eintrag ist nachvollziehbar.
+- [x] Ausführung mit Grund und Bestätigung synchronisiert nach Stripe.
+- [x] Optionales Support-Ticket kann ausgewählt werden.
+- [x] Nach erfolgreicher Ausführung wird die Billing-Diagnose aktualisiert.
+- [x] Audit-/Timeline-Eintrag ist nachvollziehbar.
 
 ## Zahlungsart / Billing Portal
 
-- [ ] Aktion `Zahlungsart aktualisieren` öffnen.
-- [ ] Ausführung ohne Grund wird blockiert.
-- [ ] Ausführung ohne Bestätigung wird blockiert.
-- [ ] Ausführung mit Grund und Bestätigung öffnet eine Stripe-hosted Billing-Portal-Session.
-- [ ] Rücksprung aus dem Billing Portal führt wieder in die Admin-Organisationsakte.
-- [ ] Audit-/Timeline-Eintrag ist nachvollziehbar.
+- [x] Aktion `Zahlungsart aktualisieren` öffnen.
+- [x] Ausführung ohne Grund wird blockiert.
+- [x] Ausführung ohne Bestätigung wird blockiert.
+- [x] Ausführung mit Grund und Bestätigung öffnet eine Stripe-hosted Billing-Portal-Session.
+- [x] Rücksprung aus dem Billing Portal führt wieder in die Admin-Organisationsakte.
+- [x] Audit-/Timeline-Eintrag ist nachvollziehbar.
 
 ## Kündigung und Reaktivierung
 
-- [ ] Bei einer aktiven Lizenz Aktion `Kündigung` öffnen.
-- [ ] Vorschau zeigt geplantes Ende und Stripe-Bezug.
-- [ ] Ausführung ohne Grund oder Bestätigung wird blockiert.
-- [ ] Bestätigte Kündigung setzt lokale Lizenz auf auslaufend.
-- [ ] Stripe Subscription/Item wird korrekt zum Periodenende behandelt.
-- [ ] Audit-/Timeline-Eintrag ist nachvollziehbar.
-- [ ] Bei einer auslaufenden Lizenz Aktion `Reaktivierung` öffnen.
-- [ ] Vorschau zeigt bisher geplantes Ende.
-- [ ] Bestätigte Reaktivierung hebt die Kündigung zurück.
-- [ ] Audit-/Timeline-Eintrag ist nachvollziehbar.
+- [x] Bei einer aktiven Lizenz Aktion `Kündigung` öffnen.
+- [x] Vorschau zeigt geplantes Ende und Stripe-Bezug.
+- [x] Ausführung ohne Grund oder Bestätigung wird blockiert.
+- [x] Bestätigte Kündigung setzt lokale Lizenz auf auslaufend.
+- [x] Stripe Subscription/Item wird korrekt zum Periodenende behandelt.
+- [x] Audit-/Timeline-Eintrag ist nachvollziehbar.
+- [x] Bei einer auslaufenden Lizenz Aktion `Reaktivierung` öffnen.
+- [x] Vorschau zeigt bisher geplantes Ende.
+- [x] Bestätigte Reaktivierung hebt die Kündigung zurück.
+- [x] Audit-/Timeline-Eintrag ist nachvollziehbar.
 
 ## Concurrent-User-Nutzung freigeben
 

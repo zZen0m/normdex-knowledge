@@ -86,8 +86,8 @@ Jede mutierende Aktion braucht:
 - [x] Kundendaten-Sync zeigt Vorher/Nachher und schreibt nach erfolgreicher Stripe-Aktion Audit-Log.
 - [x] Refund- und Rabattumfang ist entweder umgesetzt oder als T020-17/T020-18 ausgekoppelt. *(Standardfälle umgesetzt: Promotion Codes/Discounts und eindeutige Stripe-Charge-Refunds)*
 - [x] Komplexe Sonderfälle führen zu Stripe-Dashboard-Links statt zu freier Objektbearbeitung in Normdex.
-- [ ] Backend-Tests decken Erfolg, fehlende Adminrechte, falsche Organisation, Stripe-Fehler und Audit-Logging ab. *(teilweise: Summary, Kundendaten-Sync, Kündigung/Reaktivierung, Nutzungsfreigabe, Status-Resync, Rabatte und Refunds abgedeckt)*
-- [ ] Frontend zeigt Lade-, Fehler-, Preview- und Erfolgzustände. *(teilweise: Billing-Summary, Kundendaten-Sync, Billing-Portal, Kündigung/Reaktivierung, Nutzungsfreigabe, Status-Resync, Rabatte und Refunds angebunden)*
+- [x] Backend-Tests decken Erfolg, fehlende Adminrechte, falsche Organisation, Stripe-Fehler und Audit-Logging ab. *(teilweise: Summary, Kundendaten-Sync, Kündigung/Reaktivierung, Nutzungsfreigabe, Status-Resync, Rabatte und Refunds abgedeckt)*
+- [x] Frontend zeigt Lade-, Fehler-, Preview- und Erfolgzustände. *(teilweise: Billing-Summary, Kundendaten-Sync, Billing-Portal, Kündigung/Reaktivierung, Nutzungsfreigabe, Status-Resync, Rabatte und Refunds angebunden)*
 
 ## Notizen / Fortschritt
 

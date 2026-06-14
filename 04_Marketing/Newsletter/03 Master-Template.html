@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--
+      Normdex Newsletter Master-Template
+      Wiederverwendbares Geruest fuer alle Newsletter und Marketing-Mails.
+      Anleitung:
+      - Platzhalter in [[ doppelten eckigen Klammern ]] ersetzen.
+      - Brevo-Variablen wie {{ contact.VORNAME }} bleiben unveraendert.
+      - Genau ein primaerer Button pro Mail (CTA-Regel, siehe 01 Wording-Vorgaben).
+      - Signatur immer "Dein Normdex-Team".
+      - Footer mit Abmeldelink ist Pflicht.
+      Design-Referenz: 02 Designvorgaben.
+    -->
+    <title>[[ TITEL DER MAIL ]]</title>
+    <style>
+        body { margin: 0; padding: 0; background-color: #FAFAFA; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #282F3A; }
+        .wrapper { width: 100%; table-layout: fixed; background-color: #FAFAFA; padding: 40px 20px; }
+        .main { background-color: #FFFFFF; margin: 0 auto; width: 100%; max-width: 600px; border-collapse: separate; border: 1px solid #E0E0E0; border-radius: 14px; overflow: hidden; }
+        .header { background-color: #003C3E; padding: 18px 20px; text-align: left; }
+        .content { padding: 32px 24px 24px 24px; line-height: 1.6; font-size: 16px; }
+        .sig { padding: 14px 20px 18px 20px; background-color: #FFFFFF; border-top: 1px solid #E0E0E0; }
+        .bottom { padding: 10px 20px; background-color: #FFFFFF; font-size: 11px; color: #64748B; border-top: 1px solid #E0E0E0; }
+        .preheader { display: none; max-height: 0px; overflow: hidden; mso-hide: all; }
+        h1 { color: #003C3E; font-size: 22px; margin: 0 0 16px 0; font-weight: 700; }
+        p { margin: 0 0 16px 0; }
+        .accent-line { height: 3px; width: 48px; background-color: #FF2D58; margin: 0 0 24px 0; border-radius: 99px; }
+        .btn { display: inline-block; background-color: #003C3E; color: #FAFAFA; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 15px; }
+        .muted { font-size: 14px; color: #64748B; }
+        a { color: #003C3E; }
+    </style>
+</head>
+<body>
+    <!-- Preheader: ergaenzt den Betreff, wiederholt ihn nicht -->
+    <span class="preheader">[[ PREHEADER-TEXT ]]</span>
+
+    <div class="wrapper">
+        <table class="main" cellpadding="0" cellspacing="0" border="0">
+
+            <!-- Header -->
+            <tr>
+                <td class="header">
+                    <img src="https://normdex.at/assets/normdex_logo_horizontal_invert.png" alt="Normdex" width="190" style="display:block; border:0;">
+                </td>
+            </tr>
+
+            <!-- Body -->
+            <tr>
+                <td class="content">
+                    <h1>[[ UEBERSCHRIFT ]]</h1>
+                    <div class="accent-line"></div>
+
+                    <p>Hallo {{ contact.VORNAME }},</p>
+
+                    <p>[[ EINSTIEG: ein Gedanke, direkt zum Punkt ]]</p>
+
+                    <p>[[ HAUPTTEIL: fachlicher Kern, kurze Absaetze ]]</p>
+
+                    <!-- Genau ein primaerer CTA pro Mail -->
+                    <p style="text-align:center; margin: 28px 0;">
+                        <a href="[[ ZIEL-URL?utm_source=brevo&utm_medium=email&utm_campaign=[[KAMPAGNE]]&utm_content=[[MAILKENNUNG]] ]]" class="btn">[[ CTA-TEXT ]]</a>
+                    </p>
+
+                    <!-- Optionaler Hinweisblock, z. B. Gutschein. Bei Bedarf einkommentieren.
+                    <p class="muted">Dein Gutschein über <strong>10 %</strong> im ersten Monat: <strong>{{ contact.COUPON_CODE }}</strong> (30 Tage gültig, einmalig einlösbar).</p>
+                    -->
+
+                    <p>Beste Grüße<br>Dein Normdex-Team</p>
+                </td>
+            </tr>
+
+            <!-- Footer-Signatur -->
+            <tr>
+                <td class="sig">
+                    <div style="border-top: 1px solid #E0E0E0; padding-top: 14px;">
+                        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                            <tr>
+                                <td width="36" valign="top" style="padding-right:10px;">
+                                    <img src="https://normdex.at/assets/normdex_icon.png" width="28" height="28" alt="N" style="display:block; border:0; border-radius:8px;">
+                                </td>
+                                <td valign="top" style="color:#64748B; font-size:12px; line-height:18px;">
+                                    <strong style="color:#282F3A;">Normdex<sup style="font-size:6px; line-height:0; vertical-align:super; margin-left:1px;">TM</sup></strong><br>
+                                    Du erhältst diese E-Mail, weil du dich für den Normdex™ Newsletter angemeldet hast.
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+            <!-- Bottom: Pflichtangaben inkl. Abmeldelink -->
+            <tr>
+                <td class="bottom">
+                    © 2026 Normdex<sup style="font-size:6px; line-height:0; vertical-align:super; margin-left:1px;">TM</sup>. Alle Rechte vorbehalten. <span style="color:#FF2D58;">•</span>
+                    <a href="https://normdex.at/impressum" style="color:#003C3E; text-decoration:underline;">Impressum/Datenschutz</a> <span style="color:#FF2D58;">•</span>
+                    <a href="{{ unsubscribe }}" style="color:#003C3E; text-decoration:underline;">Abmelden</a>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</body>
+</html>
