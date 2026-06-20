@@ -418,9 +418,10 @@ Werte:
 
 ```env
 NORMDEX_FRONTEND_BASIC_AUTH_ENABLED=true
+NORMDEX_FRONTEND_BASIC_AUTH_USERS='admin:$2y$...'
 ```
 
-`true` bedeutet: `app.normdex.at` bleibt per BasicAuth geschützt. Das ist der gewollte Zustand, solange noch keine Kundenregistrierung möglich sein soll.
+`true` bedeutet: `app.normdex.at` bleibt per BasicAuth geschützt. Das ist der gewollte Zustand, solange noch keine Kundenregistrierung möglich sein soll. `NORMDEX_FRONTEND_BASIC_AUTH_USERS` enthält einen frisch erzeugten htpasswd-Eintrag und liegt ausschließlich in der nicht versionierten Serverdatei. Der Wrapper bricht ab, wenn BasicAuth aktiv ist und kein Credential gesetzt wurde.
 
 ```env
 NORMDEX_FRONTEND_BASIC_AUTH_ENABLED=false
@@ -432,6 +433,7 @@ Wichtig:
 
 - Produktivdeployments der App laufen über `./deploy/prod-compose.sh`, damit der Schalter angewendet wird.
 - Nicht direkt `docker compose -f deploy/docker-compose.prod.yml ...` verwenden, wenn der Gate-Schalter gelten soll.
+- BasicAuth-Passwort mit einem starken Zufallswert erzeugen, den htpasswd-Eintrag in einfache Anführungszeichen setzen und bei Verdacht oder nach Repository-Leaks rotieren.
 - Vor Kundenstart bewusst prüfen: Ist `NORMDEX_FRONTEND_BASIC_AUTH_ENABLED=false` gesetzt?
 - Wenn die App öffentlich sichtbar sein soll, Registrierung aber weiterhin blockiert bleiben muss, braucht es zusätzlich einen App-/Backend-Schalter für Registrierungen; BasicAuth sperrt immer das gesamte Frontend.
 

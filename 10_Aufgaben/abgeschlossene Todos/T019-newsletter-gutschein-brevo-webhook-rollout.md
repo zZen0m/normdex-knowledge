@@ -48,7 +48,7 @@ Der 10%-Newsletter-Gutschein soll erst nach bestätigtem Brevo-Double-Opt-in ver
 
 ## Technische Referenzen
 
-- Backend-Endpoint: `POST /newsletter/brevo/webhook?secret=...`
+- Backend-Endpoint: `POST /newsletter/brevo/webhook` mit `Authorization: Bearer <BREVO_WEBHOOK_SECRET>`
 - Subscribe-Endpoint: `POST /newsletter/subscribe`
 - Tabelle: `newsletter_coupon_claims`
 - Service: `apps/api/app/services/newsletter_coupon_service.py`

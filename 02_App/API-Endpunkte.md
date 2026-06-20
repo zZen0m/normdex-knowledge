@@ -95,10 +95,10 @@ Newsletter-Gutscheincodes werden lokal gegen `newsletter_coupon_claims.expires_a
 
 ```
 POST /newsletter/subscribe                -> Brevo Double-Opt-in starten und Pending-Claim speichern
-POST /newsletter/brevo/webhook?secret=... -> Brevo list_addition verarbeiten und Gutschein versenden
+POST /newsletter/brevo/webhook            -> Brevo list_addition verarbeiten und Gutschein versenden
 ```
 
-Der Webhook verarbeitet nur `event = list_addition` und nur dann, wenn `list_id` die konfigurierte `BREVO_LIST_ID` enthaelt. Vor bestaetigtem Double-Opt-in wird kein Gutschein erzeugt.
+Der Webhook verarbeitet nur `event = list_addition` und nur dann, wenn `list_id` die konfigurierte `BREVO_LIST_ID` enthält. Brevo authentifiziert den Aufruf mit `Authorization: Bearer <BREVO_WEBHOOK_SECRET>`; Secrets werden nicht in Query-Strings übertragen oder geloggt. Vor bestätigtem Double-Opt-in wird kein Gutschein erzeugt.
 
 ## Abonnements (Stripe)
 
@@ -117,7 +117,7 @@ POST /support/upload    → Anhang hochladen
 POST /support/public-tickets → Ticket via Landingpage-Kontaktformular
 ```
 
-Support-Anhänge werden nicht über `/static` veröffentlicht. Der Upload liefert nur einen internen Storage-Verweis, der bei der Ticketerstellung einem Support-Message-Datensatz zugeordnet wird.
+Support-Anhänge werden nicht über `/static` veröffentlicht. Der Upload liefert ein kurzlebiges, signiertes und an den Benutzer gebundenes Upload-Token. Bei der Ticketerstellung validiert der Server Eigentümer, Metadaten und Storage-Pfad, verschiebt die Datei aus dem Pending-Bereich und verbraucht den Upload einmalig. Verwaiste Uploads werden nach 24 Stunden bereinigt.
 
 ## Admin
 

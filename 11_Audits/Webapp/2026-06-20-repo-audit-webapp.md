@@ -11,6 +11,8 @@
 - Speicherort: `D:\Normdex\02_knowledge\normdex-vault\11_Audits\Webapp\2026-06-20-repo-audit-webapp.md`
 - Vorheriger Audit: `2026-06-13-repo-audit-webapp.md`
 - Git-Status zum Audit-Zeitpunkt: `apps/api/dev.db` bereits vor Audit-Beginn modifiziert; `apps/api/preview_report_demo.py` bereits vor Audit-Beginn unversioniert. Beide Nutzeränderungen wurden nicht verändert.
+- Nachtrag vom 2026-06-20: Findings 1 bis 3, 6 bis 9 sowie 11 und 12 wurden behoben. Findings 5 und 10 sind repo-seitig umgesetzt und benötigen nach dem Push noch GitHub-/VPS-Aktivierung. Finding 4 bleibt als externe Security-Nachbearbeitung unter T026 offen.
+- Nachtragsverifikation: **324 Backendtests grün**, **34 Frontendtests grün**, Standardbuild mit Vite `8.0.16` erfolgreich, `npm audit` und `pip-audit` ohne bekannte Schwachstellen, Alembic-Graph mit einem Head konsistent und Dev-Fixture im Strict-Modus ohne Warnungen.
 
 ## 2. Audit-Abdeckung
 
@@ -97,6 +99,7 @@ Das Backend ist funktional gut abgesichert: 314 Tests laufen auch mit den deklar
 - Warum das relevant ist: Der Standardbefehl aus `package.json` und Dockerfile ist nicht reproduzierbar. Ein Deployment kann je nach vorhandenem Build-Cache abbrechen.
 - Business Impact: Release-Blocker, verzögerte Deployments und nicht deterministische Produktionsimages.
 - Konkrete Handlungsempfehlung: Generierte `vite.config.js` und `vite.config.d.ts` nicht mehr versionieren, `tsconfig.node.json` auf `noEmit: true` umstellen oder Vite explizit mit `vite.config.ts` starten. `tsconfig.*.tsbuildinfo` zusätzlich in `.dockerignore` aufnehmen und den Standardbuild in CI aus einem frischen Checkout prüfen.
+- Umsetzungsstand 2026-06-20: **behoben**. Die generierten Dateien wurden aus Git entfernt und ignoriert, der Build verwendet Typechecks ohne Emit und startet Vite explizit mit `vite.config.ts`. `npm run build` läuft mit Vite `8.0.16` erfolgreich.
 
 ### Finding 2 - E-Mail-Änderung lässt sich nicht wirksam blockieren
 
@@ -110,6 +113,7 @@ Das Backend ist funktional gut abgesichert: 314 Tests laufen auch mit den deklar
 - Warum das relevant ist: Der Flow suggeriert eine Schutzmaßnahme, die technisch keine Wirkung auf die eigentliche Änderung hat.
 - Business Impact: Fortgesetzte Kontoübernahme trotz rechtzeitiger Reaktion des Kontoinhabers; Zugriff auf Projekte, Team-, Lizenz- und Rechnungsdaten.
 - Konkrete Handlungsempfehlung: Beide Tokens über eine gemeinsame Transaktions-ID koppeln. Der Block-Endpunkt muss alle zugehörigen Bestätigungs-Tokens atomar invalidieren; der Confirm-Endpunkt muss einen Blockzustand prüfen. Tests für Block-vor-Confirm, Confirm-vor-Block, Replay und parallele Requests ergänzen.
+- Umsetzungsstand 2026-06-20: **behoben**. Beide Tokens tragen eine gemeinsame Request-ID und werden unter Datenbanksperre gemeinsam geladen und verbraucht. Block-vor-Confirm, Confirm-vor-Block und Replay sind durch Regressionstests abgedeckt.
 
 ### Finding 3 - Attachment-Pfade sind clientgesteuert und der Retention-Job löscht ungeprüft
 
@@ -123,6 +127,7 @@ Das Backend ist funktional gut abgesichert: 314 Tests laufen auch mit den deklar
 - Warum das relevant ist: Clientdaten dürfen nie als vertrauenswürdige Dateisystempfade verwendet werden.
 - Business Impact: Verfügbarkeits- und Betriebsrisiko, beschädigte Containerdateien, wachsender Storage-Verbrauch und manueller Bereinigungsaufwand.
 - Konkrete Handlungsempfehlung: Uploads serverseitig als eigene temporäre DB-Objekte mit Besitzer, Größe, Status und Ablaufzeit erfassen; an das Frontend nur eine opaque Upload-ID geben. Beim Ticket atomar Eigentum und Status prüfen. Einen gemeinsamen sicheren Resolver für Download und Löschung verwenden, Upload-Quota/Rate-Limit ergänzen und verwaiste Uploads nach kurzer TTL löschen. Tests für Traversal, fremde Upload-IDs und Orphan-Cleanup ergänzen.
+- Umsetzungsstand 2026-06-20: **behoben**. Uploads liegen zunächst benutzergebunden im Pending-Bereich und werden über ein kurzlebiges signiertes Token referenziert. Der Server validiert Eigentümer, Dateigröße und Pfad, verschiebt Uploads einmalig, nutzt einen gemeinsamen sicheren Resolver, limitiert Uploads und löscht verwaiste Dateien nach 24 Stunden. Traversal-, Fremdbesitz-, Replay- und Orphan-Tests sind grün.
 
 ### Finding 4 - Historische Zugangsdaten noch nicht vollständig bereinigt
 
@@ -136,6 +141,7 @@ Das Backend ist funktional gut abgesichert: 314 Tests laufen auch mit den deklar
 - Warum das relevant ist: Ein historisches Secret muss bis zur bestätigten Rotation als kompromittiert behandelt werden.
 - Business Impact: Zahlungs-, E-Mail-, Datenschutz- und Reputationsrisiko.
 - Konkrete Handlungsempfehlung: T026 vor dem nächsten Release vollständig abschließen: Provider-Secrets rotieren, Logs prüfen, Remote-Historie koordiniert bereinigen, Klone neu synchronisieren und Gitleaks ohne Baseline ausführen.
+- Umsetzungsstand 2026-06-20: **extern offen**. Repo-Prävention und Baseline bestehen, aber Provider-Rotation, Logprüfung, Remote-History-Rewrite, Klon-Neusynchronisierung und Entfernung der neun Gitleaks-Ausnahmen wurden nicht durchgeführt. Diese Schritte bleiben unter [[T026-secret-rotation-und-history-cleanup]] blockierend.
 
 ### Finding 5 - Keine CI-Gates für Tests, Build und Dependency-Scans
 
@@ -149,6 +155,7 @@ Das Backend ist funktional gut abgesichert: 314 Tests laufen auch mit den deklar
 - Warum das relevant ist: Manuelle lokale Umgebungen können veraltet sein und erzeugen falsche grüne Signale, wie der erfolgreiche Vite-7-Build in diesem Audit zeigte.
 - Business Impact: Höheres Release-Risiko, spätere Fehlererkennung und unnötige Deployment-Unterbrechungen.
 - Konkrete Handlungsempfehlung: Einen verpflichtenden CI-Workflow mit frischer Installation aufsetzen: Backend `pytest` und `pip-audit`, Frontend `npm ci`, Tests, Standardbuild und `npm audit`, statische Migrationsprüfung sowie Fixture-Gate bei Änderungen an `dev.db`.
+- Umsetzungsstand 2026-06-20: **repo-seitig behoben**. `.github/workflows/quality.yml` führt Backendtests, `pip-audit`, Migrations-/Fixture-Prüfung sowie Frontendtests, Standardbuild und `npm audit` aus. Nach dem Push muss der Workflow in GitHub noch als verpflichtender Branch-Check für die drei aktiven Branches konfiguriert werden.
 
 ### Finding 6 - DOMPurify-Schwachstellen im aktuellen Lockfile
 
@@ -162,6 +169,7 @@ Das Backend ist funktional gut abgesichert: 314 Tests laufen auch mit den deklar
 - Warum das relevant ist: Support-E-Mails sind nicht vertrauenswürdige Inhalte und werden in einer Admin-Oberfläche gerendert.
 - Business Impact: Potenzielles XSS-Risiko im Administrationsbereich und erneuter Verlust eines scanner-sauberen Dependency-Standes.
 - Konkrete Handlungsempfehlung: DOMPurify auf eine laut Audit gefixte Version oberhalb `3.4.10` aktualisieren, Lockfile neu erzeugen und einen XSS-Regressionstest für Support-HTML ergänzen.
+- Umsetzungsstand 2026-06-20: **behoben**. DOMPurify wurde auf einen gepatchten Stand aktualisiert, `npm audit` meldet null Schwachstellen und neue Tests prüfen Script-, Event-Handler-, JavaScript-URL- und Embed-Bereinigung.
 
 ### Finding 7 - Auth-Endpunkte verraten weiterhin Account-Status
 
@@ -175,6 +183,7 @@ Das Backend ist funktional gut abgesichert: 314 Tests laufen auch mit den deklar
 - Warum das relevant ist: Firmenadressen lassen sich für Phishing und Credential-Stuffing priorisieren.
 - Business Impact: Erhöhtes Missbrauchs- und Support-Risiko.
 - Konkrete Handlungsempfehlung: Nach außen identische Antwort, Statuscode und möglichst ähnliches Timing verwenden; Details nur intern protokollieren.
+- Umsetzungsstand 2026-06-20: **behoben**. Verifikations- und Passwort-Reset-Anfragen liefern für unbekannte, verifizierte und gedrosselte Konten dieselbe öffentliche Antwort. Interne Throttle-Ereignisse bleiben im Audit-Log; Regressionstests vergleichen die Antworten.
 
 ### Finding 8 - Brevo-Webhook-Secret bleibt in URL und Fehlerlogs exponiert
 
@@ -188,6 +197,7 @@ Das Backend ist funktional gut abgesichert: 314 Tests laufen auch mit den deklar
 - Warum das relevant ist: Der Webhook steuert Newsletter-Coupon-Ereignisse.
 - Business Impact: Simulierte Events, ungewollte Gutscheine, Secret-Rotation und Logbereinigung.
 - Konkrete Handlungsempfehlung: Secret in einen Header oder geheimen Pfad verschieben, Query-Logging für den Endpunkt deaktivieren und im globalen Error-Logging nur Pfad plus redigierte Query-Keys speichern.
+- Umsetzungsstand 2026-06-20: **behoben**. Der Brevo-Webhook verlangt `Authorization: Bearer ...`; Query-Secrets werden abgelehnt. Das globale Fehlerlogging speichert nur Pfad und Query-Key-Namen, keine Query-Werte. Tests decken Headerauthentifizierung und Redaction ab.
 
 ### Finding 9 - Dev-Fixture enthält weiterhin real wirkende Daten und Asset-Probleme
 
@@ -201,6 +211,7 @@ Das Backend ist funktional gut abgesichert: 314 Tests laufen auch mit den deklar
 - Warum das relevant ist: Eine versionierte Datenbank bleibt dauerhaft in der Git-Historie.
 - Business Impact: Datenschutz-, Compliance- und Demo-Stabilitätsrisiko.
 - Konkrete Handlungsempfehlung: Vor jedem Commit reservierte Domains verwenden, reale Namen/Metadaten bereinigen, fehlende Assets ersetzen und `verify_dev_fixture.py --strict` als verpflichtendes Gate einsetzen.
+- Umsetzungsstand 2026-06-20: **behoben**. Die versionierte Fixture wurde deterministisch anonymisiert; externe Maildomains, Namen, Organisationsdaten, Support-Metadaten und instabile Asset-Referenzen wurden bereinigt. `verify_dev_fixture.py --strict` meldet keine Warnungen und läuft im neuen CI-Workflow.
 
 ### Finding 10 - BasicAuth-Hash ist fest im Produktions-Compose hinterlegt
 
@@ -214,6 +225,7 @@ Das Backend ist funktional gut abgesichert: 314 Tests laufen auch mit den deklar
 - Warum das relevant ist: Solange der geschlossene Testmodus aktiv ist, ist BasicAuth die vorgeschaltete Zugangsschranke.
 - Business Impact: Unbeabsichtigte öffentliche Erreichbarkeit der Testumgebung und zusätzlicher Credential-Rotationsaufwand.
 - Konkrete Handlungsempfehlung: BasicAuth-Benutzerliste über eine nicht versionierte Server-Env oder Secret-Datei einspeisen, einen modernen starken Zufallswert verwenden und den bisherigen Wert rotieren.
+- Umsetzungsstand 2026-06-20: **repo-seitig behoben, Rotation offen**. Der Hash wurde aus dem Compose-File entfernt und wird über `NORMDEX_FRONTEND_BASIC_AUTH_USERS` aus der nicht versionierten Deployment-Env injiziert; der Wrapper verweigert aktivierten BasicAuth-Betrieb ohne Credential. Der bisherige VPS-Wert muss beim nächsten Deployment durch einen neuen starken Wert ersetzt werden.
 
 ### Finding 11 - Versions- und Projektdokumentation sind inkonsistent
 
@@ -227,6 +239,7 @@ Das Backend ist funktional gut abgesichert: 314 Tests laufen auch mit den deklar
 - Warum das relevant ist: Support, Rollback und technische Übergaben benötigen eine eindeutige Release-Identität.
 - Business Impact: Erhöhte Wartungs- und Kommunikationskosten; langsamere Fehlerzuordnung.
 - Konkrete Handlungsempfehlung: Stackbeschreibung korrigieren, SemVer-Workflow konsolidieren, Changelog aktualisieren und Remote-Tags beziehungsweise den Verlust von `v0.2.0` manuell prüfen.
+- Umsetzungsstand 2026-06-20: **behoben**. `AGENTS.md` nennt React 18 und den korrekten Vault-Auditpfad, README und SemVer-Workflow verwenden die festen Release-Branches, und der Changelog enthält `0.1.0` sowie die aktuellen Änderungen. `git ls-remote --tags origin` bestätigt, dass aktuell keine Remote-Tags vorhanden sind; die App-Version bleibt konsistent bei `0.1.0`.
 
 ### Finding 12 - Veralteter Notifications-TODO
 
@@ -240,6 +253,7 @@ Das Backend ist funktional gut abgesichert: 314 Tests laufen auch mit den deklar
 - Warum das relevant ist: Irreführende Kommentare erschweren Reviews und Wartung.
 - Business Impact: Geringe, aber unnötige Wartungskosten.
 - Konkrete Handlungsempfehlung: Kommentar entfernen.
+- Umsetzungsstand 2026-06-20: **behoben**. Der veraltete TODO wurde aus `Sidebar.tsx` entfernt.
 
 ## 8. Quick Wins
 

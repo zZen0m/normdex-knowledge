@@ -248,9 +248,10 @@ BasicAuth-Gate:
 
 ```env
 NORMDEX_FRONTEND_BASIC_AUTH_ENABLED=true
+NORMDEX_FRONTEND_BASIC_AUTH_USERS='admin:$2y$...'
 ```
 
-`true` ist der Zustand für die geschlossene Live-Testphase. Damit können Stripe, E-Mail, Webhooks und Lizenzflüsse produktionsnah getestet werden, ohne dass Kunden sich bereits registrieren oder kaufen können.
+`true` ist der Zustand für die geschlossene Live-Testphase. Damit können Stripe, E-Mail, Webhooks und Lizenzflüsse produktionsnah getestet werden, ohne dass Kunden sich bereits registrieren oder kaufen können. Der htpasswd-Eintrag wird ausschließlich in `deploy/env/.env.deploy.prod` auf dem Server gespeichert; im Compose-File ist kein Hash versioniert.
 
 ```env
 NORMDEX_FRONTEND_BASIC_AUTH_ENABLED=false

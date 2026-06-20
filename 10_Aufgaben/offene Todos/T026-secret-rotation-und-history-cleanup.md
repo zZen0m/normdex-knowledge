@@ -41,3 +41,4 @@ Repo-seitig bereits umgesetzt:
 - 2026-06-13: Lokale Legacy-Historie bereinigt und präventives CI-Gate implementiert.
 - 2026-06-13: Aktive Remote-Historie nicht automatisch neu geschrieben oder force-gepusht, weil dies alle bestehenden Klone und offenen Arbeiten betrifft und koordiniert erfolgen muss.
 - 2026-06-13: Keine Zugangsdaten oder Secret-Werte in dieser Dokumentation gespeichert.
+- 2026-06-20: Beim Audit-Fixing erneut geprüft. Provider-Rotation, Logprüfung, Remote-History-Rewrite und Entfernung der neun `.gitleaksignore`-Einträge sind weiterhin offen und wurden nicht als erledigt markiert.

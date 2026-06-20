@@ -43,6 +43,7 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 | T020-16 | [[T020-16-Lizenz-und-Billing-Support-Aktionen]] | App / Verwaltungsportal / Stripe | offen  |
 | T026    | [[T026-secret-rotation-und-history-cleanup]]     | App / Security / Infrastruktur   | in Arbeit |
 | T028    | [[T028-newsletter-nurture-brevo-umsetzung]]      | Marketing / Newsletter / Brevo   | in Arbeit |
+| T029    | [[T029-webapp-audit-rollout-externe-konfiguration]] | App / Security / CI / Deployment | offen |
 
 ## Zusammengeführte Todo-IDs
 
@@ -92,4 +93,4 @@ Diese Todos sind konzeptionell ausgearbeitet, aber bewusst zurückgestellt. Sie 
 
 ## Nächste freie ID
 
-`T029`
+`T030`

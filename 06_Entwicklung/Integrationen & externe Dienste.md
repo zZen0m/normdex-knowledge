@@ -44,10 +44,10 @@
 
 - `POST /newsletter/subscribe` startet Brevo Double-Opt-in und speichert lokal nur einen Pending-Claim.
 - Brevo Outbound Webhook Event: `list_addition`.
-- Ziel in Normdex: `POST /newsletter/brevo/webhook?secret=...`.
-- Normdex verarbeitet nur Webhooks, deren `list_id` die konfigurierte `BREVO_LIST_ID` enthaelt.
-- `BREVO_WEBHOOK_SECRET` ist ein selbst erzeugtes Normdex-Secret, kein Wert von Brevo. Es muss in der Backend-Env und in der Brevo Webhook-URL identisch sein.
-- Erst nach bestaetigter Listenaufnahme wird der individuelle Gutschein erzeugt und per SMTP versendet.
+- Ziel in Normdex: `POST /newsletter/brevo/webhook`.
+- Normdex verarbeitet nur Webhooks, deren `list_id` die konfigurierte `BREVO_LIST_ID` enthält.
+- `BREVO_WEBHOOK_SECRET` ist ein selbst erzeugtes Normdex-Secret. Es wird in Brevo als Bearer-Authentifizierung des Webhooks und in der Backend-Env hinterlegt; es darf nicht Teil der URL sein.
+- Erst nach bestätigter Listenaufnahme wird der individuelle Gutschein erzeugt und per SMTP versendet.
 
 ---
 

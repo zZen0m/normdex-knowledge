@@ -151,8 +151,9 @@ new → triaged → in_progress → waiting_on_customer → resolved → closed
 **Webapp-Supportformular (`/support`):**
 - Kategorien: Produkt & Anwendung, Technisches Problem, Störung/Ausfall, Abrechnung/Vertrag/Lizenz, Zugang & Konto, Funktionswunsch/Feedback, Sonstiges
 - Die Kategorie kann per URL vorausgewählt werden, z. B. `/support?category=feature` aus What's-New-CTAs.
-- Anhänge werden vor Ticketerstellung über `/support/upload` hochgeladen und anschließend als Attachment-Liste am Ticket gespeichert.
+- Anhänge werden vor Ticketerstellung über `/support/upload` in einen benutzergebundenen Pending-Bereich hochgeladen. Das Frontend erhält ein kurzlebiges signiertes Upload-Token; erst bei der Ticketanlage prüft der Server Eigentümer und Metadaten und verschiebt die Datei in den finalen Attachment-Bereich.
 - Gespeicherte Anhänge sind nicht öffentlich über `/static` abrufbar. Im Support-Admin erfolgt der Download über einen authentifizierten, ticketgebundenen Admin-Endpunkt.
+- Nicht verwendete Uploads werden nach 24 Stunden automatisch gelöscht. Uploads sind rate-limitiert; Download und Retention verwenden denselben sicheren Storage-Resolver.
 - Die neue Oberfläche nutzt ein zweispaltiges Layout: links Formular, rechts Hinweise zu Kontaktweg, erwarteter Reaktionszeit und benötigten Angaben.
 
 ### Webhook-Integration (n8n)
@@ -204,8 +205,8 @@ Das Dashboard (`/app`) ist die Startseite nach dem Login:
 ## Newsletter-Gutschein
 
 - Landingpage und API bieten Newsletter-Anmeldung mit 10%-Gutschein an.
-- Der Gutschein wird nicht beim Formular-Submit erzeugt, sondern erst nach bestaetigtem Brevo Double-Opt-in.
-- Brevo sendet dafuer einen Outbound Webhook `list_addition` an `POST /newsletter/brevo/webhook?secret=...`.
+- Der Gutschein wird nicht beim Formular-Submit erzeugt, sondern erst nach bestätigtem Brevo Double-Opt-in.
+- Brevo sendet dafür einen Outbound Webhook `list_addition` an `POST /newsletter/brevo/webhook` und authentifiziert ihn per Bearer-Header.
 - Normdex erzeugt pro E-Mail einen individuellen Stripe Promotion Code auf Basis des Coupons `mbjs8wYE`.
 - Jeder Newsletter-Code ist einmalig einloesbar und 30 Tage gueltig.
 - Gueltige Codes werden im Lizenz-Checkout lokal geprueft und als Stripe Promotion Code an neue Checkout Sessions oder direkte Subscription-Updates uebergeben.
