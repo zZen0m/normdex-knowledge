@@ -10,6 +10,15 @@
 - Qualifizierter Mehrfach-Erstkauf: kein Trial, sondern einmaliger Erstbestellungsrabatt von 24,50 EUR über Coupon `QHQESezY`.
 - Relevante Webhooks für Trial: `checkout.session.completed`, `customer.subscription.updated`, `customer.subscription.trial_will_end`.
 - Lokaler Testmodus: keine localhost-Webhooks im Stripe Dashboard anlegen; für lokale Tests Stripe CLI mit `stripe listen --forward-to localhost:8000/subscriptions/webhook` verwenden.
+- Rechnungsbezogene Erstattungen laufen über Stripe Credit Notes. Führender Auflösungsweg in API-Version `2025-11-17.clover`: `Invoice → InvoicePayment.list(invoice=...) → PaymentIntent → latest_charge`.
+- Rückweg von Payment zu Invoice: `InvoicePayment.list(payment={type: payment_intent, payment_intent: ...})`.
+- Neue Rückzahlung: Credit Note mit `lines` bzw. `amount` und `refund_amount`.
+- Bestehende Rückzahlungen: Credit Note mit `refunds=[{"refund": "..."}]`; mehrere Refunds können gemeinsam verknüpft werden, ohne eine neue Auszahlung zu erzeugen.
+- Credit Notes werden mit `email_type = none` erstellt; Normdex versendet den Beleg selbst und verhindert damit doppelte Kundenmails.
+- Aktuelle Rechnungen weisen wegen der bestätigten Umsatzsteuerbefreiung 0 % USt. aus. Credit Notes übernehmen diese Behandlung aus der Originalrechnung; es wird keine künstliche Steueraufteilung erzeugt.
+- Admin-Ausführungen besitzen einen persistenten `BillingAdjustment.request_key`; Browser-Retry, Reload und Timeout verwenden denselben Schlüssel. Credit Note, Refund sowie Subscription-/Item-Änderungen erhalten zusätzlich deterministische Stripe-Idempotency-Keys.
+- Vor Subscription-Schreibvorgängen wird der konkrete Operationsplan im Adjustment gespeichert. Ein Worker-Neustart wiederholt dadurch exakt dieselben Stripe-Parameter und berechnet Mengen nicht aus einem bereits veränderten Zwischenstand neu.
+- Reconciliation prüft Credit-Note- und Refund-Beträge, Refund-IDs, Void-/Fehlerstatus, PDF und Belegzustellung. Zusätzlich werden aktuelle rechnungsbezogene Stripe-Refunds ohne verknüpfte Credit Note global erkannt. Relevante Events: `credit_note.created/updated/voided`, `refund.created/updated/failed`, `charge.refunded`.
 
 ---
 

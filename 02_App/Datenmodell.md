@@ -149,6 +149,28 @@ ip, user_agent
 meta (JSON)
 ```
 
+## BillingAdjustment
+```
+id (UUID), request_key (eindeutig, optional für Bestandsvorgänge)
+organization_id, license_ids (JSON)
+admin_user_id, support_ticket_id
+stripe_customer_id, stripe_subscription_id, stripe_invoice_id
+stripe_payment_intent_id, stripe_charge_id
+stripe_refund_id, stripe_credit_note_id
+credit_note_number, credit_note_pdf_url
+credit_amount_gross, refund_amount_gross, tax_amount, currency
+reason, reason_code
+status, attempt_count, last_error, next_attempt_at
+document_delivery_started_at, document_sent_at
+document_recipient, document_send_error
+meta (JSON: Rechnungsnummer/-datum, Originalpositionen, Credit-Note-Lines,
+      mehrere Refund-IDs, Steuerbehandlung, Request-Payload,
+      persistenter Stripe-Subscription-Operationsplan)
+created_at, completed_at
+```
+
+Persistenter Workflow für T030. Statusfolge: `pending → subscription_adjusted → credit_note_created → refund_created → document_sent → completed`; Fehlerpfade: `failed`, `partially_failed`, `manual_review_required`. `request_key` schützt den gesamten Admin-Request vor Duplikaten; Stripe-Schreibvorgänge verwenden zusätzlich stabile Idempotency Keys. Ein persistierter, aber nicht sicher abgeschlossener Mailversand wird nicht automatisch doppelt gesendet, sondern zur manuellen Prüfung markiert. Aktueller Alembic-Head für diesen Workflow: `e3c4d5e6f7a8`.
+
 ## WebhookEvent
 ```
 id (UUID), event_type, payload (JSON)

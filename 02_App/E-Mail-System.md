@@ -22,6 +22,7 @@
 | **Account-Löschung** | Bestätigung vor der Löschung |
 | **Daten-Export bereit** | Wenn DSGVO-Export abholbereit ist |
 | **Testzeitraum-Erinnerung** | Ca. 3 Tage vor Ablauf des 14-tägigen Testzeitraums (via Stripe-Webhook `customer.subscription.trial_will_end`); Empfänger: Org-Owner |
+| **Gutschriftbeleg** | Nach erfolgreicher Stripe Credit Note; Empfänger: Organisations-Owner / Rechnungsempfänger |
 
 ---
 
@@ -41,6 +42,17 @@
 - Jeder Code ist einmalig einloesbar und 30 Tage gueltig.
 - Die Gutschein-Mail enthaelt Code, Ablaufdatum und Link zu `/licenses`.
 - Idempotenz: erneute Webhooks fuer dieselbe E-Mail erzeugen keinen zweiten Code und senden nach `coupon_sent_at` keine zweite Mail.
+
+---
+
+## Gutschriftbeleg
+
+- Normdex versendet die gebrandete E-Mail führend über Brevo SMTP.
+- Enthalten sind Gutschriftnummer, Bezugsrechnung, Bruttobetrag, Grund und Link zum Stripe-Gutschrift-PDF.
+- Stripes eigener Credit-Note-Mailversand wird beim API-Aufruf mit `email_type = none` unterdrückt.
+- `BillingAdjustment.document_delivery_started_at` schützt vor Doppelversand bei einem unklaren Prozessabbruch: Ein unsicherer Zustellstatus wird manuell geprüft statt automatisch erneut gesendet.
+- Normale SMTP-Fehler werden unabhängig vom bereits abgeschlossenen Geldfluss mit Backoff wiederholt.
+- Erfolgreiche Zustellung wird über `document_sent_at` und `document_recipient` nachvollziehbar gespeichert; Outbox und Audit bleiben erhalten.
 
 ---
 

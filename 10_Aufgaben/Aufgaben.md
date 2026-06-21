@@ -44,7 +44,7 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 | T026    | [[T026-secret-rotation-und-history-cleanup]]     | App / Security / Infrastruktur   | in Arbeit |
 | T028    | [[T028-newsletter-nurture-brevo-umsetzung]]      | Marketing / Newsletter / Brevo   | in Arbeit |
 | T029    | [[T029-webapp-audit-rollout-externe-konfiguration]] | App / Security / CI / Deployment | offen |
-| T030    | [[T030-automatisierte-stripe-gutschriften-bei-refunds]] | App / Verwaltungsportal / Stripe / Rechnungslegung | offen |
+| T030    | [[T030-automatisierte-stripe-gutschriften-bei-refunds]] | App / Verwaltungsportal / Stripe / Rechnungslegung | in Arbeit |
 
 ## Zusammengeführte Todo-IDs
 

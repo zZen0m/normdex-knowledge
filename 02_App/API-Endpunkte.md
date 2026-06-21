@@ -143,6 +143,21 @@ GET    /admin/support/stats                → Support-Metriken
 
 Der Attachment-Download prüft Admin-Session, Ticket-/Attachment-Zuordnung, Retention-Löschstatus und den zulässigen Storage-Pfad. Gelöschte Anhänge liefern HTTP 410; nicht vorhandene oder ungültige Zuordnungen HTTP 404.
 
+### Admin-Billing: Gutschriften und Erstattungen
+
+```
+GET  /admin/organizations/{org_id}/billing/summary
+POST /admin/organizations/{org_id}/billing/payments/{payment_id}/refund-preview
+POST /admin/organizations/{org_id}/billing/payments/{payment_id}/refund
+POST /admin/organizations/{org_id}/billing/licenses/cancel-now-preview
+POST /admin/organizations/{org_id}/billing/licenses/cancel-now
+GET  /admin/organizations/{org_id}/billing/adjustments
+GET  /admin/organizations/{org_id}/billing/adjustments/{adjustment_id}
+POST /admin/organizations/{org_id}/billing/adjustments/{adjustment_id}/retry
+```
+
+Rechnungsbezogene Zahlungen laufen über einen persistenten `BillingAdjustment`: eindeutige Invoice-Auflösung, Stripe Credit Note auf der Originalposition, Refund bzw. Verknüpfung vorhandener Refunds, PDF-Link, Normdex-Belegmail, Retry und Reconciliation. Die beiden ausführenden POST-Endpunkte `refund` und `cancel-now` verlangen einen `idempotency_key`; derselbe Schlüssel mit identischem Payload liefert den bestehenden Vorgang zurück, ein abweichender Payload wird abgelehnt. Nicht rechnungsbezogene PaymentIntents bleiben ein explizit ausgewiesener reiner Refund-Ausnahmefall. Stripe-eigener Credit-Note-Mailversand wird mit `email_type = none` unterdrückt, damit Kunden nicht doppelt benachrichtigt werden.
+
 ## Benachrichtigungen
 
 ```

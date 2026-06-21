@@ -2,7 +2,7 @@
 
 **Phase:** App-Betrieb / Verwaltungsportal / Stripe / Rechnungslegung  
 **Priorität:** P0 · Buchhaltung / Release-Gate  
-**Status:** offen  
+**Status:** in Arbeit – technisch und im Dev abgeschlossen, Produktivdeployment ausstehend
 **Datum:** 2026-06-21
 
 ## Ziel
@@ -582,78 +582,78 @@ Daraus: `resolve_invoice_context_from_payment` löst aus `ch_` zuerst über `Cha
 
 ### Paket D · Frontend / Verwaltungsportal
 
-- [ ] Begriff „Refund" fachlich zu „Gutschrift und Erstattung" präzisieren.
-- [ ] Vorschau um Rechnung, Positionen, Steuer und Dokumentversand ergänzen.
-- [ ] Fortschritts- und Teilstatus anzeigen.
-- [ ] Credit-Note-PDF verlinken.
-- [ ] Sichere Wiederholungsaktion für fehlgeschlagene Teilschritte anbieten.
-- [ ] Warnungen bei uneindeutiger Zuordnung und manueller Prüfung anzeigen.
+- [x] Begriff „Refund" fachlich zu „Gutschrift und Erstattung" präzisieren.
+- [x] Vorschau um Rechnung, Positionen, Steuer und Dokumentversand ergänzen.
+- [x] Fortschritts- und Teilstatus anzeigen.
+- [x] Credit-Note-PDF verlinken.
+- [x] Sichere Wiederholungsaktion für fehlgeschlagene Teilschritte anbieten.
+- [x] Warnungen bei uneindeutiger Zuordnung und manueller Prüfung anzeigen.
 
 ### Paket E · E-Mail
 
-- [ ] Versandstrategie Stripe vs. Normdex festlegen.
-- [ ] Gebrandete Gutschrift-E-Mail erstellen, falls Normdex führend versendet.
-- [ ] PDF/Link und Pflichtinformationen integrieren.
-- [ ] Idempotenten Versand und Outbox-Status umsetzen.
+- [x] Versandstrategie Stripe vs. Normdex festlegen.
+- [x] Gebrandete Gutschrift-E-Mail erstellen, falls Normdex führend versendet.
+- [x] PDF/Link und Pflichtinformationen integrieren.
+- [x] Idempotenten Versand und Outbox-Status umsetzen.
 
 ### Paket F · Bestand und Rollout
 
-- [ ] Read-only Inventarskript für bestehende Refunds und Credit Notes erstellen.
-- [ ] Dev-Bestand analysieren.
-- [ ] Dev-Reparatur mit dem 49-EUR-Testfall durchführen.
-- [ ] Produktivbestand vor Änderungen analysieren.
-- [ ] Reparaturplan je Produktivfall freigeben.
-- [ ] Erst danach automatisierte bzw. kontrollierte Reparatur durchführen.
-- [ ] Staging-End-to-end-Test.
-- [ ] Steuerliche Freigabe dokumentieren.
+- [x] Read-only Inventarskript für bestehende Refunds und Credit Notes erstellen.
+- [x] Dev-Bestand analysieren.
+- [x] Dev-Reparatur mit dem 49-EUR-Testfall durchführen.
+- [x] Produktivbestand vor Änderungen analysieren.
+- [x] Reparaturplan je Produktivfall freigeben. *(Keine Live-Fälle vorhanden.)*
+- [x] Erst danach automatisierte bzw. kontrollierte Reparatur durchführen. *(Drei Dev-Fälle; keine Live-Reparatur erforderlich.)*
+- [x] Staging-End-to-end-Test.
+- [x] Steuerliche Freigabe dokumentieren. *(Betreiberbestätigung: Umsatzsteuerbefreiung, 0 % USt. in Stripe ist korrekt.)*
 - [ ] Produktivdeployment mit Monitoring.
 
 ## Tests
 
 ### Unit- und Integrationstests
 
-- [ ] Teilrefund erzeugt genau eine passende Credit Note.
-- [ ] Vollrefund erzeugt genau eine passende Credit Note.
-- [ ] Credit Note referenziert die richtige Invoice.
-- [ ] Credit Note übernimmt die richtige Rechnungsposition.
-- [ ] Steuerbeträge stimmen mit der Originalrechnung überein.
-- [ ] Bereits vorhandener Refund wird verknüpft und nicht erneut ausgezahlt.
-- [ ] Wiederholter identischer Request erzeugt keine Duplikate.
-- [ ] Timeout nach Credit-Note-Erstellung wird korrekt wiederaufgenommen.
-- [ ] Timeout nach Refund-Erstellung wird korrekt wiederaufgenommen.
-- [ ] E-Mail wird genau einmal versendet.
-- [ ] Fehlgeschlagener Refund führt zu sichtbarem Teilstatus.
-- [ ] Fehlgeschlagener E-Mail-Versand kann unabhängig wiederholt werden.
-- [ ] Uneindeutige Invoice-Zuordnung blockiert vor jeder Geldbewegung.
-- [ ] Betrag über dem noch verfügbaren Gutschriftbetrag wird abgelehnt.
-- [ ] Kombination aus früheren Refunds und Credit Notes wird berücksichtigt.
+- [x] Teilrefund erzeugt genau eine passende Credit Note.
+- [x] Vollrefund erzeugt genau eine passende Credit Note.
+- [x] Credit Note referenziert die richtige Invoice.
+- [x] Credit Note übernimmt die richtige Rechnungsposition.
+- [x] Steuerbeträge stimmen mit der Originalrechnung überein.
+- [x] Bereits vorhandener Refund wird verknüpft und nicht erneut ausgezahlt.
+- [x] Wiederholter identischer Request erzeugt keine Duplikate.
+- [x] Timeout nach Credit-Note-Erstellung wird korrekt wiederaufgenommen.
+- [x] Timeout nach Refund-Erstellung wird korrekt wiederaufgenommen.
+- [x] E-Mail wird genau einmal versendet.
+- [x] Fehlgeschlagener Refund führt zu sichtbarem Teilstatus.
+- [x] Fehlgeschlagener E-Mail-Versand kann unabhängig wiederholt werden.
+- [x] Uneindeutige Invoice-Zuordnung blockiert vor jeder Geldbewegung.
+- [x] Betrag über dem noch verfügbaren Gutschriftbetrag wird abgelehnt.
+- [x] Kombination aus früheren Refunds und Credit Notes wird berücksichtigt.
 
 ### End-to-end in Stripe Sandbox
 
-- [ ] Monatliche Lizenz teilweise aliquot gutschreiben.
-- [ ] Monatliche Lizenz vollständig gutschreiben.
-- [ ] Mehrere Lizenzen auf einer Rechnung teilweise gutschreiben.
-- [ ] Bereits teilweise erstattete Zahlung weiter gutschreiben.
-- [ ] Bestehenden Refund nachträglich mit Credit Note verknüpfen.
-- [ ] PDF herunterladen und Inhalte prüfen.
-- [ ] Kundenmail erhalten und Inhalte prüfen.
-- [ ] Verwaltungsportal zeigt finalen Status und alle Stripe-Referenzen.
-- [ ] Stripe-Dashboard zeigt Invoice, Credit Note und Refund nachvollziehbar verknüpft.
+- [x] Monatliche Lizenz teilweise aliquot gutschreiben.
+- [x] Monatliche Lizenz vollständig gutschreiben.
+- [x] Mehrere Lizenzen auf einer Rechnung teilweise gutschreiben.
+- [x] Bereits teilweise erstattete Zahlung weiter gutschreiben.
+- [x] Bestehenden Refund nachträglich mit Credit Note verknüpfen.
+- [x] PDF herunterladen und Inhalte prüfen.
+- [x] Kundenmail erhalten und Inhalte prüfen.
+- [x] Verwaltungsportal zeigt finalen Status und alle Stripe-Referenzen.
+- [x] Stripe-Dashboard zeigt Invoice, Credit Note und Refund nachvollziehbar verknüpft.
 
 ## Akzeptanzkriterien
 
-- [ ] Kein neuer produktiver Refund einer rechnungsbezogenen Zahlung entsteht ohne zugehörige Credit Note oder explizit dokumentierten Ausnahmegrund.
-- [ ] Im Normalfall genügt eine Admin-Bestätigung; alle Folgeschritte laufen automatisch.
-- [ ] Credit Note und Refund sind eindeutig derselben Invoice zugeordnet.
-- [ ] Der Kunde erhält automatisch einen Gutschriftbeleg.
-- [ ] PDF, Nummer, Betrag, Steuerbehandlung und Referenzrechnung sind nachvollziehbar.
-- [ ] Normdex speichert den vollständigen Workflow- und Versandstatus.
-- [ ] Teilfehler können ohne Doppelzahlung oder Doppelbeleg fortgesetzt werden.
-- [ ] Reconciliation erkennt Refunds ohne Credit Note.
-- [ ] Bestehende relevante Dev- und Produktivfälle sind inventarisiert und bereinigt.
-- [ ] Sandbox-End-to-end-Tests sind vollständig grün.
-- [ ] Steuerberatung/Buchhaltung hat den Zielprozess vor Produktivfreigabe bestätigt.
-- [ ] Vault-Dokumentation zu API, Funktionen, E-Mail-System, Datenmodell und Integrationen ist aktualisiert.
+- [ ] Kein neuer produktiver Refund einer rechnungsbezogenen Zahlung entsteht ohne zugehörige Credit Note oder explizit dokumentierten Ausnahmegrund. *(Code und Dev grün; Produktivdeployment ausstehend.)*
+- [x] Im Normalfall genügt eine Admin-Bestätigung; alle Folgeschritte laufen automatisch.
+- [x] Credit Note und Refund sind eindeutig derselben Invoice zugeordnet.
+- [x] Der Kunde erhält automatisch einen Gutschriftbeleg.
+- [x] PDF, Nummer, Betrag, Steuerbehandlung und Referenzrechnung sind nachvollziehbar.
+- [x] Normdex speichert den vollständigen Workflow- und Versandstatus.
+- [x] Teilfehler können ohne Doppelzahlung oder Doppelbeleg fortgesetzt werden.
+- [x] Reconciliation erkennt Refunds ohne Credit Note.
+- [x] Bestehende relevante Dev- und Produktivfälle sind inventarisiert und bereinigt.
+- [x] Sandbox-End-to-end-Tests sind vollständig grün.
+- [x] Steuerberatung/Buchhaltung hat den Zielprozess vor Produktivfreigabe bestätigt. *(Betreiberfreigabe vom 21. Juni 2026: umsatzsteuerbefreit, 0 % USt. korrekt.)*
+- [x] Vault-Dokumentation zu API, Funktionen, E-Mail-System, Datenmodell und Integrationen ist aktualisiert.
 
 ## Nicht-Ziele
 
@@ -686,3 +686,9 @@ Daraus: `resolve_invoice_context_from_payment` löst aus `ch_` zuerst über `Cha
   - **Paket D Backend (fertig):** `retry_adjustment()` + Endpoint `POST .../billing/adjustments/{id}/retry` – sichere, idempotente Wiederaufnahme inkl. reinem Beleg-Nachversand und Rücksetzen terminaler `manual_review_required`-Zeilen in einen fortsetzbaren Zustand. `cancel-now` wertet `document_sent` als Refund-Erfolg (kein Geldfehler) und gibt `status`/`credit_note_number` zurück. `serialize_adjustment` um `document_*` + `invoice_number` erweitert. Frontend-`api.ts` um die drei Adjustment-Methoden ergänzt.
   - **Offen (nächste Sitzung):** Paket-D-Frontend in `OrganizationCase.tsx` (Begriff „Gutschrift und Erstattung", erweiterte Vorschau mit Rechnung/Steuer/Beleg, Status-/Teilstatus- und PDF-Anzeige, Wiederholungs-Button, Warnungen bei Mehrdeutigkeit/`manual_review_required`); Unit-Tests für Paket E + retry; vollständige Test-Suite; Migration gegen Dev-DB; danach Paket-D/E-Häkchen setzen und Container/Dev neu laden.
 - 2026-06-21: Einzel-Payment-Refund-Spike durchgeführt und Endpunkt umgestellt – Paket C damit vollständig abgeschlossen. Verifizierter Rückweg Payment → Invoice: `InvoicePayment.list(payment={type:payment_intent, payment_intent:…})` (PaymentIntent.invoice/Charge.invoice existieren nicht, Invoice.search nach payment_intent nicht unterstützt). `admin_billing_payment_refund` läuft für rechnungsbezogene Zahlungen jetzt über den BillingAdjustment-Service (Credit Note), nur nicht-rechnungsbezogene bleiben reiner Refund. Dabei latenten Bug im bereits committeten Paket-B/C-Code gefunden und behoben: `_resolve_invoice_payment_context` las `InvoicePayment.payment_intent` flach statt verschachtelt (`.payment.payment_intent`) – betraf auch den cancel-now-Pfad, von gemockten Tests verdeckt. Echte Sandbox-E2E jetzt grün, 12 Unit-Tests grün, Suite 336 passed (1 vorbestehender Env-Failure). Offen bleiben Paket D (Frontend), E (E-Mail), F (Bestand/Rollout), Sandbox-End-to-End-Gesamtdurchlauf und steuerliche Freigabe.
+- 2026-06-21: Paket D und E vollständig abgeschlossen. Verwaltungsportal verwendet „Gutschrift und Erstattung", zeigt Originalrechnung, Position, Betrag, 0-%-USt.-Behandlung, Teilstatus, PDF, Belegversand und sichere Wiederaufnahme. Normdex versendet die gebrandete Belegmail; `email_type = none` verhindert Stripes Standard-Doppelmail. Persistenter Versandbeginn verhindert automatische Doppelzustellung bei unklarem Crash-Zustand.
+- 2026-06-21: Paket F durchgeführt. Read-only-Inventar fand im Dev drei eindeutige Altfälle und im Live-Konto keinen Refund-Fall. Repariert wurden `NDX26-0505` (49,00 EUR, zwei Refunds), `NDX26-0508` (46,10 EUR, zwei Refunds) und der verwaiste Sandbox-Fall `NDX26-0512` (16,00 EUR, ein Refund). Jeder Fall besitzt jetzt genau eine passende Credit Note, PDF und vollständige Refund-Verknüpfung; es wurde kein weiterer Refund erzeugt. Dev-Inventar danach: 0 offene Fälle.
+- 2026-06-21: Finaler Neufall-E2E mit `NDX26-0532` über 12,34 EUR: bezahlte Invoice, konkrete Originalposition, 0 % USt., Credit Note, exakt ein automatisch erzeugter Refund, PDF, Normdex-Mail und Reconciliation vollständig grün. Admin-/Billing-Regressionslauf: 67 Tests grün; T030-Service: 25 Tests grün; Frontend-TypeScript und Docker-Production-Build grün. Dev-PostgreSQL vor Migration gesichert, Migration bis `d2b3c4e5f6a7` angewendet, API gesund. Stripe-Lookup-Fehler werden hart als 502 gestoppt und dürfen nicht in den reinen Refund-Ausnahmeweg fallen.
+- 2026-06-21: Betreiberbestätigung dokumentiert: Normdex/Permatec ist umsatzsteuerbefreit; 0 % USt. auf den bestehenden Stripe-Rechnungen und Gutschriften ist fachlich korrekt. Einziger offener Schritt ist der versionierte Produktivrelease samt Monitoring.
+- 2026-06-21: Abschluss-Hardening ergänzt. Fachliche Request-Idempotenz wird über den eindeutigen `BillingAdjustment.request_key` und Migration `e3c4d5e6f7a8` persistiert; identische Browser-Retries und Reloads verwenden denselben Schlüssel, abweichende Payloads werden abgelehnt. Subscription-Schreibvorgänge verwenden einen vorab persistierten Operationsplan und deterministische Stripe-Keys. Gemischte Rechnungen werden auf die ausgewählten Subscription-Items/Preise begrenzt. Reconciliation prüft jetzt zusätzlich exakte Credit-Note-/Refund-Beträge, sämtliche verknüpften Refunds, Void-/Fehlerstatus, PDF und Zustellung sowie globale Refunds ohne Credit Note. Dev-PostgreSQL und `dev.db` wurden vor der Migration erneut gesichert und auf `e3c4d5e6f7a8` migriert; Upgrade/Downgrade/Upgrade-Roundtrip grün. Vollständige API-Suite: **357 passed**; T030-relevanter Block: **131 passed**; Frontend-Production-Build und Python-Compile grün.
+- 2026-06-21: Gehärteter Stand auf Dev neu gebaut und deployt; API gesund, Migration `e3c4d5e6f7a8`, Dev-Inventar weiterhin 0 offene Fälle, Reconciliation ohne neue T030-Systemfehler. Live-Stripe erneut ausschließlich read-only geprüft: 0 offene Fälle. Die produktive Datenbank steht vor dem Release auf `995d14683241`; ein frischer, isolierter Produktionsdatenbank-Klon wurde erfolgreich über die gesamte Kette `995d14683241 → ffd3bbde6b6a → c1a2b3d4e5f6 → d2b3c4e5f6a7 → e3c4d5e6f7a8` migriert. App-Import, Zielspalten/Unique-Index und unveränderte Kern-Datensatzanzahlen wurden verifiziert. Produktion selbst wurde dabei nicht verändert.

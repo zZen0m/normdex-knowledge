@@ -59,20 +59,23 @@ Nicht direkt in Normdex vorgesehen:
 - Stripe-Dunning-Regeln individuell pro Kunde umbauen.
 - Bank- oder Zahlungsanbieter-Sonderfälle außerhalb der Stripe-Standardoberfläche lösen.
 
-### Refunds
+### Gutschriften und Erstattungen
 
 Direkt in Normdex vorgesehen:
 
 - Letzte Zahlungen und zugehörige Rechnungen anzeigen.
-- Refund-Vorschau für eindeutige PaymentIntent- oder Charge-Kontexte.
-- Vollständige oder partielle Erstattung ausführen.
+- Vorschau für eindeutige Invoice-/Payment-Kontexte mit Originalposition und Steuerbehandlung.
+- Vollständige oder partielle Stripe Credit Note plus Erstattung ausführen.
+- Bereits vorhandene Refunds ohne erneute Auszahlung mit einer Credit Note verknüpfen.
+- Gutschrift-PDF und Versandstatus anzeigen.
+- Fehlgeschlagene Teilvorgänge sicher und idempotent fortsetzen.
 - Grund, Ticket-Kontext, Admin-ID und Stripe-Ergebnis protokollieren.
 
 Weiter über Stripe-Dashboard:
 
 - Uneindeutige Mehrfachzahlungen.
 - Chargebacks und Disputes.
-- Manuelle Refund-Korrekturen nach bereits teilweise erstatteten Sonderfällen.
+- Manuelle Korrekturen bei uneindeutiger Rechnungszuordnung oder unklarem Belegstatus.
 
 ### Rabatte und Coupons
 
@@ -117,7 +120,7 @@ Die bestehende Organisationsakte erhält im Tab **Billing & Stripe** folgende Be
 - Diagnosekarten für Customer, Subscriptions, Lizenzstatus, Zahlungsstatus und offene Rechnungen.
 - Stripe-Abgleich mit Hinweisen auf lokale/Stripe-Abweichungen.
 - Tabellen für Subscriptions, Subscription Items, Rechnungen und Zahlungen.
-- Aktionsleiste für Standardfälle: Billing prüfen, Kundendaten synchronisieren, Kündigung, Reaktivierung, Pause, Refund, Rabatt, Payment-Portal öffnen.
+- Aktionsleiste für Standardfälle: Billing prüfen, Kundendaten synchronisieren, Kündigung, Reaktivierung, Pause, Gutschrift und Erstattung, Rabatt, Payment-Portal öffnen.
 - Aktionshistorie mit Audit-Einträgen und verknüpften Tickets.
 - Direkte Links zu Stripe Customer, Subscription, Invoice und Payment.
 
