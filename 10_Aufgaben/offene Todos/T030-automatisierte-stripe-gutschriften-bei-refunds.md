@@ -533,23 +533,52 @@ Spike-Skript (Wegwerf-Code, nicht ins Repo übernommen): `/tmp/t030_paket_a_spik
 
 ### Paket B · Datenmodell und Workflow
 
-- [ ] Persistentes Modell für Billing Adjustments entwerfen.
-- [ ] Alembic-Migration erstellen.
-- [ ] Statusmaschine und Idempotency-Konzept umsetzen.
-- [ ] Recovery- und Retry-Verhalten definieren.
+- [x] Persistentes Modell für Billing Adjustments entwerfen.
+- [x] Alembic-Migration erstellen.
+- [x] Statusmaschine und Idempotency-Konzept umsetzen.
+- [x] Recovery- und Retry-Verhalten definieren.
 
 ### Paket C · Backend
 
-- [ ] Robuste Invoice-Auflösung implementieren.
-- [ ] Charge-Fallback ohne eindeutige Invoice entfernen oder hart absichern.
-- [ ] Preview um Invoice-, Credit-Note-, Steuer- und Bestandsdaten erweitern.
-- [ ] Credit Note plus Refund als gemeinsamen Service implementieren.
-- [ ] Bestehende Refunds verknüpfen können.
-- [ ] Sofortkündigung an den neuen Service anbinden.
-- [ ] Separaten Refund-Workflow an den neuen Service anbinden.
-- [ ] Audit und Systemfehler erweitern.
-- [ ] Hintergrundverarbeitung und Wiederaufnahme umsetzen.
-- [ ] Reconciliation-Job ergänzen.
+- [x] Robuste Invoice-Auflösung implementieren.
+- [x] Charge-Fallback ohne eindeutige Invoice entfernen oder hart absichern.
+- [x] Preview um Invoice-, Credit-Note-, Steuer- und Bestandsdaten erweitern.
+- [x] Credit Note plus Refund als gemeinsamen Service implementieren.
+- [x] Bestehende Refunds verknüpfen können.
+- [x] Sofortkündigung an den neuen Service anbinden.
+- [x] Separaten Refund-Workflow an den neuen Service anbinden. *(Jetzt inkl. Einzel-Payment-Refund – siehe Ergebnisse Paket C unten.)*
+- [x] Audit und Systemfehler erweitern.
+- [x] Hintergrundverarbeitung und Wiederaufnahme umsetzen.
+- [x] Reconciliation-Job ergänzen.
+
+#### Ergebnisse Paket B/C (2026-06-21)
+
+Umgesetzt in `normdex-webapp-dev` (Branch `dev-server`), API-Repo:
+
+- **Modell** `BillingAdjustment` (`apps/api/app/models.py`) + Migration `c1a2b3d4e5f6_add_billing_adjustments_table` (Revision-Kette: `ffd3bbde6b6a` → `c1a2b3d4e5f6`). Statusmaschine exakt wie oben spezifiziert (`previewed, pending, subscription_adjusted, credit_note_created, refund_created, completed, partially_failed, failed, manual_review_required`; `document_sent` bleibt als Statuswert reserviert für Paket E, wird in Paket C nicht gesetzt). Migration gegen `dev.db` getestet (`alembic upgrade head` + `alembic downgrade -1` + erneut `upgrade head`, anschließend `dev.db` auf neuem Head committet).
+- **Service** `apps/api/app/services/billing_adjustment_service.py`: `resolve_invoice_context()` implementiert exakt den in Paket A verifizierten Pfad `Invoice → InvoicePayment.list → PaymentIntent → latest_charge`; bei mehreren infrage kommenden Invoices wird `AmbiguousInvoiceContextError` geworfen, **kein** Fallback auf den neuesten Customer-Charge mehr (der bisherige Fallback in `_find_refundable_charge_for_subscriptions` ist ersatzlos entfernt – er war die Ursache der Lücke aus dem Sandbox-Fall vom 21.6.). `execute_adjustment()` ist die datengetriebene, idempotente Schritt-Engine (Subscription kündigen → Credit Note + Refund erzeugen/verknüpfen → Lizenzen beenden → completed), mit Backoff (1/5/30/120 Min.) und Eskalation nach 5 Fehlversuchen auf `manual_review_required`. Stripe-Idempotency-Keys sind deterministisch aus der Adjustment-ID abgeleitet.
+- **Anbindung bestehender Endpunkte** (`apps/api/app/routers/admin.py`): `admin_licenses_cancel_now` (Sofortkündigung + aliquote Gutschrift) läuft jetzt vollständig über den neuen Service – das ist der im Sandbox-Fall beobachtete Vorgang, der künftig immer eine Credit Note erzeugt. Neue Lese-Endpunkte `GET .../billing/adjustments` und `.../billing/adjustments/{id}` (Backend-Grundlage für die spätere Paket-D-UI).
+- **Einzel-Payment-Refund jetzt ebenfalls über Credit Note** (`admin_billing_payment_refund`, Admin gibt Charge-/PaymentIntent-ID frei ein): Gehört die Zahlung zu einer Rechnung, läuft sie nun über denselben `BillingAdjustment`-Service (Credit Note + Refund) wie die Sofortkündigung; nur nicht-rechnungsbezogene Zahlungen (einmalige PaymentIntents ohne Invoice) bleiben ein reiner `stripe.Refund.create()` (zulässiger, dokumentierter Ausnahmegrund laut Akzeptanzkriterien). Neuer Service-Resolver `resolve_invoice_context_from_payment(payment_id)` + Endpunkt-Helper `_resolve_payment_invoice_ctx_for_org`; sowohl `refund-preview` als auch `refund` geben jetzt `mode: "credit_note_refund" | "raw_refund"` zurück. Voraussetzung war ein eigener Sandbox-Spike (siehe nächster Abschnitt).
+- **Hintergrundverarbeitung/Reconciliation** (`apps/api/app/services/scheduler.py`): neue Jobs `process_pending_billing_adjustments` (alle 2 Min., Recovery-Netz für Crash/Timeout – Primärpfad bleibt synchron im Request) und `reconcile_billing_adjustments` (alle 30 Min., prüft `completed`-Adjustments der letzten 24h gegen Stripe, eskaliert Abweichungen ohne Auto-Reparatur).
+- **Webhooks** (`apps/api/app/routers/subscriptions.py`): Dispatcher um `credit_note.created/updated/voided` und `refund.updated/failed`, `charge.refunded` erweitert; synchronisiert nur bereits bekannte `BillingAdjustment`-Zeilen (PDF-Link, Status bei `voided`/`refund.failed`).
+- **Tests** `apps/api/tests/test_billing_adjustment_service.py` (12 Tests, alle grün): Mehrdeutigkeit blockiert vor jeder Geldbewegung, Neufall erzeugt Credit Note + Auto-Refund, bestehender Refund wird verknüpft ohne Doppelauszahlung, abgeschlossene Adjustments sind idempotent (No-Op), Stripe-Fehler erzeugt sichtbaren `failed`-Status mit Backoff, Reconciliation eskaliert echte Inkonsistenzen und lässt konsistente Fälle unverändert; **neu für den Einzel-Payment-Refund:** Auflösung Payment→Invoice via PaymentIntent und via Charge, `None` bei nicht-rechnungsbezogener Zahlung (→ reiner Refund), Stopp bei Mehrdeutigkeit, sowie `execute_adjustment` ohne Lizenzbezug (`license_ids=None` → nur Credit Note, keine Subscription-/Lizenz-Schritte). Die Mocks bilden jetzt die echte verschachtelte `InvoicePayment.payment.payment_intent`-Struktur ab (siehe Bugfix unten). Vollständige Suite im Dev-Container grün: 336 passed, 1 vorbestehender, nicht zusammenhängender Umgebungs-Failure (`test_subscription_portal::...syncs_stripe_customer_from_org` erwartet `return_url=http://localhost:8080/...`, der Container hat `FRONTEND_URL=https://dev.normdex.at` – reiner Env-Mismatch, unabhängig von dieser Änderung).
+
+#### Ergebnisse Paket C – Einzel-Payment-Refund-Spike (2026-06-21)
+
+Eigener Sandbox-Spike (`sk_test_...`, API-Version `2025-11-17.clover`, Dev-Container) für die offene Frage „Payment-ID → Invoice", end-to-end inkl. Credit Note, Testkunden danach gelöscht.
+
+**Kernbefund – einzig robuster Rückweg Payment → Invoice:**
+
+| Versuch | Ergebnis |
+|---|---|
+| `PaymentIntent.retrieve(pi).invoice` | **existiert nicht** (Attribut fehlt) |
+| `Charge.retrieve(ch).invoice` | **existiert nicht** |
+| `Invoice.search(query="payment_intent:'…'")` | **nicht unterstützt** (`unsupported search field`) |
+| `InvoicePayment.list(payment={"type":"payment_intent","payment_intent": pi})` | ✅ **liefert die Invoice** |
+
+Daraus: `resolve_invoice_context_from_payment` löst aus `ch_` zuerst über `Charge.payment_intent` den PaymentIntent auf und nutzt dann den `payment=`-Filter. 0 Invoices → `None` (reiner Refund), >1 → `AmbiguousInvoiceContextError` (Stopp vor Geldbewegung), genau 1 → `Invoice.retrieve` + Standard-Auflösung. Hinweis: der `payment=`-Filter ist bei brandneuen Zahlungen kurz eventual-consistent (Sekundenbereich); für real erstattete, gealterte Zahlungen irrelevant.
+
+**Dabei aufgedeckter latenter Bug (auch im lizenzbezogenen Pfad):** `_resolve_invoice_payment_context` las den PaymentIntent flach als `InvoicePayment.payment_intent`. In `2025-11-17.clover` steckt er **verschachtelt** unter `InvoicePayment.payment.payment_intent`. Dadurch lieferte die Auflösung gegen die echte API `None` – die gemockten Paket-B/C-Tests hatten das nicht erkannt, weil sie die flache Struktur mockten. Behoben (nested-Zugriff mit Flat-Fallback); Mocks auf die echte Struktur umgestellt. Der Einzel-Payment-E2E gegen die echte Sandbox läuft jetzt grün (Resolver via PI **und** via Charge, Preview, Credit Note + PDF, `invoice.post_payment_credit_notes_amount` korrekt aktualisiert).
 
 ### Paket D · Frontend / Verwaltungsportal
 
@@ -651,3 +680,5 @@ Spike-Skript (Wegwerf-Code, nicht ins Repo übernommen): `/tmp/t030_paket_a_spik
 - 2026-06-21: Sandbox-Zahlung über 49,00 EUR analysiert. Nach früherem Refund über 33,00 EUR und neuem Refund über 16,00 EUR ist die Zahlung vollständig erstattet; die zugehörige Rechnung enthält weiterhin keine Credit Note.
 - 2026-06-21: Produktentscheidung festgehalten: Billing-Vorgänge sollen generell nach einmaliger bewusster Bestätigung möglichst vollständig und resilient im Hintergrund automatisiert werden.
 - 2026-06-21: Paket A (Stripe-Spike) vollständig abgeschlossen. Alle vier Sandbox-Szenarien (Neufall, bestehenden Refund verknüpfen, Teilgutschrift einer Invoice Line, Steuer/Rundung) erfolgreich verifiziert, siehe Ergebnis-Abschnitt oben. Kritischer Zusatzbefund: `Invoice.charge`/`Invoice.payment_intent`/`Charge.invoice` existieren in der aktuellen API-Version nicht mehr; korrekter Weg ist `InvoicePayment.list(invoice=...)` → `PaymentIntent` → `latest_charge`. Kein Produktionscode geändert – nächster Schritt ist Paket B/C (Datenmodell + Backend-Service) auf Basis dieser verifizierten API-Parameter.
+- 2026-06-21: Paket B und Paket C vollständig umgesetzt (Modell, Migration, Service, Anbindung der Sofortkündigung+Gutschrift, Hintergrundjobs, Reconciliation, Webhook-Sync, Unit-Tests), siehe Ergebnis-Abschnitt oben. Bewusst nicht mitgemacht: Umstellung des separaten Einzel-Payment-Refund-Endpunkts (bräuchte einen eigenen Spike zu `PaymentIntent.invoice`), sowie Paket D (Frontend), E (E-Mail) und F (Bestandsbereinigung/Rollout) – die bleiben offen. `dev.db`-Fixture wurde auf den neuen Migrations-Head aktualisiert. Vor Produktivfreigabe weiterhin nötig: Paket D–F, vollständige Sandbox-End-to-End-Tests, steuerliche Freigabe.
+- 2026-06-21: Einzel-Payment-Refund-Spike durchgeführt und Endpunkt umgestellt – Paket C damit vollständig abgeschlossen. Verifizierter Rückweg Payment → Invoice: `InvoicePayment.list(payment={type:payment_intent, payment_intent:…})` (PaymentIntent.invoice/Charge.invoice existieren nicht, Invoice.search nach payment_intent nicht unterstützt). `admin_billing_payment_refund` läuft für rechnungsbezogene Zahlungen jetzt über den BillingAdjustment-Service (Credit Note), nur nicht-rechnungsbezogene bleiben reiner Refund. Dabei latenten Bug im bereits committeten Paket-B/C-Code gefunden und behoben: `_resolve_invoice_payment_context` las `InvoicePayment.payment_intent` flach statt verschachtelt (`.payment.payment_intent`) – betraf auch den cancel-now-Pfad, von gemockten Tests verdeckt. Echte Sandbox-E2E jetzt grün, 12 Unit-Tests grün, Suite 336 passed (1 vorbestehender Env-Failure). Offen bleiben Paket D (Frontend), E (E-Mail), F (Bestand/Rollout), Sandbox-End-to-End-Gesamtdurchlauf und steuerliche Freigabe.
