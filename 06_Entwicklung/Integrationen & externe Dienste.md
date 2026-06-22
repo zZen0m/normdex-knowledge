@@ -4,7 +4,7 @@
 
 - Subscription-basiertes Billing (monatlich / jährlich)
 - Checkout Sessions für neue Abos
-- Customer Portal für Änderungen und Kündigung
+- Customer Portal ergänzend für die Verwaltung der Zahlungsmethode
 - Webhook-Infrastruktur für Zahlungsereignisse
 - Qualifizierter Einzel-Erstkauf: Checkout-Subscription mit 14 Tagen Trial; Zahlungsdaten werden im Checkout trotzdem erfasst.
 - Qualifizierter Mehrfach-Erstkauf: kein Trial, sondern einmaliger Erstbestellungsrabatt von 24,50 EUR über Coupon `QHQESezY`.
@@ -15,6 +15,10 @@
 - Neue Rückzahlung: Credit Note mit `lines` bzw. `amount` und `refund_amount`.
 - Bestehende Rückzahlungen: Credit Note mit `refunds=[{"refund": "..."}]`; mehrere Refunds können gemeinsam verknüpft werden, ohne eine neue Auszahlung zu erzeugen.
 - Credit Notes werden mit `email_type = none` erstellt; Normdex versendet den Beleg selbst und verhindert damit doppelte Kundenmails.
+- Das Stripe Customer Portal zeigt die Stripe-Rechnungshistorie, aber keine eigenständige vollständige Credit-Note-Liste. Normdex führt deshalb Rechnungen und Credit Notes im Bereich „Abrechnungsdokumente & Zahlungsdaten“ zusammen.
+- Stripe bleibt Quelle der Rechnungs- und Credit-Note-PDFs. Normdex übernimmt Darstellung, zentralen Versand an `Organization.billing_email` und Versandstatus.
+- `invoice.paid` löst den idempotenten Normdex-Rechnungsversand aus. 0-Euro-Rechnungen werden nicht versendet.
+- Vor dem Produktivrollout müssen automatische Stripe-Rechnungs- und Zahlungsbelegmails deaktiviert bzw. geprüft sein, damit keine Doppelzustellung entsteht.
 - Aktuelle Rechnungen weisen wegen der bestätigten Umsatzsteuerbefreiung 0 % USt. aus. Credit Notes übernehmen diese Behandlung aus der Originalrechnung; es wird keine künstliche Steueraufteilung erzeugt.
 - Admin-Ausführungen besitzen einen persistenten `BillingAdjustment.request_key`; Browser-Retry, Reload und Timeout verwenden denselben Schlüssel. Credit Note, Refund sowie Subscription-/Item-Änderungen erhalten zusätzlich deterministische Stripe-Idempotency-Keys.
 - Vor Subscription-Schreibvorgängen wird der konkrete Operationsplan im Adjustment gespeichert. Ein Worker-Neustart wiederholt dadurch exakt dieselben Stripe-Parameter und berechnet Mengen nicht aus einem bereits veränderten Zwischenstand neu.

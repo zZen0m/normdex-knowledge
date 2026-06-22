@@ -105,9 +105,14 @@ Der Webhook verarbeitet nur `event = list_addition` und nur dann, wenn `list_id`
 ```
 GET  /subscriptions/config                → Stripe Public Key
 POST /subscriptions/create-portal-session → Stripe Customer Portal öffnen
+GET  /subscriptions/billing-documents     → Gemeinsame Rechnungs-/Gutschrifthistorie
 ```
 
 Käufe und Kündigungen laufen über die neuen `/licenses/...`-Endpunkte. Rabattcodes werden im Normdex-Kaufdialog validiert und bei neuen Checkout-Subscriptions sowie bei direkter Pool-Erweiterung als Stripe Promotion Code an Stripe übergeben.
+
+`GET /subscriptions/billing-documents` ist nur für Organisationsrollen `owner` und `admin` verfügbar. Der Endpunkt führt die vollständige Stripe-Historie aus Rechnungen und Credit Notes chronologisch zusammen und liefert sie über `limit` und `offset` paginiert aus. Pro Dokument werden Typ, Nummer, Datum, Betrag, Währung, PDF-Link und – sofern vorhanden – Normdex-Versandstatus und Empfänger zurückgegeben.
+
+`PATCH /organizations/{org_id}` akzeptiert für Organisations-Admins zusätzlich `billing_email`. Eine Änderung gilt sofort, wird mit dem Stripe Customer synchronisiert und löst eine Sicherheitsinformation an alte und neue Adresse aus. Ein leerer Wert ist zulässig, leert auch die Stripe-Customer-E-Mail und deaktiviert den Normdex-Versand von Rechnungs- und Gutschriftmails.
 
 ## Support (öffentlich)
 

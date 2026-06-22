@@ -17,6 +17,7 @@ settings (JSON)
 id (UUID), name
 address (JSON: street, city, postal_code, country)
 billing_address (JSON)
+billing_email (zentrale Rechnungs-E-Mail; leer = kein Dokumentversand per E-Mail)
 vat_id, customer_number
 stripe_customer_id
 trial_used_at (dauerhafter Lock für 14-Tage-Testvorteil)
@@ -170,6 +171,20 @@ created_at, completed_at
 ```
 
 Persistenter Workflow für T030. Statusfolge: `pending → subscription_adjusted → credit_note_created → refund_created → document_sent → completed`; Fehlerpfade: `failed`, `partially_failed`, `manual_review_required`. `request_key` schützt den gesamten Admin-Request vor Duplikaten; Stripe-Schreibvorgänge verwenden zusätzlich stabile Idempotency Keys. Ein persistierter, aber nicht sicher abgeschlossener Mailversand wird nicht automatisch doppelt gesendet, sondern zur manuellen Prüfung markiert. Aktueller Alembic-Head für diesen Workflow: `e3c4d5e6f7a8`.
+
+## BillingDocumentDelivery
+```
+id (UUID), organization_id
+document_type (invoice / credit_note)
+stripe_document_id, stripe_invoice_id
+document_number, document_pdf_url
+amount_gross, currency, document_created_at
+delivery_started_at, sent_at, recipient
+send_error, status, attempt_count, next_attempt_at
+created_at, updated_at
+```
+
+Persistiert den Normdex-Versandstatus von Stripe-Abrechnungsdokumenten. Die Kombination aus `document_type` und `stripe_document_id` ist eindeutig und schützt insbesondere `invoice.paid` vor Doppelversand. 0-Euro-Rechnungen erhalten den Status `not_required`; unklare Crash-Zustände werden als `manual_review_required` markiert. Aktueller Alembic-Head: `f4d5e6f7a8b9`.
 
 ## WebhookEvent
 ```
