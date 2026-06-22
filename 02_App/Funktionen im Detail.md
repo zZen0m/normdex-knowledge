@@ -256,6 +256,8 @@ Nur für Nutzer mit dem Flag `is_admin = true`.
 
 **Organisationsakte (`/admin/organizations/:orgId`):** Admin-Detailansicht pro Organisation mit Organisation, Nutzer:innen, Projekten, Lizenzen, Bestellungen, Tickets und Timeline. Datumswerte aus verschiedenen Quellen werden zeitzonensicher sortiert, damit gemischte naive/aware Python-`datetime`-Werte keine Sortierfehler auslösen.
 
+**Gutschrift und Erstattung:** Rechnungsbezogene Refunds werden nicht mehr als isolierter Geldfluss ausgeführt. Normdex löst die ursprüngliche Stripe-Rechnung und Zahlung über `InvoicePayment` eindeutig auf, erstellt eine Credit Note auf der Originalposition, erzeugt den Refund oder verknüpft vorhandene Refunds und sendet den Gutschriftbeleg automatisch. Das Verwaltungsportal zeigt Rechnung, Position, Betrag, 0-%-USt.-Behandlung laut Originalrechnung, PDF, Versandstatus und technische Teilstatus. Fehlgeschlagene Schritte können idempotent fortgesetzt werden; uneindeutige oder unklare Fälle stoppen vor einer Geldbewegung. Laufende Ausführungs-Requests behalten ihren fachlichen Idempotenzschlüssel in der Browser-Session, sodass auch Reloads und Timeouts denselben Vorgang wiederaufnehmen statt einen zweiten anzulegen.
+
 ---
 
 ## Verwandte Dokumente
