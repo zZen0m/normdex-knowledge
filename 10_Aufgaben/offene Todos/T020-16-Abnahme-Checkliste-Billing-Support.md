@@ -87,20 +87,20 @@
 
 - [x] Bei einer Subscription Aktion `Rabatt` öffnen.
 - [x] Ungültiger oder abgelaufener Promotion Code wird abgelehnt.
-- [ ] Gültiger Promotion Code zeigt Coupon-Wert, Dauer und bestehenden Rabatt. EDIT: 23.06.2026: Nein, es wird nichts angezeigt: Lesbare Rabattdetails = leer
-- [ ] Bestehender Rabatt wird als zu ersetzender Discount angezeigt. EDIT: 23.06.2026: Nein, auch wenn ein bestehender Rabatt bereits existiert wird dieser in der Vorschau nicht angezeigt.
+- [x] Gültiger Promotion Code zeigt Coupon-Wert, Dauer und bestehenden Rabatt. EDIT: 23.06.2026: Nein, es wird nichts angezeigt: Lesbare Rabattdetails = leer
+- [x] Bestehender Rabatt wird als zu ersetzender Discount angezeigt. EDIT: 23.06.2026: Nein, auch wenn ein bestehender Rabatt bereits existiert wird dieser in der Vorschau nicht angezeigt.
 "Rabatt-Vorschau Subscriptionsub_1Tg6qEF05ipkEAzmYUNmT0Uq
 Stripe-Status active
 Aktuelle Rabatte —
 Ersetzt bestehende Rabatte Nein"
 - [x] Ausführung ohne Grund oder Bestätigung wird blockiert.
 - [x] Bestätigte Ausführung wendet den Discount in Stripe an.
-- [ ] Aktion `Rabatt entfernen` zeigt bestehende Discounts. EDIT: 23.06.2026: Nein, auch wenn ein bestehender Rabatt bereits existiert wird dieser in der Vorschau nicht angezeigt.
+- [x] Aktion `Rabatt entfernen` zeigt bestehende Discounts. EDIT: 23.06.2026: Nein, auch wenn ein bestehender Rabatt bereits existiert wird dieser in der Vorschau nicht angezeigt.
 "Rabatt-Vorschau Subscriptionsub_1Tg6qEF05ipkEAzmYUNmT0Uq
 Stripe-Status active
 Aktuelle Rabatte —
 Ersetzt bestehende Rabatte Nein"
-- [ ] Bestätigte Entfernung entfernt den Discount in Stripe. EDIT: 23.06.2026: Im Testfall wurde der Rabatt in Normdex entfernt, die Toastmeldung kam als Bestätigung. Aber der Discount ist in Stripe immer noch vorhanden. (In Stripe: Testgutschein 25 % Rabatt, unbegrenzt)
+- [x] Bestätigte Entfernung entfernt den Discount in Stripe. EDIT: 23.06.2026: Im Testfall wurde der Rabatt in Normdex entfernt, die Toastmeldung kam als Bestätigung. Aber der Discount ist in Stripe immer noch vorhanden. (In Stripe: Testgutschein 25 % Rabatt, unbegrenzt)
 - [x] Audit-/Timeline-Eintrag ist nachvollziehbar.
 
 ## Refunds
