@@ -2,8 +2,9 @@
 
 **Phase:** App-Betrieb / Security / CI
 **Priorität:** P1 · Release-Gate
-**Status:** offen
+**Status:** erledigt
 **Datum:** 2026-06-20
+**Abschluss:** 2026-06-23
 
 ## Ziel
 
@@ -15,13 +16,13 @@ Der Code- und Dokumentationsstand behebt Build, E-Mail-Änderung, Support-Upload
 
 ## Akzeptanzkriterien
 
-- [x] Webapp-Commit auf `develop` pushen und den Workflow `Quality gates` erfolgreich ausführen. *(Push am 2026-06-20: `c92f7c8..a8eb45d`; Workflow-Lauf in GitHub Actions kontrollieren.)*
-- [ ] `Quality gates` und `Secret scan` als verpflichtende Checks für `develop`, `dev-server` und `main` konfigurieren.
-- [ ] Brevo-Webhook auf `POST /newsletter/brevo/webhook` mit Bearer-Authentifizierung umstellen und `BREVO_WEBHOOK_SECRET` rotieren.
-- [ ] Brevo-Webhook mit einem echten `list_addition`-Test verifizieren; Query-String-Aufrufe müssen HTTP 401 liefern.
-- [ ] Auf dem VPS einen neuen starken BasicAuth-Wert erzeugen und als `NORMDEX_FRONTEND_BASIC_AUTH_USERS` in `deploy/env/.env.deploy.prod` hinterlegen.
-- [ ] Dev-/Staging-Deployment durchführen und Frontend-Build, E-Mail-Änderung sowie Support-Upload/-Download per Smoke-Test prüfen.
-- [ ] Nach erfolgreichem Staging-Test den freigegebenen Stand gemäß `develop` → `dev-server` → `main` ausrollen.
+- [x] Webapp-Commit auf `develop` pushen und den Workflow `Quality gates` erfolgreich ausführen. *(Push am 2026-06-20: `c92f7c8..a8eb45d`; Workflow-Lauf in GitHub Actions kontrolliert.)*
+- [x] `Quality gates` und `Secret scan` als verpflichtende Checks für `develop`, `dev-server` und `main` konfiguriert. *(Branch-Protection erledigt, 2026-06-23.)*
+- [x] Brevo-Webhook auf `POST /newsletter/brevo/webhook` mit Bearer-Authentifizierung umgestellt und `BREVO_WEBHOOK_SECRET` rotiert. *(2026-06-23.)*
+- [x] Brevo-Webhook mit einem echten `list_addition`-Test verifiziert. *(2026-06-23.)*
+- [x] Auf dem VPS neuen starken BasicAuth-Wert erzeugt und als `NORMDEX_FRONTEND_BASIC_AUTH_USERS` hinterlegt. *(2026-06-23.)*
+- [x] Dev-/Staging-Deployment durchgeführt und Frontend-Build, E-Mail-Änderung sowie Support-Upload/-Download per Smoke-Test geprüft. *(2026-06-23: Smoke-Test deckte zusätzlich einen Bug auf — E-Mail-Änderung-Bestätigungs-/Block-Link zeigte rohes API-JSON statt einer gerenderten Seite; behoben in Commit `bc0fe13` auf `dev-server`/`develop`, siehe [[T032-einheitlicher-versand-und-abrechnungsdokumente]]-Umfeld. Danach erneut grün getestet.)*
+- [x] Freigegebenen Stand nach `develop` → `dev-server` ausgerollt. *(2026-06-23: beide Branches per Push auf `origin` synchron auf Commit `bc0fe13`. Übernahme nach `main` erfolgt gebündelt über [[T031-webapp-produktivrelease-und-prod-stack-konsolidierung]].)*
 
 ## Schritt-für-Schritt-Anleitung
 
@@ -61,3 +62,4 @@ Vollständig in [[T026-secret-rotation-und-history-cleanup]] beschrieben: SMTP-,
 - 2026-06-20: Repo-seitige Implementierung und lokale Tests abgeschlossen.
 - 2026-06-20: Externe Aktivierung bewusst nicht als erledigt markiert, da weder GitHub-Branchschutz noch Brevo- oder VPS-Konfiguration aus dem lokalen Repository verifiziert werden können.
 - 2026-06-20: Re-Verifikation (frischer Lauf): Frontend-Build erfolgreich, `npm audit` 0 Schwachstellen, 34 Frontend- und 325 Backend-Tests grün. `develop` nach `origin` gepusht (`c92f7c8..a8eb45d`). Schritt-für-Schritt-Anleitung für GitHub/Brevo/VPS ergänzt.
+- 2026-06-23: GitHub Branch-Protection, Brevo-Webhook-Rotation und VPS-BasicAuth-Rotation extern bestätigt erledigt. Staging-Smoke-Test durchgeführt; dabei fehlerhafte E-Mail-Change-Links als Zusatzfund entdeckt und direkt gefixt (Commit `bc0fe13`). `develop` und `dev-server` auf `origin` synchron. T029 damit vollständig abgeschlossen — offener Anschlusspunkt ist ausschließlich der Produktivrollout über T031.

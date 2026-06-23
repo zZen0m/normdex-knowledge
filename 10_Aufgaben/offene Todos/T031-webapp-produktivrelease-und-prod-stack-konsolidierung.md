@@ -16,7 +16,9 @@ konsolidieren.
 ## Ausgangslage
 
 - T030 ist auf `dev-server` mit Commit `a8fd748` abgeschlossen.
-- Dev läuft gesund auf App-Version `0.1.1` und Alembic-Head `e3c4d5e6f7a8`.
+- T032 (einheitlicher Versand und Abrechnungsdokumente) ist fachlich abgeschlossen und durch den Owner abgenommen, Commit `9c2462f`.
+- T029 (Webapp-Audit-Rollout, externe Konfiguration) ist vollständig abgeschlossen.
+- Dev läuft gesund auf App-Version `0.1.2` und Alembic-Head `f4d5e6f7a8b9` (verifiziert per `alembic heads`/`alembic current` im Container, 2026-06-23). Durch T032s Migration ist dies der neue Head, vorher dokumentiertes Ziel `e3c4d5e6f7a8` ist überholt.
 - Die produktive Datenbank steht vor dem Release auf `995d14683241`.
 - Die vollständige Migration wurde bereits erfolgreich auf einem isolierten
   Produktionsdatenbank-Klon geprüft.
@@ -33,14 +35,14 @@ konsolidieren.
 
 ## Arbeitspakete
 
-- [ ] Zielversion und Release-Banner bestätigen.
+- [x] Zielversion und Release-Banner bestätigt: **0.1.2**, kein Release-Banner, keine neue What's-New-Ausgabe — nur die Versionsnummer auf der bestehenden Grundversions-Seite wird über `__APP_VERSION__` mitgezogen. *(2026-06-23; technisch bereits in `apps/frontend/package.json`, `apps/api/app/version.py`, `Dockerfile`/`Dockerfile.dev` und `CHANGELOG.md` auf `develop`/`dev-server` umgesetzt, Commit folgt.)*
 - [ ] Produktiv-Repository und Vault auf sauberen Git-Stand prüfen.
 - [ ] Vollständiges PostgreSQL-Backup vor der Migration erstellen und prüfen.
 - [ ] `dev-server` gemäß Branch-Workflow nach `main` übernehmen.
 - [ ] Produktiv-Environment einschließlich `NORMDEX_APP_VERSION` prüfen.
 - [ ] Autoritatives Compose-Projekt festlegen.
 - [ ] Alten bzw. nicht autoritativen Prod-API-Stack kontrolliert entfernen.
-- [ ] Migration bis `e3c4d5e6f7a8` über den Migration-Service ausführen.
+- [ ] Migration bis `f4d5e6f7a8b9` über den Migration-Service ausführen.
 - [ ] API und Frontend neu bauen und starten.
 - [ ] Health, App-Version, Alembic-Head, Login, Admin-Billing und Stripe-Webhooks prüfen.
 - [ ] T030-Reconciliation und Systemfehler nach dem Release überwachen.
@@ -59,7 +61,7 @@ konsolidieren.
 
 - [ ] `api.normdex.at` wird von genau einem autoritativen Prod-API-Container bedient.
 - [ ] Produktion läuft auf der bestätigten App-Version.
-- [ ] Produktivdatenbank steht auf Alembic-Head `e3c4d5e6f7a8`.
+- [ ] Produktivdatenbank steht auf Alembic-Head `f4d5e6f7a8b9`.
 - [ ] Health- und Kernfunktionsprüfungen sind grün.
 - [ ] T030-Reconciliation meldet keine offenen oder widersprüchlichen Fälle.
 - [ ] Backup, Release-Commit, Deployment-Zeitpunkt und Monitoring-Ergebnis sind dokumentiert.

@@ -2,9 +2,10 @@
 
 **Phase:** App / Billing / Stripe / E-Mail  
 **Priorität:** P1  
-**Status:** in Arbeit  
+**Status:** fachlich abgeschlossen, wartet auf Produktivrollout  
 **Datum:** 2026-06-22  
-**Umgebung:** `normdex-webapp-dev`, Branch `dev-server`
+**Umgebung:** `normdex-webapp-dev`, Branch `dev-server`/`develop` (Commit `9c2462f`)  
+**Zielversion Produktivrollout:** 0.1.2 (über [[T031-webapp-produktivrelease-und-prod-stack-konsolidierung]])
 
 ## Ziel
 
