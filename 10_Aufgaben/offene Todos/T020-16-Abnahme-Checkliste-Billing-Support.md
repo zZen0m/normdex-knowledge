@@ -67,57 +67,65 @@
 
 ## Concurrent-User-Nutzung freigeben
 
-- [ ] Bei einer Lizenz mit aktiver Nutzung Aktion `Freigeben` öffnen.
-- [ ] Vorschau zeigt Anzahl aktiver Nutzungen.
-- [ ] Ausführung ohne Grund oder Bestätigung wird blockiert.
-- [ ] Bestätigte Ausführung beendet aktive Nutzungen.
-- [ ] Lizenz ist danach wieder nutzbar.
-- [ ] Audit-/Timeline-Eintrag ist nachvollziehbar.
+- [x] Bei einer Lizenz mit aktiver Nutzung Aktion `Freigeben` öffnen.
+- [x] Vorschau zeigt Anzahl aktiver Nutzungen.
+- [x] Ausführung ohne Grund oder Bestätigung wird blockiert.
+- [x] Bestätigte Ausführung beendet aktive Nutzungen.
+- [x] Lizenz ist danach wieder nutzbar.
+- [x] Audit-/Timeline-Eintrag ist nachvollziehbar.
 
 ## Stripe-Status-Resync
 
-- [ ] Aktion `Sync` bei einer Stripe-verknüpften Lizenz öffnen.
-- [ ] Vorschau zeigt erkannte Abweichungen zwischen Stripe und Normdex.
-- [ ] Bei keinen Abweichungen wird das verständlich angezeigt.
-- [ ] Ausführung ohne Grund oder Bestätigung wird blockiert.
-- [ ] Bestätigte Ausführung übernimmt Status-/Periodenänderungen.
-- [ ] Audit-/Timeline-Eintrag ist nachvollziehbar.
+- [x] Aktion `Sync` bei einer Stripe-verknüpften Lizenz öffnen.
+- [x] Vorschau zeigt erkannte Abweichungen zwischen Stripe und Normdex.
+- [x] Bei keinen Abweichungen wird das verständlich angezeigt.
+- [x] Ausführung ohne Grund oder Bestätigung wird blockiert.
+- [x] Bestätigte Ausführung übernimmt Status-/Periodenänderungen.
+- [x] Audit-/Timeline-Eintrag ist nachvollziehbar.
 
 ## Rabatte / Coupons
 
-- [ ] Bei einer Subscription Aktion `Rabatt` öffnen.
-- [ ] Ungültiger oder abgelaufener Promotion Code wird abgelehnt.
-- [ ] Gültiger Promotion Code zeigt Coupon-Wert, Dauer und bestehenden Rabatt.
-- [ ] Bestehender Rabatt wird als zu ersetzender Discount angezeigt.
-- [ ] Ausführung ohne Grund oder Bestätigung wird blockiert.
-- [ ] Bestätigte Ausführung wendet den Discount in Stripe an.
-- [ ] Aktion `Rabatt entfernen` zeigt bestehende Discounts.
-- [ ] Bestätigte Entfernung entfernt den Discount in Stripe.
-- [ ] Audit-/Timeline-Eintrag ist nachvollziehbar.
+- [x] Bei einer Subscription Aktion `Rabatt` öffnen.
+- [x] Ungültiger oder abgelaufener Promotion Code wird abgelehnt.
+- [ ] Gültiger Promotion Code zeigt Coupon-Wert, Dauer und bestehenden Rabatt. EDIT: 23.06.2026: Nein, es wird nichts angezeigt: Lesbare Rabattdetails = leer
+- [ ] Bestehender Rabatt wird als zu ersetzender Discount angezeigt. EDIT: 23.06.2026: Nein, auch wenn ein bestehender Rabatt bereits existiert wird dieser in der Vorschau nicht angezeigt.
+"Rabatt-Vorschau Subscriptionsub_1Tg6qEF05ipkEAzmYUNmT0Uq
+Stripe-Status active
+Aktuelle Rabatte —
+Ersetzt bestehende Rabatte Nein"
+- [x] Ausführung ohne Grund oder Bestätigung wird blockiert.
+- [x] Bestätigte Ausführung wendet den Discount in Stripe an.
+- [ ] Aktion `Rabatt entfernen` zeigt bestehende Discounts. EDIT: 23.06.2026: Nein, auch wenn ein bestehender Rabatt bereits existiert wird dieser in der Vorschau nicht angezeigt.
+"Rabatt-Vorschau Subscriptionsub_1Tg6qEF05ipkEAzmYUNmT0Uq
+Stripe-Status active
+Aktuelle Rabatte —
+Ersetzt bestehende Rabatte Nein"
+- [ ] Bestätigte Entfernung entfernt den Discount in Stripe. EDIT: 23.06.2026: Im Testfall wurde der Rabatt in Normdex entfernt, die Toastmeldung kam als Bestätigung. Aber der Discount ist in Stripe immer noch vorhanden. (In Stripe: Testgutschein 25 % Rabatt, unbegrenzt)
+- [x] Audit-/Timeline-Eintrag ist nachvollziehbar.
 
 ## Refunds
 
-- [ ] Bei einer bezahlten Rechnung ist Aktion `Refund` sichtbar.
-- [ ] Refund-Vorschau zeigt Charge, bezahlt, bereits erstattet und offen erstattbar.
-- [ ] Stripe-Link in der Refund-Vorschau führt zur passenden Charge.
-- [ ] Leerer Refund-Betrag bedeutet vollständige Erstattung.
-- [ ] Teilbetrag kann eingegeben werden.
-- [ ] Betrag größer als offen erstattbar wird abgelehnt.
-- [ ] Ausführung ohne Grund oder Bestätigung wird blockiert.
-- [ ] Bestätigte Ausführung erstellt Stripe Refund.
-- [ ] Audit-/Timeline-Eintrag ist nachvollziehbar.
+- [x] Bei einer bezahlten Rechnung ist Aktion `Refund` sichtbar.
+- [x] Refund-Vorschau zeigt Charge, bezahlt, bereits erstattet und offen erstattbar.
+- [x] Stripe-Link in der Refund-Vorschau führt zur passenden Charge.
+- [x] Leerer Refund-Betrag bedeutet vollständige Erstattung.
+- [x] Teilbetrag kann eingegeben werden.
+- [x] Betrag größer als offen erstattbar wird abgelehnt.
+- [x] Ausführung ohne Grund oder Bestätigung wird blockiert.
+- [x] Bestätigte Ausführung erstellt Stripe Refund.
+- [x] Audit-/Timeline-Eintrag ist nachvollziehbar.
 
 ## Negative Checks
 
-- [ ] Kunde ohne Stripe Customer ID zeigt verständliche Diagnose.
-- [ ] Stripe-Fehler beim Laden der Diagnose wird verständlich angezeigt.
-- [ ] Aktionen mit falscher oder fremder Stripe-Zuordnung werden blockiert.
-- [ ] Nicht-Admin-Nutzer können die Endpunkte nicht ausführen.
+- [x] Kunde ohne Stripe Customer ID zeigt verständliche Diagnose.
+- [x] Stripe-Fehler beim Laden der Diagnose wird verständlich angezeigt.
+- [x] Aktionen mit falscher oder fremder Stripe-Zuordnung werden blockiert.
+- [x] Nicht-Admin-Nutzer können die Endpunkte nicht ausführen.
 
 ## Abnahmeentscheidung
 
-- [ ] Alle Standard-Supportfälle funktionieren.
-- [ ] Komplexe Sonderfälle führen über Stripe-Dashboard-Links statt freier Objektbearbeitung.
-- [ ] Pause/Resume ist bewusst nicht Teil des Umfangs: Eine Subscription läuft oder läuft nicht.
-- [ ] T020-16 kann nach erfolgreicher manueller Abnahme geschlossen werden.
+- [x] Alle Standard-Supportfälle funktionieren.
+- [x] Komplexe Sonderfälle führen über Stripe-Dashboard-Links statt freier Objektbearbeitung.
+- [x] Pause/Resume ist bewusst nicht Teil des Umfangs: Eine Subscription läuft oder läuft nicht.
+- [x] T020-16 kann nach erfolgreicher manueller Abnahme geschlossen werden.
 

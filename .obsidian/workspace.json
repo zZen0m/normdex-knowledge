@@ -8,43 +8,45 @@
         "type": "tabs",
         "children": [
           {
-            "id": "f8c94fc6a291a981",
+            "id": "15b8e44abd00754b",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "04_Marketing/Marketingplan 2026 - Erste Kunden.md",
+                "file": "10_Aufgaben/Aufgaben.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Marketingplan 2026 - Erste Kunden"
+              "title": "Aufgaben"
             }
           },
           {
-            "id": "b15de9b52e7a12f7",
+            "id": "e83f68f57bc34ec0",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "04_Marketing/Marketingplan 2026 - Erste Kunden.md",
+                "file": "10_Aufgaben/offene Todos/T020-16-Lizenz-und-Billing-Support-Aktionen.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Marketingplan 2026 - Erste Kunden"
+              "title": "T020-16-Lizenz-und-Billing-Support-Aktionen"
             }
           },
           {
-            "id": "fe25b5a1985e0754",
+            "id": "c854d68bb0fb6db0",
             "type": "leaf",
             "state": {
-              "type": "pdf",
+              "type": "markdown",
               "state": {
-                "file": "04_Marketing/Normdex_Praxisleitfaden_OENORM_M7140.pdf"
+                "file": "10_Aufgaben/offene Todos/T020-16-Abnahme-Checkliste-Billing-Support.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-file-text",
-              "title": "Normdex_Praxisleitfaden_OENORM_M7140"
+              "icon": "lucide-file",
+              "title": "T020-16-Abnahme-Checkliste-Billing-Support"
             }
           }
         ],
@@ -210,9 +212,22 @@
       "bases:Neue Base erstellen": false
     }
   },
-  "active": "fe25b5a1985e0754",
+  "active": "c854d68bb0fb6db0",
   "lastOpenFiles": [
+    "10_Aufgaben/offene Todos/T020-16-Lizenz-und-Billing-Support-Aktionen.md",
+    "10_Aufgaben/offene Todos/T020-16-Abnahme-Checkliste-Billing-Support.md",
+    "10_Aufgaben/Aufgaben.md",
+    "10_Aufgaben/offene Todos/T032-einheitlicher-versand-und-abrechnungsdokumente.md",
+    "10_Aufgaben/offene Todos/T031-webapp-produktivrelease-und-prod-stack-konsolidierung.md",
+    "10_Aufgaben/offene Todos/T029-webapp-audit-rollout-externe-konfiguration.md",
+    "10_Aufgaben/offene Todos/T026-secret-rotation-und-history-cleanup.md",
+    "10_Aufgaben/offene Todos/T030-automatisierte-stripe-gutschriften-bei-refunds.md",
+    "10_Aufgaben/abgeschlossene Todos/T030-automatisierte-stripe-gutschriften-bei-refunds.md",
+    "08_Entscheidungen/2026-06-22-einheitlicher-versand-und-abrechnungsdokumente.md",
     "11_Audits/Webapp/2026-06-20-repo-audit-webapp.md",
+    "10_Aufgaben/offene Todos/T029-webapp-audit-rollout-externe-konfiguration.md.tmp.22160.3ee444d729ab",
+    "10_Aufgaben/offene Todos/T029-webapp-audit-rollout-externe-konfiguration.md.tmp.22160.e9199585b712",
+    "04_Marketing/Normdex_Praxisleitfaden_OENORM_M7140.pdf",
     "10_Aufgaben/Aufgaben.md.tmp.17640.0dae1c370ced",
     "10_Aufgaben/Aufgaben.md.tmp.17640.1cd96d7f0ab9",
     "10_Aufgaben/offene Todos/T028-newsletter-nurture-brevo-umsetzung.md",
@@ -220,7 +235,6 @@
     "11_Audits/Landingpage/2026-06-14-repo-audit-landingpage.md",
     "04_Marketing/Newsletter/04 Brevo-Umsetzung und Workflow-Anleitung.md",
     "04_Marketing/Marketingplan 2026 - Erste Kunden.md",
-    "04_Marketing/Normdex_Praxisleitfaden_OENORM_M7140.pdf",
     "04_Marketing/Newsletter/Newsletter-Archiv/Nurture-Strecke nach Lead-Magnet.md",
     "07_KI_Agenten/Prompt - Brevo Newsletter-Automation umsetzen.md",
     "04_Marketing/Newsletter/04 Brevo-Umsetzung und Workflow-Anleitung.md.tmp.9916.5fee933ecbe7",
@@ -229,8 +243,6 @@
     "07_KI_Agenten/Prompt - Brevo Newsletter-Automation umsetzen.md.tmp.45152.c23fb4b2496c",
     "04_Marketing/Newsletter/01 Wording-Vorgaben.md",
     "04_Marketing/Newsletter/00 Newsletter-Leitfaden.md",
-    "07_KI_Agenten/Prompt - Brevo Newsletter-Automation umsetzen.md.tmp.27572.a11bd45e6fa0",
-    "07_KI_Agenten/Prompt - Brevo Newsletter-Automation umsetzen.md.tmp.27572.98e6d7b21a6e",
     "04_Marketing/Newsletter/02 Designvorgaben.md",
     "04_Marketing/Google Ads - Keywords und Anzeigen.md",
     "10_Aufgaben/offene Todos/T027-landingpage-marketing-schaerfung.md",
@@ -238,16 +250,6 @@
     "04_Marketing/Newsletter-Strecke nach Lead-Magnet.md",
     "04_Marketing/Lead-Magnet ÖNORM M 7140 - Entwurf.md",
     "04_Marketing/Key Messages & CTAs.md",
-    "10_Aufgaben/offene Todos/T020-16-Abnahme-Checkliste-Billing-Support.md",
-    "10_Aufgaben/offene Todos/T020-16-Lizenz-und-Billing-Support-Aktionen.md",
-    "10_Aufgaben/offene Todos/T026-secret-rotation-und-history-cleanup.md",
-    "10_Aufgaben/Aufgaben.md",
-    "11_Audits/Webapp/2026-06-13-repo-audit-webapp.md",
-    "00_Start/AI Kontext - Einstieg.md",
-    "11_Audits/Webapp/2026-06-07-repo-audit-webapp.md",
-    "10_Aufgaben/abgeschlossene Todos/T024-account-einrichtung-onboarding-hinweise.md",
-    "11_Audits/Webapp/2026-06-04-repo-audit-webapp.md",
-    "06_Entwicklung/Kontoloeschung – Projekte an Team-Owner uebertragen.md",
     "99_Anhaenge/Pasted image 20260503134652.png",
     "Pasted image 20260503134652.png",
     "Pasted image 20260501161134.png",
