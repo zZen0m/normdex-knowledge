@@ -40,7 +40,6 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 
 | ID      | Todo                                            | Bereich                          | Status |
 | ------- | ----------------------------------------------- | -------------------------------- | ------ |
-| T020-16 | [[T020-16-Lizenz-und-Billing-Support-Aktionen]] | App / Verwaltungsportal / Stripe | offen  |
 | T026    | [[T026-secret-rotation-und-history-cleanup]]     | App / Security / Infrastruktur   | in Arbeit |
 | T028    | [[T028-newsletter-nurture-brevo-umsetzung]]      | Marketing / Newsletter / Brevo   | in Arbeit |
 | T029    | [[T029-webapp-audit-rollout-externe-konfiguration]] | App / Security / CI / Deployment | offen |
@@ -63,6 +62,7 @@ Diese Todos sind konzeptionell ausgearbeitet, aber bewusst zurückgestellt. Sie 
 
 | ID      | Todo                                                | Bereich                          | Abgeschlossen |
 | ------- | --------------------------------------------------- | -------------------------------- | ------------- |
+| T020-16 | [[T020-16-Lizenz-und-Billing-Support-Aktionen]]     | App / Verwaltungsportal / Stripe | 2026-06-23 |
 | T030    | [[T030-automatisierte-stripe-gutschriften-bei-refunds]] | App / Verwaltungsportal / Stripe / Rechnungslegung | 2026-06-22 |
 | T027    | [[T027-landingpage-marketing-schaerfung]]           | Landingpage / Marketing          | 2026-06-13    |
 | T024    | [[T024-account-einrichtung-onboarding-hinweise]]    | App / UX / Onboarding / Notifications | 2026-06-07 |

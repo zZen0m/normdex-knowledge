@@ -1,8 +1,8 @@
 # T020-16 · Lizenz- und Billing-Support-Aktionen
 
-**Phase:** 4 (Konzept abgeschlossen, Umsetzung in Arbeit)  
+**Phase:** 4 (Konzept und Umsetzung abgeschlossen)  
 **Priorität:** P2 · Verwaltungsportal / Stripe / Support  
-**Status:** in Arbeit  
+**Status:** abgeschlossen (2026-06-23)  
 **Parent:** [[T020-allgemeine Todos]]  
 **Referenz:** [[Verwaltungsportal-Billing-und-Abo-Support]]
 
@@ -103,3 +103,6 @@ Jede mutierende Aktion braucht:
 - 2026-05-30: Stripe-Dashboard-Deep-Links ergänzt: Billing-Summary liefert test/live-korrekte Dashboard-URLs für Customer, Subscriptions, Invoices und Payments/Charges; UI zeigt direkte Stripe-Links für Sonderfälle.
 - 2026-05-30: Pause/Resume fachlich ausgeschlossen. Zielmodell bleibt: Subscription läuft oder läuft nicht.
 - 2026-05-30: Manuelle Abnahme-Checkliste angelegt: [[T020-16-Abnahme-Checkliste-Billing-Support]].
+- 2026-06-23: Rabatt-/Coupon-Bugs behoben: Coupon-Details wurden nicht angezeigt, weil die neue Stripe-Discount-Struktur (`source.coupon`) nicht gelesen wurde; bestehende Discounts wurden in Vorschau und Entfernen-Dialog nicht angezeigt; Discount-Entfernung wirkte nur lokal. Fix: erweiterte Stripe-Expands, neue Coupon-Resolver-Helper und `stripe.Subscription.delete_discount(...)` statt `modify(discounts=[])`. Backend-Tests ergänzt (5 Discount-Tests grün).
+- 2026-06-23: Diagnose verbessert: Stripe-Subscriptions zeigen jetzt zugeordnete Normdex-Lizenz(en) inkl. Lizenzart, Abrechnungsrhythmus und Status; "Lokale Lizenzen" in "Normdex-Lizenzen" umbenannt.
+- 2026-06-23: Manuelle Re-Abnahme aller zuvor offenen Checklisten-Punkte erfolgreich. T020-16 abgeschlossen.

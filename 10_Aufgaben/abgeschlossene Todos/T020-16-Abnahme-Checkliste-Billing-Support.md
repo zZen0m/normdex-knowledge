@@ -17,9 +17,9 @@
 - [x] Organisationsakte öffnen und Tab `Billing & Stripe` auswählen.
 - [x] `Diagnose laden` ausführen.
 - [x] Stripe Customer wird angezeigt.
-- [x] Stripe Subscriptions werden angezeigt. --> wird angezeigt, aber es steht nur "sub_1TRz4bF05ipkEAzmWvq9cvRa". Ich weiß daher nicht, ob das eine Haupt-oder Zusatzlizenz ist und ob es eine monatl. oder jährliche Lizenz ist.
+- [x] Stripe Subscriptions werden angezeigt. EDIT: 23.06.2026: Behoben – unter der `sub_…`-ID werden jetzt zugeordnete Normdex-Lizenz(en) mit Lizenzart (Haupt-/Zusatz), Abrechnungsrhythmus (monatl./jährl.) und Status angezeigt.
 - [x] Stripe Rechnungen werden angezeigt.
-- [x] Lokale Lizenzen werden angezeigt. --> Was sind lokale Lizenzen?
+- [x] Lokale Lizenzen werden angezeigt. EDIT: 23.06.2026: Begriff im UI in "Normdex-Lizenzen" umbenannt – gemeint sind die in der Normdex-Datenbank geführten Lizenzen (im Gegensatz zum Stripe-Zustand).
 - [x] Offene Rechnungen werden als Hinweis sichtbar.
 - [x] Zahlungsprobleme oder Past-Due-Zustände werden als Hinweis sichtbar.
 - [x] Abweichungen zwischen lokalen Lizenzdaten und Stripe werden als Diagnose-Warnung sichtbar.
@@ -87,20 +87,12 @@
 
 - [x] Bei einer Subscription Aktion `Rabatt` öffnen.
 - [x] Ungültiger oder abgelaufener Promotion Code wird abgelehnt.
-- [x] Gültiger Promotion Code zeigt Coupon-Wert, Dauer und bestehenden Rabatt. EDIT: 23.06.2026: Nein, es wird nichts angezeigt: Lesbare Rabattdetails = leer
-- [x] Bestehender Rabatt wird als zu ersetzender Discount angezeigt. EDIT: 23.06.2026: Nein, auch wenn ein bestehender Rabatt bereits existiert wird dieser in der Vorschau nicht angezeigt.
-"Rabatt-Vorschau Subscriptionsub_1Tg6qEF05ipkEAzmYUNmT0Uq
-Stripe-Status active
-Aktuelle Rabatte —
-Ersetzt bestehende Rabatte Nein"
+- [x] Gültiger Promotion Code zeigt Coupon-Wert, Dauer und bestehenden Rabatt. EDIT: 23.06.2026: Behoben – Coupon wird jetzt aus der neuen Stripe-Struktur (`source.coupon`) gelesen; Re-Abnahme erfolgreich.
+- [x] Bestehender Rabatt wird als zu ersetzender Discount angezeigt. EDIT: 23.06.2026: Behoben – bestehende Discounts werden über erweiterte Stripe-Expands in der Vorschau angezeigt; Re-Abnahme erfolgreich.
 - [x] Ausführung ohne Grund oder Bestätigung wird blockiert.
 - [x] Bestätigte Ausführung wendet den Discount in Stripe an.
-- [x] Aktion `Rabatt entfernen` zeigt bestehende Discounts. EDIT: 23.06.2026: Nein, auch wenn ein bestehender Rabatt bereits existiert wird dieser in der Vorschau nicht angezeigt.
-"Rabatt-Vorschau Subscriptionsub_1Tg6qEF05ipkEAzmYUNmT0Uq
-Stripe-Status active
-Aktuelle Rabatte —
-Ersetzt bestehende Rabatte Nein"
-- [x] Bestätigte Entfernung entfernt den Discount in Stripe. EDIT: 23.06.2026: Im Testfall wurde der Rabatt in Normdex entfernt, die Toastmeldung kam als Bestätigung. Aber der Discount ist in Stripe immer noch vorhanden. (In Stripe: Testgutschein 25 % Rabatt, unbegrenzt)
+- [x] Aktion `Rabatt entfernen` zeigt bestehende Discounts. EDIT: 23.06.2026: Behoben – bestehende Discounts werden in der Entfernen-Vorschau angezeigt; Re-Abnahme erfolgreich.
+- [x] Bestätigte Entfernung entfernt den Discount in Stripe. EDIT: 23.06.2026: Behoben – Entfernung nutzt jetzt `stripe.Subscription.delete_discount(...)` statt `modify(discounts=[])`; Discount verschwindet nun korrekt in Stripe. Re-Abnahme erfolgreich.
 - [x] Audit-/Timeline-Eintrag ist nachvollziehbar.
 
 ## Refunds
