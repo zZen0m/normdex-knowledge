@@ -43,8 +43,8 @@ Normdex versendet bezahlte Rechnungen und Credit Notes einheitlich über das eig
 
 ## Noch offen
 
-- manuelle fachliche/UI-Abnahme durch den Owner auf `https://dev.normdex.at`
-- vor Produktivfreigabe Stripe-Dashboard prüfen: automatische Rechnungs- und Zahlungsbelegmails müssen deaktiviert sein
+- manuelle fachliche/UI-Abnahme durch den Owner auf `https://dev.normdex.at` EDIT: 23.06.2026: Abnahme positiv erfolgt
+- vor Produktivfreigabe Stripe-Dashboard prüfen: automatische Rechnungs- und Zahlungsbelegmails müssen deaktiviert sein EDIT: 23.06.2026: erledigt
 - Produktivrollout ausschließlich über [[T031-webapp-produktivrelease-und-prod-stack-konsolidierung]]
 
 ## Referenzen
