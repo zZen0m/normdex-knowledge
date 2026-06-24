@@ -61,6 +61,7 @@
 - Neue und migrierte Organisationen erhalten zunächst eine `billing_email` aus der Adresse des ersten bzw. ältesten Owners. Organisations-Admins können das Feld später vollständig leeren.
 - Spätere Käufe oder neue Admins überschreiben diese Adresse nicht.
 - Bezahlte Rechnungen werden nach `invoice.paid` vorgemerkt und frühestens fünf Minuten später als gebrandete Normdex-Mail mit Stripe-PDF-Link versendet. So treffen Bestellbestätigung und Rechnung nicht unmittelbar gleichzeitig ein. Der Scheduler prüft jede Minute; praktisch erfolgt der Versand nach etwa fünf bis sechs Minuten.
+- Die Rechnungs-Mail spricht den Empfänger persönlich an („Hallo Max,“). Dazu wird anhand der Rechnungs-E-Mail ein Benutzer gesucht und dessen Vorname (sonst Anzeigename) verwendet. Gibt es keinen passenden Benutzer (z. B. generische Buchhaltungsadresse), bleibt die neutrale Anrede „Hallo,“.
 - 0-Euro-Rechnungen werden im Dokumentbereich angezeigt, aber nicht per E-Mail versendet.
 - Rechnungs- und Gutschriftversand sind in `billing_document_deliveries` idempotent dokumentiert. Fehlgeschlagene Rechnungsmails werden mit Backoff erneut versucht; ein unklarer Versandzustand erfordert manuelle Prüfung.
 - Historische Dokumente werden nicht nachträglich versendet.
