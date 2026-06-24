@@ -2,10 +2,11 @@
 
 **Phase:** App / Billing / Stripe / E-Mail  
 **Priorität:** P1  
-**Status:** fachlich abgeschlossen, wartet auf Produktivrollout  
+**Status:** erledigt, live in Produktion  
 **Datum:** 2026-06-22  
+**Abgeschlossen:** 2026-06-24  
 **Umgebung:** `normdex-webapp-dev`, Branch `dev-server`/`develop` (Commit `9c2462f`)  
-**Zielversion Produktivrollout:** 0.1.2 (über [[T031-webapp-produktivrelease-und-prod-stack-konsolidierung]])
+**Produktivrollout:** 0.1.2, über [[T031-webapp-produktivrelease-und-prod-stack-konsolidierung]] am 2026-06-24 ausgerollt (Merge-Commit `8d14ad6`, Migration bis `f4d5e6f7a8b9`).
 
 ## Ziel
 
@@ -46,7 +47,7 @@ Normdex versendet bezahlte Rechnungen und Credit Notes einheitlich über das eig
 
 - manuelle fachliche/UI-Abnahme durch den Owner auf `https://dev.normdex.at` EDIT: 23.06.2026: Abnahme positiv erfolgt
 - vor Produktivfreigabe Stripe-Dashboard prüfen: automatische Rechnungs- und Zahlungsbelegmails müssen deaktiviert sein EDIT: 23.06.2026: erledigt
-- Produktivrollout ausschließlich über [[T031-webapp-produktivrelease-und-prod-stack-konsolidierung]]
+- Produktivrollout ausschließlich über [[T031-webapp-produktivrelease-und-prod-stack-konsolidierung]] EDIT: 24.06.2026: durchgeführt, Produktion läuft auf 0.1.2, `billing_adjustments` ohne offene Fälle.
 
 ## Referenzen
 
