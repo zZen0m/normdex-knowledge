@@ -47,6 +47,8 @@ Der Automations-Workflow selbst lässt sich nur im Brevo-UI bauen (Trigger und W
 1. Als Trigger **Contact added to a list** wählen (Kontakt zu einer Liste hinzugefügt).
 2. Liste **Normdex Newsletter** (listId 3) auswählen. Da die Anmeldung mit Double-Opt-in läuft, landet ein Kontakt erst nach bestätigter Anmeldung in dieser Liste, der Trigger feuert also genau zum richtigen Zeitpunkt.
 
+> **Dev/Prod-Hinweis (2026-06-24):** Dev- und Prod-Backend nutzen denselben Brevo-Account. Solange `BREVO_LIST_ID` in `.env.api.dev` und `.env.api.prod` auf dieselbe Liste zeigt, lösen Test-Anmeldungen auf dem Dev-Server **auch** den Prod-Webhook (und damit einen echten Stripe-Gutschein) aus, da Brevo-Webhooks account-weit auf Events abonniert sind, nicht pro Liste gefiltert. Geplante Trennung über eine eigene Dev-Liste: siehe [[T033-brevo-dev-prod-listentrennung]].
+
 ### 3. Mailfolge mit Wartezeiten
 
 Baue diese Abfolge auf. Die Wartezeiten sind kumulativ relativ zum Eintritt gedacht, deshalb stehen unten die Abstände zwischen den Schritten.
