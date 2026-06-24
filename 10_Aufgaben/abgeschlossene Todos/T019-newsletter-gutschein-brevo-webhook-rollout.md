@@ -61,3 +61,4 @@ Der 10%-Newsletter-Gutschein soll erst nach bestätigtem Brevo-Double-Opt-in ver
 - 2026-05-01: Brevo Webhook Secret auf dem Produktivserver erstellt.
 - 2026-05-01: Brevo Outbound Webhook in Brevo erstellt. Ziel-URL enthält das Secret als Query-Parameter.
 - 2026-05-30: Rollout abgeschlossen — Deploy, Migration, Env-Setup, API-Neustart und End-to-end Test erfolgreich. Fehlerfall (falsche Liste) verifiziert.
+- 2026-06-24: Nachtrag im Rahmen von [[T028-newsletter-nurture-brevo-umsetzung]]. Der Webhook erzeugte den Code und versendete ihn nur via eigener App-Mail, schrieb ihn aber nicht in das Brevo-Kontaktattribut `COUPON_CODE` zurück. Für die Nurture-Strecke (`{{ contact.COUPON_CODE }}`) wurde der Service um einen best-effort Write-back (`PUT /v3/contacts/{email}`) erweitert. Details und Tests siehe T028.
