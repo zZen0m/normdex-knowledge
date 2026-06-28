@@ -41,28 +41,21 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 | ID      | Todo                                            | Bereich                          | Status |
 | ------- | ----------------------------------------------- | -------------------------------- | ------ |
 | T026    | [[T026-secret-rotation-und-history-cleanup]]     | App / Security / Infrastruktur   | in Arbeit |
-| T028    | [[T028-newsletter-nurture-brevo-umsetzung]]      | Marketing / Newsletter / Brevo   | in Arbeit |
-| T029    | [[T029-webapp-audit-rollout-externe-konfiguration]] | App / Security / CI / Deployment | offen |
-| T031    | [[T031-webapp-produktivrelease-und-prod-stack-konsolidierung]] | App / Release / Infrastruktur | offen |
-| T032    | [[T032-einheitlicher-versand-und-abrechnungsdokumente]] | App / Billing / Stripe / E-Mail | in Arbeit |
 
 ## Zusammengeführte Todo-IDs
 
 Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollout-abschliessen]] zusammengeführt. Diese IDs werden nicht wiederverwendet.
 
-## Zurückgestellte / Geplante Erweiterungen
-
-Diese Todos sind konzeptionell ausgearbeitet, aber bewusst zurückgestellt. Sie sollen zu einem späteren Zeitpunkt umgesetzt werden. Die Detaildateien liegen unter `90_Archiv/`.
-
-| ID   | Todo                                                                           | Bereich                                   | Zurückgestellt |
-| ---- | ------------------------------------------------------------------------------ | ----------------------------------------- | -------------- |
-| T021 | [[90_Archiv/T021-rechnungslegung-individuelle-rechnungen\|T021-rechnungslegung-individuelle-rechnungen]] | App / Lizenzen / Stripe / Rechnungslegung | 2026-05-30     |
-
 ## Abgeschlossene Todos
 
 | ID      | Todo                                                | Bereich                          | Abgeschlossen |
 | ------- | --------------------------------------------------- | -------------------------------- | ------------- |
+| T028    | [[T028-newsletter-nurture-brevo-umsetzung]]      | Marketing / Newsletter / Brevo   | 2026-06-28 |
 | T020-16 | [[T020-16-Lizenz-und-Billing-Support-Aktionen]]     | App / Verwaltungsportal / Stripe | 2026-06-23 |
+| T032    | [[T032-einheitlicher-versand-und-abrechnungsdokumente]] | App / Billing / Stripe / E-Mail | 2026-06-24 |
+| T031    | [[T031-webapp-produktivrelease-und-prod-stack-konsolidierung]] | App / Release / Infrastruktur | 2026-06-24 |
+| T029    | [[T029-webapp-audit-rollout-externe-konfiguration]] | App / Security / CI / Deployment | 2026-06-23 |
+| T033    | [[T033-brevo-dev-prod-listentrennung]]           | App / Newsletter / Brevo / Infrastruktur | 2026-06-24 |
 | T030    | [[T030-automatisierte-stripe-gutschriften-bei-refunds]] | App / Verwaltungsportal / Stripe / Rechnungslegung | 2026-06-22 |
 | T027    | [[T027-landingpage-marketing-schaerfung]]           | Landingpage / Marketing          | 2026-06-13    |
 | T024    | [[T024-account-einrichtung-onboarding-hinweise]]    | App / UX / Onboarding / Notifications | 2026-06-07 |
@@ -96,4 +89,4 @@ Diese Todos sind konzeptionell ausgearbeitet, aber bewusst zurückgestellt. Sie 
 
 ## Nächste freie ID
 
-`T033`
+`T034`

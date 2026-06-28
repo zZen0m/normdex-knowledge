@@ -677,7 +677,6 @@ Daraus: `resolve_invoice_context_from_payment` löst aus `ch_` zuerst über `Cha
 - [[T020-16-Lizenz-und-Billing-Support-Aktionen]]
 - [[T020-16-Abnahme-Checkliste-Billing-Support]]
 - [[T020-12-Konzept Verwaltungsportal]]
-- [[T021-rechnungslegung-individuelle-rechnungen]]
 - [[02_App/API-Endpunkte]]
 - [[02_App/Funktionen im Detail]]
 - [[02_App/E-Mail-System]]
