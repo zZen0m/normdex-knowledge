@@ -24,21 +24,29 @@
 
 - Vorheriger Audit: 2026-06-14
 - Findings im Vorbericht: 4
-- Davon behoben: 0
-- Davon weiterhin offen: 4
+- Davon behoben: 4
+- Davon weiterhin offen: 0
 - Davon nicht abschließend verifizierbar: 0
 - Regressionen: 0
+- Findings dieses Audits insgesamt: 8
+- Davon behoben: 8
+- Davon weiterhin offen: 0
+- Umsetzungsnachtrag 2026-06-28: Alle acht Findings dieses Audits wurden im Landingpage-Repo behoben und lokal verifiziert.
 
 ### Behobene Findings
 
-- Keine.
+- Finding 1 - Open-Graph/Twitter/JSON-LD pro Route: **behoben**. Evidenz: zentraler SEO-Datenbestand, Post-Build-Route-HTML-Generator, `npm run build` erzeugt 12 route-spezifische HTML-Dateien mit eigenen OG-/Twitter-/Canonical-/JSON-LD-Werten.
+- Finding 2 - `/features` ohne H1: **behoben**. Evidenz: `FeaturesPage.tsx` enthält ein sichtbares H1 "Alle Normdex-Funktionen im Überblick"; Test `FeaturesPage.test.tsx` deckt es ab.
+- Finding 3 - zu lange Title-/Description-Tags: **behoben**. Evidenz: zentrale SEO-Texte in `seo-routes.json`; Tests prüfen SERP-freundliche Längen der priorisierten Routen.
+- Finding 4 - Sie-Form in Marketing-CTAs: **behoben**. Evidenz: CTA-Texte in `About.tsx` und `OenormM7140.tsx` wurden auf Du-Form umgestellt.
+- Finding 5 - SPA-404 ohne `noindex` / Soft-404-Risiko: **behoben**. Evidenz: `NotFound.tsx` setzt `noindex`; `Dockerfile` nutzt `try_files $uri $uri/ =404`.
+- Finding 6 - `sitemap.xml` ohne `<lastmod>`: **behoben**. Evidenz: alle 12 Sitemap-URLs enthalten `<lastmod>2026-06-28</lastmod>`.
+- Finding 7 - TypeScript-Strictness deaktiviert: **behoben**. Evidenz: `tsconfig.app.json` setzt `"strict": true` und `"noImplicitAny": true`; `npx tsc -p tsconfig.app.json --noEmit` läuft grün.
+- Finding 8 - Keine automatisierten Tests: **behoben**. Evidenz: `package.json` enthält `test: vitest run`; 3 Testdateien mit 8 Tests laufen grün.
 
 ### Weiterhin offene Findings
 
-- Finding 1 (Vorbericht) - TypeScript-Strictness: weiterhin offen. `tsconfig.app.json` hat unverändert `"strict": false` und `"noImplicitAny": false`.
-- Finding 2 (Vorbericht) - Keine automatisierten Tests: weiterhin offen. `package.json` enthält weiterhin kein `test`-Script.
-- Finding 3 (Vorbericht) - Hero-Mock-Daten manuell dupliziert: weiterhin offen. `src/components/HeroAppMock.tsx` enthält unverändert hartkodierte Konstanten (`MAX = 7_130_491` etc.), die unabhängig vom generierten Beispielbericht in `public/report-preview/` gepflegt werden.
-- Finding 4 (Vorbericht) - Fast-Refresh-Lint-Warnungen: weiterhin offen. `npx eslint .` meldet unverändert exakt dieselben 7 Warnungen in denselben shadcn-Basiskomponenten.
+- Keine.
 
 ### Regressionen
 
@@ -56,17 +64,18 @@ Die Landingpage hat ein solides SEO-Grundgerüst: Jede Hauptroute hat eigenen Ti
 
 ## 6. Wichtigste Findings
 
-1. **[hoch][Bug] Open-Graph/Twitter-Card/JSON-LD sind seitenweit identisch, da rein client-seitig per Helmet gesetzt und ohne Pre-Rendering.** Social-Shares von Unterseiten zeigen immer den Homepage-Titel.
-2. **[hoch][Bug] `/features` hat kein `<h1>`.** Die Route nutzt `Features.tsx` direkt, dessen einzige Überschrift ein `<h2>` ist.
-3. **[mittel][Improvement] Mehrere Title-Tags und die Meta-Description der ÖNORM-Seite überschreiten die in SERPs sichtbare Länge.**
-4. **[mittel][Improvement] Sie-Form auf zwei Marketingseiten (`About.tsx`, `OenormM7140.tsx`) widerspricht der dokumentierten Du-Form-Konvention.**
-5. **[mittel][Risk] SPA-404 ohne `noindex`-Meta-Tag und ohne im Repo erkennbare Server-Rewrite-Konfiguration.**
-6. **[niedrig][Improvement] `sitemap.xml` enthält keine `<lastmod>`-Angaben.**
+1. **[behoben][hoch][Bug] Open-Graph/Twitter-Card/JSON-LD sind seitenweit identisch, da rein client-seitig per Helmet gesetzt und ohne Pre-Rendering.** Behoben durch route-spezifisches Post-Build-HTML.
+2. **[behoben][hoch][Bug] `/features` hat kein `<h1>`.** Behoben durch sichtbares H1 auf der Route.
+3. **[behoben][mittel][Improvement] Mehrere Title-Tags und die Meta-Description der ÖNORM-Seite überschreiten die in SERPs sichtbare Länge.** Behoben durch zentrale, gekürzte SEO-Texte.
+4. **[behoben][mittel][Improvement] Sie-Form auf zwei Marketingseiten (`About.tsx`, `OenormM7140.tsx`) widerspricht der dokumentierten Du-Form-Konvention.** Behoben durch Umstellung auf Du-Form.
+5. **[behoben][mittel][Risk] SPA-404 ohne `noindex`-Meta-Tag und ohne im Repo erkennbare Server-Rewrite-Konfiguration.** Behoben durch `noindex` und Nginx-404-Konfiguration.
+6. **[behoben][niedrig][Improvement] `sitemap.xml` enthält keine `<lastmod>`-Angaben.** Behoben durch `<lastmod>` für alle Sitemap-URLs.
 
 ## 7. Detaillierte Findings je Punkt
 
 ### Finding 1 - Open-Graph/Twitter/JSON-LD nur statisch in `index.html`, kein Pre-Rendering
 
+- Status 2026-06-28: **behoben** durch zentrale SEO-Metadaten, `scripts/generate-route-html.mjs` und route-spezifische `dist/<route>/index.html`-Dateien im Build.
 - Kategorie: Bug
 - Priorität: hoch
 - Verifizierungsstatus: statisch verifiziert
@@ -80,6 +89,7 @@ Die Landingpage hat ein solides SEO-Grundgerüst: Jede Hauptroute hat eigenen Ti
 
 ### Finding 2 - `/features` hat kein `<h1>`
 
+- Status 2026-06-28: **behoben** durch sichtbares H1 in `FeaturesPage.tsx`; zusätzlich mit `FeaturesPage.test.tsx` abgesichert.
 - Kategorie: Bug
 - Priorität: hoch
 - Verifizierungsstatus: statisch verifiziert
@@ -93,6 +103,7 @@ Die Landingpage hat ein solides SEO-Grundgerüst: Jede Hauptroute hat eigenen Ti
 
 ### Finding 3 - Title-Tags und ÖNORM-Meta-Description überschreiten SERP-sichtbare Länge
 
+- Status 2026-06-28: **behoben** durch zentrale, gekürzte SEO-Texte in `seo-routes.json`; priorisierte Routen werden per Test auf Titel- und Description-Länge geprüft.
 - Kategorie: Improvement
 - Priorität: mittel
 - Verifizierungsstatus: statisch verifiziert
@@ -110,6 +121,7 @@ Die Landingpage hat ein solides SEO-Grundgerüst: Jede Hauptroute hat eigenen Ti
 
 ### Finding 4 - Sie-Form auf zwei Marketingseiten widerspricht der dokumentierten Du-Form
 
+- Status 2026-06-28: **behoben** durch Umstellung der betroffenen Marketing-CTA-Texte in `About.tsx` und `OenormM7140.tsx` auf Du-Form.
 - Kategorie: Bug
 - Priorität: mittel
 - Verifizierungsstatus: statisch verifiziert
@@ -123,6 +135,7 @@ Die Landingpage hat ein solides SEO-Grundgerüst: Jede Hauptroute hat eigenen Ti
 
 ### Finding 5 - SPA-404 ohne `noindex` und ohne erkennbare Server-Rewrite-Konfiguration
 
+- Status 2026-06-28: **behoben** durch `noindex` in `NotFound.tsx` und `try_files $uri $uri/ =404` im Docker-Nginx.
 - Kategorie: Risk
 - Priorität: mittel
 - Verifizierungsstatus: wahrscheinlich / manuell prüfen
@@ -136,6 +149,7 @@ Die Landingpage hat ein solides SEO-Grundgerüst: Jede Hauptroute hat eigenen Ti
 
 ### Finding 6 - `sitemap.xml` ohne `<lastmod>`
 
+- Status 2026-06-28: **behoben** durch `<lastmod>2026-06-28</lastmod>` für alle 12 URLs in `public/sitemap.xml`.
 - Kategorie: Improvement
 - Priorität: niedrig
 - Verifizierungsstatus: statisch verifiziert
@@ -149,6 +163,7 @@ Die Landingpage hat ein solides SEO-Grundgerüst: Jede Hauptroute hat eigenen Ti
 
 ### Finding 7 - TypeScript-Strictness bleibt deaktiviert (persistent)
 
+- Status 2026-06-28: **behoben**. `tsconfig.app.json` setzt `"strict": true` und `"noImplicitAny": true`; `npx tsc -p tsconfig.app.json --noEmit` läuft erfolgreich.
 - Kategorie: Improvement
 - Priorität: mittel
 - Verifizierungsstatus: statisch verifiziert
@@ -162,6 +177,7 @@ Die Landingpage hat ein solides SEO-Grundgerüst: Jede Hauptroute hat eigenen Ti
 
 ### Finding 8 - Keine automatisierten Tests (persistent)
 
+- Status 2026-06-28: **behoben**. `package.json` enthält `test: vitest run`; Vitest-Konfiguration und erste Tests für SEO-Metadaten, Report-Preview-Daten und `/features`-H1 sind vorhanden.
 - Kategorie: Risk
 - Priorität: mittel
 - Verifizierungsstatus: statisch verifiziert
@@ -175,21 +191,21 @@ Die Landingpage hat ein solides SEO-Grundgerüst: Jede Hauptroute hat eigenen Ti
 
 ## 8. Quick Wins
 
-- `<meta name="robots" content="noindex">` in `NotFound.tsx` ergänzen (5-Minuten-Fix).
-- Eigenes `<h1>` auf `/features` ergänzen.
-- Title- und Description-Längen der vier betroffenen Seiten kürzen, Schwerpunkt ÖNORM-Description.
-- Die zwei Sie-Form-Stellen in `About.tsx` und `OenormM7140.tsx` auf Du-Form umstellen.
-- `<lastmod>` in `sitemap.xml` ergänzen.
+- ~~`<meta name="robots" content="noindex">` in `NotFound.tsx` ergänzen.~~ **Erledigt 2026-06-28.**
+- ~~Eigenes `<h1>` auf `/features` ergänzen.~~ **Erledigt 2026-06-28.**
+- ~~Title- und Description-Längen der vier betroffenen Seiten kürzen, Schwerpunkt ÖNORM-Description.~~ **Erledigt 2026-06-28.**
+- ~~Die zwei Sie-Form-Stellen in `About.tsx` und `OenormM7140.tsx` auf Du-Form umstellen.~~ **Erledigt 2026-06-28.**
+- ~~`<lastmod>` in `sitemap.xml` ergänzen.~~ **Erledigt 2026-06-28.**
 
 ## 9. Strategische Empfehlungen
 
-- Pre-Rendering/SSG für die Landingpage einführen, damit Social-Sharing-Vorschauen und Crawler ohne JS-Ausführung pro Route korrekte Meta-Daten erhalten. Dies ist der größte Hebel für organische Reichweite und Social-Conversion in diesem Audit.
+- ~~Pre-Rendering/SSG für die Landingpage einführen, damit Social-Sharing-Vorschauen und Crawler ohne JS-Ausführung pro Route korrekte Meta-Daten erhalten.~~ **Erledigt 2026-06-28 als pragmatischer Post-Build-HTML-Generator pro Route.**
 - Pro Marketingseite ein eigenes, thematisch passendes JSON-LD-Schema prüfen (z. B. `FAQPage` für die ÖNORM-Seite, falls dort künftig FAQ-Inhalte ergänzt werden), statt nur des globalen `SoftwareApplication`-Schemas auf Homepage-Ebene.
-- Conversion-Flows mit einer kleinen automatisierten Regressionstest-Suite absichern (unverändert aus Vorbericht).
+- ~~Conversion-Flows mit einer kleinen automatisierten Regressionstest-Suite absichern (unverändert aus Vorbericht).~~ **Grundlage erledigt 2026-06-28 mit Vitest-Testsetup und ersten Regressionstests.**
 
 ## 10. Empfohlene nächste Aktion
 
-Die beiden hoch priorisierten Findings (Open-Graph/Social-Sharing-Problem und fehlendes H1 auf `/features`) vor der nächsten größeren Marketing-Kampagne beheben; die übrigen SEO-Quick-Wins können parallel im nächsten regulären Sprint umgesetzt werden.
+Alle Findings dieses Audits sind repo-seitig behoben und lokal verifiziert. Nächste sinnvolle Aktion nach Deployment: Social-Share-Previews und 404-Status auf `https://normdex.at` live stichprobenhaft prüfen.
 
 ## 11. Offene Unsicherheiten / Punkte zur manuellen Prüfung
 
