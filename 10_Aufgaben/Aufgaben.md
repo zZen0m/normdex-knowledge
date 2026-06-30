@@ -40,6 +40,7 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 
 | ID      | Todo                                            | Bereich                          | Status |
 | ------- | ----------------------------------------------- | -------------------------------- | ------ |
+| T035    | [[T035-checkout-session-expired-trial-reset]]    | App / Lizenzen / Stripe / Checkout | offen |
 | T034    | [[T034-excel-export-wirtschaftlichkeitsbericht]] | App / Wirtschaftlichkeitsberechnung / Export | offen |
 | T026    | [[T026-secret-rotation-und-history-cleanup]]     | App / Security / Infrastruktur   | in Arbeit |
 
@@ -90,4 +91,4 @@ Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollo
 
 ## Nächste freie ID
 
-`T035`
+`T036`
