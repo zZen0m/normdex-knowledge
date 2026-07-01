@@ -128,23 +128,23 @@ Bewusst klein gehalten, damit es solo und nebenbei machbar bleibt. Die ersten Sc
 
 **Phase 1, Fundament (etwa Monat 1 bis 2):**
 
-- Positionierung auf der Landingpage schärfen.
-- Beispiel-Report als öffentliches PDF erstellen.
-- Methodik- und Validierungsseite schreiben.
-- Lead-Magnet erstellen und die Newsletter-Seite darauf ausrichten.
-- Nurture-Sequenz aufsetzen.
+- [x] Positionierung auf der Landingpage schärfen.
+- [ ] Beispiel-Report als öffentliches PDF erstellen. (Status bei letztem Stand nicht bestätigt)
+- [ ] Methodik- und Validierungsseite schreiben. (Status bei letztem Stand nicht bestätigt)
+- [x] Lead-Magnet (Leitfaden) erstellt.
+- [x] Nurture-Sequenz aufgesetzt, versendet den Leitfaden bereits.
 
 **Phase 2, Sichtbarkeit (ab etwa Monat 3):**
 
-- LinkedIn-Unternehmensseite anlegen, erste Posts.
-- Google Ads klein starten, beide Zielseiten testen.
-- Wöchentlich kurz messen und nachschärfen.
+- [ ] LinkedIn-Unternehmensseite anlegen, erste Posts. (Nächster Schritt)
+- [ ] Google Ads klein starten, beide Zielseiten testen. (Danach)
+- [ ] Wöchentlich kurz messen und nachschärfen.
 
 **Phase 3, Kumulieren (laufend):**
 
-- Ein Fachbeitrag pro Monat.
+- Ein Fachbeitrag pro Monat. Wird als Content-Seite auf der Landingpage veröffentlicht (SEO-Kanal), nicht als reiner Newsletter-Inhalt, endet aber mit Newsletter-CTA. Im `normdex-landingpage`-Repo existiert noch keine Blog-/Artikel-Struktur, das muss vor dem ersten Beitrag noch aufgebaut werden.
 - Zwei bis vier LinkedIn-Posts pro Monat.
-- Von den ersten Nutzern aktiv Testimonials einsammeln. Diese ersetzen mit der Zeit die fehlende Autorität.
+- Von den ersten Nutzern aktiv Testimonials einsammeln. Diese ersetzen mit der Zeit die fehlende Autorität. Russ Ingenieure GmbH (Pilotkunde, ehemaliger Arbeitgeber von Andreas Gruber, Haustechnik-Planungsbüro) testet bereits und gibt Feedback.
 
 ## Messung
 

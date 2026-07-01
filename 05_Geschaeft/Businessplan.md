@@ -44,6 +44,8 @@ Das Produkt ist betrieblich abgesichert (Backups, getrennte Umgebungen, dokument
 
 Interpretation: Das Produkt ist am Markt, die ersten echten Transaktionen laufen. Die Basis ist klein und damit voll im Plan der Validierungsphase. Der Engpass ist nicht das Produkt, sondern qualifizierter Traffic und Conversion.
 
+Hinweis zu Russ Ingenieure GmbH: kein klassischer Self-Service-Funnel-Lead, sondern der ehemalige Arbeitgeber von Andreas Gruber (Haustechnik-Planungsbüro), der sich bereit erklärt hat, Normdex zu testen und Feedback zu geben. Einzuordnen als Pilot-/Referenzkunde, nicht als Kaltakquise-Erfolg.
+
 ## 3. Markt und Wettbewerb
 
 Der Markt ist eine klar abgegrenzte Nische mit kleinem Suchvolumen und etablierten Anbietern.
