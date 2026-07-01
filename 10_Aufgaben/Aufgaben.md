@@ -40,6 +40,7 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 
 | ID      | Todo                                            | Bereich                          | Status |
 | ------- | ----------------------------------------------- | -------------------------------- | ------ |
+| T037    | [[T037-fachbeitrag-content-struktur-landingpage]] | Landingpage / Marketing / Content / SEO | offen |
 | T035    | [[T035-checkout-session-expired-trial-reset]]    | App / Lizenzen / Stripe / Checkout | offen |
 | T034    | [[T034-excel-export-wirtschaftlichkeitsbericht]] | App / Wirtschaftlichkeitsberechnung / Export | offen |
 | T026    | [[T026-secret-rotation-und-history-cleanup]]     | App / Security / Infrastruktur   | in Arbeit |
@@ -52,6 +53,7 @@ Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollo
 
 | ID      | Todo                                                | Bereich                          | Abgeschlossen |
 | ------- | --------------------------------------------------- | -------------------------------- | ------------- |
+| T036    | [[T036-dashboard-erste-schritte-popup-zustand-speichern]] | App / Frontend / Backend / UX | 2026-07-01 |
 | T028    | [[T028-newsletter-nurture-brevo-umsetzung]]      | Marketing / Newsletter / Brevo   | 2026-06-28 |
 | T020-16 | [[T020-16-Lizenz-und-Billing-Support-Aktionen]]     | App / Verwaltungsportal / Stripe | 2026-06-23 |
 | T032    | [[T032-einheitlicher-versand-und-abrechnungsdokumente]] | App / Billing / Stripe / E-Mail | 2026-06-24 |
@@ -91,4 +93,4 @@ Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollo
 
 ## Nächste freie ID
 
-`T036`
+`T038`
