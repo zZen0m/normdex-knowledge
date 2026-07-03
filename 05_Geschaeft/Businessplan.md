@@ -33,14 +33,14 @@ Das Produkt ist betrieblich abgesichert (Backups, getrennte Umgebungen, dokument
 
 ### Reale Geschäftskennzahlen (Stichtag 2026-06-30)
 
-| Kennzahl | Wert |
-|---|---|
-| Organisationen gesamt | 3 (davon Permatec als eigene Org) |
-| Externe Organisationen | 2 (Sarah Illmeier GmbH aktiv, Russ Ingenieure GmbH in Anbahnung) |
-| Aktive Lizenzen | 2 (davon 1 externer Zahlkunde) |
-| Registrierte Nutzer | 9 |
-| Angelegte Projekte | 6 |
-| Lizenzbestellungen gesamt | 4 |
+| Kennzahl                  | Wert                                                                                   |
+| ------------------------- | -------------------------------------------------------------------------------------- |
+| Organisationen gesamt     | 3 (davon Permatec als eigene Org)                                                      |
+| Externe Organisationen    | 2 (Sarah Illmeier GmbH aktiv (eigener Testaccount), Russ Ingenieure GmbH in Anbahnung) |
+| Aktive Lizenzen           | 2 (davon 0 externer Zahlkunde)                                                         |
+| Registrierte Nutzer       | 9                                                                                      |
+| Angelegte Projekte        | 6                                                                                      |
+| Lizenzbestellungen gesamt | 4                                                                                      |
 
 Interpretation: Das Produkt ist am Markt, die ersten echten Transaktionen laufen. Die Basis ist klein und damit voll im Plan der Validierungsphase. Der Engpass ist nicht das Produkt, sondern qualifizierter Traffic und Conversion.
 
@@ -48,7 +48,7 @@ Hinweis zu Russ Ingenieure GmbH: kein klassischer Self-Service-Funnel-Lead, sond
 
 ## 3. Markt und Wettbewerb
 
-Der Markt ist eine klar abgegrenzte Nische mit kleinem Suchvolumen und etablierten Anbietern.
+Der Markt ist eine klar abgegrenzte Nische mit kleinem Suchvolumen und etablierten Anbietern. Die quantitative Marktgröße (Anzahl Büros nach Bundesländern, Betriebsgrößen, TAM/SAM/SOM und Verdrängungsanalyse) ist in der [[Marktanalyse Österreich]] auf Basis der WKO-Branchendaten hergeleitet.
 
 | Anbieter | Profil | Bedeutung |
 |---|---|---|
@@ -97,13 +97,13 @@ Rahmenbedingungen, die den Plan bestimmen: Kaltstart ohne Branchennetzwerk, Budg
 
 Funnel-Logik: Die Trial verlangt die Karte und ist damit eine echte Hürde für kalten Verkehr. Davor liegt der Newsletter als Vertrauens- und Auffangschicht. Wer nicht sofort kauft, wird über einen Lead-Magneten (Praxisleitfaden plus Checkliste und Beispielbericht) eingesammelt und über eine Nurture-Strecke an die Trial herangeführt.
 
-| Kanal | Rolle | Priorität |
-|---|---|---|
-| Conversion-Fläche (Landingpage, Beispiel-Report, Methodikseite) | Verkauft im Self-Service allein, muss vor jedem bezahlten Klick stehen | Zuerst |
-| Newsletter und Lead-Magnet | Auffangnetz für alle, die nicht sofort die Karte hinterlegen | Hoch |
-| Google Ads | Aktiver Motor auf Begriffe mit klarer Kaufabsicht, kleines Tagesbudget | Hoch |
-| LinkedIn-Markenkanal | Fachposts unter der Marke, führen zu Newsletter oder Beispiel-Report | Mittel |
-| SEO und Content | Langfristige, kumulierende Wette auf Long-Tail-Fragen | Laufend |
+| Kanal                                                           | Rolle                                                                  | Priorität |
+| --------------------------------------------------------------- | ---------------------------------------------------------------------- | --------- |
+| Conversion-Fläche (Landingpage, Beispiel-Report, Methodikseite) | Verkauft im Self-Service allein, muss vor jedem bezahlten Klick stehen | Zuerst    |
+| Newsletter und Lead-Magnet                                      | Auffangnetz für alle, die nicht sofort die Karte hinterlegen           | Hoch      |
+| Google Ads                                                      | Aktiver Motor auf Begriffe mit klarer Kaufabsicht, kleines Tagesbudget | Hoch      |
+| LinkedIn-Markenkanal                                            | Fachposts unter der Marke, führen zu Newsletter oder Beispiel-Report   | Mittel    |
+| SEO und Content                                                 | Langfristige, kumulierende Wette auf Long-Tail-Fragen                  | Laufend   |
 
 Verbindliche Schreibregeln für alle öffentlichen Texte: Du-Form, direkte Umlaute, keine Gedankenstriche als Satzzeichen, sachlich statt werblich, kein Mitbewerber namentlich.
 
@@ -154,8 +154,73 @@ Vorteil der Aufstellung: minimale Fixkosten, schnelle Entscheidungen, voller tec
 | Technische Release-Qualität (Build, Dependencies, Security) | Strukturierte Repo-Audits, CI-Gates, Aufgabensteuerung im Vault; offene Sicherheitsaufgaben (z. B. Secret-Rotation T026) priorisiert abarbeiten |
 | Wenige Referenzen zum Start | Von den ersten Nutzern aktiv Testimonials einsammeln, die mit der Zeit fehlende Autorität ersetzen |
 
-## 11. Verwandte Dokumente
+## 11. Finanzplanung: Kosten und Umsatz
 
+> Ergänzt am 2026-07-03. Die Fixkosten unten sind der reale Ist-Stand. Die Umsatzzahlen sind ein Planszenario auf Basis der Ziele aus Abschnitt 7 und des Preismodells aus Abschnitt 5, kein Forecast. Sie stehen und fallen mit dem Aufbau eines funktionierenden Akquise-Motors.
+
+### 11.1 Laufende Fixkosten (Ist-Stand)
+
+Schlanke Kostenbasis, wie sie zum Solo-Betrieb passt. Jährlich abgerechnete Positionen sind auf den Monat umgelegt.
+
+| Position | Anbieter | Abrechnung | Betrag | Betrag mtl. | Betrag p.a. |
+|---|---|---|---|---|---|
+| Microsoft 365 Business Standard | Microsoft | monatl. | 14,04 € | 14,04 € | 168,48 € |
+| ChatGPT Plus | OpenAI | monatl. | 21,00 € | 21,00 € | 252,00 € |
+| Claude Pro | Anthropic | monatl. | 21,99 € | 21,99 € | 263,88 € |
+| VPS | — | monatl. | 10,00 € | 10,00 € | 120,00 € |
+| Gewerbe | — | jährl. | 150,00 € | 12,50 € | 150,00 € |
+| SVA | — | monatl. | 13,00 € | 13,00 € | 156,00 € |
+| Domain Normdex.at | World4You | jährl. | 36,00 € | 3,00 € | 36,00 € |
+| Domain Normdex.com | World4You | jährl. | 24,00 € | 2,00 € | 24,00 € |
+| Domain Normdex.de | World4You | jährl. | 10,00 € | 0,83 € | 10,00 € |
+| **Summe Fixkosten** | | | | **98,36 €** | **1.180,36 €** |
+
+Marketing und Ads sind hier bewusst nicht enthalten. Dafür gilt der Rahmen aus Abschnitt 6: Budget unter 2.000 € pro Jahr. Ebenfalls nicht in den Fixkosten: Stripe-Transaktionsgebühren, die als variable Kosten mit dem Umsatz mitwachsen (Größenordnung rund 1,5 bis 2,9 % je Zahlung plus Fixanteil).
+
+**Geplante Gesamtkosten 2026:** rund 1.180 € Fixkosten plus bis zu 2.000 € Marketing plus variable Stripe-Gebühren, also grob **bis 3.200 € über das Jahr**.
+
+### 11.2 Absehbare Kostensteigerungen (mittelfristig)
+
+| Auslöser | Effekt | Größenordnung |
+|---|---|---|
+| Umstieg auf größeren VPS (mehr Kunden, mehr Last) | höhere Betriebskosten | +10 bis +40 € mtl. |
+| Umstieg auf größeren Claude-Plan | höhere Toolkosten | ca. 100 € mtl. statt 21,99 €, also rund +78 € mtl. (+936 € p.a.) |
+| Steigende Stripe-Gebühren | variabel, wächst mit Umsatz | ca. 1,5 bis 2,9 % vom Umsatz |
+| Skalierendes Marketing/Ads | höherer Wachstumshebel | Budget nach Bedarf über die 2.000 € hinaus |
+
+Auch mit diesen Steigerungen bleibt die Kostenbasis im Verhältnis zu den Umsatzzielen klein. Der Solo-Betrieb ohne Personalkosten ist der zentrale Kostenvorteil.
+
+### 11.3 Umsatzplanung 2026 und die nächsten fünf Jahre
+
+Annahmen des Szenarios:
+
+- **Eine Jahreslizenz pro Kunde**, also ARPU **490 € pro Kunde und Jahr**. Das ist die konservative, realistische Annahme: Der durchschnittliche Kunde braucht genau eine Lizenz. Nur wenige sehr große Kunden nehmen eine zweite Lizenz dazu. Diese Ausreißer nach oben werden im Szenario bewusst nicht eingepreist und bilden den Puffer. Monatszahler (588 € p.a.) würden den Schnitt leicht anheben, gleichen also den seltenen Rabattfall aus.
+- Kundenzahl zum Jahresende 2026 in der Mitte des Ziels aus Abschnitt 7 (fünf bis zehn), also **acht zahlende Kunden**.
+- Zielmarkt ist **ausschließlich Österreich**, weil Normdex die ÖNORM M 7140 abbildet. Das Wachstum ist ambitioniert, aber im österreichischen Markt plausibel, getragen von SEO-Kumulation, Newsletter und bezahlter Suche. Die Marktgröße dazu ist in der [[Marktanalyse Österreich]] hergeleitet.
+- ARR = Run-Rate zum Jahresende (Kunden × ARPU). Der realisierte Jahresumsatz liegt darunter, weil Kunden über das Jahr erst dazukommen (Ramp).
+
+| Jahr         | Zahlende Kunden (Jahresende) | ARR (Run-Rate, Jahresende) | Umsatz im Jahr (realisiert, geschätzt) |
+| ------------ | ---------------------------- | -------------------------- | -------------------------------------- |
+| 2026 (heuer) | 8                            | ~3.900 €                   | ~1.200 €                               |
+| 2027         | 20                           | ~9.800 €                   | ~6.900 €                               |
+| 2028         | 40                           | ~19.600 €                  | ~14.700 €                              |
+| 2029         | 65                           | ~31.900 €                  | ~25.500 €                              |
+| 2030         | 95                           | ~46.600 €                  | ~39.200 €                              |
+| 2031         | 130                          | ~63.700 €                  | ~54.900 €                              |
+
+### 11.4 Langfristperspektive
+
+Der Zielmarkt Österreich ist klar begrenzt. Die [[Marktanalyse Österreich]] beziffert den bedienbaren Markt (SAM) auf grob **~750 Büros** und den engen Haustechnik-Kern (WKO-Berufszweig Installationstechnik) auf **~640 Büros**. Bei erfolgreicher Etablierung als moderne Web-Alternative zur Desktop-Software sind langfristig **~150 bis 300 zahlende Organisationen** realistisch, was bei einer Jahreslizenz pro Kunde einem **ARR von rund 75.000 bis 147.000 €** entspricht. Die theoretische Nischendecke (nahezu vollständige Durchdringung des Kerns) liegt bei rund 200.000 bis 250.000 € ARR und ist gegen den etablierten Anbieter unrealistisch — sie markiert nur die Obergrenze. Wachstum darüber hinaus bräuchte angrenzende Anwendungsfälle (z. B. CO2-Bilanzierung, weitere Normverfahren, Export-Schnittstellen) oder andere Märkte mit eigenen Normen.
+
+Der 5-Jahres-Zielwert von 130 Kunden entspricht rund 20 % des engen Haustechnik-Kerns und markiert damit das obere Ende des Plausiblen; ein konservativerer Pfad bliebe wirtschaftlich weiterhin klar tragfähig.
+
+Wegen der schlanken Kostenbasis wird der Betrieb schon bei sehr wenigen Kunden deckungsbeitragspositiv: Ab rund **drei Jahreskunden** sind die reinen Fixkosten (~1.180 € p.a.) gedeckt, inklusive des vollen Marketing-Budgets (~2.000 € p.a.) ab rund **sieben Jahreskunden**. Ab dieser Schwelle finanziert jeder weitere Kunde überwiegend Reinvestition und Ertrag.
+
+**Wichtiger Vorbehalt:** Diese Zahlen sind ein Zielszenario, kein Versprechen. Der Engpass bleibt (siehe Abschnitt 2) nicht das Produkt, sondern qualifizierter Traffic und Conversion. Ohne funktionierenden Akquise-Motor verschieben sich alle Jahre nach hinten.
+
+## 12. Verwandte Dokumente
+
+- [[Marktanalyse Österreich]]
 - [[Produkt-Übersicht]]
 - [[Unternehmensangaben]]
 - [[Marketingplan 2026 - Erste Kunden]]
