@@ -136,7 +136,8 @@ Bewusst klein gehalten, damit es solo und nebenbei machbar bleibt. Die ersten Sc
 
 **Phase 2, Sichtbarkeit (ab etwa Monat 3):**
 
-- [ ] LinkedIn-Unternehmensseite anlegen, erste Posts. (Nächster Schritt)
+- [x] LinkedIn-Unternehmensseite angelegt (04.07.2026): https://www.linkedin.com/company/normdex
+- [ ] Erste Fachposts veröffentlichen. (Nächster Schritt)
 - [ ] Google Ads klein starten, beide Zielseiten testen. (Danach)
 - [ ] Wöchentlich kurz messen und nachschärfen.
 

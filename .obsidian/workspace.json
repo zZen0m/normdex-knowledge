@@ -13,15 +13,70 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "10_Aufgaben/offene Todos/T028-newsletter-nurture-brevo-umsetzung.md",
+                "file": "10_Aufgaben/Aufgaben.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "T028-newsletter-nurture-brevo-umsetzung"
+              "title": "Aufgaben"
+            }
+          },
+          {
+            "id": "c448ca0c4f8f3fc5",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "04_Marketing/Normdex_Praxisleitfaden_OENORM_M7140.pdf"
+              },
+              "icon": "lucide-file-text",
+              "title": "Normdex_Praxisleitfaden_OENORM_M7140"
+            }
+          },
+          {
+            "id": "bb9cb39b2bc0b439",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "05_Geschaeft/Unternehmensangaben.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Unternehmensangaben"
+            }
+          },
+          {
+            "id": "f01ec1ca2ff4904f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "07_KI_Agenten/Prompt - Brevo Newsletter-Automation umsetzen.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Prompt - Brevo Newsletter-Automation umsetzen"
+            }
+          },
+          {
+            "id": "24ae6324760eb902",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "04_Marketing/Marketingplan 2026 - Erste Kunden.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Marketingplan 2026 - Erste Kunden"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -183,53 +238,53 @@
       "bases:Neue Base erstellen": false
     }
   },
-  "active": "15b8e44abd00754b",
+  "active": "c448ca0c4f8f3fc5",
   "lastOpenFiles": [
-    "10_Aufgaben/abgeschlossene Todos/T019-newsletter-gutschein-brevo-webhook-rollout.md.tmp.25796.33d462c7e796",
-    "10_Aufgaben/offene Todos/T028-newsletter-nurture-brevo-umsetzung.md.tmp.25796.0e3bcd27c496",
-    "10_Aufgaben/offene Todos/T028-newsletter-nurture-brevo-umsetzung.md.tmp.25796.75aa6948f2c9",
+    "04_Marketing/LinkedIn/01 Schreib- und Designvorgaben LinkedIn.md.tmp.21068.77c983e6bd1d",
+    "10_Aufgaben/Aufgaben.md",
+    "04_Marketing/LinkedIn/00 Themenplan.md.tmp.45908.a6e41826aaa9",
+    "04_Marketing/LinkedIn/00 Themenplan.md.tmp.48508.427f2fc0f022",
+    "04_Marketing/LinkedIn/Archiv/2026-07-07 Launch-Announcement.png",
+    "04_Marketing/LinkedIn/00 Themenplan.md.tmp.7156.aa35ac42ac71",
+    "04_Marketing/LinkedIn/00 Themenplan.md.tmp.46152.e2ded3a5b4be",
+    "04_Marketing/LinkedIn/00 Themenplan.md.tmp.38200.acad89ced749",
+    "04_Marketing/LinkedIn/01 Schreib- und Designvorgaben LinkedIn.md.tmp.26480.5674c9162a24",
+    "04_Marketing/LinkedIn/00 Themenplan.md.tmp.47476.ed7f0044b48d",
+    "04_Marketing/LinkedIn/01 Schreib- und Designvorgaben LinkedIn.md",
+    "04_Marketing/LinkedIn/01 Schreib- und Designvorgaben LinkedIn.md.tmp.43516.91850f6dd14f",
+    "04_Marketing/LinkedIn/00 Themenplan.md",
+    "04_Marketing/LinkedIn/00 Themenplan.md.tmp.43516.2624919827b5",
+    "04_Marketing/LinkedIn/Archiv",
+    "04_Marketing/Marketingplan 2026 - Erste Kunden.md",
+    "04_Marketing/normdex_linkedin_banner.png",
+    "04_Marketing/Normdex_LinkedIn_Ueber_uns.md",
+    "07_KI_Agenten/Prompt - Brevo Newsletter-Automation umsetzen.md",
+    "05_Geschaeft/Unternehmensangaben.md",
+    "04_Marketing/normdex_linkedin_logo_300x300.png",
+    "04_Marketing/normdex_linkedin_banner_combined_1128x191.png",
+    "10_Aufgaben/abgeschlossene Todos/T038-support-ticket-direkt-schliessen-ohne-bounce-loop.md",
+    "10_Aufgaben/abgeschlossene Todos/T035-checkout-session-expired-trial-reset.md",
+    "04_Marketing/normdex_linkedin_banner_sidebar_1128x191.png",
+    "04_Marketing/normdex_linkedin_banner_plain_1128x191.png",
+    "04_Marketing/normdex_linkedin_banner_1128x191.png",
+    "10_Aufgaben/offene Todos/T038-support-ticket-direkt-schliessen-ohne-bounce-loop.md",
+    "05_Geschaeft/Businessplan.md",
+    "05_Geschaeft/Marktanalyse Österreich.md",
+    "10_Aufgaben/offene Todos/T034-excel-export-wirtschaftlichkeitsbericht.md",
+    "90_Archiv/T021-rechnungslegung-individuelle-rechnungen.md",
     "10_Aufgaben/offene Todos/T026-secret-rotation-und-history-cleanup.md",
     "10_Aufgaben/offene Todos/T028-newsletter-nurture-brevo-umsetzung.md",
+    "10_Aufgaben/abgeschlossene Todos/T028-newsletter-nurture-brevo-umsetzung.md",
+    "10_Aufgaben/abgeschlossene Todos/T031-webapp-produktivrelease-und-prod-stack-konsolidierung.md",
+    "11_Audits/Landingpage/2026-06-28-repo-audit-landingpage.md",
+    "11_Audits/Landingpage/2026-06-14-repo-audit-landingpage.md",
+    "10_Aufgaben/abgeschlossene Todos/T033-brevo-dev-prod-listentrennung.md",
     "10_Aufgaben/offene Todos/T032-einheitlicher-versand-und-abrechnungsdokumente.md",
     "10_Aufgaben/abgeschlossene Todos/T032-einheitlicher-versand-und-abrechnungsdokumente.md",
-    "10_Aufgaben/abgeschlossene Todos/T031-webapp-produktivrelease-und-prod-stack-konsolidierung.md",
-    "02_App/E-Mail-System.md.tmp.42436.56e6355775a0",
     "10_Aufgaben/offene Todos/T031-webapp-produktivrelease-und-prod-stack-konsolidierung.md",
     "10_Aufgaben/offene Todos/T029-webapp-audit-rollout-externe-konfiguration.md",
-    "10_Aufgaben/abgeschlossene Todos/T029-webapp-audit-rollout-externe-konfiguration.md",
-    "10_Aufgaben/Aufgaben.md",
-    "10_Aufgaben/offene Todos/T020-16-Lizenz-und-Billing-Support-Aktionen.md",
-    "10_Aufgaben/abgeschlossene Todos/T020-16-Lizenz-und-Billing-Support-Aktionen.md",
-    "10_Aufgaben/abgeschlossene Todos/T020-16-Abnahme-Checkliste-Billing-Support.md",
-    "10_Aufgaben/offene Todos/T020-16-Abnahme-Checkliste-Billing-Support.md",
-    "10_Aufgaben/offene Todos/T030-automatisierte-stripe-gutschriften-bei-refunds.md",
-    "10_Aufgaben/abgeschlossene Todos/T030-automatisierte-stripe-gutschriften-bei-refunds.md",
-    "08_Entscheidungen/2026-06-22-einheitlicher-versand-und-abrechnungsdokumente.md",
-    "11_Audits/Webapp/2026-06-20-repo-audit-webapp.md",
-    "10_Aufgaben/offene Todos/T029-webapp-audit-rollout-externe-konfiguration.md.tmp.22160.3ee444d729ab",
-    "10_Aufgaben/offene Todos/T029-webapp-audit-rollout-externe-konfiguration.md.tmp.22160.e9199585b712",
-    "04_Marketing/Normdex_Praxisleitfaden_OENORM_M7140.pdf",
-    "10_Aufgaben/Aufgaben.md.tmp.17640.0dae1c370ced",
-    "10_Aufgaben/Aufgaben.md.tmp.17640.1cd96d7f0ab9",
-    "10_Aufgaben/offene Todos/T028-newsletter-nurture-brevo-umsetzung.md.tmp.17640.0a4ec7d62c5f",
-    "11_Audits/Landingpage/2026-06-14-repo-audit-landingpage.md",
-    "04_Marketing/Newsletter/04 Brevo-Umsetzung und Workflow-Anleitung.md",
-    "04_Marketing/Marketingplan 2026 - Erste Kunden.md",
-    "04_Marketing/Newsletter/Newsletter-Archiv/Nurture-Strecke nach Lead-Magnet.md",
-    "07_KI_Agenten/Prompt - Brevo Newsletter-Automation umsetzen.md",
-    "04_Marketing/Newsletter/04 Brevo-Umsetzung und Workflow-Anleitung.md.tmp.9916.5fee933ecbe7",
-    "04_Marketing/Newsletter/01 Wording-Vorgaben.md",
-    "04_Marketing/Newsletter/00 Newsletter-Leitfaden.md",
-    "04_Marketing/Newsletter/02 Designvorgaben.md",
     "99_Anhaenge/Pasted image 20260503134652.png",
     "Pasted image 20260503134652.png",
-    "Pasted image 20260501161134.png",
-    "Pasted image 20260501162843.png",
-    "Pasted image 20260501162349.png",
-    "Pasted image 20260501162250.png",
-    "Pasted image 20260501162003.png",
-    "Pasted image 20260501161847.png",
-    "Pasted image 20260501161658.png",
-    "Pasted image 20260501161647.png"
+    "Pasted image 20260501161134.png"
   ]
 }
