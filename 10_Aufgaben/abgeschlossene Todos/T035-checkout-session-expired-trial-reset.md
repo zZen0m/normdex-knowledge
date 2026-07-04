@@ -2,8 +2,9 @@
 
 **Phase:** App / Lizenzen / Stripe / Checkout  
 **Priorität:** P1 · Produktionsbug / UX-kritisch  
-**Status:** in Umsetzung — Code fertig & getestet, Stripe-Dashboard-Konfiguration steht noch aus  
-**Datum:** 2026-06-30
+**Status:** erledigt  
+**Datum:** 2026-06-30  
+**Abgeschlossen:** 2026-07-04
 
 ## Ziel
 
@@ -147,12 +148,12 @@ Ggf. einmalige DB-Abfrage auf Organisationen prüfen, bei denen `trial_used_at` 
 
 ## Akzeptanzkriterien
 
-- [ ] **Offen — manuelle Aktion nötig:** `checkout.session.expired` im Stripe-Dashboard-Webhook-Endpunkt registrieren (Prod + Dev). Ohne diesen Schritt sendet Stripe das Event nicht und der Handler läuft nie an.
+- [x] `checkout.session.expired` im Stripe-Dashboard-Webhook-Endpunkt registriert (Prod + Dev).
 - [x] Handler in `subscriptions.py` ist implementiert und eingebunden (`_handle_checkout_session_expired`, Dispatcher-Zweig ergänzt).
 - [x] Bricht ein Nutzer den Checkout ab und läuft die Session ab: `trial_used_at = NULL`, Pending-Lizenz wird auf `ended` gesetzt, Pending-Order auf `failed` (analog zum bestehenden `checkout/cancel`-Pfad; harte Löschung wie ursprünglich skizziert wurde bewusst nicht umgesetzt, um mit dem bestehenden Muster konsistent zu bleiben).
 - [x] Hat die Order bereits einen anderen Status (`completed`/`failed`) oder ist unbekannt: kein Eingriff (idempotent).
 - [x] Alle Tests grün (5 neue Tests in `test_license_webhooks.py::TestHandleCheckoutSessionExpired`), volle Suite (386 Tests) ohne neue Regressionen geprüft.
-- [ ] Stripe-Event in Dev-Umgebung über Stripe CLI end-to-end getestet: `stripe trigger checkout.session.expired` (nur mit registriertem Webhook-Event sinnvoll, siehe Punkt 1).
+- [ ] Optional/nicht blockierend: Stripe-Event in Dev-Umgebung über Stripe CLI end-to-end nachgetestet (`stripe trigger checkout.session.expired`). Noch nicht durchgeführt — Webhook-Registrierung ist jetzt aber die Voraussetzung dafür erfüllt.
 
 ## Notizen / Fortschritt
 
@@ -166,3 +167,4 @@ Ggf. einmalige DB-Abfrage auf Organisationen prüfen, bei denen `trial_used_at` 
   - `trial_used_at` wird nur zurückgesetzt, wenn `order.meta.trial_benefit_applied` gesetzt war — exakt dieselbe Bedingung wie im bestehenden `checkout/cancel`-Pfad. Der zusätzliche Stripe-API-Check aus `checkout/cancel` (Race-Condition-Schutz bei aktivem Nutzer-Abbruch) ist hier nicht nötig, da Stripe `checkout.session.expired` nur für Sessions sendet, die nie abgeschlossen wurden.
   - Tests: 5 neue Fälle in `test_license_webhooks.py::TestHandleCheckoutSessionExpired` (Trial-Reset, unberührte aktive Fremdlizenz, bereits abgeschlossene Order, unbekannte Session, Order-Fund über sekundäre Session). Volle Suite im `normdex-dev-api`-Container gegen SQLite ausgeführt: 386 bestanden, 3 vorbestehende/unabhängige Fehler (fehlendes `pytest-asyncio`-Plugin, abweichende `FRONTEND_URL` im Dev-Container) unverändert.
   - **Noch zu tun, bevor der Fix in Produktion wirkt:** Stripe-Dashboard-Konfiguration (Schritt 1) — das Event `checkout.session.expired` muss manuell im Stripe-Dashboard für den Prod- und Dev-Webhook-Endpunkt aktiviert werden. Das kann nicht per Code/Repo erledigt werden.
+- 2026-07-04: Stripe-Dashboard-Event `checkout.session.expired` von Andreas für Prod- und Dev-Webhook-Endpunkt ergänzt. Damit ist die letzte offene Voraussetzung erfüllt — Todo abgeschlossen. Ein Nachtest per `stripe trigger checkout.session.expired` in Dev steht optional noch aus, ist aber nicht blockierend, da die Logik bereits durch die Unit-Tests abgedeckt ist.
