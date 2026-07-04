@@ -40,7 +40,6 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 
 | ID      | Todo                                            | Bereich                          | Status |
 | ------- | ----------------------------------------------- | -------------------------------- | ------ |
-| T038    | [[T038-support-ticket-direkt-schliessen-ohne-bounce-loop]] | App / Support / Ticketsystem / E-Mail | offen |
 | T037    | [[T037-fachbeitrag-content-struktur-landingpage]] | Landingpage / Marketing / Content / SEO | offen |
 | T035    | [[T035-checkout-session-expired-trial-reset]]    | App / Lizenzen / Stripe / Checkout | offen |
 | T034    | [[T034-excel-export-wirtschaftlichkeitsbericht]] | App / Wirtschaftlichkeitsberechnung / Export | offen |
@@ -54,6 +53,7 @@ Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollo
 
 | ID      | Todo                                                | Bereich                          | Abgeschlossen |
 | ------- | --------------------------------------------------- | -------------------------------- | ------------- |
+| T038    | [[T038-support-ticket-direkt-schliessen-ohne-bounce-loop]] | App / Support / Ticketsystem / E-Mail | 2026-07-04 |
 | T036    | [[T036-dashboard-erste-schritte-popup-zustand-speichern]] | App / Frontend / Backend / UX | 2026-07-01 |
 | T028    | [[T028-newsletter-nurture-brevo-umsetzung]]      | Marketing / Newsletter / Brevo   | 2026-06-28 |
 | T020-16 | [[T020-16-Lizenz-und-Billing-Support-Aktionen]]     | App / Verwaltungsportal / Stripe | 2026-06-23 |

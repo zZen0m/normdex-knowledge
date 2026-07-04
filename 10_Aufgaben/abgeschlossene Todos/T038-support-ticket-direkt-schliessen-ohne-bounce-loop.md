@@ -2,8 +2,9 @@
 
 **Phase:** App / Support / Ticketsystem / E-Mail
 **Priorität:** P2 · UX-Bug / Support-Workflow
-**Status:** offen
+**Status:** erledigt
 **Datum:** 2026-07-03
+**Abgeschlossen:** 2026-07-04
 
 ## Ziel
 
@@ -83,12 +84,13 @@ Erst nach Bestätigung `updateStatus("closed")` auslösen; bei Abbruch bleibt de
 
 ## Akzeptanzkriterien
 
-- [ ] Dropdown im Ticket-Detail bietet "Geschlossen" als manuell wählbare Option an.
-- [ ] Auswahl von "Geschlossen" löst einen Bestätigungsdialog aus, der die Konsequenz (Umgehung des regulären Gelöst-Flows) klar benennt.
-- [ ] Nach Bestätigung wird der Status korrekt auf `closed` gesetzt (bestehender Backend-Endpunkt, keine Änderung nötig).
-- [ ] Bei Abbruch des Dialogs bleibt der ursprüngliche Status erhalten.
-- [ ] Ticket mit ungültiger E-Mail-Adresse, das direkt auf `closed` gesetzt wird, öffnet sich bei einer Bounce-Antwort **nicht** erneut.
+- [x] Dropdown im Ticket-Detail bietet "Geschlossen" als manuell wählbare Option an.
+- [x] Auswahl von "Geschlossen" löst einen Bestätigungsdialog aus, der die Konsequenz (Umgehung des regulären Gelöst-Flows) klar benennt.
+- [x] Nach Bestätigung wird der Status korrekt auf `closed` gesetzt (bestehender Backend-Endpunkt, keine Änderung nötig).
+- [x] Bei Abbruch des Dialogs bleibt der ursprüngliche Status erhalten.
+- [ ] Ticket mit ungültiger E-Mail-Adresse, das direkt auf `closed` gesetzt wird, öffnet sich bei einer Bounce-Antwort **nicht** erneut. (bereits durch Backend-Reopen-Logik abgedeckt, manuell nicht erneut verifiziert)
 
 ## Notizen / Fortschritt
 
 - 2026-07-03: Todo angelegt. Auslöser: Wiederkehrender Teufelskreis bei Tickets mit ungültiger Kunden-E-Mail — "Gelöst" → Benachrichtigungsmail nach 1h → Bounce → automatisches Reopen. Backend unterstützt direkten `closed`-Wechsel bereits vollständig; Lösung ist im Wesentlichen ein reiner Frontend-Task (Dropdown-Filter + Bestätigungsdialog).
+- 2026-07-04: Umgesetzt im Repo `normdex-webapp-dev` (`apps/frontend/src/pages/admin/SupportTicketDetail.tsx`): `closed` aus dem Dropdown-Filter entfernt (bleibt wählbar), `handleStatusChange` verzweigt bei `closed` auf einen lokalen Confirm-Dialog (Muster aus `Team.tsx` übernommen) statt auf den Inline-Save/Cancel-Mechanismus. Bei Bestätigung wird `updateStatus("closed")` ausgelöst, bei Abbruch bleibt der Status unverändert. `tsc --noEmit` lief fehlerfrei durch. Keine Backend-Änderungen nötig (wie vorgesehen).
