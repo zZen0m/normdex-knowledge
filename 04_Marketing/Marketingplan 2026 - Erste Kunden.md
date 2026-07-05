@@ -5,7 +5,7 @@ Ziel dieses Plans ist es, bis Jahresende 2026 die ersten fünf bis zehn zahlende
 Rahmenbedingungen, die den ganzen Plan bestimmen:
 
 - Kaltstart ohne bestehendes Netzwerk in der Energie- und Planungsbranche.
-- Kleines Budget (unter 2.000 € für das Jahr).
+- Kleines Budget (unter 600 € für das Jahr).
 - Umsetzung solo und nebenbei, also wenige Stunden pro Woche.
 - Reiner Self-Service-Funnel ohne Demo-Calls und ohne persönliche Selbstvermarktung.
 - Die 14-Tage-Trial bleibt an die Hinterlegung der Zahlungsdaten gebunden (bewusste Produktentscheidung).
@@ -36,7 +36,7 @@ Botschaftsgerüst:
 
 - Normkonform und validiert nach Abschnitt 10. Sachlich genannt, nicht als Hauptverkaufsargument inszeniert.
 - Überall nutzbar, ohne Installation, immer aktuell.
-- Saubere, prüffähige PDF-Reports, auch bei großen Beträgen.
+- Saubere, prüffähige PDF-Reports.
 - Mehrere Nutzer in einer Organisation, gemeinsame Projekte.
 
 **Frontend-Regel (verbindlich):** Im öffentlichen Auftritt wird kein Mitbewerber namentlich genannt. Keine Vergleichsseite mit Firmennamen, kein Mitbewerber-Name als Keyword. Wir vergleichen nur die Kategorie ("klassische Desktop-Software" gegenüber "moderne Web-Lösung"), nie eine konkrete Firma. Wettbewerbsanalyse bleibt internen Dokumenten vorbehalten.
@@ -81,11 +81,12 @@ Weil die organischen Plätze besetzt sind, ist bezahlte Suche der schnellste Weg
 
 ### 4. LinkedIn-Markenkanal
 
-Ein Unternehmenskanal unter der Marke Normdex, kein persönlicher Auftritt. Regelmäßige Fachposts rund um Wirtschaftlichkeit von Energiesystemen, verständlich erklärt. Jeder Post führt sanft zum Newsletter oder zum Beispiel-Report.
+Ein Unternehmenskanal unter der Marke Normdex, kein persönlicher Auftritt. Regelmäßige Fachposts rund um Wirtschaftlichkeit von Energiesystemen, verständlich erklärt. Jeder Post führt sanft zum Newsletter.
 
 - Eine Unternehmensseite anlegen.
-- Etwa zwei bis vier Posts pro Monat, fachlich und nützlich, ohne Werbefloskeln.
+- Etwa zwei Posts pro Monat, fachlich und nützlich, ohne Werbefloskeln.
 - Wiederkehrender Aufruf zum Newsletter am Ende der Beiträge.
+``EDIT: 04.07.2026: linkedIn-Kanal erstellt. (https://www.linkedin.com/company/normdex)``
 
 ### 5. SEO und Content (Hintergrundwette)
 
@@ -105,7 +106,7 @@ Konkrete Lead-Magnet-Ideen (eine reicht zum Start):
 
 - Ein Leitfaden als PDF, zum Beispiel "Wirtschaftlichkeitsberechnung nach ÖNORM M 7140: Worauf es bei einer prüffähigen Berechnung ankommt".
 - Eine Checkliste für eine normkonforme Vergleichsrechnung.
-- Der erwähnte Beispiel-Report als Vollversion.
+``EDIT: 04.07.2026: Leitfaden inkl. Checkliste erstellt.``
 
 Ablauf:
 
@@ -144,7 +145,7 @@ Bewusst klein gehalten, damit es solo und nebenbei machbar bleibt. Die ersten Sc
 **Phase 3, Kumulieren (laufend):**
 
 - Ein Fachbeitrag pro Monat. Wird als Content-Seite auf der Landingpage veröffentlicht (SEO-Kanal), nicht als reiner Newsletter-Inhalt, endet aber mit Newsletter-CTA. Im `normdex-landingpage`-Repo existiert noch keine Blog-/Artikel-Struktur, das muss vor dem ersten Beitrag noch aufgebaut werden.
-- Zwei bis vier LinkedIn-Posts pro Monat.
+- Zwei LinkedIn-Posts pro Monat.
 - Von den ersten Nutzern aktiv Testimonials einsammeln. Diese ersetzen mit der Zeit die fehlende Autorität. Russ Ingenieure GmbH (Pilotkunde, ehemaliger Arbeitgeber von Andreas Gruber, Haustechnik-Planungsbüro) testet bereits und gibt Feedback.
 
 ## Messung

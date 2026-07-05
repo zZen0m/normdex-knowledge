@@ -74,9 +74,37 @@
               "icon": "lucide-file",
               "title": "Marketingplan 2026 - Erste Kunden"
             }
+          },
+          {
+            "id": "5213b8dcec3188e7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "04_Marketing/LinkedIn/01 Schreib- und Designvorgaben LinkedIn.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "01 Schreib- und Designvorgaben LinkedIn"
+            }
+          },
+          {
+            "id": "5a20ee418addeab9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "10_Aufgaben/offene Todos/T037-fachbeitrag-content-struktur-landingpage.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "T037-fachbeitrag-content-struktur-landingpage"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -238,24 +266,26 @@
       "bases:Neue Base erstellen": false
     }
   },
-  "active": "c448ca0c4f8f3fc5",
+  "active": "5213b8dcec3188e7",
   "lastOpenFiles": [
+    "04_Marketing/Newsletter/02 Designvorgaben.md",
+    "04_Marketing/LinkedIn/00 Themenplan.md",
+    "04_Marketing/LinkedIn/01 Schreib- und Designvorgaben LinkedIn.md",
+    "04_Marketing/Newsletter/Newsletter-Archiv/Nurture-Strecke nach Lead-Magnet.md",
+    "10_Aufgaben/offene Todos/T037-fachbeitrag-content-struktur-landingpage.md",
+    "04_Marketing/LinkedIn/Archiv/2026-07-07 Launch-Announcement.png",
+    "04_Marketing/Marketingplan 2026 - Erste Kunden.md",
+    "04_Marketing/Normdex_Praxisleitfaden_OENORM_M7140.pdf",
     "04_Marketing/LinkedIn/01 Schreib- und Designvorgaben LinkedIn.md.tmp.21068.77c983e6bd1d",
     "10_Aufgaben/Aufgaben.md",
     "04_Marketing/LinkedIn/00 Themenplan.md.tmp.45908.a6e41826aaa9",
     "04_Marketing/LinkedIn/00 Themenplan.md.tmp.48508.427f2fc0f022",
-    "04_Marketing/LinkedIn/Archiv/2026-07-07 Launch-Announcement.png",
     "04_Marketing/LinkedIn/00 Themenplan.md.tmp.7156.aa35ac42ac71",
     "04_Marketing/LinkedIn/00 Themenplan.md.tmp.46152.e2ded3a5b4be",
     "04_Marketing/LinkedIn/00 Themenplan.md.tmp.38200.acad89ced749",
     "04_Marketing/LinkedIn/01 Schreib- und Designvorgaben LinkedIn.md.tmp.26480.5674c9162a24",
     "04_Marketing/LinkedIn/00 Themenplan.md.tmp.47476.ed7f0044b48d",
-    "04_Marketing/LinkedIn/01 Schreib- und Designvorgaben LinkedIn.md",
     "04_Marketing/LinkedIn/01 Schreib- und Designvorgaben LinkedIn.md.tmp.43516.91850f6dd14f",
-    "04_Marketing/LinkedIn/00 Themenplan.md",
-    "04_Marketing/LinkedIn/00 Themenplan.md.tmp.43516.2624919827b5",
-    "04_Marketing/LinkedIn/Archiv",
-    "04_Marketing/Marketingplan 2026 - Erste Kunden.md",
     "04_Marketing/normdex_linkedin_banner.png",
     "04_Marketing/Normdex_LinkedIn_Ueber_uns.md",
     "07_KI_Agenten/Prompt - Brevo Newsletter-Automation umsetzen.md",
@@ -281,8 +311,6 @@
     "10_Aufgaben/abgeschlossene Todos/T033-brevo-dev-prod-listentrennung.md",
     "10_Aufgaben/offene Todos/T032-einheitlicher-versand-und-abrechnungsdokumente.md",
     "10_Aufgaben/abgeschlossene Todos/T032-einheitlicher-versand-und-abrechnungsdokumente.md",
-    "10_Aufgaben/offene Todos/T031-webapp-produktivrelease-und-prod-stack-konsolidierung.md",
-    "10_Aufgaben/offene Todos/T029-webapp-audit-rollout-externe-konfiguration.md",
     "99_Anhaenge/Pasted image 20260503134652.png",
     "Pasted image 20260503134652.png",
     "Pasted image 20260501161134.png"
