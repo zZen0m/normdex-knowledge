@@ -52,6 +52,7 @@ Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollo
 
 | ID      | Todo                                                | Bereich                          | Abgeschlossen |
 | ------- | --------------------------------------------------- | -------------------------------- | ------------- |
+| T044    | [[T044-letzter-login-mitgliederliste-verwaltungsportal]] | App / Admin / Kundenakte / Mitglieder | 2026-07-09 |
 | T038    | [[T038-support-ticket-direkt-schliessen-ohne-bounce-loop]] | App / Support / Ticketsystem / E-Mail | 2026-07-04 |
 | T035    | [[T035-checkout-session-expired-trial-reset]]    | App / Lizenzen / Stripe / Checkout | 2026-07-04 |
 | T036    | [[T036-dashboard-erste-schritte-popup-zustand-speichern]] | App / Frontend / Backend / UX | 2026-07-01 |
@@ -94,4 +95,4 @@ Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollo
 
 ## Nächste freie ID
 
-`T039`
+`T045`
