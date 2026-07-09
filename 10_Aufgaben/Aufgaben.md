@@ -40,6 +40,7 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 
 | ID      | Todo                                            | Bereich                          | Status |
 | ------- | ----------------------------------------------- | -------------------------------- | ------ |
+| T045    | [[T045-systemlogs-in-adminoberflaeche]]          | App / Admin / Verwaltungsportal / Diagnose | offen |
 | T037    | [[T037-fachbeitrag-content-struktur-landingpage]] | Landingpage / Marketing / Content / SEO | offen |
 | T034    | [[T034-excel-export-wirtschaftlichkeitsbericht]] | App / Wirtschaftlichkeitsberechnung / Export | offen |
 | T026    | [[T026-secret-rotation-und-history-cleanup]]     | App / Security / Infrastruktur   | in Arbeit |
@@ -95,4 +96,4 @@ Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollo
 
 ## Nächste freie ID
 
-`T045`
+`T046`
