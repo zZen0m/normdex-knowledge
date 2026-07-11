@@ -81,3 +81,20 @@ Vor Umsetzung die Ergebnisse aus [[T042-seo-analyse-landingpage]] abwarten – d
 ## Notizen / Fortschritt
 
 - 2026-07-08: Todo angelegt. Hintergrund: Ziel ist mehr organischer Traffic über Long-Tail-Keywords rund um die ÖNORM M 7140. Die Seite ist aktuell gut strukturiert, aber zu dünn für Ranking. Baut auf [[T042-seo-analyse-landingpage]] auf. Inhaltlich verzahnt mit [[T037-fachbeitrag-content-struktur-landingpage]] (Fachbeiträge auf `/wissen` sind ein separater Kanal, diese Seite bleibt aber dauerhaft die Haupt-Ressource zur Norm).
+
+- **2026-07-11: Inhaltliche Verbesserung der bestehenden Sektionen durchgeführt** (ohne Praktisches Beispiel oder Glossar):
+  - **Hero-Teaser:** Prägnanter formuliert – Problem/Lösung-Struktur, warum die Norm wichtig ist (vs. Bauchgefühl/Improvisation)
+  - **Intro-Absatz ("Was ist ÖNORM M 7140?"):** Deutlich ausführlicher (3 Absätze), klärt: Definition, Problem das gelöst wird, Kostenkategorien, dynamisches Rechnen, Revision 2021, Abschnitt 10/Validierung
+  - **"Dynamisch statt statisch"-Box:** Bessere Erklärungen der 3 Punkte — konkrete Beispiele, warum relevant (Zeitwert des Geldes, energieträgerspezifische Preissteigerungsraten, Impact bei 20+ Jahren)
+  - **Verfahren & Inhalte (normSections):**
+    - Kapitalwertmethode → "Kapitalwertmethode (Barwertmethode)" mit Erklärung Kalkulationszinssatz
+    - Annuitätenmethode → "Annuitätenmethode (Jahresrente)" mit Jahresraten-Analogie
+    - Amortisationsrechnung → "Amortisationsrechnung (Payback)" mit deutlicher Erklärung
+    - Kostenstruktur → "Kostenstruktur nach Verursachung" – transparentere Kategorisierung
+  - **FAQ:** Erste Frage erweitert und prägnanter
+  - Alle Umlaute (ä, ö, ü) durchgehend, Brand Voice "Präzise, Professionell, Vertrauenswürdig" eingehalten
+
+Folgende Bereichezur noch **offen** (aus T043 ursprünglich):
+- **A. Beispielrechnung:** Explizit abgelehnt (User: "Ich will nicht, dass du das mit einem praktischen Beispiel machst")
+- **C. Verfahrensvergleich (Tabelle):** Noch nicht implementiert
+- **D. Glossar (Accordion):** Noch nicht implementiert

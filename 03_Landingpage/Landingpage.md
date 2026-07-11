@@ -240,6 +240,46 @@ Die Preisseite setzt auf ein **Hybrid-Modell**: Plan-Karten zum Vergleich + daue
 
 ---
 
+## ÖNORM M 7140-Seite (`/oenorm-m-7140`, Stand 2026-07-11)
+
+**Zweck:** Informationsseite zur ÖNORM M 7140 — soll zur besten deutschsprachigen Ressource für diese Norm werden. Ziel: Long-Tail-Traffic aus der Zielgruppe (Energieberater, TGA-Ingenieure, Investoren).
+
+**Struktur und Sektionen:**
+
+1. **Hero** – Validiertes Badge, H1 "ÖNORM M 7140", Teaser mit **Problem/Lösung-Struktur** (vs. Bauchgefühl/Improvisation)
+2. **"Was ist ÖNORM M 7140?" (3 Absätze)** 
+   - Definition, Problemstellung, nationale Umsetzung der EN 15459-1
+   - Kostenstruktur (kapitalgebunden, betriebsgebunden, verbrauchsgebunden)
+   - Dynamische Rechenmethoden, Revision 2021, Abschnitt 10/Validierung
+   - **"Dynamisch statt statisch"-Box** mit 3 erklärten Punkten (Zeitwert, Preissteigerung, Relevanz)
+3. **"Die 4 Kernergebnisse der Norm"** – 2x2-Grid: Gesamtlebenszykluskosten, Annuitäten, Amortisationsrechnung, Sensitivitätsanalyse
+4. **"Verfahren und Inhalte der Norm"** – 3x2-Grid mit 6 Karten:
+   - **Kapitalwertmethode (Barwertmethode)** – Barwert-Erklärung, Kalkulationszinssatz
+   - **Annuitätenmethode (Jahresrente)** – Jahresraten-Analogie
+   - **Amortisationsrechnung (Payback)** – Amortisationszeit-Erklärung
+   - **Kostenstruktur nach Verursachung** – 3 Kategorien
+   - **Validierung nach Abschnitt 10** – Testbeispiele
+5. **"Für wen ist die ÖNORM relevant?"** – 2x2-Grid (Energieberater, TGA-Ingenieure, Projektentwickler, Privatpersonen)
+6. **"Wie Normdex die ÖNORM M 7140 umsetzt"** – 2x5-Grid auf dunklem Grund (schwarze Typo), detaillierte Umsetzung
+7. **"So validiert Normdex nach Abschnitt 10"** – 2er-Grid: Referenzbeispiele, Abgleich, Rechenschritte, kontinuierliche Prüfung
+8. **"Normdex statt manueller Berechnung"** – 3er-Grid (Stunden zu Minuten, Keine Rechenfehler, Professionelle Dokumentation)
+9. **FAQ mit Schema.org `FAQPage`** – 6 Fragen (Was ist ÖNORM, Methoden, Unterschied dynamisch/statisch, Relevanz, Revision 2021, Normdex-Support)
+10. **CTA-Section** – "Normkonforme Berechnungen starten" mit Buttons zu Pricing und Features
+
+**Brand Voice:** Durchgehend Normdex-Stil: Präzise, Professionell, Vertrauenswürdig. Fachbegriffe werden erklärt. Keine praktische Beispielrechnung (User-Anforderung). Echte Umlaute (ä, ö, ü) durchgehend.
+
+**SEO & Struktur:**
+- Canonical: `https://normdex.at/oenorm-m-7140`
+- Title: "ÖNORM M 7140 – Wirtschaftlichkeitsberechnung für Energiesysteme | Normdex"
+- FAQ-Rich-Results aktiviert via `FAQPage` JSON-LD
+- Interne Verlinkungen: von `/` (Hero-Badge) und `/features` verlinkt
+
+**Abhängigkeiten:**
+- [[T043-oenorm-seite-inhaltlicher-ausbau]] – Laufendes Projekt für Erweiterungen (Glossar, Vergleichstabelle)
+- [[T042-seo-analyse-landingpage]] – Keyword-Recherche liefert Basis
+
+---
+
 ## Über uns (`/ueber-uns`)
 
 | Card | Titel | Text |
