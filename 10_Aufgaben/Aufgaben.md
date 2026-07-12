@@ -40,6 +40,7 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 
 | ID      | Todo                                            | Bereich                          | Status |
 | ------- | ----------------------------------------------- | -------------------------------- | ------ |
+| T047    | [[T047-linkedin-api-freigabe-statistiken]]       | Marketing / LinkedIn-Markenkanal / Reporting | offen |
 | T046    | [[T046-ssg-vite-react-ssg-landingpage]]          | Landingpage / Technisches SEO / Rendering | offen |
 | T045    | [[T045-systemlogs-in-adminoberflaeche]]          | App / Admin / Verwaltungsportal / Diagnose | offen |
 | T037    | [[T037-fachbeitrag-content-struktur-landingpage]] | Landingpage / Marketing / Content / SEO | offen |
@@ -97,4 +98,4 @@ Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollo
 
 ## Nächste freie ID
 
-`T047`
+`T048`
