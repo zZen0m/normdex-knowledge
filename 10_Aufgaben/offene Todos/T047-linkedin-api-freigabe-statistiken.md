@@ -2,7 +2,7 @@
 
 **Phase:** Marketing / LinkedIn-Markenkanal / Reporting
 **Priorität:** P3 · Nice-to-have für Reporting, kein Blocker für laufenden Betrieb
-**Status:** offen
+**Status:** in Arbeit
 **Datum:** 2026-07-12
 
 ## Ziel
@@ -37,7 +37,20 @@ Kontext: [[Marketingplan 2026 - Erste Kunden]], Phase 2 „Sichtbarkeit" — Lin
 
 ## Nächste Schritte
 
-- [ ] Bei developer.linkedin.com als Page-Admin anmelden und App anlegen
-- [ ] App mit LinkedIn-Unternehmensseite „normdex" verknüpfen
-- [ ] Community Management API beantragen (Use-Case: automatisiertes Reporting der Page-Statistiken für internes Marketing-Tracking)
-- [ ] Nach Freigabe: Abrufweg entscheiden (n8n vs. direkte Integration) und Todo entsprechend fortschreiben oder neues Umsetzungs-Todo anlegen
+- [x] Bei developer.linkedin.com als Page-Admin anmelden und App anlegen (erledigt 2026-07-12)
+- [x] App mit LinkedIn-Unternehmensseite „normdex" verknüpft
+- [ ] Community Management API beantragen (Use-Case: automatisiertes Reporting der Page-Statistiken für internes Marketing-Tracking) — **im Portal aktuell nicht beantragbar**, siehe Notizen
+- [ ] Nach Freigabe: Statistik-Endpunkte (Follower-Historie, Post-Performance) anbinden und Todo entsprechend fortschreiben oder neues Umsetzungs-Todo anlegen
+
+## Notizen / Fortschritt
+
+**2026-07-12 — App erstellt, OAuth-Verbindung für Basis-Scopes erfolgreich getestet**
+
+- Entscheidung: Integration läuft **nicht über n8n**, sondern direkt lokal in der Claude-Code-Umgebung auf dem VPS, damit Claude selbst Statistiken auslesen und Fragen dazu beantworten kann. n8n war nur als Ausweichoption gedacht, falls der Developer-Weg nicht klappt.
+- App im LinkedIn Developer Portal angelegt, mit der Unternehmensseite verknüpft. Freigegebene Produkte bislang: **Sign In with LinkedIn using OpenID Connect**, **Share on LinkedIn**, ein **Events**-Produkt. **Community Management API steht dort aktuell nicht als beantragbar zur Verfügung** — der eigentliche Kern dieses Todos (Statistik-Zugriff) ist damit weiterhin blockiert.
+- Freigegebene Scopes: `r_verify`, `openid`, `profile`, `r_events`, `w_member_social`, `email`, `r_profile_basicinfo`, `rw_events`. Keine davon deckt Organisations-Statistiken ab (dafür nötig: `r_organization_social`, `rw_organization_admin`).
+- 3-legged-OAuth2-Flow einmalig manuell durchgeführt (Consent im Browser, Code aus Redirect-URL kopiert) und serverseitig gegen Access-/Refresh-Token getauscht.
+- Verbindung erfolgreich getestet: `GET https://api.linkedin.com/v2/userinfo` liefert Profildaten (Andreas Gruber) zurück — technischer OAuth-Unterbau funktioniert.
+- Zugangsdaten (Client ID/Secret, Access-/Refresh-Token) liegen lokal auf dem VPS unter `/home/deploy/tools/linkedin-stats/credentials.json` (Dateirechte 600, nicht in einem Git-Repo, nicht versioniert). Hilfsskripte dort: `get_auth_url.py`, `exchange_token.py`.
+- Access-Token gültig bis 10.09.2026, Refresh-Token bis 2027 — Statistik-Scopes können bei Bedarf per erneutem Consent-Flow nachgezogen werden, sobald Community Management API im Portal beantragbar ist.
+- **Damit nutzbar:** eigenes Profil abrufen, Organisation-Events lesen/verwalten, Posts im eigenen Namen erstellen. **Weiterhin nicht möglich:** Follower-Statistiken, Post-Performance/Impressions der Unternehmensseite.
