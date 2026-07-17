@@ -2,8 +2,8 @@
 
 **Thema-Nr.:** 1 aus [[00 Themenplan]]
 **Zieltermin laut Plan:** Di, 14.07.2026
-**Tatsächliches Postingdatum:** geplant für 15. oder 16.07.2026 (Andreas)
-**Status:** Text und Grafik fertig, noch nicht gepostet
+**Tatsächliches Postingdatum:** in LinkedIn eingeplant für Di, 21.07.2026, 09:15 Uhr
+**Status:** Text und Grafik fertig, in LinkedIn geplant (noch nicht veröffentlicht)
 
 ## Posttext
 

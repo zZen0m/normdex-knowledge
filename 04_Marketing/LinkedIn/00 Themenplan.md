@@ -10,7 +10,7 @@ Reihenfolge orientiert sich an drei Prinzipien: erst Orientierung, dann inhaltli
 
 | # | Zieltermin | Thema | Status | Angedachter Winkel |
 |---|---|---|---|---|
-| 1 | Di, 14.07.2026 | Die drei Verfahren kurz erklärt | in Arbeit | Orientierungspost direkt nach dem Launch, baut Grundverständnis auf. Kapitalwert-, Annuitäten- und Amortisationsmethode verdichtet, später Verweis auf ausführlichen Fachbeitrag (siehe [[T037-fachbeitrag-content-struktur-landingpage]]). Textentwurf fertig, Posting durch Andreas für 15. oder 16.07.2026 geplant (siehe [[2026-07-14-drei-verfahren-kurz-erklaert]]) |
+| 1 | Di, 21.07.2026, 09:15 | Die drei Verfahren kurz erklärt | in Arbeit | Orientierungspost direkt nach dem Launch, baut Grundverständnis auf. Kapitalwert-, Annuitäten- und Amortisationsmethode verdichtet, später Verweis auf ausführlichen Fachbeitrag (siehe [[T037-fachbeitrag-content-struktur-landingpage]]). Text und Grafik fertig, in LinkedIn für 21.07.2026, 09:15 Uhr eingeplant (siehe [[2026-07-14-drei-verfahren-kurz-erklaert]]) |
 | 2 | Di, 28.07.2026 | Validierung nach Abschnitt 10 | geplant | Vertrauensthema, früh sinnvoll direkt nach dem Launch. Was das praktisch für Kunden und Behörden bedeutet, nicht nur eine Formalie |
 | 3 | Di, 25.08.2026 | Kalkulationszinssatz | geplant | Erster inhaltlich schwerer Post, größter Hebel auf das Ergebnis. Wie er gewählt wird, was ein falsch angesetzter Zinssatz für die Empfehlung bedeutet |
 | 4 | Di, 08.09.2026 | Vier-Augen-Prinzip im Team | geplant | Auflockerung nach dem technischen Post. Warum eine Berechnung, die später vor einem Kunden oder Fördergeber steht, vor dem Rausgehen von mehr als einer Person geprüft werden sollte |
