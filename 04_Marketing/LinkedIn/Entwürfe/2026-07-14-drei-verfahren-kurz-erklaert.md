@@ -3,7 +3,7 @@
 **Thema-Nr.:** 1 aus [[00 Themenplan]]
 **Zieltermin laut Plan:** Di, 14.07.2026
 **Tatsächliches Postingdatum:** geplant für 15. oder 16.07.2026 (Andreas)
-**Status:** Entwurf fertig, noch nicht gepostet
+**Status:** Text und Grafik fertig, noch nicht gepostet
 
 ## Posttext
 
@@ -30,12 +30,14 @@ Der Praxisleitfaden zur ÖNORM M 7140 geht ausführlicher auf alle drei Verfahre
 - Vor dem Posten: Begleitgrafik noch manuell erstellen (siehe Design-Briefing unten).
 - Timing laut Vorgabe: werktags vormittags, 08 bis 10 Uhr.
 
-## Design-Briefing für Begleitgrafik
+## Begleitgrafik (fertig)
 
-- Format: 1200 x 627 px (Feed) oder 1080 x 1080 px (quadratisch).
-- Farben und Schrift laut [[Designsystem & Farben]].
-- Kernsatz als Bildtext, z. B. "Drei Verfahren, eine Empfehlung" oder "Eine Zahl reicht nicht".
-- Stilvorlage: `normdex_linkedin_banner.png` (04_Marketing).
+Fertige Grafik: [[2026-07-14-drei-verfahren-kurz-erklaert-banner.png]] (1200 x 627 px, helle Variante).
+
+- Headline: "Drei Verfahren. Drei Antworten."
+- Drei Icon-Chips rechts: Kapitalwert (Euro-Kreis, "Wert von heute"), Annuität (drei gleich hohe Balken, "Gleiche Jahresraten"), Amortisation (Uhr, "Rückzahldauer").
+- Helle Variante gewählt (Off-White/Hellcyan-Gradient, Dunkel-Teal-Text), siehe [[01 Schreib- und Designvorgaben LinkedIn]] für beide verfügbaren Stilvarianten und Farbwerte.
+- Iterationsverlauf: erst dunkle Variante ohne Icons, dann dunkle Variante mit den drei Icon-Chips, dann auf helle Variante mit denselben Icons umgestellt (Wunsch von Andreas, wirkt freundlicher und näher am App-Look).
 
 ## Verwandte Dokumente
 

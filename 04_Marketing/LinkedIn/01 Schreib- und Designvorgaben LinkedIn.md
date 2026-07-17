@@ -44,12 +44,16 @@ Ein Post darf nicht auf den ersten Blick als KI-generiert erkennbar sein. Das is
 
 ## Design-Briefing für Begleitgrafik
 
-Der Skill liefert nur die Spezifikation, kein fertiges Bild. Umsetzung erfolgt manuell (z. B. Canva) durch Andreas.
-
 - Format: 1200 x 627 px (Feed) oder 1080 x 1080 px (quadratisch).
 - Farben und Schrift laut [[Designsystem & Farben]].
 - Ein kurzer Kernsatz als Bildtext, kein Fließtext im Bild.
-- Stilvorlage: `normdex_linkedin_banner.png` (04_Marketing).
+- Kleine Icon-Elemente (Lucide-Linienstil, 2px Strich, pinker Kreisrahmen) sind erlaubt und bei mehrteiligen Themen (z. B. mehrere Verfahren/Begriffe) empfohlen, um das Bild aufzulockern. Kein Icon-Overkill, keine Emoji-Icons, keine Icons ohne inhaltlichen Bezug.
+- **Zwei Stilvarianten verfügbar**, beide unter `04_Marketing/LinkedIn/Design-Vorlagen/` als leere Basis (nur Hintergrund, Punktraster, pinker Randbalken, ohne Text):
+  - **Dunkel** (`normdex_linkedin_banner_dunkel_1200x627.png`): Gradient `#001a1b` → `#0f4547`, Text/Icons in Off-White `#fafafa`, gedämpfte Labels in `#8fb3b3`. Wirkt kräftiger, guter Kontrast für Sonderanlässe (Launch, große Ankündigungen).
+  - **Hell** (`normdex_linkedin_banner_hell_1200x627.png`): Gradient `#fafafa` → `#e3f4f4` (identisch zu `--gradient-hero` aus [[Designsystem & Farben]]), Text/Icons in Dunkel-Teal `#003c3e`, gedämpfte Labels in `#4f8688`. Näher am Look von App und Landingpage, seit 2026-07-17 Standardwahl für die laufende Fachpost-Rotation.
+  - Beide Varianten: pinker Randbalken `#ff2d58`, Schrift Inter (Bold für Headline, Medium für Labels), 10 px breiter Akzentbalken links.
+  - Das ursprüngliche `normdex_linkedin_banner.png` (04_Marketing, 1128 x 191 px) ist das separate LinkedIn-Unternehmensseiten-Titelbild (Cover Photo), nicht die Vorlage für Post-Grafiken. Gleiche Farbwelt, andere Verwendung.
+- Fertige Beispielumsetzung mit Icons (Referenz für künftige Posts): [[2026-07-14-drei-verfahren-kurz-erklaert-banner.png]] im Ordner `Entwürfe/`.
 
 ## Praktische Hinweise zur Veröffentlichung
 
