@@ -55,6 +55,12 @@ Ein Post darf nicht auf den ersten Blick als KI-generiert erkennbar sein. Das is
   - Das ursprüngliche `normdex_linkedin_banner.png` (04_Marketing, 1128 x 191 px) ist das separate LinkedIn-Unternehmensseiten-Titelbild (Cover Photo), nicht die Vorlage für Post-Grafiken. Gleiche Farbwelt, andere Verwendung.
 - Fertige Beispielumsetzung mit Icons (Referenz für künftige Posts): [[2026-07-14-drei-verfahren-kurz-erklaert-banner.png]] im Ordner `Entwürfe/`.
 
+## Ablagestruktur für Post-Dateien
+
+Jeder Fachpost besteht aus zwei Dateien mit demselben Datums-Präfix im Dateinamen: der MD-Datei mit Text und Metadaten sowie der PNG-Begleitgrafik (z. B. `2026-07-14-drei-verfahren-kurz-erklaert.md` und `2026-07-14-drei-verfahren-kurz-erklaert-banner.png`). Der gemeinsame Präfix hält beide Dateien beim Sortieren zusammen.
+
+Während der Entwurfsphase liegen beide Dateien flach in `Entwürfe/`. Nach der Veröffentlichung wandern beide Dateien flach nach `Archiv/`, ohne eigenen Unterordner pro Post. Bei der erwarteten Menge von rund 20 bis 25 Fachposts pro Jahr reicht die Zuordnung über den Datumspräfix aus, ein Unterordner pro Post wäre unnötiger Navigationsaufwand. Unterordner sind erst sinnvoll, falls ein Post mehrere Bilder bekommt (z. B. Karussell mit mehreren Slides) oder das Archiv deutlich größer wird als aktuell absehbar.
+
 ## Praktische Hinweise zur Veröffentlichung
 
 Gilt zusätzlich zu Text und Grafik, betrifft den Vorgang des Postens selbst. Basis: Recherche Juli 2026, überwiegend Marketing-Blogs und Tool-Anbieter, keine offizielle LinkedIn-Bestätigung, aber die Richtung deckt sich seit Jahren mit Beobachtungen aus der Praxis.
