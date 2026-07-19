@@ -206,6 +206,32 @@ created_at
 Indizes: `(user_id)`, `(read_at)`, `(created_at)`, `(user_id, read_at)`, `(user_id, created_at)`.
 Persistente In-App-Benachrichtigungen je User. Cascade-Delete beim User. Siehe [[Funktionen im Detail#Benachrichtigungen]] und [[API-Endpunkte#Benachrichtigungen]].
 
+## LinkedIn-Marketing
+
+```text
+linkedin_connections
+  Organisations-URN, verschlüsselte Access-/Refresh-Tokens,
+  Ablaufzeitpunkte, Verbindungsstatus, letzter Token-Refresh
+
+linkedin_sync_runs
+  Trigger, Status, Start/Ende, auslösender Admin,
+  Post-Zähler und sanitierte Fehlerkategorie/-meldung
+
+linkedin_posts
+  eindeutige LinkedIn-URN, Lifecycle, Text, URL,
+  Anlage-/Veröffentlichungszeitpunkt, Sichtkontakte, unavailable-Kennzeichen
+
+linkedin_post_snapshots
+  Post-FK, Sync-Run-FK, Messzeitpunkt und Leistungskennzahlen;
+  eindeutig pro Post und Sync-Lauf
+
+linkedin_follower_snapshots
+  Sync-Run-FK, Messzeitpunkt, organische/bezahlte/gesamte Follower;
+  höchstens ein Snapshot pro Sync-Lauf
+```
+
+Aktueller Alembic-Head: `a5c6d7e8f9b0`. Zeitbereichs-, Status- und Post-/Messzeitpunkt-Indizes unterstützen die Admin-Auswertung. Details: [[LinkedIn-Marketing-KPIs]].
+
 ---
 
 ## Verwandte Dokumente

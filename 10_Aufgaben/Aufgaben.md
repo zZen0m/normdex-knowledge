@@ -40,7 +40,8 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 
 | ID      | Todo                                            | Bereich                          | Status |
 | ------- | ----------------------------------------------- | -------------------------------- | ------ |
-| T048    | [[T048-linkedin-marketing-kpis-verwaltungsportal]] | App / Admin / Verwaltungsportal / Marketing | offen |
+| T049    | [[T049-google-marketing-kpis-verwaltungsportal]] | App / Admin / Verwaltungsportal / Marketing | offen |
+| T048    | [[T048-linkedin-marketing-kpis-verwaltungsportal]] | App / Admin / Verwaltungsportal / Marketing | Abnahme offen |
 | T046    | [[T046-ssg-vite-react-ssg-landingpage]]          | Landingpage / Technisches SEO / Rendering | Abnahme offen |
 | T045    | [[T045-systemlogs-in-adminoberflaeche]]          | App / Admin / Verwaltungsportal / Diagnose | offen |
 | T037    | [[T037-fachbeitrag-content-struktur-landingpage]] | Landingpage / Marketing / Content / SEO | offen |

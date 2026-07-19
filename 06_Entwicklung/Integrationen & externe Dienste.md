@@ -79,6 +79,17 @@
 
 ---
 
+## LinkedIn Community Management API
+
+- Ausschließlich die Produktions-App kommuniziert live mit LinkedIn; lokal und `dev-server` verwenden Datenbank-Fixtures.
+- OAuth-Tokens werden authentifiziert verschlüsselt in `linkedin_connections` gespeichert. Client-ID, Client-Secret, Organisations-URN, REST-Version und Fernet-Schlüssel bleiben Umgebungsvariablen.
+- Automatischer Lauf täglich um 05:00 Uhr `Europe/Vienna`, abgesichert durch `LINKEDIN_LIVE_SYNC_ENABLED` und `LINKEDIN_SCHEDULER_ENABLED`.
+- Verwendete Ressourcen: Posts-Finder mit `viewContext=AUTHOR`, Organisations-Follower-Statistik und Organisations-Share-Statistik je Post.
+- LinkedIn-REST-Version ist konfigurierbar und vor Rollouts gegen die offizielle Dokumentation zu prüfen.
+- Vollständige Betriebs-, Bootstrap-, Fixture-, Rollout- und Rollback-Dokumentation: [[LinkedIn-Marketing-KPIs]].
+
+---
+
 ## Normdex API (Landingpage → Backend)
 
 - Kontaktformular-Einreichung: `POST {VITE_API_URL}/support/public-tickets`

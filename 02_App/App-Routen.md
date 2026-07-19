@@ -49,3 +49,4 @@
 | `/admin/organizations/:orgId` | **Organisationsakte** – Organisation, Nutzer, Lizenzen, Bestellungen, Projekte, Tickets und Timeline; Zeitstempel werden zeitzonensicher sortiert |
 | `/admin/support` | **Support-Posteingang** – alle Tickets |
 | `/admin/support/:ticketId` | **Ticket-Detailansicht** – Antworten, Statusverwaltung |
+| `/admin/marketing` | **Marketing** – LinkedIn-Sync-Status, KPIs, Follower-Verlauf sowie veröffentlichte und geplante Posts |

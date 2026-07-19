@@ -1,16 +1,16 @@
-# LinkedIn-Post: Kalkulationszinssatz
+# LinkedIn-Post: Kalkulatorischer Zinssatz
 
 **Thema-Nr.:** 3 aus [[00 Themenplan]]
 **Zieltermin laut Plan:** Di, 25.08.2026
-**Status:** Textentwurf fertig, Grafik offen
+**Status:** Text und Grafik fertig
 
 ## Posttext
 
-Zwei Prozentpunkte beim Kalkulationszinssatz reichen in einer 20-Jahre-Betrachtung oft aus, um die Rangfolge zweier Varianten zu kippen.
+Zwei Prozentpunkte beim kalkulatorischen Zinssatz reichen in einer 20-Jahre-Betrachtung oft aus, um die Rangfolge zweier Varianten zu kippen.
 
-Der Kalkulationszinssatz ist neben Betrachtungszeitraum und Preissteigerung einer der drei Rahmenparameter, die jedes Ergebnis der ÖNORM M 7140 prägen. Er bildet die Kapitalkosten und die Renditeerwartung ab, mit denen künftige Zahlungen auf den heutigen Wert abgezinst werden.
+Der kalkulatorische Zinssatz ist neben Betrachtungszeitraum und Preissteigerung einer der drei Rahmenparameter, die jedes Ergebnis der ÖNORM M 7140 prägen. Er bildet die Kapitalkosten und die Renditeerwartung ab, mit denen künftige Zahlungen auf den heutigen Wert abgezinst werden.
 
-Ein zu niedrig angesetzter Zinssatz begünstigt Varianten mit hoher Anfangsinvestition, weil spätere Kosten kaum noch ins Gewicht fallen. Ein zu hoch angesetzter Zinssatz tut das Gegenteil und bevorzugt die günstigere Anschaffung, selbst wenn die laufenden Kosten später höher ausfallen.
+Ein zu niedrig angesetzter Zinssatz lässt hohe laufende Kosten kaum schrumpfen, sie fließen fast mit vollem Gewicht in die Rechnung ein. Das begünstigt Varianten mit höherer Anfangsinvestition und niedrigeren Folgekosten. Ein zu hoch angesetzter Zinssatz dreht das um: Spätere Kosten werden stark abgezinst, die günstigere Anschaffung ist im Vorteil, selbst wenn ihre laufenden Kosten später höher ausfallen.
 
 Einen einzigen richtigen Zinssatz für alle Projekte gibt es nicht. Er muss zur Finanzierungssituation und zur Renditeerwartung des Auftraggebers passen und vor allem begründet werden, nicht einfach übernommen.
 
@@ -22,14 +22,17 @@ Mehr zur Auswahl der Rahmenparameter gibt es im Praxisleitfaden zur ÖNORM M 714
 
 ## Hinweise zur Veröffentlichung
 
-- Zeichenlänge im Richtwert (rund 1370 Zeichen, siehe [[01 Schreib- und Designvorgaben LinkedIn]]).
-- Faktenbasis: [[Wirtschaftlichkeitsrechner]] (Diskontierungssatz als Berechnungsparameter, Sensitivitätsanalyse für Zinssätze) und `Normdex_Praxisleitfaden_OENORM_M7140.pdf` (Abschnitt "Wähle die Rahmenparameter bewusst": Kalkulationszinssatz bildet Kapitalkosten und Renditeerwartung ab, muss begründet festgelegt werden; Abschnitt "Prüfe die Stabilität mit einer Sensitivitätsanalyse").
+- Zeichenlänge im Richtwert (rund 1490 Zeichen, oberes Ende, siehe [[01 Schreib- und Designvorgaben LinkedIn]]).
+- Korrektur 2026-07-19: Ursprüngliche Formulierung hatte die Wirkungsrichtung des Zinssatzes verdreht ("spätere Kosten fallen bei niedrigem Zinssatz kaum ins Gewicht" war falsch herum). Richtig ist: bei niedrigem Zinssatz werden spätere Kosten kaum abgezinst und fallen deshalb voll ins Gewicht, das begünstigt Varianten mit niedrigeren laufenden Kosten. Text korrigiert.
+- Faktenbasis: [[Wirtschaftlichkeitsrechner]] (Diskontierungssatz als Berechnungsparameter, Sensitivitätsanalyse für Zinssätze) und `Normdex_Praxisleitfaden_OENORM_M7140.pdf` (Abschnitt "Wähle die Rahmenparameter bewusst": kalkulatorischer Zinssatz bildet Kapitalkosten und Renditeerwartung ab, muss begründet festgelegt werden; Abschnitt "Prüfe die Stabilität mit einer Sensitivitätsanalyse").
 - Keine feste Zinssatz-Empfehlung im Text, bewusst offen gehalten. Der Praxisleitfaden nennt in seinem anonymisierten Beispielbericht 3,0 Prozent, das ist aber ein fiktives Rechenbeispiel und keine allgemeine Norm-Vorgabe, deshalb nicht im Post als Faustregel zitiert.
 - Link als Klartext ohne https:// (laufender Fachpost, kein Sonderanlass).
 
 ## Begleitgrafik
 
-Noch nicht erstellt. Vorschlag: analog zu Post 2 ein kleines Schema statt reiner Textkacheln, z. B. Wippe/Balance-Symbol oder zwei Balken (niedriger vs. hoher Zinssatz), die zeigen, wie sich die Gewichtung zwischen hoher Anfangsinvestition und späteren laufenden Kosten verschiebt. Helle Stilvorlage (`normdex_linkedin_banner_hell_1200x627.png`) als Basis.
+Erstellt: [[2026-08-25-kalkulationszinssatz-banner.png]]. Helle Stilvorlage, Headline "Zwei Prozentpunkte. Andere Rangfolge." Zwei Ergebniskarten im Report-Look nebeneinander, links "Niedriger Zinssatz", rechts "Hoher Zinssatz". Jede Karte zeigt zwei Zeilen ("Hohe Investition, niedrige Kosten" / "Niedrige Investition, hohe Kosten") mit einem Balken als relative Kostengröße und einem Häkchen-Badge bei der jeweils günstigeren Variante. Das Häkchen wandert zwischen den Karten von der einen zur anderen Zeile, das visualisiert die kippende Rangfolge direkt und produktnah.
+
+Balkenlängen sind schematisch, keine echten Werte oder Achsenskalierung, um keine ÖNORM- oder Produktzahlen zu suggerieren, die nicht belegt sind. Schrift ist Liberation Sans statt Inter (bewusst so belassen). Frühere Entwürfe (Liniendiagramm, Wippe/Balance-Symbol) verworfen.
 
 ## Verwandte Dokumente
 

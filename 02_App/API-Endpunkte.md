@@ -144,9 +144,15 @@ GET    /admin/support/tickets/{id}/attachments/{attachment_id} → Anhang herunt
 POST   /admin/support/tickets/{id}/reply   → Antwort / Status-Update
 PATCH  /admin/support/tickets/{id}         → Status/Priorität/Kategorie/Assignee
 GET    /admin/support/stats                → Support-Metriken
+GET    /admin/marketing/linkedin/overview  → Sync-Status, KPIs, Follower-Zeitreihe und Post-Marker
+GET    /admin/marketing/linkedin/posts     → Veröffentlichte/geplante Posts, Suche, Sortierung und Pagination
+POST   /admin/marketing/linkedin/sync      → Manuellen Produktions-Sync im Hintergrund starten
+GET    /admin/marketing/linkedin/sync-runs/{id} → Laufstatus für Frontend-Polling
 ```
 
 Der Attachment-Download prüft Admin-Session, Ticket-/Attachment-Zuordnung, Retention-Löschstatus und den zulässigen Storage-Pfad. Gelöschte Anhänge liefern HTTP 410; nicht vorhandene oder ungültige Zuordnungen HTTP 404.
+
+Die LinkedIn-Endpunkte sind ausschließlich für Admins verfügbar. `overview` und veröffentlichte Posts verwenden einen gemeinsamen Wiener Kalenderzeitraum. KPIs aggregieren nur den neuesten Snapshot je Post. Der manuelle Sync liefert HTTP 202, parallele/Cooldown-Starts HTTP 409 und einen deaktivierten oder unvollständig konfigurierten Live-Sync HTTP 503. Details: [[LinkedIn-Marketing-KPIs]].
 
 ### Admin-Billing: Gutschriften und Erstattungen
 
