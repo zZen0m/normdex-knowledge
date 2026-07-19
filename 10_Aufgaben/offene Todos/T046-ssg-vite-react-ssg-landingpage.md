@@ -2,7 +2,7 @@
 
 **Phase:** Landingpage / Technisches SEO / Rendering
 **Priorität:** P2 · Größter struktureller SEO-Hebel – mittelfristig
-**Status:** offen
+**Status:** umgesetzt · manuelle Deployment-Abnahme offen
 **Datum:** 2026-07-10
 
 ## Ziel
@@ -228,16 +228,16 @@ Als `npm run verify:prerender` nach dem Build ausführen (lokal + in CI, falls v
 
 ## Akzeptanzkriterien
 
-- [ ] Vite-8/rolldown-Kompatibilität von `vite-react-ssg` bestätigt (oder dokumentierter Fallback gewählt).
-- [ ] `dist/<route>/index.html` enthält für **alle** 12 Routen den vollständigen Body-Inhalt (H1 + Sektionstexte) im rohen HTML.
-- [ ] `<body>` ist bei keiner Route mehr nur `<div id="root"></div>`.
-- [ ] Head pro Route korrekt: genau **ein** Title, korrektes Canonical (Trailing-Slash), JSON-LD `@graph` (Organization + WebSite + Seiten-Node) — **keine Duplikate**.
-- [ ] FAQPage-Schema steht im rohen HTML von `/oenorm-m-7140/`.
-- [ ] `scripts/generate-route-html.mjs` entfernt; `npm run build` = `vite-react-ssg build`.
-- [ ] Ausgabepfad weiterhin `dist/<route>/index.html` (Trailing-Slash-kompatibel).
-- [ ] `npm test` grün (bestehende 12 + neuer Render-Smoke-Test).
-- [ ] `npm run verify:prerender` grün.
-- [ ] `npm run lint` sauber.
+- [x] Vite-8/rolldown-Kompatibilität von `vite-react-ssg` bestätigt (oder dokumentierter Fallback gewählt).
+- [x] `dist/<route>/index.html` enthält für **alle** 12 Routen den vollständigen Body-Inhalt (H1 + Sektionstexte) im rohen HTML.
+- [x] `<body>` ist bei keiner Route mehr nur `<div id="root"></div>`.
+- [x] Head pro Route korrekt: genau **ein** Title, korrektes Canonical (Trailing-Slash), JSON-LD `@graph` (Organization + WebSite + Seiten-Node) — **keine Duplikate**.
+- [x] FAQPage-Schema steht im rohen HTML von `/oenorm-m-7140/`.
+- [x] `scripts/generate-route-html.mjs` entfernt; `npm run build` = `vite-react-ssg build`.
+- [x] Ausgabepfad weiterhin `dist/<route>/index.html` (Trailing-Slash-kompatibel).
+- [x] `npm test` grün (bestehende 12 + neuer Render-Smoke-Test).
+- [x] `npm run verify:prerender` grün.
+- [x] `npm run lint` sauber.
 - [ ] Keine visuelle/funktionale Regression (Navigation, Cookie-Consent, Newsletter-Formular, Kontakt-Formular inkl. reCAPTCHA, Scroll-to-Hash).
 - [ ] Docker-Build (`docker build`) läuft durch; nginx liefert alle Routen mit 200 aus.
 
@@ -263,3 +263,6 @@ Isolierter Feature-Branch. Bei Problemen Branch verwerfen / Revert — der `main
 ## Notizen / Fortschritt
 
 - 2026-07-10: Todo angelegt als Folge der GSC-/SEO-Optimierung (Commit `bee87bb`, [[2026-07-10-gsc-seo-optimierung-landingpage]]). SSG ist der dort identifizierte „größte strukturelle SEO-Hebel". Ergänzt die Content-/Keyword-Todos [[T042-seo-analyse-landingpage]], [[T043-oenorm-seite-inhaltlicher-ausbau]] und [[T037-fachbeitrag-content-struktur-landingpage]] auf technischer Ebene. Umlaut-/Schreibregeln beachten: [[feedback_german_umlauts]], [[feedback_oenorm_uppercase]].
+- 2026-07-11: Umsetzung auf Branch `feat/ssg-vite-react-ssg` im Repo `normdex-landingpage`. `vite-react-ssg` 0.9.1 unterstützt laut Peer-Dependencies Vite 8; der reale Build mit Vite 8.1.0/Rolldown rendert alle 12 Routen erfolgreich nach `dist/<route>/index.html`.
+- 2026-07-11: Technische Verifikation grün: `npm run build`, `npm run verify:prerender` (12/12), `npm test` (24/24), `npx tsc -b --pretty false` und `npm run lint`. Roh-HTML der ÖNORM-Seite enthält H1, FAQ-Inhalt, FAQPage-Schema, genau einen Title und genau ein Canonical.
+- 2026-07-11: Browser- und Docker-Abnahme bleiben manuell offen: In der Codex-Sitzung war kein In-App-Browser verfügbar und auf dem Host ist keine Docker-CLI installiert. Der lokale Preview-Server lieferte `/oenorm-m-7140/` mit HTTP 200; der unveränderte Dockerfile führt im Build-Stage den bereits erfolgreichen `npm run build` aus.
