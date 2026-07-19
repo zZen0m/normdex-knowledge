@@ -41,8 +41,6 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 | ID      | Todo                                            | Bereich                          | Status |
 | ------- | ----------------------------------------------- | -------------------------------- | ------ |
 | T049    | [[T049-google-marketing-kpis-verwaltungsportal]] | App / Admin / Verwaltungsportal / Marketing | offen |
-| T048    | [[T048-linkedin-marketing-kpis-verwaltungsportal]] | App / Admin / Verwaltungsportal / Marketing | Abnahme offen |
-| T046    | [[T046-ssg-vite-react-ssg-landingpage]]          | Landingpage / Technisches SEO / Rendering | Abnahme offen |
 | T045    | [[T045-systemlogs-in-adminoberflaeche]]          | App / Admin / Verwaltungsportal / Diagnose | offen |
 | T037    | [[T037-fachbeitrag-content-struktur-landingpage]] | Landingpage / Marketing / Content / SEO | offen |
 | T034    | [[T034-excel-export-wirtschaftlichkeitsbericht]] | App / Wirtschaftlichkeitsberechnung / Export | offen |
@@ -56,7 +54,9 @@ Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollo
 
 | ID      | Todo                                                | Bereich                          | Abgeschlossen |
 | ------- | --------------------------------------------------- | -------------------------------- | ------------- |
+| T048    | [[T048-linkedin-marketing-kpis-verwaltungsportal]] | App / Admin / Verwaltungsportal / Marketing | 2026-07-19 |
 | T047    | [[T047-linkedin-api-freigabe-statistiken]]       | Marketing / LinkedIn-Markenkanal / Reporting | 2026-07-19 |
+| T046    | [[T046-ssg-vite-react-ssg-landingpage]]          | Landingpage / Technisches SEO / Rendering | 2026-07-19 |
 | T044    | [[T044-letzter-login-mitgliederliste-verwaltungsportal]] | App / Admin / Kundenakte / Mitglieder | 2026-07-09 |
 | T038    | [[T038-support-ticket-direkt-schliessen-ohne-bounce-loop]] | App / Support / Ticketsystem / E-Mail | 2026-07-04 |
 | T035    | [[T035-checkout-session-expired-trial-reset]]    | App / Lizenzen / Stripe / Checkout | 2026-07-04 |
@@ -100,4 +100,4 @@ Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollo
 
 ## Nächste freie ID
 
-`T048`
+`T050`

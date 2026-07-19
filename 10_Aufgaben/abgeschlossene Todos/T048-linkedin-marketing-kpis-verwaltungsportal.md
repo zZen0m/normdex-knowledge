@@ -2,9 +2,9 @@
 
 **Phase:** App / Admin / Verwaltungsportal / Marketing  
 **Priorität:** P3 · Wichtig für Wachstumsanalyse, kein Blocker für laufenden Betrieb  
-**Status:** Produktiv ausgerollt · erster automatischer 05:00-Uhr-Lauf offen  
-**Datum:** 2026-07-19  
-**Zuletzt aktualisiert:** 2026-07-19 · Release `0.2.0` produktiv ausgerollt und manueller Live-Sync verifiziert
+**Status:** erledigt  
+**Abgeschlossen:** 2026-07-19  
+**Zuletzt aktualisiert:** 2026-07-19 · Nutzerabnahme bestätigt
 
 ## Ziel
 

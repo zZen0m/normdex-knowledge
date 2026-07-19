@@ -2,8 +2,8 @@
 
 **Phase:** Landingpage / Technisches SEO / Rendering
 **Priorität:** P2 · Größter struktureller SEO-Hebel – mittelfristig
-**Status:** umgesetzt · manuelle Deployment-Abnahme offen
-**Datum:** 2026-07-10
+**Status:** erledigt
+**Abgeschlossen:** 2026-07-19
 
 ## Ziel
 
