@@ -67,6 +67,7 @@ Bei der Registrierung mit `invite_token` muss die normalisierte Registrierungsad
 
 ## Lizenzen
 
+
 ```
 GET  /licenses/                         → Aktive Lizenzen der Organisation (Legacy-/Usage-kompatibel)
 GET  /licenses/pools                    → Pool-Zusammenfassung monatlich/jährlich
