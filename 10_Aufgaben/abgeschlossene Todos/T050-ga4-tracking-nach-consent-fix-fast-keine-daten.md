@@ -2,9 +2,10 @@
 
 **Phase:** Landingpage / Analytics / Datenschutz
 **Priorität:** P3 · Datenlage beeinträchtigt, kein Produktionsbug
-**Status:** abgeschlossen
+**Status:** erledigt
 **Datum:** 2026-07-23
 **Zuletzt aktualisiert:** 2026-07-24
+**Abgeschlossen:** 2026-07-24
 
 ## Ziel
 

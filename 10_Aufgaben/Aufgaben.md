@@ -40,7 +40,6 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 
 | ID      | Todo                                            | Bereich                          | Status |
 | ------- | ----------------------------------------------- | -------------------------------- | ------ |
-| T050    | [[T050-ga4-tracking-nach-consent-fix-fast-keine-daten]] | App / Marketing / Tracking | offen |
 | T049    | [[T049-google-marketing-kpis-verwaltungsportal]] | App / Admin / Verwaltungsportal / Marketing | offen |
 | T045    | [[T045-systemlogs-in-adminoberflaeche]]          | App / Admin / Verwaltungsportal / Diagnose | offen |
 | T043    | [[T043-oenorm-seite-inhaltlicher-ausbau]]        | Landingpage / Marketing / SEO / Content | offen |
@@ -59,6 +58,7 @@ Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollo
 
 | ID      | Todo                                                | Bereich                          | Abgeschlossen |
 | ------- | --------------------------------------------------- | -------------------------------- | ------------- |
+| T050    | [[T050-ga4-tracking-nach-consent-fix-fast-keine-daten]] | Landingpage / Analytics / Datenschutz | 2026-07-24 |
 | T037    | [[T037-fachbeitrag-content-struktur-landingpage]] | Landingpage / Marketing / Content / SEO | 2026-07-24 |
 | T051    | [[T051-beispielbericht-oeffentlich-downloadbar]] | Landingpage / Marketing / Conversion | 2026-07-24 |
 | T048    | [[T048-linkedin-marketing-kpis-verwaltungsportal]] | App / Admin / Verwaltungsportal / Marketing | 2026-07-19 |
