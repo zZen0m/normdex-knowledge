@@ -2,7 +2,7 @@
 
 **Phase:** Landingpage / Analytics / Datenschutz
 **Priorität:** P3 · Datenlage beeinträchtigt, kein Produktionsbug
-**Status:** fast abgeschlossen (nur Retention-Einstellung offen)
+**Status:** abgeschlossen
 **Datum:** 2026-07-23
 **Zuletzt aktualisiert:** 2026-07-24
 
@@ -43,13 +43,13 @@ Kombination aus **Option 3** (cookieloses Analytics-Tool) und **Option 4** (GSC 
 - [x] **GA4:** bleibt bestehen, weiterhin consent-gated wie bisher (`src/components/GoogleAnalytics.tsx`), für Marketing-/Kampagnen-Attribution mit echtem Opt-in
 - [x] **Datenschutzerklärung:** Absatz zu Plausible ergänzt (`src/pages/Datenschutz.tsx`, Rechtsgrundlage Art. 6 Abs. 1 lit. f DSGVO, keine Cookies, 26 Monate Speicherdauer)
 - [x] **SMTP:** Brevo-Zugangsdaten aus dem laufenden Prod-API-Container wiederverwendet, in `.env` auf dem Server hinterlegt
-- [ ] **Data Retention:** 26 Monate — Site `normdex.at` in Plausible angelegt (Admin registriert), Retention-Einstellung unter Site Settings > General noch manuell zu setzen (Nutzer)
+- [x] **Data Retention:** 26 Monate — **kein** UI-/Env-Feature in Plausible CE (nur in Plausible Cloud), stattdessen natives ClickHouse-TTL (`clickhouse/retention.sql` im Repo) auf `events_v2`/`sessions_v2` gesetzt
 - [x] **Deployment:** Stack läuft auf `normdex-vps` unter `/opt/stacks/normdex-analytics` (SSH-Zugriff war entgegen ursprünglicher Annahme doch vorhanden — Host `normdex-vps` in `~/.ssh/config`)
 - [x] **Option 4 (GSC):** Praxis-Hinweis im Vault dokumentiert ([[Landingpage]] → Abschnitt „Analytics")
 
 ### Offene manuelle Schritte (Nutzer)
 
-1. Data Retention der Site `normdex.at` in der Plausible-UI (Site Settings > General) auf 26 Monate stellen.
+Keine mehr — Umsetzung vollständig abgeschlossen.
 
 ## Akzeptanzkriterien
 
@@ -90,4 +90,7 @@ Kombination aus **Option 3** (cookieloses Analytics-Tool) und **Option 4** (GSC 
 - Nutzer hat sich unter `/register` mit `office@normdex.at` registriert und die Site `normdex.at` in der Plausible-UI angelegt (Tracking-Snippet daraus kopiert).
 - `ENABLE_REGISTRATION` danach auf `invite_only` zurückgestellt, Container neu gestartet — Registrierung ist jetzt geschlossen.
 - Von Plausible generierter Snippet enthielt mehr als der Standard-Tag: erweiterte Script-Datei mit Tracking-Extensions (`file-downloads.hash.outbound-links.pageview-props.revenue.tagged-events.js`) plus `window.plausible`-Queue-Shim für zukünftige Custom-Events/Conversions — `index.html` entsprechend korrigiert, committed und auf `develop` gepusht (zusammen mit den vorherigen zwei unabhängigen Commits des Nutzers).
-- **Einziger offener Punkt:** Data Retention (26 Monate) muss der Nutzer noch manuell in der Plausible-UI unter Site Settings > General setzen — keine Env-Var/API dafür ohne Plausible-API-Key, daher bewusst nicht per DB-Hack gesetzt.
+- **Korrektur Retention:** Nutzer meldete, dass es unter Site Settings > General gar keine Retention-Einstellung gibt. Ursache: Data Retention ist bei Plausible **Community Edition (self-hosted) kein Feature** — nur Plausible Cloud (bezahlte SaaS-Version) bietet das in der UI. Ohne Gegenmaßnahme wären Events unbegrenzt in ClickHouse verblieben, was dem in der Datenschutzerklärung versprochenen 26-Monate-Limit widersprochen hätte.
+  - Lösung: natives ClickHouse-TTL direkt auf den Event-Tabellen gesetzt — `ALTER TABLE plausible_events_db.events_v2 MODIFY TTL timestamp + INTERVAL 26 MONTH` und analog auf `sessions_v2` (`start + INTERVAL 26 MONTH`). Das ist dieselbe Technik, mit der Plausible Cloud sein bezahltes Retention-Feature intern umsetzt — kein Hack, sondern ein Standard-ClickHouse-Mechanismus. Verifiziert per `SHOW CREATE TABLE`.
+  - Dokumentiert und reproduzierbar gemacht in `clickhouse/retention.sql` im Repo, README-Deploy-Schritte entsprechend korrigiert (kein automatischer Admin-Account, manuelle Registrierung, TTL-Schritt nach jedem Neuaufbau der ClickHouse-Tabellen erneut anwenden).
+- Damit ist T050 vollständig umgesetzt: Plausible live, Registrierung geschlossen, Tracking-Script korrekt (inkl. Custom-Events-Shim), Datenschutzerklärung stimmt jetzt technisch mit der Realität überein (26 Monate durchgesetzt statt nur behauptet).
