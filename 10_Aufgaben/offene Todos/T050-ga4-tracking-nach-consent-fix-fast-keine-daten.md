@@ -2,9 +2,9 @@
 
 **Phase:** Landingpage / Analytics / Datenschutz
 **Priorität:** P3 · Datenlage beeinträchtigt, kein Produktionsbug
-**Status:** offen
+**Status:** in Umsetzung
 **Datum:** 2026-07-23
-**Zuletzt aktualisiert:** 2026-07-23
+**Zuletzt aktualisiert:** 2026-07-24
 
 ## Ziel
 
@@ -29,12 +29,32 @@ Klären, ob und wie die GA4-Datenerfassung auf der Landingpage verbessert werden
 3. **Cookieloses Analytics-Tool ergänzen** (z.B. Plausible/Fathom), das ohne personenbeziehbare Cookies und damit ohne Consent-Banner zählt — würde belastbare Zahlen unabhängig von der Opt-in-Quote liefern. Vermutlich der wirksamste Hebel.
 4. **So akzeptieren** – GA4 zeigt künftig nur noch "echte Zustimmer", stattdessen stärker auf GSC-Klicks/Impressionen als Performance-Indikator setzen.
 
+## Entscheidung (2026-07-24)
+
+Kombination aus **Option 3** (cookieloses Analytics-Tool) und **Option 4** (GSC stärker als Performance-Indikator nutzen), GA4 bleibt parallel bestehen.
+
+### Umsetzungsplan
+
+- [x] **Tool:** Plausible, self-hosted (eigener Postgres- + ClickHouse-Container im Plausible-Stack, getrennt von der App-DB)
+- [ ] **Server:** derselbe Server wie `api.normdex.at` / `app.normdex.at`, im bestehenden Traefik-Netzwerk (`proxy`) — Compose vorbereitet, Deploy auf dem Server noch offen (manuell)
+- [ ] **Subdomain:** `analytics.normdex.at` — Traefik-Router im Compose konfiguriert, DNS/Deploy auf dem Server noch offen
+- [x] **Repo:** neues privates GitHub-Repo [normdex-analytics](https://github.com/zZen0m/normdex-analytics) angelegt (per `gh` CLI), Compose-Stack, ClickHouse-Config, `.env.example` und README gepusht
+- [x] **Tracking-Script:** in `normdex-landingpage/index.html` immer geladen, keine Kopplung an `CookieConsent.tsx`
+- [x] **GA4:** bleibt bestehen, weiterhin consent-gated wie bisher (`src/components/GoogleAnalytics.tsx`), für Marketing-/Kampagnen-Attribution mit echtem Opt-in
+- [x] **Datenschutzerklärung:** Absatz zu Plausible ergänzt (`src/pages/Datenschutz.tsx`, Rechtsgrundlage Art. 6 Abs. 1 lit. f DSGVO, keine Cookies, 26 Monate Speicherdauer)
+- [x] **SMTP:** Brevo im `.env.example` vorgesehen (gleiche Konfiguration wie `deploy/env/.env.api.prod.example` im App-Repo)
+- [x] **Data Retention:** 26 Monate dokumentiert (Datenschutzerklärung + `.env.example`-Kommentar; wird bei der Einrichtung in der Plausible-Owner-UI gesetzt, kein Env-Var)
+- [ ] **Deployment:** Compose-Datei, Traefik-Labels und `.env`-Vorlage vorbereitet und gepusht; Deploy auf dem Server erfolgt manuell (kein SSH-Zugriff für den Agenten) — **noch offen**
+- [x] **Option 4 (GSC):** Praxis-Hinweis im Vault dokumentiert ([[Landingpage]] → Abschnitt „Analytics")
+
 ## Akzeptanzkriterien
 
-- [ ] Entscheidung getroffen, ob und welche der obigen Optionen umgesetzt werden.
-- [ ] Falls Option 3 (cookieloses Tool): Tool ausgewählt, DSGVO-/TKG-Einordnung geprüft, Integration umgesetzt.
-- [ ] Falls Option 1/2: Banner-Copy bzw. -Layout angepasst, ohne gegen Dark-Pattern-Vorgaben zu verstoßen.
-- [ ] Ergebnis im Vault dokumentiert (z.B. unter `06_Entwicklung` oder `08_Entscheidungen`, falls Grundsatzentscheidung).
+- [x] Entscheidung getroffen, ob und welche der obigen Optionen umgesetzt werden. → Option 3 + 4 kombiniert (siehe oben).
+- [ ] Plausible self-hosted eingerichtet und unter `analytics.normdex.at` erreichbar. → Compose-Stack fertig vorbereitet in [normdex-analytics](https://github.com/zZen0m/normdex-analytics), Deploy auf dem Server noch manuell durchzuführen.
+- [x] Tracking-Script in der Landingpage integriert (ohne Consent-Kopplung).
+- [x] Datenschutzerklärung um Plausible-Absatz ergänzt.
+- [x] GSC-Praxis-Hinweis im Vault dokumentiert (primäre SEO-Quelle statt GA4).
+- [x] Ergebnis im Vault dokumentiert (dieses Todo laufend aktualisiert).
 
 ## Notizen / Fortschritt
 
@@ -42,3 +62,16 @@ Klären, ob und wie die GA4-Datenerfassung auf der Landingpage verbessert werden
 
 - Todo aus Chat-Analyse angelegt, nachdem GSC- und GA4-Performance für Juli verglichen wurden und die Diskrepanz auffiel.
 - Root Cause im Code verifiziert (Commit `1eec259`, `src/components/GoogleAnalytics.tsx:53-76`).
+
+### 2026-07-24
+
+- Entscheidung getroffen: Option 3 (Plausible self-hosted) + Option 4 (GSC als primäre SEO-Quelle) kombiniert, GA4 bleibt parallel bestehen.
+- Details per Interview geklärt (Hosting, Repo, Consent, SMTP, Retention) — siehe Umsetzungsplan oben.
+- Umsetzung (Repo, Compose, Tracking-Script, Datenschutztext) noch offen — nur Todo/Planung, noch keine Implementierung.
+
+### 2026-07-24 (Fortsetzung)
+
+- Repo [normdex-analytics](https://github.com/zZen0m/normdex-analytics) angelegt: `docker-compose.yml` (Plausible + Postgres + ClickHouse, Traefik-Labels für `analytics.normdex.at` im `proxy`-Netzwerk), `.env.example` (inkl. Brevo-SMTP, Retention-Hinweis), ClickHouse-Logging-Configs, README — committed und gepusht.
+- `normdex-landingpage`: Plausible-Script (`analytics.normdex.at/js/script.js`, `data-domain="normdex.at"`) fest in `index.html` eingebaut, unabhängig von `CookieConsent.tsx`. Datenschutzerklärung (`src/pages/Datenschutz.tsx`) um eigenen Plausible-Abschnitt ergänzt (vor Google Analytics), nachfolgende Abschnittsnummerierung angepasst. Typecheck grün, lokal committed (noch nicht gepusht — Branch `develop` hatte bereits 2 unabhängige lokale Commits vor dieser Änderung).
+- Vault: neuer Abschnitt „Analytics" in [[Landingpage]] mit Stack-Übersicht und GSC-als-primäre-SEO-Quelle-Hinweis.
+- **Noch offen:** tatsächliches Deployment von Plausible auf dem Server (`docker compose up -d`, Admin-Account, Site in Plausible-UI mit 26 Monaten Retention anlegen) — manuell durch den Nutzer, da kein SSH-Zugriff für den Agenten. Landingpage-Commit muss noch gepusht werden.

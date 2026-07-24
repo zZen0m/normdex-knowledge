@@ -290,9 +290,22 @@ Die Preisseite setzt auf ein **Hybrid-Modell**: Plan-Karten zum Vergleich + daue
 
 ---
 
+## Analytics (Stand 2026-07-24, T050)
+
+Seit dem Opt-in-Consent-Fix (Commit `1eec259`, 2026-06-28) erfasst GA4 nur noch Besucher, die aktiv im Cookie-Banner zustimmen — GA4 zeigt strukturell nur noch einen Bruchteil des echten Traffics.
+
+- **Plausible (self-hosted)** — `analytics.normdex.at`, Repo [normdex-analytics](https://github.com/zZen0m/normdex-analytics). Cookielos, kein Consent nötig, Script in `index.html` immer geladen (keine Kopplung an `CookieConsent.tsx`). Liefert seither die verlässlichste Pageview-Zahl.
+- **GA4** — bleibt bestehen, weiterhin consent-gated (`src/components/GoogleAnalytics.tsx`), für Marketing-/Kampagnen-Attribution mit echtem Opt-in.
+- **Google Search Console (GSC)** — von der Consent-Problematik nicht betroffen (unabhängig vom Cookie-Status erhoben). **Primäre SEO-Performance-Quelle** für Klicks/Impressionen/Rankings ab jetzt, ergänzend zu Plausible-Pageviews — GA4-Zahlen für SEO-Bewertung nicht mehr heranziehen.
+
+Details/Historie: [[T050-ga4-tracking-nach-consent-fix-fast-keine-daten]]
+
+---
+
 ## Verwandte Dokumente
 
 - [[Key Messages & CTAs]]
 - [[Designsystem & Farben]]
 - [[Unternehmensangaben]]
 - [[T019-newsletter-gutschein-brevo-webhook-rollout]]
+- [[T050-ga4-tracking-nach-consent-fix-fast-keine-daten]]
