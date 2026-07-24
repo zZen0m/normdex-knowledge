@@ -2,8 +2,8 @@
 
 **Thema-Nr.:** 1 aus [[00 Themenplan]]
 **Zieltermin laut Plan:** Di, 14.07.2026
-**Tatsächliches Postingdatum:** in LinkedIn eingeplant für Di, 21.07.2026, 09:15 Uhr
-**Status:** Text und Grafik fertig, in LinkedIn geplant (noch nicht veröffentlicht)
+**Tatsächliches Postingdatum:** Di, 21.07.2026, 09:30 Uhr
+**Status:** gepostet
 
 ## Posttext
 
@@ -27,7 +27,6 @@ Der Praxisleitfaden zur ÖNORM M 7140 geht ausführlicher auf alle drei Verfahre
 
 - Zeichenlänge liegt im Richtwert (800 bis 1500 Zeichen laut [[01 Schreib- und Designvorgaben LinkedIn]]).
 - Link bewusst als Klartext ohne https:// gesetzt (laufender Fachpost, nicht Launch/Sonderanlass).
-- Vor dem Posten: Begleitgrafik noch manuell erstellen (siehe Design-Briefing unten).
 - Timing laut Vorgabe: werktags vormittags, 08 bis 10 Uhr.
 
 ## Begleitgrafik (fertig)
