@@ -94,3 +94,10 @@ Keine mehr — Umsetzung vollständig abgeschlossen.
   - Lösung: natives ClickHouse-TTL direkt auf den Event-Tabellen gesetzt — `ALTER TABLE plausible_events_db.events_v2 MODIFY TTL timestamp + INTERVAL 26 MONTH` und analog auf `sessions_v2` (`start + INTERVAL 26 MONTH`). Das ist dieselbe Technik, mit der Plausible Cloud sein bezahltes Retention-Feature intern umsetzt — kein Hack, sondern ein Standard-ClickHouse-Mechanismus. Verifiziert per `SHOW CREATE TABLE`.
   - Dokumentiert und reproduzierbar gemacht in `clickhouse/retention.sql` im Repo, README-Deploy-Schritte entsprechend korrigiert (kein automatischer Admin-Account, manuelle Registrierung, TTL-Schritt nach jedem Neuaufbau der ClickHouse-Tabellen erneut anwenden).
 - Damit ist T050 vollständig umgesetzt: Plausible live, Registrierung geschlossen, Tracking-Script korrekt (inkl. Custom-Events-Shim), Datenschutzerklärung stimmt jetzt technisch mit der Realität überein (26 Monate durchgesetzt statt nur behauptet).
+
+### 2026-07-24 (Landingpage-Deploy)
+
+- Prod-Deploy von `normdex-landingpage` baut aus `/opt/repos/normdex-landingpage` vom Branch `main` (separat vom Analytics-Server-Deploy) — die Plausible-Commits lagen zunächst nur auf `develop`, `main` war 4 Commits zurück.
+- `develop` nach `main` gemergt (inkl. zweier fremder Commits: Wissen-Sektion mit erstem Fachbeitrag, Beispielbericht als öffentliches PDF), Typecheck grün, gepusht (`0478711`).
+- Auf dem Server: Repo-Checkout unter `/opt/repos/normdex-landingpage` auf `main` aktualisiert, Docker-Image via `docker compose build` neu gebaut, Container neu gestartet. Verifiziert: ausgelieferte `index.html` enthält das korrekte Plausible-Script.
+- Damit ist auch die Landingpage-Seite des Rollouts live, nicht nur der Analytics-Stack.
