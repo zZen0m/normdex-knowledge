@@ -2,8 +2,9 @@
 
 **Phase:** Landingpage / Marketing / Conversion
 **Priorität:** P1 · Conversion – Trust-Signal
-**Status:** offen
+**Status:** erledigt
 **Datum:** 2026-07-24
+**Abgeschlossen:** 2026-07-24
 
 ## Ziel
 
@@ -46,11 +47,11 @@ Klärung mit Andreas (2026-07-24):
 
 ## Akzeptanzkriterien
 
-- [ ] `Normdex_Beispielbericht_OENORM_M7140.pdf` liegt in `public/` und ist über einen direkten Link/Button erreichbar, ohne Anmeldung oder Weiterleitung zum Newsletter.
-- [ ] Download-Button erscheint ausschließlich unter der ReportPreview-Sektion (kein zusätzlicher Button in der Lightbox, Hero-CTA unverändert).
-- [ ] Kein Text auf der Landingpage behauptet mehr, der Beispielbericht sei Teil des Praxisleitfaden-Downloads.
-- [ ] `/Normdex_Beispielbericht_OENORM_M7140.pdf` ist in `sitemap.xml` gelistet.
-- [ ] [[Landingpage]] und [[Marketingplan 2026 - Erste Kunden]] spiegeln den neuen Stand korrekt wider.
+- [x] `Normdex_Beispielbericht_OENORM_M7140.pdf` liegt in `public/` und ist über einen direkten Link/Button erreichbar, ohne Anmeldung oder Weiterleitung zum Newsletter.
+- [x] Download-Button erscheint ausschließlich unter der ReportPreview-Sektion (kein zusätzlicher Button in der Lightbox, Hero-CTA unverändert).
+- [x] Kein Text auf der Landingpage behauptet mehr, der Beispielbericht sei Teil des Praxisleitfaden-Downloads.
+- [x] `/Normdex_Beispielbericht_OENORM_M7140.pdf` ist in `sitemap.xml` gelistet.
+- [x] [[Landingpage]] und [[Marketingplan 2026 - Erste Kunden]] spiegeln den neuen Stand korrekt wider.
 
 ## Verifikation
 
@@ -61,3 +62,4 @@ Klärung mit Andreas (2026-07-24):
 ## Notizen / Fortschritt
 
 - 2026-07-24: Todo angelegt nach Grill-Session mit Andreas. Hintergrund: neuer Beispielbericht wurde erstellt, bisherige Landingpage-Umsetzung behauptete fälschlich, er sei Teil des Praxisleitfadens, obwohl laut Marketingplan ein eigenständiges, öffentliches Trust-Signal vorgesehen war.
+- 2026-07-24: Umsetzung abgeschlossen. PDF nach `public/Normdex_Beispielbericht_OENORM_M7140.pdf` kopiert, `ReportPreview.tsx` bekommt eigenen `EXAMPLE_REPORT_URL`-Download-Button, Bundle-Sprache in `Hero.tsx`, `NewsletterStrip.tsx` und `Newsletter.tsx` korrigiert, `sitemap.xml` ergänzt. Lokaler `npm run build` (inkl. vite-react-ssg-Prerender) erfolgreich, PDF und Sitemap-Eintrag in `dist/` verifiziert. Doku in [[Landingpage]] (Abschnitt 8 + Newsletter/Lead-Magnet) und [[Marketingplan 2026 - Erste Kunden]] aktualisiert.

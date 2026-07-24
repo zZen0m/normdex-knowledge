@@ -130,7 +130,7 @@ Bewusst klein gehalten, damit es solo und nebenbei machbar bleibt. Die ersten Sc
 **Phase 1, Fundament (etwa Monat 1 bis 2):**
 
 - [x] Positionierung auf der Landingpage schärfen.
-- [ ] Beispiel-Report als öffentliches PDF erstellen. (Status bei letztem Stand nicht bestätigt)
+- [x] Beispiel-Report als öffentliches PDF erstellen. (erledigt, T051, 2026-07-24)
 - [ ] Methodik- und Validierungsseite schreiben. (Status bei letztem Stand nicht bestätigt)
 - [x] Lead-Magnet (Leitfaden) erstellt.
 - [x] Nurture-Sequenz aufgesetzt, versendet den Leitfaden bereits.

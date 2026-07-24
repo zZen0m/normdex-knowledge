@@ -73,9 +73,9 @@ Die Normdex-Landingpage ist die öffentliche Marketing-Website mit folgenden Zie
 
 ---
 
-## Newsletter / Lead-Magnet (Stand 2026-06-13, T027)
+## Newsletter / Lead-Magnet (Stand 2026-07-24, T051)
 
-Der Hauptanreiz ist der **kostenlose Praxisleitfaden** (Checkliste + Beispielbericht), der 10%-Gutschein ist nur der Bonus.
+Der Hauptanreiz ist der **kostenlose Praxisleitfaden** (Checkliste), der 10%-Gutschein ist nur der Bonus. Der Beispielbericht ist **kein** Teil dieses Bundles mehr — er steht eigenständig, ungated in der ReportPreview-Sektion (siehe unten) zum Download bereit.
 
 - **Lead-Magnet:** Praxisleitfaden als PDF, direkter Download auf der Newsletter-Seite und im Erfolgs-State des Formulars. Dateipfad: `public/Normdex_Praxisleitfaden_OENORM_M7140.pdf` (vom Betreiber bereitzustellen).
 - Frontend liefert nur UI und sendet die Anmeldung an `POST /newsletter/subscribe`.
@@ -101,7 +101,7 @@ Reihenfolge in `Index.tsx`: Hero → TrustFactors → TargetAudience → Compari
 - **H1:** „Im Browser. Im Team. Prüffähig." (pink) + „Wirtschaftlichkeitsberechnungen für Energiesysteme"
 - **Unterüberschrift:** *Normdex ist die zeitgemäße Wirtschaftlichkeitsberechnung für Energiesysteme. Ohne Installation, überall im Browser, gemeinsam im Team und mit prüffähigen PDF-Reports. Validiert nach ÖNORM M 7140.*
 - **CTAs:** „Kostenlos testen →" (primär, → `#pricing`) | „Beispielbericht ansehen" (sekundär, scrollt zu `#report-preview`)
-- **Newsletter-Hook:** *„Kostenlosen Praxisleitfaden sichern — inkl. Checkliste und Beispielbericht."* (Link → `/newsletter`)
+- **Newsletter-Hook:** *„Kostenlosen Praxisleitfaden sichern — inkl. Checkliste."* (Link → `/newsletter`)
 - **Trust-Indicators:** ✓ 14 Tage kostenlos beim Erstkauf einer Lizenz · ✓ Keine Abbuchung während der Testphase · ✓ Jederzeit kündbar
 - **Validierungs-Badge:** 🛡 *Validiert nach Abschnitt 10 der ÖNORM M 7140*
 - **Rechte Seite:** Komponente `HeroAppMock.tsx` — gecodeter Mock der App-Ergebnisseite (Browser-Chrome), Tab **Gesamtkosten** mit gestapeltem Balkendiagramm (Barwert je System: Kapital blau / Verbrauch grün / Betrieb gelb), Wärmepumpe als günstigste Variante markiert + Sieger-Banner. Werte konsistent zum Beispielbericht (WP 2,97 Mio. € < Pellet 3,85 Mio. € < Gas 7,13 Mio. €).
@@ -137,7 +137,7 @@ Sachliche Kategorie-Gegenüberstellung **„klassische Desktop-Software" gegen �
 
 Inline-Sektion. Hauptanreiz ist jetzt der kostenlose Praxisleitfaden, 10 % nur als Bonus.
 
-- **Links:** EyebrowPill pink „Kostenloser Praxisleitfaden" + H3 „Praxisleitfaden zur ÖNORM M 7140 gratis holen." + Sub (Checkliste + Beispielbericht, plus 10 % Rabatt im ersten Monat).
+- **Links:** EyebrowPill pink „Kostenloser Praxisleitfaden" + H3 „Praxisleitfaden zur ÖNORM M 7140 gratis holen." + Sub (Checkliste, plus 10 % Rabatt im ersten Monat).
 - **Rechts:** Button „Leitfaden holen →" → `/newsletter`
 
 ### 6. Features
@@ -168,9 +168,9 @@ Gleichmäßiges 3-Spalten-Grid (6 Karten, alle gleich groß). Durchgängig **Du-
 | 3 | Rechnen lassen | Kapitalwert, Annuität, Amortisation automatisch nach Norm. |
 | 4 | Report exportieren | PDF-Dokumentation mit allen Annahmen und Rechenwegen. |
 
-### 8. ReportPreview (NEU, T027)
+### 8. ReportPreview (Stand 2026-07-24, T051)
 
-Berichtsvorschau auf der Seite (kein Download). Galerie von sechs echten Berichtsseiten als anklickbare Thumbnails, die per Lightbox/Dialog im Browser geöffnet werden. Belegt die Output-Qualität (saubere Darstellung auch großer Beträge) und verweist für den Vollbericht auf den Newsletter-Praxisleitfaden. Komponente `ReportPreview.tsx`, Anker `#report-preview`. Bilder: `public/report-preview/seite-1..6.png` (Deckblatt, Projektdaten, Gesamtkosten, Annuitäten, Kostenverlauf/Amortisation, Resümee). Generiert aus dem kuratierten Beispielbericht via `apps/api/preview_report_demo.py` (Repo normdex-app).
+Berichtsvorschau auf der Seite. Galerie von sechs echten Berichtsseiten als anklickbare Thumbnails, die per Lightbox/Dialog im Browser geöffnet werden. Belegt die Output-Qualität (saubere Darstellung auch großer Beträge). Darunter ein eigenständiger, ungated Download-Button für den vollständigen Beispielbericht als PDF — kein Bundle mit dem Newsletter-Praxisleitfaden, keine Anmeldung nötig. Komponente `ReportPreview.tsx`, Anker `#report-preview`. Bilder: `public/report-preview/seite-1..6.png` (Deckblatt, Projektdaten, Gesamtkosten, Annuitäten, Kostenverlauf/Amortisation, Resümee), generiert aus dem kuratierten Beispielbericht via `apps/api/preview_report_demo.py` (Repo normdex-app). PDF: `public/Normdex_Beispielbericht_OENORM_M7140.pdf` (fiktiv/anonymisiert, unbedenklich zur Veröffentlichung), Export `EXAMPLE_REPORT_URL` aus `ReportPreview.tsx`.
 
 ### 9. CTA-Section
 
