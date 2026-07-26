@@ -2,8 +2,9 @@
 
 **Phase:** Landingpage / Marketing / SEO
 **Priorität:** P2 · Reichweite – kurzfristig umsetzbar
-**Status:** in Arbeit
+**Status:** erledigt
 **Datum:** 2026-07-08
+**Abgeschlossen:** 2026-07-26
 
 ## Ziel
 
@@ -60,7 +61,7 @@ Priorisierte Liste mit:
 
 ## Verifikation
 
-- Google PageSpeed Insights Score für normdex.at > 80 (Mobile) — **Stand 2026-07-26 vormittags: 68** (Desktop: 97). Root Cause identifiziert und noch am selben Tag behoben: fehlendes Gzip + Cache-Control im nginx-Container von `normdex-landingpage` (nicht `normdex-app`, wie zunächst fälschlich angenommen). Fix deployt und per `curl -I` verifiziert (`Content-Encoding: gzip`, `Cache-Control: public, immutable`). **Re-Check des PageSpeed-Scores steht noch aus** (neuer Lab-Lauf nötig, um die Wirkung zu bestätigen).
+- Google PageSpeed Insights Score für normdex.at > 80 (Mobile) — **erfüllt.** Vormittags 2026-07-26: Mobile 68, Desktop 97. Root Cause identifiziert und noch am selben Tag behoben: fehlendes Gzip + Cache-Control im nginx-Container von `normdex-landingpage` (nicht `normdex-app`, wie zunächst fälschlich angenommen). Re-Check 14:44 Uhr: **Mobile 91, Desktop 100** (LCP 6,0s → 3,5s, FCP 4,1s → 1,7s).
 - Google Search Console zeigt keine Critical Issues
 - Alle Title-Tags und Meta-Descriptions innerhalb empfohlener Zeichenlänge
 
@@ -70,4 +71,5 @@ Priorisierte Liste mit:
 - 2026-07-26: Todo geschärft und Analyse durchgeführt, siehe vollständigen Report: [[SEO-Analyse-2026-07]]. Kernfunde: GSC liefert nach 90 Tagen nur 12 Marken-Tippfehler-Queries, 0 Klicks — keine Keyword-Opportunities aus GSC ableitbar, daher Keyword-Liste manuell aus Fachwissen + Konkurrenzrecherche (Pokorny Technologies, Urban-Energy) erstellt. Kritischer Fund: `/wissen`-Seiten (aus T037) fehlten in `public/sitemap.xml` und waren dadurch nicht/kaum indexiert — als Sofort-Fix behoben (Änderung noch nicht committet). Offen: PageSpeed-Score manuell erheben, Content-Lücke „Annuität vs. durchschnittliche Kosten" als möglicher Folge-Fachbeitrag.
 - 2026-07-26: Plausible-Traffic per Stats API (v2/query, API-Key vom User erzeugt) direkt abgefragt statt manuell nachzuschauen. Ergebnis: Tracking läuft erst seit 24.07., nur 2 Besucher/3 Pageviews gesamt, ausschließlich Direct-Traffic, 0 Aufrufe auf `/wissen`-Seiten — bestätigt GSC-Befund (noch kein messbarer Traffic). Erneute Prüfung in ca. 4 Wochen sinnvoll. Report aktualisiert: [[SEO-Analyse-2026-07]].
 - 2026-07-26: PageSpeed Insights für `/` vom User beigesteuert (Desktop + Mobile). Desktop top (97), Mobile fällt mit 68 durch das Akzeptanzkriterium (>80). Root Cause: fehlende Kompression + ineffizientes Caching, nicht Content-bedingt. Erste Vermutung (Fix gehört zu `normdex-app`) war falsch — verifiziert per Dockerfile-Check: `normdex-landingpage` baut sein eigenes `nginx:alpine`-Image, Traefik davor komprimiert nicht.
-- 2026-07-26: Fix noch am selben Tag umgesetzt und deployt: neue `nginx.conf` (Gzip + Cache-Control/expires für `/static_assets/` und weitere statische Dateien) in `normdex-landingpage`, `Dockerfile` darauf umgestellt. Merge `develop` → `main`, gepusht, auf `normdex-vps` per SSH gepullt, `docker compose build && up -d` im Stack `/opt/stacks/normdex-landingpage`. Verifiziert per `curl -I`: Gzip + `Cache-Control: public, immutable, max-age=31536000` aktiv. PageSpeed-Re-Check (neuer Lab-Lauf) steht noch aus, um den erwarteten Score-Sprung zu bestätigen. Damit ist T042 inhaltlich vollständig abgeschlossen bis auf: PageSpeed-Re-Check und die spätere Plausible-Nachprüfung in ~4 Wochen.
+- 2026-07-26: Fix noch am selben Tag umgesetzt und deployt: neue `nginx.conf` (Gzip + Cache-Control/expires für `/static_assets/` und weitere statische Dateien) in `normdex-landingpage`, `Dockerfile` darauf umgestellt. Merge `develop` → `main`, gepusht, auf `normdex-vps` per SSH gepullt, `docker compose build && up -d` im Stack `/opt/stacks/normdex-landingpage`. Verifiziert per `curl -I`: Gzip + `Cache-Control: public, immutable, max-age=31536000` aktiv.
+- 2026-07-26, 14:44 Uhr: PageSpeed-Re-Check vom User beigesteuert — bestätigt die Wirkung eindeutig: Mobile-Score 68 → **91**, Desktop 97 → **100**, Mobile-LCP 6,0s → 3,5s, Mobile-FCP 4,1s → 1,7s. Akzeptanzkriterium erfüllt. **T042 damit vollständig abgeschlossen.** Verbleibend nur die spätere Plausible-Nachprüfung in ~4 Wochen (kein Blocker) sowie zwei neu identifizierte, nicht-kritische Folgepunkte (Security-Header, kleinere Accessibility-Fixes), die bei Bedarf als eigenes Todo aufgesetzt werden können.

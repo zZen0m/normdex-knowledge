@@ -108,16 +108,30 @@ Direkte Konkurrenz für ÖNORM-M-7140-Software:
 
 ## 5a. PageSpeed Insights (`/`, 26.07.2026)
 
+**Vor dem Fix (vormittags):**
+
 | | Desktop | Mobile |
 |---|---|---|
-| Performance | **97** | **68** ⚠️ (Ziel It. Verifikation: >80) |
-| Accessibility | 89 | 89 |
-| Best Practices | 96 | 96 |
-| SEO | 100 | 100 |
+| Performance | 97 | **68** ⚠️ (Ziel It. Verifikation: >80) |
 | FCP | 0,8 s | 4,1 s |
 | LCP | 1,1 s | **6,0 s** (Ziel <2,5 s) |
 | CLS | 0 | 0 |
 | TBT | 0 ms | 0 ms |
+
+**Nach dem Fix (14:44 Uhr, Re-Check):**
+
+| | Desktop | Mobile |
+|---|---|---|
+| Performance | **100** ✅ | **91** ✅ (Ziel >80 erreicht) |
+| Accessibility | 89 | 89 |
+| Best Practices | 96 | 96 |
+| SEO | 100 | 100 |
+| FCP | 0,4 s | 1,7 s |
+| LCP | 0,8 s | **3,5 s** |
+| CLS | 0 | 0 |
+| TBT | 0 ms | 0 ms |
+
+→ **Akzeptanzkriterium erfüllt.** Gzip + Cache-Control allein haben den Mobile-Score von 68 auf 91 gehoben (LCP von 6,0s auf 3,5s, FCP von 4,1s auf 1,7s). Verbleibendes LCP-Einsparpotenzial laut Lighthouse: „Effiziente Verweildauer im Cache" nur noch 22 KiB (vorher 798 KiB) — der große Cache-Hebel ist gezogen.
 
 **Root Cause:** Mobile (Slow-4G-Drosselung in Lighthouse) fällt durch, Desktop ist einwandfrei — das ist kein Content-, sondern ein Infra-Thema:
 
@@ -131,7 +145,13 @@ Direkte Konkurrenz für ÖNORM-M-7140-Software:
 - Fehlende `<main>`-Landmark, Überschriften-Reihenfolge nicht durchgängig
 - Kein CSP/HSTS/COOP/X-Frame-Options-Header gesetzt (Security-Hardening, siehe evtl. eigenes Todo)
 
-→ **Behoben (2026-07-26):** Fix-Ort war entgegen erster Vermutung **nicht** `normdex-app`, sondern das eigene `Dockerfile`/nginx in `normdex-landingpage` — der Container baut sein eigenes nginx (`FROM nginx:alpine`), Traefik davor komprimiert nicht. Neue `nginx.conf` mit `gzip on` + `Cache-Control`/`expires` für `/static_assets/` (1 Jahr, immutable, da hashed) und weitere statische Dateien (7 Tage). Deployt auf `normdex-vps` (`/opt/stacks/normdex-landingpage`, Rebuild + Recreate). Verifiziert per `curl -I`: `Content-Encoding: gzip` und `Cache-Control: public, immutable, max-age=31536000` auf `/static_assets/app-*.js` sowie gzip auf `/`. PageSpeed-Re-Check empfohlen, sobald neue CrUX-/Lab-Daten vorliegen (in einigen Tagen erneut über pagespeed.web.dev prüfen).
+→ **Behoben und verifiziert (2026-07-26):** Fix-Ort war entgegen erster Vermutung **nicht** `normdex-app`, sondern das eigene `Dockerfile`/nginx in `normdex-landingpage` — der Container baut sein eigenes nginx (`FROM nginx:alpine`), Traefik davor komprimiert nicht. Neue `nginx.conf` mit `gzip on` + `Cache-Control`/`expires` für `/static_assets/` (1 Jahr, immutable, da hashed) und weitere statische Dateien (7 Tage). Deployt auf `normdex-vps` (`/opt/stacks/normdex-landingpage`, Rebuild + Recreate). Sowohl per `curl -I` (Gzip + Cache-Control aktiv) als auch per PageSpeed-Re-Check bestätigt: Mobile-Score 68 → **91**, Desktop 97 → **100** (Details siehe Abschnitt 5a).
+
+**Restliche, kleinere Befunde aus dem PageSpeed-Report (nicht performance-kritisch, aber leicht behebbar):**
+- Ungenutztes JS weiterhin ~33 KiB (`app-DPmitkGQ.js`) — Code-Splitting-Kandidat, kein akuter Handlungsbedarf
+- Logo-`<img>`-Elemente ohne explizite `width`/`height` (CLS-Risiko, aktuell bei 0 unauffällig)
+- Accessibility (89): ungültige `aria-selected`-Werte am Pricing-Tab, Kontrastproblem bei „Kostenlos testen"-Button, fehlende `<main>`-Landmark, Überschriften-Reihenfolge nicht durchgängig
+- Best Practices (96): Charset-Deklaration zu spät im HTML, keine CSP/HSTS/COOP/X-Frame-Options-Header — Security-Hardening, eigenes Thema außerhalb SEO
 
 ## 6. Traffic-Daten (Plausible)
 
@@ -162,12 +182,15 @@ Per API-Key direkt gegen die Plausible Stats API (`/api/v2/query`) abgefragt. Tr
 | 5 | Article-JSON-LD um `datePublished`/`author`/`image` erweitern für `/wissen`-Artikel | `src/lib/seo.ts` (`getJsonLd`) | Mittel | Mittel (Rich-Snippet-Chance) |
 | 6 | Neuer Fachbeitrag zu „Annuität vs. durchschnittliche Kosten" bzw. „ÖNORM M 7140 2021 Neuerungen" — Content-Lücke ggü. Pokorny | `/wissen/...` (neue Route) | Groß | Hoch (Long-Tail + Autorität) |
 | 7 | Title-Tags von `/preise`, `/kontakt`, `/newsletter` verlängern (aktuell 39–42 Zeichen, Potenzial bis 60) | `src/pages/seo-routes.json` | Klein | Niedrig-Mittel |
-| 8 | ✅ **Erledigt:** Gzip-Kompression + Cache-Control-Header im nginx-Container aktiviert | `normdex-landingpage/nginx.conf`, `Dockerfile` | Mittel | Hoch (größter identifizierter Hebel) — Mobile-Score-Re-Check aussteht |
+| 8 | ✅ **Erledigt & verifiziert:** Gzip-Kompression + Cache-Control-Header im nginx-Container aktiviert — Mobile-Score 68→91 | `normdex-landingpage/nginx.conf`, `Dockerfile` | Mittel | Hoch (bestätigt größter identifizierter Hebel) |
+| 9 | Security-Header ergänzen (CSP, HSTS, COOP, X-Frame-Options) — laut PageSpeed alle mit Schweregrad „Hoch" markiert | `normdex-landingpage/nginx.conf` | Mittel | Mittel (Best-Practices-Score, nicht SEO-relevant, aber sinnvoll) |
+| 10 | Accessibility-Fixes: `<main>`-Landmark ergänzen, `aria-selected` am Pricing-Tab korrigieren, Kontrast beim „Kostenlos testen"-Button prüfen | `normdex-landingpage/src` (Layout, Pricing, Button-Varianten) | Klein | Niedrig (kein direkter SEO-Effekt, aber Nutzerfreundlichkeit) |
 
 ---
 
 ## 8. Offene Punkte für T042-Abschluss
 
-- [ ] PageSpeed-Score manuell erheben (kein Tool-Zugriff)
+- [x] PageSpeed-Score erhoben und Root Cause behoben (Mobile 68→91)
 - [ ] Plausible-Traffic erneut prüfen, sobald mehr Daten vorliegen (z. B. in 4 Wochen)
 - [ ] Maßnahme #6 (neuer Fachbeitrag) als eigenes Folge-Todo anlegen, falls priorisiert
+- [ ] Maßnahme #9 (Security-Header) und #10 (Accessibility-Fixes) ggf. als eigenes technisches Todo auslagern — außerhalb des SEO-Scopes von T042
