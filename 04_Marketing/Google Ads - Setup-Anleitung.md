@@ -12,7 +12,7 @@ Am 26.07.2026 wurden im Repo `normdex-landingpage` zwei GA4-Conversion-Events er
 Beide Events laufen über die bestehende, consent-gated GA4-Integration (`GoogleAnalytics.tsx`, Property `G-WGPWWKYJRW`) — sie feuern nur, wenn der Besucher Analyse-Cookies akzeptiert hat, genau wie die bisherigen Pageviews.
 
 **Vor Schritt 1 unten:** Änderungen committen, nach `normdex-landingpage` deployen (Build war lokal bereits erfolgreich getestet), und per Klick auf der Live-Seite (Realtime-Bericht in GA4) verifizieren, dass beide Events tatsächlich ankommen.
-
+##### EDIT: DONE
 ### Troubleshooting-Notiz vom 26.07.2026: „Datenerhebung nicht aktiv" trotz korrektem Code
 
 Nach dem Deployment zeigte GA4 dauerhaft „Für Ihre Website ist die Datenerhebung nicht aktiv" und der Echtzeit-Bericht blieb bei Testklicks auf 0, obwohl mehrfach mit erteiltem Analyse-Consent getestet wurde. Ausführliche Diagnose ergab:
@@ -26,10 +26,16 @@ Nach dem Deployment zeigte GA4 dauerhaft „Für Ihre Website ist die Datenerheb
 
 ## Schritt 1: GA4-Events als Key Events markieren
 
+Erledigt am 26.07.2026. Da eigene Testklicks aus dem lokalen Netzwerk nachweislich nie bei Google ankamen (siehe Troubleshooting-Notiz oben), wurden die Key Events manuell registriert, ohne auf einen empfangenen Testklick zu warten:
+
 1. In Google Analytics 4 (Property zu `G-WGPWWKYJRW`) einloggen.
-2. Verwaltung → Events.
-3. Nach mindestens einem Testklick sollten `trial_start_click` und `newsletter_signup` in der Liste erscheinen (kann bis zu 24 Stunden dauern, bei Realtime sofort sichtbar).
-4. Für beide Events den Schalter „Als Key Event markieren" (früher „Als Conversion markieren") aktivieren.
+2. Verwaltung → Datenanzeige → **Ereignisse** → Tab **„Schlüsselereignisse"** → „Schlüsselereignis erstellen" → „Ereignis erstellen".
+3. Ereignisname exakt eintragen (`trial_start_click` bzw. `newsletter_signup`), „Als Schlüsselereignis markieren" aktivieren.
+4. Bei „Standardwert des Schlüsselereignisses" **„Keinen Standardwert für Schlüsselereignis festlegen"** wählen (kein fixer Dollarwert, da unterschiedliche Plan-/Mengenpreise und Start mit „Klicks maximieren" statt wertbasierten Geboten).
+5. Bei „So soll ein Ereignis erstellt werden" **„Mit Code erstellen"** wählen (nicht „Ohne Code erstellen" — der Code existiert bereits im Repo, es muss nur die Definition angelegt werden, kein URL-Trigger nötig).
+6. Erstellen, für beide Events wiederholen.
+
+Damit sind beide Events jetzt als Schlüsselereignisse registriert, unabhängig davon, ob bereits echte Daten dafür vorliegen — sie zählen automatisch, sobald ein Besucher sie auslöst.
 
 ## Schritt 2: Google Ads mit GA4 verknüpfen
 
