@@ -101,10 +101,37 @@ Direkte Konkurrenz für ÖNORM-M-7140-Software:
 | Structured Data: Article-Properties (datePublished, author) | ⚠️ `/wissen/die-drei-verfahren-erklaert` ist als `Article` typisiert, aber ohne Article-spezifische Felder (datePublished, author, image) — generischer WebPage-Fallback greift |
 | Canonical URLs | ✅ vollständig in `seo-routes.json` |
 | Hreflang | ✅ nicht nötig (nur de-AT), `inLanguage: de-AT` gesetzt |
-| Core Web Vitals / PageSpeed | ⚠️ **nicht automatisiert prüfbar** — kein PageSpeed-MCP-Tool verfügbar. Manuell nachholen: [pagespeed.web.dev](https://pagespeed.web.dev) für `/` und `/oenorm-m-7140` |
+| Core Web Vitals / PageSpeed | ⚠️ **Mobile-Ziel verfehlt** (siehe unten) |
 | Indexierung `/wissen`-Seiten | ⚠️ noch nicht indexiert (siehe Abschnitt 1) — nach Sitemap-Fix in GSC „Indexierung beantragen" für beide URLs |
 
 ---
+
+## 5a. PageSpeed Insights (`/`, 26.07.2026)
+
+| | Desktop | Mobile |
+|---|---|---|
+| Performance | **97** | **68** ⚠️ (Ziel It. Verifikation: >80) |
+| Accessibility | 89 | 89 |
+| Best Practices | 96 | 96 |
+| SEO | 100 | 100 |
+| FCP | 0,8 s | 4,1 s |
+| LCP | 1,1 s | **6,0 s** (Ziel <2,5 s) |
+| CLS | 0 | 0 |
+| TBT | 0 ms | 0 ms |
+
+**Root Cause:** Mobile (Slow-4G-Drosselung in Lighthouse) fällt durch, Desktop ist einwandfrei — das ist kein Content-, sondern ein Infra-Thema:
+
+- **Keine Komprimierung auf der Dokumentanfrage** (Lighthouse markiert das explizit, ~65 KiB) — gzip/brotli am Server/Reverse-Proxy fehlt offenbar
+- **Ineffizientes Cache-Verhalten** — 798 KiB geschätztes Einsparpotenzial (fehlende/kurze `Cache-Control`-Header auf `/static_assets/*`)
+- **Ungenutztes JS/CSS**: ~192 KiB JS (v. a. `app-*.js`, `utils-*.js`, `react-dom-*.js`) + 54–56 KiB CSS
+- LCP-Element-Rendering-Verzögerung: 620 ms (Desktop) / 1.330 ms (Mobile) — der Großteil der LCP-Zeit ist Verzögerung, nicht Ladezeit
+
+**Zusätzlich (Accessibility/Best Practices, nicht kritisch für SEO-Ranking direkt, aber leicht zu fixen):**
+- Logo-Bilder ohne explizite `width`/`height` (CLS-Risiko, aktuell noch bei 0)
+- Fehlende `<main>`-Landmark, Überschriften-Reihenfolge nicht durchgängig
+- Kein CSP/HSTS/COOP/X-Frame-Options-Header gesetzt (Security-Hardening, siehe evtl. eigenes Todo)
+
+→ **Behoben (2026-07-26):** Fix-Ort war entgegen erster Vermutung **nicht** `normdex-app`, sondern das eigene `Dockerfile`/nginx in `normdex-landingpage` — der Container baut sein eigenes nginx (`FROM nginx:alpine`), Traefik davor komprimiert nicht. Neue `nginx.conf` mit `gzip on` + `Cache-Control`/`expires` für `/static_assets/` (1 Jahr, immutable, da hashed) und weitere statische Dateien (7 Tage). Deployt auf `normdex-vps` (`/opt/stacks/normdex-landingpage`, Rebuild + Recreate). Verifiziert per `curl -I`: `Content-Encoding: gzip` und `Cache-Control: public, immutable, max-age=31536000` auf `/static_assets/app-*.js` sowie gzip auf `/`. PageSpeed-Re-Check empfohlen, sobald neue CrUX-/Lab-Daten vorliegen (in einigen Tagen erneut über pagespeed.web.dev prüfen).
 
 ## 6. Traffic-Daten (Plausible)
 
@@ -135,7 +162,7 @@ Per API-Key direkt gegen die Plausible Stats API (`/api/v2/query`) abgefragt. Tr
 | 5 | Article-JSON-LD um `datePublished`/`author`/`image` erweitern für `/wissen`-Artikel | `src/lib/seo.ts` (`getJsonLd`) | Mittel | Mittel (Rich-Snippet-Chance) |
 | 6 | Neuer Fachbeitrag zu „Annuität vs. durchschnittliche Kosten" bzw. „ÖNORM M 7140 2021 Neuerungen" — Content-Lücke ggü. Pokorny | `/wissen/...` (neue Route) | Groß | Hoch (Long-Tail + Autorität) |
 | 7 | Title-Tags von `/preise`, `/kontakt`, `/newsletter` verlängern (aktuell 39–42 Zeichen, Potenzial bis 60) | `src/pages/seo-routes.json` | Klein | Niedrig-Mittel |
-| 8 | PageSpeed Insights für `/` und `/oenorm-m-7140` manuell prüfen und Score dokumentieren | — | Klein | offen (Datenbasis fehlt noch) |
+| 8 | ✅ **Erledigt:** Gzip-Kompression + Cache-Control-Header im nginx-Container aktiviert | `normdex-landingpage/nginx.conf`, `Dockerfile` | Mittel | Hoch (größter identifizierter Hebel) — Mobile-Score-Re-Check aussteht |
 
 ---
 
