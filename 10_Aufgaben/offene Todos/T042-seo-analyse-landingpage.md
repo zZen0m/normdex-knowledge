@@ -2,7 +2,7 @@
 
 **Phase:** Landingpage / Marketing / SEO
 **Priorität:** P2 · Reichweite – kurzfristig umsetzbar
-**Status:** offen
+**Status:** in Arbeit
 **Datum:** 2026-07-08
 
 ## Ziel
@@ -52,11 +52,11 @@ Priorisierte Liste mit:
 
 ## Akzeptanzkriterien
 
-- [ ] Keyword-Liste mit mind. 10 priorisierten Ziel-Keywords (inkl. Suchvolumen-Einschätzung)
-- [ ] On-Page-Bewertung aller 6 Hauptseiten
-- [ ] Technische SEO-Checkliste abgehakt
-- [ ] Verbesserungsvorschläge als priorisierte Liste (mindestens 5 konkrete Maßnahmen)
-- [ ] Mindestens eine direkt umsetzbare Quick-Win-Maßnahme identifiziert und als eigenes Todo angelegt
+- [x] Keyword-Liste mit mind. 10 priorisierten Ziel-Keywords (Suchvolumen nicht verfügbar, Priorisierung nach Intent/Konkurrenzsignalen)
+- [x] On-Page-Bewertung aller Hauptseiten (auf 9 Seiten erweitert, inkl. `/wissen`-Bereich aus T037)
+- [x] Technische SEO-Checkliste abgehakt (PageSpeed-Score offen, siehe Notizen)
+- [x] Verbesserungsvorschläge als priorisierte Liste (8 konkrete Maßnahmen)
+- [x] Quick-Win identifiziert und direkt umgesetzt: fehlende `/wissen`-Seiten in `public/sitemap.xml` ergänzt (Commit ausstehend)
 
 ## Verifikation
 
@@ -67,3 +67,4 @@ Priorisierte Liste mit:
 ## Notizen / Fortschritt
 
 - 2026-07-08: Todo angelegt. Hintergrund: Landingpage hat kaum organischen Traffic, LinkedIn-Account steht bereits, Fokus jetzt auf SEO als zweitem Reichweiten-Kanal. Analyse soll Grundlage für [[T037-fachbeitrag-content-struktur-landingpage]] und [[T043-oenorm-seite-inhaltlicher-ausbau]] liefern.
+- 2026-07-26: Todo geschärft und Analyse durchgeführt, siehe vollständigen Report: [[SEO-Analyse-2026-07]]. Kernfunde: GSC liefert nach 90 Tagen nur 12 Marken-Tippfehler-Queries, 0 Klicks — keine Keyword-Opportunities aus GSC ableitbar, daher Keyword-Liste manuell aus Fachwissen + Konkurrenzrecherche (Pokorny Technologies, Urban-Energy) erstellt. Kritischer Fund: `/wissen`-Seiten (aus T037) fehlten in `public/sitemap.xml` und waren dadurch nicht/kaum indexiert — als Sofort-Fix behoben (Änderung noch nicht committet). Offen: PageSpeed-Score manuell erheben, Plausible-Traffic-Auswertung manuell nachholen (kein MCP-Zugriff), Content-Lücke „Annuität vs. durchschnittliche Kosten" als möglicher Folge-Fachbeitrag.
