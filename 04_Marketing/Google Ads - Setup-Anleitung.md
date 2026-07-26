@@ -13,6 +13,17 @@ Beide Events laufen über die bestehende, consent-gated GA4-Integration (`Google
 
 **Vor Schritt 1 unten:** Änderungen committen, nach `normdex-landingpage` deployen (Build war lokal bereits erfolgreich getestet), und per Klick auf der Live-Seite (Realtime-Bericht in GA4) verifizieren, dass beide Events tatsächlich ankommen.
 
+### Troubleshooting-Notiz vom 26.07.2026: „Datenerhebung nicht aktiv" trotz korrektem Code
+
+Nach dem Deployment zeigte GA4 dauerhaft „Für Ihre Website ist die Datenerhebung nicht aktiv" und der Echtzeit-Bericht blieb bei Testklicks auf 0, obwohl mehrfach mit erteiltem Analyse-Consent getestet wurde. Ausführliche Diagnose ergab:
+
+- `window.dataLayer` im Browser enthielt alle korrekten Einträge (`consent default`, `consent update` auf granted, `js`, `config`, das eigene `newsletter_signup`-Event) — der Code ist korrekt.
+- Die echte Google-Bibliothek lädt und läuft (automatische Enhanced-Measurement-Instrumentierung wie `gtm.formInteract`, `gtm.click-v2` erschien im dataLayer).
+- Googles eigener Tag Assistant bestätigte „Google-Tag gefunden", meldete aber „Von diesem Tag wurden keine Treffer gesendet" — und das über drei unabhängige Testumgebungen hinweg (Desktop mit vollständig deaktiviertem AdGuard, Handy im Mobilfunknetz).
+- Direkter Server-zu-Server-Test per Measurement Protocol (`POST https://www.google-analytics.com/mp/collect?measurement_id=G-WGPWWKYJRW&api_secret=…`, `204`-Antwort) landete sofort und korrekt im Echtzeit-Bericht. **Die Property selbst ist also nachweislich gesund.**
+- Fazit: Die Blockade liegt spezifisch in der Testumgebung des Nutzers (vermutlich netzwerk-/DNS-seitig, tiefer als die AdGuard-Browsererweiterung — z. B. Router- oder systemweite DNS-Konfiguration), nicht im Code oder in der GA4-Konfiguration. Für echte Website-Besucher außerhalb dieses speziellen Setups ist keine Beeinträchtigung zu erwarten.
+- Für zukünftige Property-Gesundheitschecks: ein Measurement-Protocol-Test-Hit (siehe oben) ist der schnellste, browserunabhängige Weg, um „Property kaputt" von „Client-Problem" zu unterscheiden. Das dafür angelegte API-Secret sollte nach Gebrauch in GA4 unter Verwaltung → Datenstreams → Measurement Protocol API-Secrets wieder gelöscht werden.
+
 ## Schritt 1: GA4-Events als Key Events markieren
 
 1. In Google Analytics 4 (Property zu `G-WGPWWKYJRW`) einloggen.
