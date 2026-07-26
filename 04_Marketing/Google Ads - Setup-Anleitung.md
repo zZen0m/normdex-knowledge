@@ -39,18 +39,18 @@ Damit sind beide Events jetzt als Schlüsselereignisse registriert, unabhängig 
 
 ## Schritt 2: Google Ads mit GA4 verknüpfen
 
-1. In Google Ads: Tools und Einstellungen → Einrichtung → Verknüpfte Konten.
-2. Google Analytics (GA4) auswählen, Property verknüpfen, die auch für `normdex.at` läuft.
-3. Verknüpfung bestätigen.
+Erledigt am 26.07.2026. Google-Ads-Konto (unter Permatec e.U.) angelegt, GA4-Property `normdex.at` (528084185) verknüpft, Status „Verknüpft", beide Datenfreigabe-Schalter („App- und Webmesswerte importieren", „Google Analytics-Zielgruppen importieren") aktiv.
 
 ## Schritt 3: Conversions aus GA4 importieren
 
-1. In Google Ads: Tools und Einstellungen → Messung → Conversions.
+**Offen, nächster Schritt.** Beim Versuch, `trial_start_click` und `newsletter_signup` unter Zielvorhaben → Conversions → „+ Neu" → „Google Analytics (GA4)-Property importieren" zu importieren, tauchten beide Events noch nicht in der Liste auf — vermutlich reine Sync-Verzögerung, da die Schlüsselereignisse erst wenige Minuten zuvor in GA4 angelegt wurden (Google nennt hier bis zu ein paar Stunden Verzögerung). Morgen zuerst hier weitermachen:
+
+1. In Google Ads: Zielvorhaben (Pokal-Symbol) → Conversions.
 2. „+ Neu" → „Google Analytics (GA4)-Property importieren".
-3. Beide Key Events (`trial_start_click`, `newsletter_signup`) auswählen und importieren.
-4. Für `trial_start_click`: Kategorie „Kauf/Anmeldung" (hartes Ziel), Zählmethode „Einmal" pro Klick.
-5. Für `newsletter_signup`: Kategorie „Lead" (weiches Ziel), Zählmethode „Einmal".
-6. Optional, aber empfohlen: `trial_start_click` als primäre Conversion für die Gebotsstrategie markieren, `newsletter_signup` als sekundär (nur zur Beobachtung, nicht gebotsrelevant) — sonst optimiert Google Ads am Ende auf das leichtere Ziel statt auf zahlungsrelevante Klicks.
+3. Prüfen, ob `trial_start_click` und `newsletter_signup` jetzt in der Liste auftauchen. Falls immer noch nicht: in GA4 unter Verwaltung → Datenanzeige → Ereignisse → Tab „Schlüsselereignisse" gegenprüfen, dass beide dort korrekt mit genau diesem Namen stehen (angelegt via „Mit Code erstellen", siehe Schritt 1).
+4. Beide auswählen und importieren.
+5. Für `trial_start_click`: Kategorie „Kauf/Anmeldung" (hartes Ziel), Zählmethode „Einmal" pro Klick, als **primäre** Conversion markieren.
+6. Für `newsletter_signup`: Kategorie „Lead" (weiches Ziel), Zählmethode „Einmal", als **sekundäre** Conversion markieren (nur zur Beobachtung, nicht gebotsrelevant) — sonst optimiert Google Ads am Ende auf das leichtere Ziel statt auf zahlungsrelevante Klicks.
 
 ## Schritt 4: Kampagne anlegen
 
