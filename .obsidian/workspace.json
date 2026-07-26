@@ -20,23 +20,8 @@
               "icon": "lucide-file",
               "title": "Aufgaben"
             }
-          },
-          {
-            "id": "189b28ca06cb8f5d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "10_Aufgaben/offene Todos/T050-ga4-tracking-nach-consent-fix-fast-keine-daten.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "T050-ga4-tracking-nach-consent-fix-fast-keine-daten"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -198,18 +183,29 @@
       "bases:Neue Base erstellen": false
     }
   },
-  "active": "189b28ca06cb8f5d",
+  "active": "abc71b05b535aeb4",
   "lastOpenFiles": [
-    "10_Aufgaben/offene Todos/T050-ga4-tracking-nach-consent-fix-fast-keine-daten.md.tmp.31116.9e7227875f47",
-    "10_Aufgaben/offene Todos/T050-ga4-tracking-nach-consent-fix-fast-keine-daten.md.tmp.31116.f339c52c83de",
-    "10_Aufgaben/offene Todos/T050-ga4-tracking-nach-consent-fix-fast-keine-daten.md.tmp.31116.9f68340a7850",
-    "03_Landingpage/Landingpage.md.tmp.31116.eeb7aaf840db",
-    "10_Aufgaben/offene Todos/T050-ga4-tracking-nach-consent-fix-fast-keine-daten.md.tmp.13852.dcc150354f35",
-    "10_Aufgaben/offene Todos/T050-ga4-tracking-nach-consent-fix-fast-keine-daten.md.tmp.13852.68fa86b9f732",
+    "04_Marketing/Google Ads - Keywords und Anzeigen.md.tmp.3532.b5f9b0577cc5",
+    "04_Marketing/Marketingplan 2026 - Erste Kunden.md.tmp.3532.729fbc820896",
+    "04_Marketing/Google Ads - Setup-Anleitung.md",
+    "04_Marketing/Google Ads - Setup-Anleitung.md.tmp.3532.2bb74d39fa98",
+    "04_Marketing/Marketingplan 2026 - Erste Kunden.md.tmp.3532.c8a52425a2c2",
+    "04_Marketing/Marketingplan 2026 - Erste Kunden.md.tmp.3532.a52816072f31",
+    "10_Aufgaben/Aufgaben.md.tmp.44192.392c9b0acb1f",
+    "10_Aufgaben/Aufgaben.md.tmp.44192.9c3295eee371",
+    "10_Aufgaben/abgeschlossene Todos/T043-oenorm-seite-inhaltlicher-ausbau.md",
+    "10_Aufgaben/offene Todos/T043-oenorm-seite-inhaltlicher-ausbau.md.tmp.44192.d591286fea2f",
+    "10_Aufgaben/offene Todos/T043-oenorm-seite-inhaltlicher-ausbau.md.tmp.44192.80b48015877b",
+    "10_Aufgaben/offene Todos/T043-oenorm-seite-inhaltlicher-ausbau.md.tmp.44192.b3f1e47bc6b7",
+    "10_Aufgaben/offene Todos/T043-oenorm-seite-inhaltlicher-ausbau.md",
+    "10_Aufgaben/offene Todos/T043-oenorm-seite-inhaltlicher-ausbau.md.tmp.44192.034208cdad12",
     "10_Aufgaben/Aufgaben.md",
+    "10_Aufgaben/abgeschlossene Todos/T042-seo-analyse-landingpage.md",
+    "03_Landingpage/SEO-Analyse-2026-07.md",
+    "10_Aufgaben/offene Todos/T050-ga4-tracking-nach-consent-fix-fast-keine-daten.md",
+    "10_Aufgaben/abgeschlossene Todos/T050-ga4-tracking-nach-consent-fix-fast-keine-daten.md",
     "2026-07-24.md",
     "11_Audits/Webapp/2026-06-20-repo-audit-webapp.md",
-    "10_Aufgaben/offene Todos/T050-ga4-tracking-nach-consent-fix-fast-keine-daten.md",
     "01_Produkt/Brand Identity & Voice.md",
     "05_Geschaeft/Businessplan.md",
     "02_App/API-Endpunkte.md",
@@ -219,13 +215,8 @@
     "04_Marketing/LinkedIn/01 Schreib- und Designvorgaben LinkedIn.md",
     "10_Aufgaben/offene Todos/T045-systemlogs-in-adminoberflaeche.md",
     "04_Marketing/Google Ads - Keywords und Anzeigen.md",
-    "10_Aufgaben/Aufgaben.md.tmp.9576.21233b641c0a",
     "10_Aufgaben/abgeschlossene Todos/T047-linkedin-api-freigabe-statistiken.md",
-    "10_Aufgaben/Aufgaben.md.tmp.44944.9f44002eb0e9",
-    "10_Aufgaben/Aufgaben.md.tmp.44944.11181551ffd9",
     "10_Aufgaben/abgeschlossene Todos/T037-fachbeitrag-content-struktur-landingpage.md",
-    "10_Aufgaben/offene Todos/T037-fachbeitrag-content-struktur-landingpage.md.tmp.44944.9f801b9ca074",
-    "10_Aufgaben/offene Todos/T037-fachbeitrag-content-struktur-landingpage.md.tmp.44944.e5b1332daa61",
     "10_Aufgaben/offene Todos/T049-google-marketing-kpis-verwaltungsportal.md",
     "10_Aufgaben/abgeschlossene Todos/T051-beispielbericht-oeffentlich-downloadbar.md",
     "10_Aufgaben/offene Todos/T051-beispielbericht-oeffentlich-downloadbar.md",
@@ -233,13 +224,7 @@
     "04_Marketing/LinkedIn/Entwürfe/2026-08-04-validierung-abschnitt-10-banner.png",
     "04_Marketing/LinkedIn/Archiv/2026-07-14-drei-verfahren-kurz-erklaert-banner.png",
     "04_Marketing/LinkedIn/Entwürfe/2026-07-14-drei-verfahren-kurz-erklaert.md",
-    "04_Marketing/LinkedIn/Archiv/2026-07-14-drei-verfahren-kurz-erklaert.md",
     "04_Marketing/LinkedIn/Archiv/2026-07-07 Launch-Announcement.png",
-    "04_Marketing/LinkedIn/00 Themenplan.md",
-    "07_KI_Agenten/MCP-Zugriff - Google Search Console & GA4.md",
-    "10_Aufgaben/abgeschlossene Todos/T046-ssg-vite-react-ssg-landingpage.md",
-    "10_Aufgaben/abgeschlossene Todos/T048-linkedin-marketing-kpis-verwaltungsportal.md",
-    "10_Aufgaben/offene Todos/T047-linkedin-api-freigabe-statistiken.md",
     "04_Marketing/LinkedIn/Entwürfe/2026-08-25-kalkulationszinssatz-banner-waage.png",
     "04_Marketing/LinkedIn/Entwürfe/2026-08-25-kalkulationszinssatz-banner 1.png",
     "04_Marketing/LinkedIn/Design-Vorlagen/normdex_linkedin_banner_dunkel_1200x627.png",

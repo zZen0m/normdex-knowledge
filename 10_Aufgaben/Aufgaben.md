@@ -42,7 +42,6 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 | ------- | ----------------------------------------------- | -------------------------------- | ------ |
 | T049    | [[T049-google-marketing-kpis-verwaltungsportal]] | App / Admin / Verwaltungsportal / Marketing | offen |
 | T045    | [[T045-systemlogs-in-adminoberflaeche]]          | App / Admin / Verwaltungsportal / Diagnose | offen |
-| T043    | [[T043-oenorm-seite-inhaltlicher-ausbau]]        | Landingpage / Marketing / SEO / Content | offen |
 | T041    | [[T041-referenzwerte-kostenkategorien-systeme]]  | App / Wirtschaftlichkeitsberechnung / Eingabe | offen |
 | T040    | [[T040-projekt-duplizieren]]                     | App / Projektverwaltung / Effizienz | offen |
 | T039    | [[T039-kommentar-aktivitaets-feed-pro-projekt]]  | App / Projektverwaltung / Zusammenarbeit | offen |
@@ -57,6 +56,7 @@ Die früheren Einzel-Todos `T003` bis `T011` wurden in [[T013-lizenzsystem-rollo
 
 | ID      | Todo                                                | Bereich                          | Abgeschlossen |
 | ------- | --------------------------------------------------- | -------------------------------- | ------------- |
+| T043    | [[T043-oenorm-seite-inhaltlicher-ausbau]]        | Landingpage / Marketing / SEO / Content | 2026-07-26 |
 | T042    | [[T042-seo-analyse-landingpage]]                 | Landingpage / Marketing / SEO    | 2026-07-26 |
 | T050    | [[T050-ga4-tracking-nach-consent-fix-fast-keine-daten]] | Landingpage / Analytics / Datenschutz | 2026-07-24 |
 | T037    | [[T037-fachbeitrag-content-struktur-landingpage]] | Landingpage / Marketing / Content / SEO | 2026-07-24 |

@@ -172,3 +172,4 @@ Schalte die Anzeigen erst, wenn die Landeseiten stehen. Die Testphasen-Anzeigen 
 - [[Marketingplan 2026 - Erste Kunden]]
 - [[Newsletter-Strecke nach Lead-Magnet]]
 - [[Key Messages & CTAs]]
+- [[Google Ads - Setup-Anleitung]]

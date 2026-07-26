@@ -131,15 +131,15 @@ Bewusst klein gehalten, damit es solo und nebenbei machbar bleibt. Die ersten Sc
 
 - [x] Positionierung auf der Landingpage schärfen.
 - [x] Beispiel-Report als öffentliches PDF erstellen. (erledigt, T051, 2026-07-24)
-- [ ] Methodik- und Validierungsseite schreiben. (Status bei letztem Stand nicht bestätigt)
+- [x] Methodik- und Validierungsseite geschrieben. (`/oenorm-m-7140`, Sektionen "Wie Normdex die ÖNORM M 7140 umsetzt" und "So validiert Normdex nach Abschnitt 10"; inhaltlich final ausgebaut 2026-07-26, siehe [[T043-oenorm-seite-inhaltlicher-ausbau]])
 - [x] Lead-Magnet (Leitfaden) erstellt.
 - [x] Nurture-Sequenz aufgesetzt, versendet den Leitfaden bereits.
 
 **Phase 2, Sichtbarkeit (ab etwa Monat 3):**
 
 - [x] LinkedIn-Unternehmensseite angelegt (04.07.2026): https://www.linkedin.com/company/normdex
-- [ ] Erste Fachposts veröffentlichen. (Nächster Schritt)
-- [ ] Google Ads klein starten, beide Zielseiten testen. (Danach)
+- [x] Erste Fachposts veröffentlicht. (Post 1 "Die drei Verfahren kurz erklärt" am 21.07.2026, weitere laufend gemäß [[00 Themenplan]])
+- [ ] Google Ads klein starten, beide Zielseiten testen. (Landingpages inkl. Methodikseite jetzt fertig, Blocker entfällt ab 26.07.2026 — Nächster Schritt)
 - [ ] Wöchentlich kurz messen und nachschärfen.
 
 **Phase 3, Kumulieren (laufend):**
@@ -175,3 +175,5 @@ Gilt für Landingpage, Ads, Newsletter, LinkedIn und Fachbeiträge.
 - [[Key Messages & CTAs]]
 - [[Brand Identity & Voice]]
 - [[Landingpage]]
+- [[Google Ads - Keywords und Anzeigen]]
+- [[Google Ads - Setup-Anleitung]]
