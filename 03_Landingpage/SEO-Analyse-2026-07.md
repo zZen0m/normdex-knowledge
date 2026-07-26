@@ -108,7 +108,19 @@ Direkte Konkurrenz für ÖNORM-M-7140-Software:
 
 ## 6. Traffic-Daten (Plausible)
 
-**Nicht ausgewertet in dieser Session** — es ist kein Plausible-MCP-Server verbunden, nur GSC. Manuell nachzuholen über das Plausible-Dashboard (analytics.normdex.at) für: Seitenaufrufe pro Route, Top-Referrer, Bounce Rate der `/wissen`-Seiten seit Launch.
+Per API-Key direkt gegen die Plausible Stats API (`/api/v2/query`) abgefragt. Tracking läuft erst seit **2026-07-24** — Datenbasis dementsprechend minimal:
+
+| Metrik | Wert (24.–26.07.2026, gesamt) |
+|---|---|
+| Besucher | 2 |
+| Pageviews | 3 |
+| Bounce Rate | 50 % |
+| Ø Besuchsdauer | 44 s |
+| Traffic-Quelle | ausschließlich „Direct / None" — kein Referrer |
+| Top-Seiten | `/oenorm-m-7140/` (1 Besucher), `/` (1 Besucher, 2 Pageviews) |
+| `/wissen`-Seiten | 0 Aufrufe |
+
+→ Bestätigt den Kernbefund aus Abschnitt 1: kein messbarer Traffic, organisch oder sonstig, vermutlich eigene Testaufrufe. Erneut prüfen, sobald der Sitemap-Fix (Abschnitt 4) zu Indexierung geführt hat und mehr Zeit vergangen ist — z. B. in 4 Wochen.
 
 ---
 
@@ -130,5 +142,5 @@ Direkte Konkurrenz für ÖNORM-M-7140-Software:
 ## 8. Offene Punkte für T042-Abschluss
 
 - [ ] PageSpeed-Score manuell erheben (kein Tool-Zugriff)
-- [ ] Plausible-Traffic-Auswertung manuell nachholen
+- [ ] Plausible-Traffic erneut prüfen, sobald mehr Daten vorliegen (z. B. in 4 Wochen)
 - [ ] Maßnahme #6 (neuer Fachbeitrag) als eigenes Folge-Todo anlegen, falls priorisiert
