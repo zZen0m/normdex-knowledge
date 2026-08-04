@@ -43,28 +43,36 @@ Erledigt am 26.07.2026. Google-Ads-Konto (unter Permatec e.U.) angelegt, GA4-Pro
 
 ## Schritt 3: Conversions aus GA4 importieren
 
-**Offen, nächster Schritt.** Beim Versuch, `trial_start_click` und `newsletter_signup` unter Zielvorhaben → Conversions → „+ Neu" → „Google Analytics (GA4)-Property importieren" zu importieren, tauchten beide Events noch nicht in der Liste auf — vermutlich reine Sync-Verzögerung, da die Schlüsselereignisse erst wenige Minuten zuvor in GA4 angelegt wurden (Google nennt hier bis zu ein paar Stunden Verzögerung). Morgen zuerst hier weitermachen:
+Erledigt am 03.08.2026 (via Chrome-Steuerung). Beide GA4-Events waren inzwischen synchronisiert und importierbar. Ablauf im neuen Google-Ads-Setup-Flow:
 
-1. In Google Ads: Zielvorhaben (Pokal-Symbol) → Conversions.
-2. „+ Neu" → „Google Analytics (GA4)-Property importieren".
-3. Prüfen, ob `trial_start_click` und `newsletter_signup` jetzt in der Liste auftauchen. Falls immer noch nicht: in GA4 unter Verwaltung → Datenanzeige → Ereignisse → Tab „Schlüsselereignisse" gegenprüfen, dass beide dort korrekt mit genau diesem Namen stehen (angelegt via „Mit Code erstellen", siehe Schritt 1).
-4. Beide auswählen und importieren.
-5. Für `trial_start_click`: Kategorie „Kauf/Anmeldung" (hartes Ziel), Zählmethode „Einmal" pro Klick, als **primäre** Conversion markieren.
-6. Für `newsletter_signup`: Kategorie „Lead" (weiches Ziel), Zählmethode „Einmal", als **sekundäre** Conversion markieren (nur zur Beobachtung, nicht gebotsrelevant) — sonst optimiert Google Ads am Ende auf das leichtere Ziel statt auf zahlungsrelevante Klicks.
+1. Zielvorhaben → Conversions → „Neue Conversion-Aktion".
+2. Datenquelle „Conversions auf einer Website" (GA4-Property normdex.at, 528084185) aktiv gelassen, „Conversions aus Anrufen" abgewählt.
+3. Auf der Seite „Conversions gruppieren" NICHT die Kategorie-Kacheln oben (die legen ein neues Event an), sondern unten „Mehrere Conversion-Aktionen aus einem verknüpften Konto erstellen" → „Auswählen" → Property normdex.at → in der Checkbox-Tabelle `trial_start_click` und `newsletter_signup` angehakt.
+4. Kategorien pro Zeile: `trial_start_click` → „Anmeldung", `newsletter_signup` → „Lead-Formular senden".
+5. In den Einstellungen je Conversion: Wert auf „keinen Wert verwenden" (kein erfundener Wert, Start mit Klicks maximieren), Zählmethode „Nur genau eine Conversion" (= Einmal).
+6. `trial_start_click` bleibt Primäre Aktion. Für `newsletter_signup` ist die Primär/Sekundär-Wahl im Wizard ausgegraut — stattdessen nach dem Wizard unter Zielvorhaben → „Lead-Formular senden" → „Zielvorhaben bearbeiten" → „Kontostandard" den Schalter „Als Standardzielvorhaben auf Kontoebene festlegen" AUSgeschaltet. Damit ist newsletter_signup nur Beobachtung, nicht gebotsrelevant.
+
+Ergebnis in der Conversion-Aktionsliste bestätigt: `trial_start_click` „In Zielvorhaben auf Kontoebene einbezogen: Ja", `newsletter_signup: Nein". Beide Tracking-Status „Keine kürzlich erfassten Conversions" — das ist normal und wechselt erst nach dem ersten echten Klick auf „aktiv erfassend".
+##### EDIT: DONE
 
 ## Schritt 4: Kampagne anlegen
 
-Alle Inhalte (Keywords, Anzeigentexte, Erweiterungen, Budget) stehen fertig in [[Google Ads - Keywords und Anzeigen]]. Ablauf:
+Erledigt am 03.08.2026 (via Chrome-Steuerung). Kampagne „ÖNORM M 7140 Suche AT" (Campaign-ID 24100511423) wurde veröffentlicht und sofort pausiert.
 
-1. Neue Kampagne, Ziel „Website-Traffic" oder ohne Zielvorgabe (nicht „Umsatz", da keine E-Commerce-Conversion-Werte hinterlegt sind).
-2. Kampagnentyp: Suche. Netzwerke: nur Suchnetzwerk, Displaynetzwerk und Suchnetzwerk-Partner abwählen.
-3. Standort: Österreich. Sprache: Deutsch.
-4. Gebotsstrategie: „Klicks maximieren" mit Ober­grenze 1,50–2,50 € (siehe Kampagnen-Setup-Tabelle im Referenzdokument).
-5. Tagesbudget: 5–10 € zum Start.
-6. Negativ-Keywords auf Kampagnenebene aus dem Referenzdokument eintragen.
-7. Drei Anzeigengruppen anlegen exakt wie im Referenzdokument beschrieben (ÖNORM M 7140 Kern, Wirtschaftlichkeit Energiesysteme, Methodik/Lebenszykluskosten informierend), jeweils mit den dort gelisteten Keywords (Wortgruppe/genau passend wie angegeben) und Ziel-URLs.
-8. Responsive Suchanzeigen mit den vorformulierten Überschriften und Textzeilen aus dem Referenzdokument anlegen (Gruppe 1+2 → Testphase-Texte, Gruppe 3 → Lead-Magnet-Texte).
-9. Anzeigenerweiterungen (Sitelinks, Callouts, Snippet) aus dem Referenzdokument hinzufügen.
+Wichtige Erkenntnis: Der Google-Ads-Erstellungswizard für neue Kampagnen erlaubt nur eine einzige Anzeigengruppe und bietet auch keine Stelle für Negativ-Keywords. Beides ist erst nach der Veröffentlichung über die normale Kampagnenverwaltung möglich. Ablauf war daher:
+
+1. Im Wizard: Kampagnentyp Suche, nur Suchnetzwerk (Partner und Display abgewählt), Standort Österreich, Sprache Deutsch, Gebotsstrategie „Klicks maximieren" mit Obergrenze 2,00 €, Tagesbudget 7,00 €/Tag, Zielvorhaben „Registrierungen". AI Max für die Kampagne deaktiviert gelassen (Textanpassung und Erweiterung der finalen URL beide aus – Achtung, die Überprüfen-Seite zeigte hier fälschlich „aktiviert" an, das ist ein reiner Anzeigefehler der Zusammenfassung, die tatsächlichen Schalter waren korrekt aus).
+2. Anzeigengruppe 1 (ÖNORM M 7140 Kern) komplett im Wizard erstellt: Keywords, RSA-Anzeige mit allen 15 Überschriften/4 Textzeilen (Testphase-Set), Sitelinks, Callouts und Snippet auf Kampagnenebene (gelten automatisch für alle Anzeigengruppen). Beim Snippet-Typ gibt es kein exaktes „Funktionen"-Pendant in der deutschen Auswahlliste, „Ausstattung" als nächstliegende Option gewählt.
+3. Kampagne veröffentlicht, danach sofort über das Status-Dropdown links oben auf „Pausiert" gesetzt (lief kurz als „Aktiviert" im Lernmodus, bevor die Pausierung gegriffen hat).
+4. Anzeigengruppe 2 (Wirtschaftlichkeit Energiesysteme, Software) über Kampagnen → Anzeigengruppen → „+" nachträglich angelegt: gleiche Ziel-URL wie Gruppe 1 (`app.normdex.at/auth/register`), gleiche 5 Keywords aus dem Referenzdokument. Google Ads hat hier automatisch die komplette Anzeige (15 Überschriften, 4 Textzeilen) von Gruppe 1 übernommen, da dieselbe Ziel-URL erkannt wurde – Inhalte 1:1 geprüft, stimmen mit dem Testphase-Set aus dem Referenzdokument überein.
+5. Anzeigengruppe 3 (Methodik und Lebenszykluskosten, informierend) ebenso nachträglich angelegt: Ziel-URL `normdex.at/newsletter`, 4 Keywords aus dem Referenzdokument. Achtung: Hier hatte Google Ads beim automatischen Vorschlag fälschlich die Ziel-URL und alle Anzeigentexte von Gruppe 1/2 übernommen (falsche URL `app.normdex.at/auth/register` statt Newsletter-Seite). Manuell korrigiert: Ziel-URL auf `normdex.at/newsletter` gesetzt und alle 15 Überschriften sowie 4 Textzeilen einzeln durch das Lead-Magnet-Set aus dem Referenzdokument ersetzt.
+6. Negativ-Keywords (alle 20 aus dem Referenzdokument) über Zielgruppen, Keywords und Inhalte → Keywords → Tab „Auszuschließende Keywords" → „Hinzufügen zu: Kampagne" ergänzt.
+7. Ad-Gruppen-Ebene-Sitelink-Vorschläge (in Anzeigengruppe 2 und 3 leer angeboten) bewusst nicht ausgefüllt, da die Kampagnen-Sitelinks aus Schritt 2 (Anzeigengruppe 1) automatisch für die ganze Kampagne gelten.
+
+Ergebnis: Alle drei Anzeigengruppen, alle Keywords, Anzeigentexte, Erweiterungen und Negativ-Keywords stehen wie im Referenzdokument beschrieben. Kampagnenstatus „Pausiert" – noch nicht live.
+
+Optionaler Zusatzschritt nach Veröffentlichung übersprungen: Google Ads bot direkt nach dem Publizieren an, ein zusätzliches globales Google-Tag (gtag.js) auf der Website einzubinden. Das wurde nicht gemacht, da die Conversion-Erfassung schon über die importierten GA4-Events läuft (siehe Schritt 3) und das Einbinden von Tracking-Code eine Website-Code-Änderung wäre, die nicht in dieser Session gehört.
+##### EDIT: DONE
 
 ## Schritt 5: Vor dem Start prüfen
 
