@@ -40,6 +40,9 @@ Diese Datei ist die Übersicht. Detailinformationen stehen immer in der jeweilig
 
 | ID   | Todo                                             | Bereich                                       | Status      |
 | ---- | ------------------------------------------------ | --------------------------------------------- | ----------- |
+| T054 | [[T054-wirtschaftlichkeit-designsystem]]         | App / Wirtschaftlichkeitsberechnung / Frontend-Refactor | offen |
+| T053 | [[T053-wirtschaftlichkeit-bedienzustaende]]      | App / Wirtschaftlichkeitsberechnung / Eingabe | offen       |
+| T052 | [[T052-wirtschaftlichkeit-layout-skalierung]]    | App / Wirtschaftlichkeitsberechnung / Darstellung | offen   |
 | T049 | [[T049-google-marketing-kpis-verwaltungsportal]] | App / Admin / Verwaltungsportal / Marketing   | offen       |
 | T045 | [[T045-systemlogs-in-adminoberflaeche]]          | App / Admin / Verwaltungsportal / Diagnose    | offen       |
 | T041 | [[T041-referenzwerte-kostenkategorien-systeme]]  | App / Wirtschaftlichkeitsberechnung / Eingabe | offen       |
