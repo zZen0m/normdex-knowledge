@@ -51,6 +51,13 @@
 - SMTP-Relay: `smtp-relay.brevo.com:587`
 - Absender: `notify@normdex.at`
 
+- Newsletter-/Double-Opt-in-Funktionen nutzen zusätzlich einen separaten Brevo-API-Schlüssel. Erfolgreiche SMTP-Anmeldung bestätigt diesen API-Schlüssel nicht.
+- Brevo deaktiviert API-Schlüssel nach 90 Tagen ohne erfolgreichen API-Aufruf, auch ohne festes Ablaufdatum: https://help.brevo.com/hc/en-us/articles/40154686262546
+- Seit 28.10.2026 prüft ein Host-Cron täglich um 06:23 UTC mit den echten App-Zugangsdaten lesend Konto und konfigurierte Newsletterliste sowie die SMTP-Anmeldung. Keine Kontakte werden geändert und keine E-Mails gesendet. Erfolgreiche API-Aufrufe halten den verwendeten Schlüssel aktiv.
+- Alle 15 Minuten prüft ein zweiter Cron den Ergebnisstatus: spätestens nach 36 Stunden ohne aktuelle erfolgreiche Prüfung wird über Telegram alarmiert. Fehler werden direkt gemeldet und fehlgeschlagene Benachrichtigungen erneut versucht; gleiche Alarme höchstens täglich, Entwarnung bei Erholung.
+- Quellen: `normdex-backup/integrations/`. Status: `state/brevo-check.json`; Logs: `state/brevo-check.log` und `state/brevo-watchdog.log`. Bestehende Cronjobs bleiben erhalten. Die Checks laufen unabhängig von n8n, teilen aber den VPS/Internetzugang.
+- Prüfung am 28.10.2026: Brevo-Konto und Newsletterliste HTTP 200, SMTP-Anmeldung erfolgreich. Das belegt Verbindung und Zugang; vollständige Newsletter-Anmeldung, Webhook-Rücklauf und tatsächlicher Postfacheingang benötigen separate gekennzeichnete Ende-zu-Ende-Tests.
+
 ---
 
 ### Newsletter Double-Opt-in / Brevo Webhook
