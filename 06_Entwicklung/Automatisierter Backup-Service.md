@@ -1,117 +1,113 @@
 # Automatisierter Backup-Service
 
-Der Normdex Backup-Service sichert täglich die Produktionsdatenbank und das Uploads-Volume und speichert die Backups lokal auf dem VPS sowie offsite auf SharePoint.
+Stand: 28.10.2026. Repo: `zZen0m/normdex-backup`, VPS: `/opt/repos/normdex-backup`.
 
-## Was gesichert wird
+## Sicherungen und Erfolgsnachweis
 
-| Quelle | Methode | Datei |
-|---|---|---|
-| PostgreSQL `normdex_prod_database` | `pg_dump` → gzip | `normdex_prod_db.sql.gz` |
-| Docker Volume `normdex_prod_normdex_uploads` | tar | `uploads.tar.gz` |
+Täglich 02:00 Europe/Vienna sichert `normdex-backup`:
 
-## Architektur
+- PostgreSQL `normdex_prod_database` als `normdex_prod_db.dump` (Custom-Format).
+- Volume `normdex_prod_normdex_uploads` als `uploads.tar.gz`.
+- `manifest.json` mit Dateigrößen, SHA-256 und Erstellungszeit.
 
-- **Repo:** `git@github.com:zZen0m/normdex-backup.git`
-- **Server-Pfad:** `/opt/repos/normdex-backup/`
-- **Container:** `normdex-backup` (Docker, `restart: unless-stopped`)
-- **Cron:** täglich um 02:00 Uhr (Europe/Vienna)
-- **Lokale Retention:** letzte 14 Tage unter `./data/`
-- **Remote Retention:** letzte 30 Tage auf SharePoint
+Ein Datenbankdump gilt nur bei erfolgreichem `pg_dump` und `pg_restore --list` als
+lokal erfolgreich. Uploads werden mit `tar -tzf` geprüft. Unvollständige Sicherungen
+bleiben `.partial` und gelten nicht als Erfolg.
 
-## Offsite-Speicherort (SharePoint)
+Cloud-Ziel: SharePoint, Normdex – Dokumente,
+`03_Product-Development/01_Backups Normdex Produktion VPS`.
+Nach jedem Upload vergleicht `rclone check --download` den tatsächlichen Inhalt.
+Erst danach wird Cloud-Erfolg gespeichert. Maßgeblich für Frische ist das Alter
+der Sicherung, nicht der Zeitpunkt eines späteren erneuten Uploads.
 
-```
-Permatec e.U > Normdex – Dokumente > 03_Product-Development > 01_Backups Normdex Produktion VPS
-```
+## Persistente Anmeldung
 
-Die Verbindung läuft über rclone mit einer Azure App Registration:
+`config/rclone/rclone.conf` enthält die Microsoft-Verbindung und den aktuellen
+Refresh-Token. Das Verzeichnis ist dauerhaft gemountet; die Datei ist Modus 600.
+Die bisherigen `RCLONE_CONFIG_SHAREPOINT_*`-Variablen dienen nur dem einmaligen
+Import, falls die Datei noch nicht existiert. Vor jedem rclone-Lauf werden diese
+Overrides entfernt, damit ein alter Umgebungs-Token keinen erneuerten Token ersetzt.
+Nie Token oder Client Secret in Git, Chat, Telegram oder Logs schreiben.
 
-| Parameter | Wert |
-|---|---|
-| Azure App | Normdex Backup rclone |
-| App-ID (Client ID) | `0cb92941-31aa-4100-a78f-89ab613985e0` |
-| Tenant | `4099f674-ae6c-47ab-a7bd-2d2e582ac426` (permateceu) |
-| SharePoint Drive | Normdex – Dokumente (documentLibrary) |
-| Drive ID | `b!vU7cHYgueEm3nFz3uq-D3n7DUYwwn-xBvnwt8HYELr_zbjzOJJCsR4HZAyb8DCqs` |
+Incident: Vollständige Cloud-Backups waren zuletzt am 31.08.2026 erfolgreich.
+Ab 01.09. scheiterte die Anmeldung. Am 28.10. wurde der neuere Refresh-Token aus
+der Konfiguration im alten Container vor dessen Austausch geschützt gerettet.
+Damit war die Verbindung ohne erneute Benutzeranmeldung wiederherstellbar.
+Ein kompletter Upload mit Inhaltsprüfung wurde erfolgreich getestet.
 
-Wichtig: Die Azure App ist single-tenant. rclone muss deshalb tenant-spezifische OAuth-Endpunkte verwenden, sonst versucht der Token-Refresh den `/common`-Endpoint und wird von Microsoft abgelehnt:
+## Alarmierung und unabhängige Kontrolle
 
-```env
-RCLONE_CONFIG_SHAREPOINT_AUTH_URL=https://login.microsoftonline.com/4099f674-ae6c-47ab-a7bd-2d2e582ac426/oauth2/v2.0/authorize
-RCLONE_CONFIG_SHAREPOINT_TOKEN_URL=https://login.microsoftonline.com/4099f674-ae6c-47ab-a7bd-2d2e582ac426/oauth2/v2.0/token
-```
+Telegram verwendet den vorhandenen Bot „Telegram Normdex Tickets“ und den
+bestehenden Zielchat aus n8n. Zugangsdaten liegen ausschließlich in
+`env/.env.alerts` (600); der Versand erfolgt direkt, unabhängig von n8n-Workflows.
 
-Credentials (Client Secret, OAuth-Token) liegen ausschliesslich in `/opt/repos/normdex-backup/env/.env.backup` auf dem Server – diese Datei ist in `.gitignore` und wird nie committet.
+Der Benutzer-Cron des VPS prüft alle 15 Minuten, unabhängig vom Backup-Container:
 
-## Backup-Ablauf
+- letzte lokale und Cloud-Sicherung höchstens 26 Stunden alt;
+- letzter Wiederherstellungstest höchstens 8 Tage alt;
+- letzter Backup-Lauf und Wiederherstellungstest erfolgreich;
+- mindestens 15 % freier Speicherplatz.
 
-1. `pg_dump` der Produktionsdatenbank → komprimiert als `.sql.gz`
-2. `tar` des Uploads-Volumes → `.tar.gz`
-3. Beide Dateien via rclone auf SharePoint hochladen
-4. Lokale Rotation: Verzeichnisse älter als die letzten 14 werden gelöscht
-5. Remote-Rotation: Verzeichnisse älter als die letzten 30 werden auf SharePoint gelöscht
+Fehler werden sofort beim Lauf bzw. spätestens bei der nächsten Prüfung gemeldet.
+Gleiche Alarme werden höchstens täglich wiederholt, Änderungen und Entwarnung
+werden gemeldet. Fehlgeschlagene Zustellungen werden erneut versucht.
+Ein Testversand ist mit `python3 host_watchdog.py notify-test` möglich.
 
-Bei einem Fehler bricht das Skript sofort ab (`set -e`). Der Fehler ist in den Container-Logs sichtbar.
+Für den Totalausfall des VPS ist zusätzlich ein externer Dead-Man-Monitor nötig.
+Die Anbindung über `BACKUP_HEARTBEAT_URL` ist vorbereitet, aber ohne eingetragenen
+externen Dienst **nicht aktiv**. Kein vollständiger VPS-Ausfallschutz behaupten.
 
-## Backup manuell ausführen
+## Aufbewahrung und Platzbegrenzung
 
-```bash
+- Lokal: letzte 14 Sicherungen, zusätzlich Schutz der letzten lokal erfolgreichen,
+  Cloud-geprüften und wiederhergestellten Sicherung (ggf. mehr als 14 Ordner).
+- Extern: letzte 30 tägliche Sicherungen und jeweils die letzte Sicherung der
+  letzten 12 Monate. Manuelle Zusatzläufe zählen bei den letzten 30 mit.
+- Lokale Bereinigung läuft auch nach Cloud-Fehlern. Bei der Umstellung wird erst
+  nach dem ersten neuen bestätigten Cloud-Upload bereinigt.
+- Verwaiste `.partial`-Ordner werden nach zwei Tagen entfernt.
+- Extern werden automatisch nur vom neuen Ablauf hochgeladene und geprüfte
+  Sicherungen gelöscht. Historische externe Sicherungen bleiben bis zur gesonderten
+  Prüfung erhalten.
+- Containerlogs: maximal 3 × 5 MB. `data/backup.log` bleibt historische Altdatei.
+
+## Wiederherstellungstest
+
+Jeden Sonntag um 04:00 UTC (05:00/06:00 Wien) startet ein separater Container ohne
+Netzwerkverbindung, ohne Produktionszugangsdaten und ohne produktive Datenbank-
+Volumes. Der aktuelle geprüfte Dump wird in eine temporäre PostgreSQL-Instanz
+zurückgespielt; eine nichtleere Tabellenstruktur ist erforderlich. Backup und
+Wiederherstellung teilen eine Sperre, damit die Bereinigung den Dump nicht entfernt.
+Beim Integrationstest am 28.10. wurden 31 Tabellen erfolgreich wiederhergestellt.
+
+## Betrieb
+
+```sh
+cd /opt/repos/normdex-backup
+docker logs --tail 100 normdex-backup
+cat state/watchdog.log state/restore.log
+crontab -l
 docker exec normdex-backup /app/backup.sh
+docker compose --profile maintenance run --rm --no-deps restore-check
+python3 host_watchdog.py
 ```
 
-## Logs prüfen
+`state/local.json`, `cloud.json`, `restore.json`, `run.json` und `restore-run.json`
+enthalten die Erfolgszeitpunkte/-ergebnisse. Verzeichnis 2770 und Statusdateien
+660 erlauben dem Benutzer `deploy` die unabhängige Kontrolle; Nutzdaten und
+Zugangsdaten sind davon getrennt und bleiben restriktiv geschützt.
+Die mitgelieferten systemd-Units sind eine Alternative für Administratoren;
+aktuell ist Benutzer-Cron aktiv. Nicht beide Zeitpläne gleichzeitig aktivieren.
 
-```bash
-# Live-Log des Containers
-docker logs normdex-backup -f
+## Wiederherstellung im Ernstfall
 
-# Archiviertes Log aller Läufe
-cat /opt/repos/normdex-backup/data/backup.log
-```
+Neue Dumps sind Custom-Format: `pg_restore --exit-on-error --no-owner
+--no-privileges --dbname LEERE_TESTDATENBANK normdex_prod_db.dump`.
+Zuerst Prüfsummen prüfen und in einer isolierten Datenbank wiederherstellen,
+danach App-Daten validieren. Upload-Archiv separat prüfen und erst bei geplanter
+Wiederherstellung das Produktionsvolume ersetzen.
+Historische `.sql.gz`-Dumps werden weiterhin mit `gunzip` und `psql` wiederhergestellt.
+Keine Produktionswiederherstellung ohne eigene Wartungsfreigabe.
 
-## Wiederherstellung (Disaster Recovery)
-
-### Datenbank wiederherstellen
-
-```bash
-# Neuestes lokales Backup finden
-ls -lt /opt/repos/normdex-backup/data/ | head -5
-
-# DB wiederherstellen
-gunzip -c /opt/repos/normdex-backup/data/DATUM/normdex_prod_db.sql.gz \
-  | docker exec -i db-postgres-1 psql -U normdex -d normdex_prod_database
-```
-
-### Uploads wiederherstellen
-
-```bash
-tar -xzf /opt/repos/normdex-backup/data/DATUM/uploads.tar.gz \
-  -C /var/lib/docker/volumes/normdex_prod_normdex_uploads/_data/
-```
-
-Falls keine lokalen Backups vorhanden sind, können die letzten 30 Tage von SharePoint heruntergeladen werden.
-
-## Azure App – Token erneuern
-
-Der OAuth Refresh-Token erneuert sich automatisch bei jedem Backup-Lauf. Falls die Verbindung zu SharePoint dennoch bricht (z.B. nach manueller Revokation), muss der Token neu generiert werden:
-
-1. Auf dem lokalen Windows-Rechner rclone portable herunterladen
-2. Befehl ausführen:
-   ```powershell
-   rclone.exe authorize "onedrive" "0cb92941-31aa-4100-a78f-89ab613985e0" "CLIENT_SECRET" --onedrive-tenant "4099f674-ae6c-47ab-a7bd-2d2e582ac426"
-   ```
-3. Neuen Token-JSON in `/opt/repos/normdex-backup/env/.env.backup` unter `RCLONE_CONFIG_SHAREPOINT_TOKEN` eintragen
-4. Container neu starten: `docker compose -f /opt/repos/normdex-backup/docker-compose.yml up -d --force-recreate`
-
-Das Client Secret läuft am **1.6.2028** ab (Secret "Normdex VPS" in der Azure App Registration).
-
-## Deployment-Integration
-
-Manuelles Pre-Deployment-Backup (vor Migrationen) weiterhin empfohlen, auch wenn der automatische tägliche Backup läuft:
-
-```bash
-docker exec -t db-postgres-1 pg_dump -U normdex normdex_prod_database \
-  > /opt/repos/normdex-webapp/deploy/db_backups/normdex_prod_backup_$(date +%Y%m%d_%H%M%S).sql
-```
-
-Siehe auch: [[IT-Workflow Branches Deployments Backups Migrationen]]
+Vor Migrationen bleibt ein frisches Pre-Deployment-Backup verpflichtend.
+Siehe [[IT-Workflow Branches Deployments Backups Migrationen]].
