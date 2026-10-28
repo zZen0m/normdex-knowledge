@@ -1,6 +1,8 @@
 # Eingangsrechnungen: Diagnose und Reparaturvorschlag
 
-Stand: 28.10.2026. Produktiver Ablauf nicht verändert; nur inaktive Diagnoseworkflows
+Historischer Diagnosebefund vom 28.10.2026, vor der Reparatur.
+Die Reparatur wurde inzwischen veröffentlicht; siehe [[Eingangsrechnungen – Robuster Betrieb]].
+Zum Diagnosezeitpunkt: Produktiver Ablauf nicht verändert; nur inaktive Diagnoseworkflows
 und lesende Verbindungstests. Keine echten E-Mails/Anhänge an neue KI-Anbieter gesendet.
 
 ## Gesicherte Befunde
