@@ -7,7 +7,7 @@ Quellstand: `normdex-backup/monitoring/n8n/website-monitoring.json`.
 
 ## Prüfungen
 
-Jede Minute normale HTTPS-GET-Anfragen an:
+Alle fünf Minuten normale HTTPS-GET-Anfragen an:
 
 | Ziel | URL | Erfolg |
 |---|---|---|
@@ -16,8 +16,8 @@ Jede Minute normale HTTPS-GET-Anfragen an:
 | API | https://api.normdex.at/health | HTTP 200 und JSON status=ok |
 
 TLS-Zertifikate werden geprüft, Timeout pro Anfrage 12 Sekunden.
-Drei aufeinanderfolgende Fehler eines Ziels lösen einen Telegram-Alarm aus.
-Während desselben Ausfalls kein Alarm pro Minute. Nach erfolgreicher Prüfung
+Zwei aufeinanderfolgende Fehler eines Ziels lösen einen Telegram-Alarm aus.
+Während desselben Ausfalls keine wiederholte Meldung pro Prüfung. Nach erfolgreicher Prüfung
 folgt eine Entwarnung. Fehlgeschlagene Telegram-Zustellungen werden erneut versucht.
 Der Workflow nutzt das vorhandene Credential „Telegram Normdex Tickets“ und den
 bestehenden Zielchat. Status und Fehlerzähler werden im Workflow gespeichert.
