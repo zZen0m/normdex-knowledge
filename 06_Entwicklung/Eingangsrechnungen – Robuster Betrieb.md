@@ -9,8 +9,9 @@ Modell `openai/gpt-oss-120b`, striktes JSON-Schema, begrenzte Antwortlänge.
 Outlook-Abfrage wie bisher jede Minute, maximal zehn Anhänge je Nachricht.
 Nicht-PDFs/Inline-Dateien und sicher erkannte Nicht-Rechnungen werden ignoriert;
 alle Schleifenpfade kehren zur nächsten Datei zurück. PDF maximal 10 MiB,
-extrahierter Text maximal 18.000 Zeichen. Kein OCR: leere/gescannte/zu lange
-oder unsicher klassifizierte PDFs benötigen manuelle Prüfung und lösen Telegram aus.
+extrahierter Text maximal 18.000 Zeichen. Bei fehlendem Text wird lokales OCR als begrenzter Fallback ausgeführt (maximal acht Seiten,
+120 Sekunden, 512 MiB und 0,75 CPU). Unlesbare/zu lange oder unsicher klassifizierte PDFs
+benötigen weiterhin manuelle Prüfung und lösen Telegram aus. Das Original-PDF bleibt unverändert.
 Erkennungsqualität bleibt modellabhängig; keine Garantie für jede Rechnung.
 
 SharePoint: `02_Finanzen Buchhaltung/02_Rechnungen Eingang/<Jahr>`.
@@ -38,7 +39,7 @@ Schritt und Ausführungs-ID, keine rohen KI-Antworten oder Zugangsdaten.
 ## Überwachung und Neustart
 
 `normdexIncomingHealth` prüft täglich 06:00 Europe/Vienna Outlook-Inbox,
-Groq-Modellliste und SharePoint-Ordner. Das ist eine Zugangsprüfung, kein täglicher
+Groq-Modellliste, SharePoint-Ordner und einen echten lokalen OCR-Selbsttest. Das ist eine Zugangsprüfung, kein täglicher
 KI-/Upload-Ende-zu-Ende-Test. Vorhandener stündlicher Host-Wächter prüft zusätzlich
 Aktivierung aller sechs Workflows und einen erfolgreichen Befund innerhalb30h.
 Ein einmaliger, zeitlich ablaufender Erstnachweis überbrückt den ersten Tageslauf.
@@ -64,3 +65,11 @@ Ausführung487: künstliches PDF in isoliertem SharePoint-Testordner hochgeladen
 byteweise rückgelesen, zweiter Versuch dedupliziert; eigene Testdatei/Statuszeilen gelöscht.
 Outlook/Groq/SharePoint-Zugangsprüfung separat erfolgreich. Keine echten Mails verändert.
 Alle temporären Test-/Setup-Workflows anschließend deaktiviert.
+
+## OCR-Ergänzung 28.10.2026
+
+Lokaler Tesseract-/Poppler-Dienst ohne öffentliche Ports oder zusätzliche OCR-API-Kosten
+aktiviert; täglicher Selbsttest und stündliche Containerüberwachung ergänzt. Details und
+Tests: `normdex-backup/incoming-invoices/ocr/README.md`. Synthetischer Scan mit Groq
+erfolgreich, Text-PDF umgeht OCR, leeres PDF wird zur Prüfung gemeldet. Acht Testseiten
+3,62 Sekunden, gemessener Containerhöchststand 80,9 MiB. Neustart von OCR und n8n geprüft.
