@@ -147,3 +147,38 @@ Rollback für diesen Nachtrag: `/home/deploy/workspaces/normdex-mail-category/ro
 Microsoft-Referenzen:
 - https://learn.microsoft.com/en-us/graph/api/resources/outlookcategory?view=graph-rest-1.0
 - https://learn.microsoft.com/en-us/graph/api/outlookcategory-update?view=graph-rest-1.0
+
+## Historischer Nachlauf ab 01.08.2026 – abgeschlossen am 29.10.2026
+
+Auf ausdrücklichen Nutzerauftrag empfangene Office-Mails ab 01.08.2026, 00:00
+Europe/Vienna (31.07.2026 22:00 UTC), bis zum festen Startzeitpunkt paginiert geprüft.
+13 Mails: elf mit 14 PDFs, zwei reine Preisänderungsmitteilungen. Neun unterschiedliche
+Rechnungen bestätigt: vier neu ergänzt, fünf bereits vorhanden. Zwei Microsoft-
+Rechnungen lagen jeweils in zwei Mails vor. Drei Anthropic-Zahlungsbestätigungen
+wurden anhand Rechnungsnummer, Datum und Betrag der jeweiligen Rechnung zugeordnet;
+sie bleiben in der Mail erhalten und erzeugen keine zusätzliche Rechnungsablage.
+
+Vorher vorhandene 36 PDFs byteweise gelesen und per SHA256 im Dokumentregister
+registriert. Abweichende PDF-Metadaten und Aussteller-Schreibweisen erforderten
+zusätzlich vollständige normalisierte Textvergleiche: World4You-Variante inhaltlich
+identisch; drei zunächst neu erzeugte Varianten nach bestätigter Textgleichheit
+wieder entfernt, einschließlich genau ihrer neuen Registerzeilen. Ausschließlich
+eigene neue Kopien bereinigt; keine vorher vorhandene Archivdatei verändert.
+Endbestand: 40 PDFs, davon neun Rechnungen aus dem geprüften Zeitraum.
+
+Die vier gesondert geprüften Mailstatus wurden mit Nachweis im Queue-Zusammenfassungsfeld
+abgeschlossen, anschließend durch den normalen Verschiebe-/Kategorie-Worker geführt.
+Alle elf Rechnungs-Mails tatsächlich im bestehenden Ordner Posteingang/Rechnungen
+und mit abgelegt markiert; keine technischen Fehler oder ungeklärten Fälle verbleiben.
+Regulärer Outlook-Poll-Lesestand nicht geändert. Einmaligen Nachlauf
+`normdexIncomingBackfillAugust` nach Abschluss deaktiviert und Testwebhook entfernt.
+Kein wiederkehrender historischer Nachlauf eingerichtet; Produktionslogik unverändert.
+
+Geschützter Prüfbericht und Rohbelege auf dem VPS:
+`/home/deploy/workspaces/normdex-incoming-backfill/Pruefbericht.md` (Verzeichnis0700).
+Keine Mail-IDs, Nachrichtentexte oder echten PDF-Inhalte ins Repository übernommen.
+Im geprüften Postfach wurde keine im Oktober eingegangene Microsoft-Rechnung gefunden;
+der Nachlauf bestätigt vorhandene Nachrichten und ersetzt keinen Lieferantenportal-Abgleich.
+Die drei Receipt-Sonderfälle und normalisierten PDF-Textgleichheiten waren bewusste
+Einzelfallprüfungen dieses Nachlaufs; die Produktionslogik bleibt bei abweichenden
+Datei-Bytes weiterhin konservativ und meldet Konflikte zur Prüfung.
