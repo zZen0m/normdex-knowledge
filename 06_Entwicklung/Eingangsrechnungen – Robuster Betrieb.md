@@ -41,7 +41,7 @@ Schritt und Ausführungs-ID, keine rohen KI-Antworten oder Zugangsdaten.
 `normdexIncomingHealth` prüft täglich 06:00 Europe/Vienna Outlook-Inbox,
 Groq-Modellliste, SharePoint-Ordner und einen echten lokalen OCR-Selbsttest. Das ist eine Zugangsprüfung, kein täglicher
 KI-/Upload-Ende-zu-Ende-Test. Vorhandener stündlicher Host-Wächter prüft zusätzlich
-Aktivierung aller sechs Workflows und einen erfolgreichen Befund innerhalb30h.
+Aktivierung aller sieben Workflows und einen erfolgreichen Befund innerhalb30h.
 Ein einmaliger, zeitlich ablaufender Erstnachweis überbrückt den ersten Tageslauf.
 Cron/Trigger und Datentabellen liegen persistent in n8n; Neustart wurde geprüft.
 Der gemeinsame VPS bleibt ein gemeinsamer Ausfallpunkt für Telegram-Alarmierung.
@@ -73,3 +73,77 @@ aktiviert; täglicher Selbsttest und stündliche Containerüberwachung ergänzt.
 Tests: `normdex-backup/incoming-invoices/ocr/README.md`. Synthetischer Scan mit Groq
 erfolgreich, Text-PDF umgeht OCR, leeres PDF wird zur Prüfung gemeldet. Acht Testseiten
 3,62 Sekunden, gemessener Containerhöchststand 80,9 MiB. Neustart von OCR und n8n geprüft.
+
+## Rechnungs-Mails nach Ablage verschieben (29.10.2026)
+
+Nach mindestens einer bestätigten Rechnungsablage und ohne fehlerhafte/ungeklärte
+Anhänge wird die gesamte Nachricht nach **Posteingang/Rechnungen** im freigegebenen
+Postfach `office@normdex.at` verschoben. Sicher ignorierte Anhänge verhindern das nicht.
+Reine Nicht-Rechnungen bleiben im Posteingang; ungeklärte/fehlgeschlagene Mails ebenso.
+Der vorhandene Rechnungsordner wird über seine feste ID verwendet.
+
+Neuer interner Worker `normdexIncomingMove`: vor dem Verschieben wird der Auftrag
+mit ursprünglicher Outlook-ID und Internet-Message-ID in der nativen Queue gespeichert.
+Der Worker sucht zuerst im Zielordner nach der exakten Internet-Message-ID. Ein Treffer
+bestätigt einen bereits ausgeführten Auftrag, mehr als ein Treffer wird als unklar
+abgebrochen. Ein POST wird nicht blind wiederholt. Bei verlorener Antwort/Neustart
+wird der gespeicherte Auftrag fortgesetzt, ohne Groq oder SharePoint erneut aufzurufen.
+Die reguläre Outlook-ID ändert sich beim Verschieben; deshalb ist allein diese ID
+kein ausreichender Wiederaufnahmenachweis. Microsofts alternative ID-Übersetzung
+war im delegierten Shared-Mailbox-Kontext mit vorhandenem Credential nicht erlaubt;
+der veröffentlichte Ablauf benötigt diese zusätzliche Berechtigung nicht.
+
+Erst nach Zielbestätigung wird Mailstatus `complete`; Verschiebefehler nutzen die
+bestehende begrenzte Wiederholungswarteschlange und Telegram-Fehleralarmierung.
+Täglicher Healthcheck prüft zusätzlich den Zielordner. Der stündliche Hostwächter
+prüft auch den neuen Worker auf Aktivierung.
+
+Wichtig: Das Outlook-Credential verwendet `useShared=true` für `office@normdex.at`.
+Native Outlook-Knoten berücksichtigen dies; direkte HTTP-Aufrufe tun das nicht
+von selbst. Alle neuen Mail-HTTP-Schritte und der tägliche Inbox-Test adressieren
+daher ausdrücklich `/users/office@normdex.at/` statt `/me/`.
+
+Nachweise: `node incoming-invoices/test_move.cjs` und bestehende Logiktests.
+Serverintegration mit künstlichem, ungesendetem Office-Entwurf, simuliert bestätigter
+Anhangsablage: Move-Auftrag persistent gespeichert, Nachricht verschoben, verlorene
+Antwort simuliert, Wiederaufnahme ohne erneute Anhangsverarbeitung erfolgreich.
+Eigener Testentwurf/Queue-Datensatz entfernt; keine E-Mails versendet oder echten
+Bestandsmails verschoben. Frühere künstliche Testdaten im angemeldeten anderen
+Postfach und der dort irrtümlich angelegte leere Testordner ebenfalls entfernt.
+Temporäre Testwebhooks deaktiviert. Neue Regeln wirken auf künftige Verarbeitung;
+keine automatische Nachbearbeitung bereits abgeschlossener historischer Mails.
+Rollback-Snapshots: `/home/deploy/workspaces/normdex-mail-move/rollback` (0700/0600).
+
+## Kategorie „abgelegt“ nach Verschieben (29.10.2026)
+
+Der Verschiebe-Worker setzt anschließend `abgelegt` in der Kategorienliste der
+Ziel-Mail. Bestehende Kategorien werden übernommen; fehlende Kategorien werden
+ergänzt, nicht ersetzt. Die Liste wird zurückgelesen und auf neue sowie zuvor
+vorhandene Einträge geprüft. Erst dann liefert der Worker `moved:true,categorized:true`
+und die Queue wird vollständig abgeschlossen. Eine fehlgeschlagene Kennzeichnung
+bleibt als Verschiebeauftrag wiederholbar; bereits verschobene Mails werden im
+Zielordner über Internet-Message-ID gefunden und anschließend nur noch markiert.
+Keine nachträgliche automatische Änderung bereits abgeschlossener historischer Mails.
+
+Die Kategorie wird erfolgreich als Name an Nachrichten gesetzt. Ihre gewünschte
+Farbe Grün ist noch **nicht** per API eingerichtet: Die Kategorienliste im Office-
+Postfach ist lesbar, `POST /users/office@normdex.at/outlook/masterCategories` für
+`{displayName:"abgelegt",color:"preset4"}` liefert jedoch403. Bestehende Definitionen
+wurden nicht verändert. Microsoft verlangt für das Erstellen/Ändern von Kategorien
+`MailboxSettings.ReadWrite`; die derzeitige Verbindung erlaubt diesen Schritt nicht.
+Einmalig in Outlook für das freigegebene Office-Postfach eine Kategorie namens
+**abgelegt** mit grüner Farbe anlegen. Die automatische Namenszuweisung läuft bereits;
+eine erneute Microsoft-Autorisierung ist für die manuelle Farbzuordnung nicht nötig.
+Eine bestehende Kategorie „in SharePoint abgelegt“ mit anderer Farbe wurde bewusst
+nicht verändert. Outlook-Clients bestimmen die konkrete Darstellung des Farbcodes.
+
+Nachweise: `node incoming-invoices/test_category.cjs`; künstlicher ungesendeter
+Office-Entwurf wurde verschoben und markiert, vorhandene „Rote Kategorie“ blieb
+bestehen, zweiter identischer Aufruf erfolgreich, Testentwurf anschließend gelöscht.
+Tests versendeten keine Nachrichten und lösten keine regulären Telegram-Meldungen aus.
+Neustart, aktive Veröffentlichungsstände und gesunder Hostwächter nach Deployment bestätigt.
+Rollback für diesen Nachtrag: `/home/deploy/workspaces/normdex-mail-category/rollback`.
+
+Microsoft-Referenzen:
+- https://learn.microsoft.com/en-us/graph/api/resources/outlookcategory?view=graph-rest-1.0
+- https://learn.microsoft.com/en-us/graph/api/outlookcategory-update?view=graph-rest-1.0

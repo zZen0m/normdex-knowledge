@@ -61,3 +61,11 @@ keine Leistung oder zuverlässige Erkennungsquote ohne Benchmark zusagen.
 - https://console.groq.com/docs/billing-faqs
 - https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.chainllm/
 - https://docs.ollama.com/faq
+
+## Nachtrag 29.10.2026: Shared-Mailbox-Kontext
+
+Das Credential spricht nativ das freigegebene Postfach office@normdex.at an.
+Der ursprüngliche direkte HTTP-Metadatentest verwendete /me und bestätigte daher
+nur den Zugriff auf das angemeldete Postfach. Der Tagescheck ist inzwischen auf
+/users/office@normdex.at umgestellt; tatsächliche Office-Verarbeitung und
+Rechnungsordner wurden im Zuge der Verschiebe-Erweiterung separat geprüft.
